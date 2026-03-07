@@ -16,6 +16,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@fullstack-reo/ui";
+import { apiUrl } from "@/lib/api";
 import type { ParentCompany } from "./columns";
 
 const CATEGORIAS: Record<number, string> = {
@@ -109,8 +110,8 @@ export function EmpresaModal({
     try {
       const url =
         mode === "edit"
-          ? `/api/parent-companies/${empresa!.idDlkParentCompany}`
-          : "/api/parent-companies";
+          ? apiUrl(`/api/parent-companies/${empresa!.idDlkParentCompany}`)
+          : apiUrl("/api/parent-companies");
       const method = mode === "edit" ? "PUT" : "POST";
 
       const payload = { ...form };

@@ -16,6 +16,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@fullstack-reo/ui";
+import { apiUrl } from "@/lib/api";
 import type { FacilityMaquila } from "./columns";
 
 type ModalMode = "create" | "edit" | "view";
@@ -70,12 +71,12 @@ export function FabricaMaquilaModal({
 
   useEffect(() => {
     if (!open) return;
-    fetch("/api/maquilas")
+    fetch(apiUrl("/api/maquilas"))
       .then((res) => res.json())
       .then((data: MaquilaOption[]) => setMaquilas(data))
       .catch((err) => console.error("Error al cargar maquilas:", err));
 
-    fetch("/api/ubigeo?limit=500")
+    fetch(apiUrl("/api/ubigeo?limit=500"))
       .then((res) => res.json())
       .then((data: UbigeoOption[]) => setUbigeos(data))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
@@ -126,8 +127,8 @@ export function FabricaMaquilaModal({
     try {
       const url =
         mode === "edit"
-          ? `/api/facilities-maquila/${item!.idDlkFacilityMaquila}`
-          : "/api/facilities-maquila";
+          ? apiUrl(`/api/facilities-maquila/${item!.idDlkFacilityMaquila}`)
+          : apiUrl("/api/facilities-maquila");
       const method = mode === "edit" ? "PUT" : "POST";
 
       const payload = {

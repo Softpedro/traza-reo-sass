@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
+import { apiUrl } from "@/lib/api";
 import { getColumns, type FacilityMaquila } from "./columns";
 import { FabricaMaquilaModal } from "./fabrica-maquila-modal";
 
@@ -22,7 +23,7 @@ export default function FabricaMaquilaPage() {
 
   const fetchItems = useCallback(() => {
     setLoading(true);
-    fetch("/api/facilities-maquila")
+    fetch(apiUrl("/api/facilities-maquila"))
       .then((res) => res.json())
       .then((data) => setItems(data))
       .catch((err) => console.error("Error al cargar fábricas de maquila:", err))

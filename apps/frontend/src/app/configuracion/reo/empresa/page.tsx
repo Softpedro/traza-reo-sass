@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { DataTable } from "@fullstack-reo/ui";
+import { apiUrl } from "@/lib/api";
 import { getColumns, type ParentCompany } from "./columns";
 import { EmpresaModal } from "./empresa-modal";
 
@@ -22,7 +23,7 @@ export default function EmpresaPage() {
 
   const fetchEmpresas = useCallback(() => {
     setLoading(true);
-    fetch("/api/parent-companies")
+    fetch(apiUrl("/api/parent-companies"))
       .then((res) => res.json())
       .then((data) => setEmpresas(data))
       .catch((err) => console.error("Error al cargar empresas:", err))

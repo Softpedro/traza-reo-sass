@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
+import { apiUrl } from "@/lib/api";
 import { getColumns, type Brand } from "./columns";
 import { MarcaModal } from "./marca-modal";
 
@@ -22,7 +23,7 @@ export default function MarcaPage() {
 
   const fetchMarcas = useCallback(() => {
     setLoading(true);
-    fetch("/api/brands")
+    fetch(apiUrl("/api/brands"))
       .then((res) => res.json())
       .then((data) => setMarcas(data))
       .catch((err) => console.error("Error al cargar marcas:", err))

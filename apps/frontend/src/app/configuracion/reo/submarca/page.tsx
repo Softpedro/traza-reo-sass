@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
+import { apiUrl } from "@/lib/api";
 import { getColumns, type Subbrand } from "./columns";
 import { SubmarcaModal } from "./submarca-modal";
 
@@ -22,7 +23,7 @@ export default function SubmarcaPage() {
 
   const fetchItems = useCallback(() => {
     setLoading(true);
-    fetch("/api/subbrands")
+    fetch(apiUrl("/api/subbrands"))
       .then((res) => res.json())
       .then((data) => setItems(data))
       .catch((err) => console.error("Error al cargar submarcas:", err))

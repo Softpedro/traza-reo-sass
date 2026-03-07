@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { UbigeoSelector } from "@/components/ubigeo-selector";
+import { apiUrl } from "@/lib/api";
 import type { Brand } from "./columns";
 
 type ModalMode = "create" | "edit" | "view";
@@ -75,12 +76,12 @@ export function MarcaModal({
 
   useEffect(() => {
     if (!open) return;
-    fetch("/api/parent-companies")
+    fetch(apiUrl("/api/parent-companies"))
       .then((res) => res.json())
       .then((data: ParentCompanyOption[]) => setEmpresas(data))
       .catch((err) => console.error("Error al cargar empresas:", err));
 
-    fetch("/api/ubigeo?limit=500")
+    fetch(apiUrl("/api/ubigeo?limit=500"))
       .then((res) => res.json())
       .then((data: UbigeoOption[]) => setUbigeos(data))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
@@ -152,8 +153,8 @@ export function MarcaModal({
     try {
       const url =
         mode === "edit"
-          ? `/api/brands/${marca!.idDlkBrand}`
-          : "/api/brands";
+          ? apiUrl(`/api/brands/${marca!.idDlkBrand}`)
+          : apiUrl("/api/brands");
       const method = mode === "edit" ? "PUT" : "POST";
 
       const payload = {

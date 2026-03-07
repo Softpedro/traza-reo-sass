@@ -16,6 +16,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@fullstack-reo/ui";
+import { apiUrl } from "@/lib/api";
 import type { UserReo } from "./columns";
 
 type ModalMode = "create" | "edit" | "view";
@@ -85,7 +86,7 @@ export function UsuarioModal({
 
   useEffect(() => {
     if (!open) return;
-    fetch("/api/parent-companies")
+    fetch(apiUrl("/api/parent-companies"))
       .then((res) => res.json())
       .then((data: ParentCompanyOption[]) => setEmpresas(data))
       .catch((err) => console.error("Error al cargar empresas:", err));
@@ -170,8 +171,8 @@ export function UsuarioModal({
     try {
       const url =
         mode === "edit"
-          ? `/api/users/${usuario!.idDlkUserReo}`
-          : "/api/users";
+          ? apiUrl(`/api/users/${usuario!.idDlkUserReo}`)
+          : apiUrl("/api/users");
       const method = mode === "edit" ? "PUT" : "POST";
 
       const payload: Record<string, unknown> = { ...form };

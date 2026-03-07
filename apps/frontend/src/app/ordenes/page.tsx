@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
 } from "@fullstack-reo/ui";
+import { apiUrl } from "@/lib/api";
 import { columns, type OrdenPedido } from "./columns";
 
 const stats = [
@@ -19,7 +20,7 @@ export default function OrdenesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/ordenes")
+    fetch(apiUrl("/api/ordenes"))
       .then((res) => res.json())
       .then((data) => setOrdenes(data))
       .catch((err) => console.error("Error al cargar órdenes:", err))

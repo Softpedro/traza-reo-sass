@@ -1,0 +1,22 @@
+{
+  "name": "fullstack-reo",
+  "private": true,
+  "workspaces": [
+    "apps/frontend",
+    "apps/backend",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "dev:frontend": "npm run dev -w apps/frontend",
+    "dev:backend": "npm run dev -w apps/backend",
+    "build": "npm run build --workspaces --if-present",
+    "db:generate": "npm run db:generate -w apps/backend",
+    "db:push": "npm run db:push -w apps/backend",
+    "db:studio": "npm run db:studio -w apps/backend",
+    "storybook": "npm run storybook -w @fullstack-reo/ui"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

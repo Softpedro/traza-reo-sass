@@ -50,7 +50,7 @@ const prisma = new PrismaClient({ adapter });
 const app = express();
 const PORT = process.env.PORT ?? 4000;
 
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: process.env.CORS_ORIGIN || "http://localhost:3000" }));
 app.use(express.json());
 
 app.get("/health", async (_req, res) => {

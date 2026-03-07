@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-import { PrismaClient } from "../generated/prisma/client.js";
+import { PrismaClient } from "../generated/prisma/index.mjs";
 import { ParentCompanyService } from "./services/parent-company.service.js";
 import { parentCompanyRoutes } from "./routes/parent-company.routes.js";
 import { FacilityService } from "./services/facility.service.js";
@@ -220,6 +220,7 @@ async function start() {
   try {
     await prisma.$queryRawUnsafe("SELECT 1");
     console.log("[DB] Conexión verificada correctamente");
+    console.log("[CORS] Origin configurado:", process.env.CORS_ORIGIN);
   } catch (e) {
     console.error("[DB] ERROR: No se pudo conectar a la base de datos:", e instanceof Error ? e.message : e);
     console.error("[DB] Verifica que MariaDB esté corriendo en", `${dbConfig.host}:${dbConfig.port}`);

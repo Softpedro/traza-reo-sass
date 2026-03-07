@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-import { PrismaClient } from "../generated/prisma/index.mjs";
+import { PrismaClient } from "../generated/prisma/client.js";
 import { ParentCompanyService } from "./services/parent-company.service.js";
 import { parentCompanyRoutes } from "./routes/parent-company.routes.js";
 import { FacilityService } from "./services/facility.service.js";

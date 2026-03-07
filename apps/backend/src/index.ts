@@ -55,8 +55,18 @@ const prisma = new PrismaClient({ adapter });
 const app = express();
 const PORT = process.env.PORT ?? 4000;
 
+const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:3000";
+console.log(`[CORS] CORS_ORIGIN env value: "${corsOrigin}"`);
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+  origin: (origin, callback) => {
+    console.log(`[CORS] Request origin: "${origin}"`);
+    if (!origin || origin === corsOrigin) {
+      callback(null, true);
+    } else {
+      console.log(`[CORS] BLOCKED: "${origin}" !== "${corsOrigin}"`);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]

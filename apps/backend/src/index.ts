@@ -1,13 +1,8 @@
-console.log("[BOOT] Starting backend...");
 import "dotenv/config";
-console.log("[BOOT] dotenv loaded");
 import express from "express";
 import cors from "cors";
-console.log("[BOOT] express/cors loaded");
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-console.log("[BOOT] PrismaMariaDb loaded");
 import { PrismaClient } from "../generated/prisma/client.js";
-console.log("[BOOT] PrismaClient loaded");
 import { ParentCompanyService } from "./services/parent-company.service.js";
 import { parentCompanyRoutes } from "./routes/parent-company.routes.js";
 import { FacilityService } from "./services/facility.service.js";
@@ -235,20 +230,15 @@ app.delete("/api/ordenes/:id", async (req, res) => {
   }
 });
 
-// ── Verificar conexión DB y levantar servidor ─────────────────────
-async function start() {
-  try {
-    await prisma.$queryRawUnsafe("SELECT 1");
-    console.log("[DB] Conexión verificada correctamente");
-    console.log("[CORS] Origin configurado:", process.env.CORS_ORIGIN);
-  } catch (e) {
-    console.error("[DB] ERROR: No se pudo conectar a la base de datos:", e instanceof Error ? e.message : e);
-    console.error("[DB] Verifica que MariaDB esté corriendo en", `${dbConfig.host}:${dbConfig.port}`);
-  }
+// ── Levantar servidor inmediatamente, luego verificar DB ─────────
+app.listen(Number(PORT), "0.0.0.0", () => {
+  console.log(`Backend escuchando en http://0.0.0.0:${PORT}`);
+  console.log("[CORS] Origin configurado:", process.env.CORS_ORIGIN);
 
-  app.listen(Number(PORT), "0.0.0.0", () => {
-    console.log(`Backend escuchando en http://0.0.0.0:${PORT}`);
-  });
-}
-
-start();
+  prisma.$queryRawUnsafe("SELECT 1")
+    .then(() => console.log("[DB] Conexión verificada correctamente"))
+    .catch((e) => {
+      console.error("[DB] ERROR: No se pudo conectar a la base de datos:", e instanceof Error ? e.message : e);
+      console.error("[DB] Verifica que MariaDB esté corriendo en", `${dbConfig.host}:${dbConfig.port}`);
+    });
+});

@@ -1,8 +1,13 @@
+console.log("[BOOT] Starting backend...");
 import "dotenv/config";
+console.log("[BOOT] dotenv loaded");
 import express from "express";
 import cors from "cors";
+console.log("[BOOT] express/cors loaded");
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
+console.log("[BOOT] PrismaMariaDb loaded");
 import { PrismaClient } from "../generated/prisma/client.js";
+console.log("[BOOT] PrismaClient loaded");
 import { ParentCompanyService } from "./services/parent-company.service.js";
 import { parentCompanyRoutes } from "./routes/parent-company.routes.js";
 import { FacilityService } from "./services/facility.service.js";

@@ -231,8 +231,8 @@ async function start() {
     console.error("[DB] Verifica que MariaDB esté corriendo en", `${dbConfig.host}:${dbConfig.port}`);
   }
 
-  app.listen(PORT, () => {
-    console.log(`Backend escuchando en http://localhost:${PORT}`);
+  app.listen(Number(PORT), "0.0.0.0", () => {
+    console.log(`Backend escuchando en http://0.0.0.0:${PORT}`);
   });
 }
 

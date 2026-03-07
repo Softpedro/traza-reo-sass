@@ -41,6 +41,7 @@ model MdParentCompany {
   // Relaciones
   brands           MdBrand[]
   ordenes          MdOrdenPedido[]
+  processes        MdProcess[]
   facilities       MdFacility[]
   maquilaRelations MdParentCompanyMaquila[]
   users            MdUserReo[]
@@ -91,7 +92,7 @@ model MdBrand {
   codUsuarioCargaDl  String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
   fehProcesoCargaDl  DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
   fehProcesoModifDl  DateTime @updatedAt @map("FEH_PROCESO_MODIF_DL")
-  desAccion          String   @map("DES_ACCION")
+  desAccion          String   @map("DES_ACCION") @db.VarChar(20) // INSERT, UPDATE, DELETE
   flgStatutActif     Int      @default(1) @map("FLG_STATUT_ACTIF")
 
   parentCompany MdParentCompany @relation(fields: [idDlkParentCompany], references: [idDlkParentCompany])
@@ -122,6 +123,360 @@ model MdOrdenPedido {
 
   @@index([idDlkParentCompany])
   @@map("MD_ORDEN_PEDIDO")
+}
+
+// Cadena de producción (MD_PRODUCTION_CHAIN)
+model MdProductionChain {
+  idDlkProductionChain       Int      @id @default(autoincrement()) @map("ID_DLK_PRODUCTION_CHAIN")
+  codProductionChain         String   @unique(map: "UK_COD_PRODUCTION_CHAIN") @map("COD_PRODUCTION_CHAIN") @db.VarChar(10)
+  codCategoryProductionChain Int     @map("COD_CATEGORY_PRODUCTION_CHAIN")
+  numPrecedenciaTrazabilidad Int      @map("NUM_PRECEDENCIA_TRAZABILIDAD")
+  numPrecedenciaProductiva   Int      @map("NUM_PRECEDENCIA_PRODUCTIVA")
+  nameProductionChain        String   @map("NAME_PRODUCTION_CHAIN") @db.VarChar(100)
+  desProductionChain         String   @map("DES_PRODUCTION_CHAIN") @db.VarChar(1000)
+  stateProductionChain       Int      @default(1) @map("STATE_PRODUCTION_CHAIN")
+  codUsuarioCargaDl          String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(50)
+  fehProcesoCargaDl           DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl           DateTime @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                   String?  @map("DES_ACCION") @db.VarChar(50)
+  flgStatutActif              Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  processes MdProcess[]
+
+  @@map("MD_PRODUCTION_CHAIN")
+}
+
+// Maestro de Procesos (MD_PROCESS)
+model MdProcess {
+  idDlkProcess              Int      @id @default(autoincrement()) @map("ID_DLK_PROCESS")
+  idDlkParentCompany        Int      @map("ID_DLK_PARENT_COMPANY")
+  idDlkProductionChain      Int      @map("ID_DLK_PRODUCTION_CHAIN")
+  ordenPrecedenciaProcess   Int      @map("ORDEN_PRECEDENCIA_PROCESS")
+  codProcess                String   @map("COD_PROCESS") @db.VarChar(100)
+  nameProcess               String   @map("NAME_PROCESS") @db.VarChar(100)
+  desProcess                String   @map("DES_PROCESS") @db.VarChar(1000)
+  objetiveProcess           String   @map("OBJETIVE_PROCESS") @db.VarChar(1000)
+  criticalityProcess        String   @map("CRITICALITY_PROCESS") @db.VarChar(200)
+  outsourcedProcess         String   @map("OUTSOURCED_PROCESS") @db.VarChar(250)
+  estimatedTimeProcess       Int      @map("ESTIMATED_TIME_PROCESS")
+  responsibleUnit           String   @map("RESPONSIBLE_UNIT") @db.VarChar(100)
+  responsibleProcess        String   @map("RESPONSIBLE_PROCESS") @db.VarChar(100)
+  processCertification      String?  @map("PROCESS_CERTIFICATION") @db.VarChar(1000)
+  stateProcess               Int      @default(1) @map("STATE_PROCESS")
+  codUsuarioCargaDl         String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl         DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl          DateTime @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                 String   @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif            Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  parentCompany    MdParentCompany    @relation(fields: [idDlkParentCompany], references: [idDlkParentCompany])
+  productionChain  MdProductionChain  @relation(fields: [idDlkProductionChain], references: [idDlkProductionChain])
+  subprocesses     MdSubprocess[]
+  inputProcesses   MdInputProcess[]
+  outputProcesses  MdOutputProcess[]
+  procedureProcesses MdProcedureProcess[]
+
+  @@index([idDlkParentCompany], map: "FK_PROCESS_PARENT_COMPANY")
+  @@index([idDlkProductionChain], map: "FK_PROCESS_PRODUCTION_CHAIN")
+  @@map("MD_PROCESS")
+}
+
+// Maestro de Subprocesos (MD_SUBPROCESS)
+model MdSubprocess {
+  idDlkSubprocess            Int      @id @default(autoincrement()) @map("ID_DLK_SUBPROCESS")
+  idDlkProcess               Int      @map("ID_DLK_PROCESS")
+  ordenPrecedenciaSubprocess Int?     @map("ORDEN_PRECEDENCIA_SUBPROCESS")
+  codSubprocess              String   @map("COD_SUBPROCESS") @db.VarChar(100)
+  nameSubprocess             String   @map("NAME_SUBPROCESS") @db.VarChar(100)
+  descriptionSubprocess      String   @map("DESCRIPTION_SUBPROCESS") @db.VarChar(1000)
+  objectiveSubprocess        String?  @map("OBJECTIVE_SUBPROCESS") @db.VarChar(1000)
+  criticalitySubprocess      String?  @map("CRITICALITY_SUBPROCESS") @db.VarChar(200)
+  outsourcedSubprocess       String?  @map("OUTSOURCED_SUBPROCESS") @db.VarChar(250)
+  estimatedTimeSubprocess    Int?     @map("ESTIMATED_TIME_SUBPROCESS")
+  responsibleUnit            String?  @map("RESPONSIBLE_UNIT") @db.VarChar(100)
+  responsibleRole            String?  @map("RESPONSIBLE_ROLE") @db.VarChar(100)
+  certificationSubprocess    String?  @map("CERTIFICATION_SUBPROCESS") @db.VarChar(1000)
+  stateSubprocess            Int      @default(1) @map("STATE_SUBPROCESS")
+  codUsuarioCargaDl          String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl          DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl          DateTime? @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                  String   @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif             Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  process          MdProcess          @relation(fields: [idDlkProcess], references: [idDlkProcess])
+  activities       MdActivities[]
+  inputSubprocesses  MdInputSubprocess[]
+  outputSubprocesses MdOutputSubprocess[]
+  procedureSubprocesses MdProcedureSubprocess[]
+
+  @@index([idDlkProcess], map: "FK_SUBPROCESS_PROCESS")
+  @@map("MD_SUBPROCESS")
+}
+
+// Maestro de Actividades (MD_ACTIVITIES)
+model MdActivities {
+  idDlkActivities           Int      @id @default(autoincrement()) @map("ID_DLK_ACTIVITIES")
+  idDlkSubprocess            Int      @map("ID_DLK_SUBPROCESS")
+  codActivities             String   @map("COD_ACTIVITIES") @db.VarChar(100)
+  nameActivities             String   @map("NAME_ACTIVITIES") @db.VarChar(200)
+  descriptionActivities     String   @map("DESCRIPTION_ACTIVITIES") @db.VarChar(1000)
+  typeActivities             String   @map("TYPE_ACTIVITIES") @db.VarChar(200)
+  orderActivities            Int?     @map("ORDER_ACTIVITIES")
+  estimatedTimeActivities   String?  @map("ESTIMATED_TIME_ACTIVITIES") @db.VarChar(200)
+  machineRequired           String?  @map("MACHINE_REQUIRED") @db.VarChar(200)
+  skillRequired             String?  @map("SKILL_REQUIRED") @db.VarChar(200)
+  checklistActivities       String?  @map("CHECKLIST_ACTIVITIES") @db.VarChar(200)
+  stateActivities           Int      @default(1) @map("STATE_ACTIVITIES")
+  codUsuarioCargaDl         String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl         DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl         DateTime? @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                 String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif            Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  subprocess        MdSubprocess        @relation(fields: [idDlkSubprocess], references: [idDlkSubprocess])
+  inputActivities   MdInputActivities[]
+  outputActivities  MdOutputActivities[]
+  procedureActivities MdProcedureActivities[]
+
+  @@index([idDlkSubprocess], map: "FK_ACTIVITIES_SUBPROCESS")
+  @@map("MD_ACTIVITIES")
+}
+
+// Entradas al proceso (MD_INPUT_PROCESS)
+model MdInputProcess {
+  idDlkInputProcess         Int      @id @default(autoincrement()) @map("ID_DLK_INPUT_PROCESS")
+  idDlkProcess              Int      @map("ID_DLK_PROCESS")
+  codInputProcess           String   @map("COD_INPUT_PROCESS") @db.VarChar(200)
+  nameInputProcess          String   @map("NAME_INPUT_PROCESS") @db.VarChar(200)
+  descriptionInputProcess  String   @map("DESCRIPTION_INPUT_PROCESS") @db.VarChar(200)
+  typeInputProcess         String   @map("TYPE_INPUT_PROCESS") @db.VarChar(200)
+  originInputProcess       String   @map("ORIGIN_INPUT_PROCESS") @db.VarChar(200)
+  amountInputProcess       String   @map("AMOUNT_INPUT_PROCESS") @db.VarChar(200)
+  unitQuantity             String   @map("UNIT_QUANTITY") @db.VarChar(200)
+  supplierInputProcess     String?  @map("SUPPLIER_INPUT_PROCESS") @db.VarChar(200)
+  certificationInputProcess String? @map("CERTIFICATION_INPUT_PROCESS") @db.VarChar(200)
+  observationInputProcess String?  @map("OBSERVATION_INPUT_PROCESS") @db.VarChar(200)
+  stateInputProcess        Int      @default(1) @map("STATE_INPUT_PROCESS")
+  codUsuarioCargaDl        String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl        DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl        DateTime? @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif           Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  process MdProcess @relation(fields: [idDlkProcess], references: [idDlkProcess])
+
+  @@index([idDlkProcess], map: "FK_INPUT_PROCESS_PROCESS")
+  @@map("MD_INPUT_PROCESS")
+}
+
+// Entradas al subproceso (MD_INPUT_SUBPROCESS)
+model MdInputSubprocess {
+  idDlkInputSubprocess      Int      @id @default(autoincrement()) @map("ID_DLK_INPUT_SUBPROCESS")
+  idDlkSubprocess           Int      @map("ID_DLK_SUBPROCESS")
+  codInputSubprocess        String   @map("COD_INPUT_SUBPROCESS") @db.VarChar(200)
+  nameInputSubprocess       String   @map("NAME_INPUT_SUBPROCESS") @db.VarChar(200)
+  descriptionInputSubprocess String  @map("DESCRIPTION_INPUT_SUBPROCESS") @db.VarChar(200)
+  typeInputSubprocess       String   @map("TYPE_INPUT_SUBPROCESS") @db.VarChar(200)
+  originInputSubprocess     String   @map("ORIGIN_INPUT_SUBPROCESS") @db.VarChar(200)
+  amountInputSubprocess     String   @map("AMOUNT_INPUT_SUBPROCESS") @db.VarChar(200)
+  unitQuantity              String   @map("UNIT_QUANTITY") @db.VarChar(200)
+  supplierInputSubprocess   String?  @map("SUPPLIER_INPUT_SUBPROCESS") @db.VarChar(200)
+  certificationInputSubprocess String? @map("CERTIFICATION_INPUT_SUBPROCESS") @db.VarChar(200)
+  observationInputSubprocess String? @map("OBSERVATION_INPUT_SUBPROCESS") @db.VarChar(200)
+  stateInputSubprocess      Int      @default(1) @map("STATE_INPUT_SUBPROCESS")
+  codUsuarioCargaDl         String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl         DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl         DateTime? @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                 String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif            Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  subprocess MdSubprocess @relation(fields: [idDlkSubprocess], references: [idDlkSubprocess])
+
+  @@index([idDlkSubprocess], map: "FK_INPUT_SUBPROCESS_SUBPROCESS")
+  @@map("MD_INPUT_SUBPROCESS")
+}
+
+// Entradas a la actividad (MD_INPUT_ACTIVITIES)
+model MdInputActivities {
+  idDlkInputActivities      Int      @id @default(autoincrement()) @map("ID_DLK_INPUT_ACTIVITIES")
+  idDlkActivities           Int      @map("ID_DLK_ACTIVITIES")
+  codInputActivities        String   @map("COD_INPUT_ACTIVITIES") @db.VarChar(200)
+  nameInputActivities       String   @map("NAME_INPUT_ACTIVITIES") @db.VarChar(200)
+  descriptionInputActivities String  @map("DESCRIPTION_INPUT_ACTIVITIES") @db.VarChar(1000)
+  typeInputActivities       String   @map("TYPE_INPUT_ACTIVITIES") @db.VarChar(200)
+  amountRequiredActivities  String   @map("AMOUNT_REQUIRED_ACTIVITIES") @db.VarChar(200)
+  unitMeasureActivities    String   @map("UNIT_MEASURE_ACTIVITIES") @db.VarChar(200)
+  sourceInputActivities    String?  @map("SOURCE_INPUT_ACTIVITIES") @db.VarChar(200)
+  technicalSpecActivities  String?  @map("TECHNICAL_SPEC_ACTIVITIES") @db.VarChar(200)
+  criticalCheckActivities  String?  @map("CRITICAL_CHECK_ACTIVITIES") @db.VarChar(200)
+  stateInputActivities     Int      @default(1) @map("STATE_INPUT_ACTIVITIES")
+  codUsuarioCargaDl        String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(50)
+  fehProcesoCargaDl         DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl         DateTime? @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                 String   @default("INSERT") @map("DES_ACCION") @db.VarChar(50)
+  flgStatutActif            Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  activities MdActivities @relation(fields: [idDlkActivities], references: [idDlkActivities])
+
+  @@index([idDlkActivities], map: "FK_INPUT_ACTIVITIES_ACTIVITIES")
+  @@map("MD_INPUT_ACTIVITIES")
+}
+
+// Salidas del proceso (MD_OUTPUT_PROCESS)
+model MdOutputProcess {
+  idDlkOutputProcess        Int      @id @default(autoincrement()) @map("ID_DLK_OUTPUT_PROCESS")
+  idDlkProcess              Int      @map("ID_DLK_PROCESS")
+  codOutputProcess          String   @map("COD_OUTPUT_PROCESS") @db.VarChar(200)
+  nameOutputProcess         String   @map("NAME_OUTPUT_PROCESS") @db.VarChar(200)
+  descriptionOutputProcess String   @map("DESCRIPTION_OUTPUT_PROCESS") @db.VarChar(200)
+  typeOutputProcess         String   @map("TYPE_OUTPUT_PROCESS") @db.VarChar(200)
+  destinationOutputProcess String   @map("DESTINATION_OUTPUT_PROCESS") @db.VarChar(200)
+  amountOutputProcess       String   @map("AMOUNT_OUTPUT_PROCESS") @db.VarChar(200)
+  unitQuantity              String   @map("UNIT_QUANTITY") @db.VarChar(200)
+  stateOutputProcess        String   @map("STATE_OUTPUT_PROCESS") @db.VarChar(200)
+  certificationOutputProcess String? @map("CERTIFICATION_OUTPUT_PROCESS") @db.VarChar(200)
+  observationOutputProcess  String?  @map("OBSERVATION_OUTPUT_PROCESS") @db.VarChar(200)
+  stateOutput               Int      @default(1) @map("STATE_OUTPUT")
+  codUsuarioCargaDl        String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl         DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl         DateTime? @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                 String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif            Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  process MdProcess @relation(fields: [idDlkProcess], references: [idDlkProcess])
+
+  @@index([idDlkProcess], map: "FK_OUTPUT_PROCESS_PROCESS")
+  @@map("MD_OUTPUT_PROCESS")
+}
+
+// Salidas del subproceso (MD_OUTPUT_SUBPROCESS)
+model MdOutputSubprocess {
+  idDlkOutputSubprocess     Int      @id @default(autoincrement()) @map("ID_DLK_OUTPUT_SUBPROCESS")
+  idDlkSubprocess           Int      @map("ID_DLK_SUBPROCESS")
+  codOutputSubprocess       String   @map("COD_OUTPUT_SUBPROCESS") @db.VarChar(200)
+  nameOutputSubprocess      String   @map("NAME_OUTPUT_SUBPROCESS") @db.VarChar(200)
+  descriptionOutputSubprocess String @map("DESCRIPTION_OUTPUT_SUBPROCESS") @db.VarChar(200)
+  typeOutputSubprocess      String   @map("TYPE_OUTPUT_SUBPROCESS") @db.VarChar(200)
+  destinationOutputSubprocess String @map("DESTINATION_OUTPUT_SUBPROCESS") @db.VarChar(200)
+  amountOutputSubprocess     String   @map("AMOUNT_OUTPUT_SUBPROCESS") @db.VarChar(200)
+  unitQuantity               String   @map("UNIT_QUANTITY") @db.VarChar(200)
+  stateOutputSubprocess      String   @map("STATE_OUTPUT_SUBPROCESS") @db.VarChar(200)
+  certificationOutputSubprocess String? @map("CERTIFICATION_OUTPUT_SUBPROCESS") @db.VarChar(200)
+  observationOutputSubprocess  String? @map("OBSERVATION_OUTPUT_SUBPROCESS") @db.Text
+  stateOutput                Int      @default(1) @map("STATE_OUTPUT")
+  codUsuarioCargaDl         String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl         DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl         DateTime? @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                 String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif            Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  subprocess MdSubprocess @relation(fields: [idDlkSubprocess], references: [idDlkSubprocess])
+
+  @@index([idDlkSubprocess], map: "FK_OUTPUT_SUBPROCESS_SUBPROCESS")
+  @@map("MD_OUTPUT_SUBPROCESS")
+}
+
+// Salidas de la actividad (MD_OUTPUT_ACTIVITIES)
+model MdOutputActivities {
+  idDlkOutputActivities     Int      @id @default(autoincrement()) @map("ID_DLK_OUTPUT_ACTIVITIES")
+  idDlkActivities           Int      @map("ID_DLK_ACTIVITIES")
+  codOutputActivities       String   @map("COD_OUTPUT_ACTIVITIES") @db.VarChar(200)
+  nameOutputActivities      String   @map("NAME_OUTPUT_ACTIVITIES") @db.VarChar(200)
+  descriptionOutputActivities String  @map("DESCRIPTION_OUTPUT_ACTIVITIES") @db.VarChar(1000)
+  typeOutputActivities      String   @map("TYPE_OUTPUT_ACTIVITIES") @db.VarChar(200)
+  amountExpectedActivities  String   @map("AMOUNT_EXPECTED_ACTIVITIES") @db.VarChar(200)
+  unitMeasureOutput         String   @map("UNIT_MEASURE_OUTPUT") @db.VarChar(200)
+  nextDestinationActivities String?  @map("NEXT_DESTINATION_ACTIVITIES") @db.VarChar(200)
+  qualityStandardActivities String?  @map("QUALITY_STANDARD_ACTIVITIES") @db.VarChar(200)
+  stateOutputActivities     Int      @default(1) @map("STATE_OUTPUT_ACTIVITIES")
+  codUsuarioCargaDl        String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl         DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl         DateTime? @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                 String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif            Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  activities MdActivities @relation(fields: [idDlkActivities], references: [idDlkActivities])
+
+  @@index([idDlkActivities], map: "FK_OUTPUT_ACTIVITIES_ACTIVITIES")
+  @@map("MD_OUTPUT_ACTIVITIES")
+}
+
+// Procedimientos del proceso (MD_PROCEDURE_PROCESS)
+model MdProcedureProcess {
+  idDlkProcedureProcess    Int      @id @default(autoincrement()) @map("ID_DLK_PROCEDURE_PROCESS")
+  idDlkProcess             Int      @map("ID_DLK_PROCESS")
+  codProcedureProcess      String   @map("COD_PROCEDURE_PROCESS") @db.VarChar(200)
+  nameProcedureProcess     String   @map("NAME_PROCEDURE_PROCESS") @db.VarChar(200)
+  descriptionProcedureProcess String @map("DESCRIPTION_PROCEDURE_PROCESS") @db.VarChar(200)
+  typeProcedureProcess     String   @map("TYPE_PROCEDURE_PROCESS") @db.VarChar(200)
+  responsibleProcedureProcess String @map("RESPONSIBLE_PROCEDURE_PROCESS") @db.VarChar(200)
+  estimatedTimeProcess     String   @map("ESTIMATED_TIME_PROCESS") @db.VarChar(200)
+  criticalityProcess       String   @map("CRITICALITY_PROCESS") @db.VarChar(200)
+  validationMethodProcess  String   @map("VALIDATION_METHOD_PROCESS") @db.VarChar(200)
+  pccProcess               String   @map("PCC_PROCESS") @db.VarChar(200)
+  stateProcedureProcess    Int      @default(1) @map("STATE_PROCEDURE_PROCESS")
+  codUsuarioCargaDl        String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl        DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl        DateTime? @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif           Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  process MdProcess @relation(fields: [idDlkProcess], references: [idDlkProcess])
+
+  @@index([idDlkProcess], map: "FK_PROCEDURE_PROCESS_PROCESS")
+  @@map("MD_PROCEDURE_PROCESS")
+}
+
+// Procedimientos del subproceso (MD_PROCEDURE_SUBPROCESS)
+model MdProcedureSubprocess {
+  idDlkProcedureSubprocess Int      @id @default(autoincrement()) @map("ID_DLK_PROCEDURE_SUBPROCESS")
+  idDlkSubprocess          Int      @map("ID_DLK_SUBPROCESS")
+  codProcedureSubprocess   String   @map("COD_PROCEDURE_SUBPROCESS") @db.VarChar(200)
+  nameProcedureSubprocess  String   @map("NAME_PROCEDURE_SUBPROCESS") @db.VarChar(200)
+  descriptionProcedureSubprocess String @map("DESCRIPTION_PROCEDURE_SUBPROCESS") @db.VarChar(200)
+  typeProcedureSubprocess  String   @map("TYPE_PROCEDURE_SUBPROCESS") @db.VarChar(200)
+  responsibleProcedureSubprocess String @map("RESPONSIBLE_PROCEDURE_SUBPROCESS") @db.VarChar(200)
+  estimatedTimeSubprocess  String   @map("ESTIMATED_TIME_SUBPROCESS") @db.VarChar(200)
+  criticalitySubprocess   String   @map("CRITICALITY_SUBPROCESS") @db.VarChar(200)
+  validationMethodSubprocess String @map("VALIDATION_METHOD_SUBPROCESS") @db.VarChar(200)
+  pccSubprocess            String   @map("PCC_SUBPROCESS") @db.VarChar(200)
+  stateProcedureSubprocess Int      @default(1) @map("STATE_PROCEDURE_SUBPROCESS")
+  codUsuarioCargaDl        String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl        DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl        DateTime? @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif           Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  subprocess MdSubprocess @relation(fields: [idDlkSubprocess], references: [idDlkSubprocess])
+
+  @@index([idDlkSubprocess], map: "FK_PROCEDURE_SUBPROCESS_SUBPROCESS")
+  @@map("MD_PROCEDURE_SUBPROCESS")
+}
+
+// Procedimientos de la actividad (MD_PROCEDURE_ACTIVITIES)
+model MdProcedureActivities {
+  idDlkProcedureActivities Int      @id @default(autoincrement()) @map("ID_DLK_PROCEDURE_ACTIVITIES")
+  idDlkActivities          Int      @map("ID_DLK_ACTIVITIES")
+  codProcedureActivities   String   @map("COD_PROCEDURE_ACTIVITIES") @db.VarChar(200)
+  nameProcedureActivities  String   @map("NAME_PROCEDURE_ACTIVITIES") @db.VarChar(200)
+  descriptionProcedureActivities String @map("DESCRIPTION_PROCEDURE_ACTIVITIES") @db.VarChar(1000)
+  typeProcedureActivities  String   @map("TYPE_PROCEDURE_ACTIVITIES") @db.VarChar(200)
+  responsibleExecution     String   @map("RESPONSIBLE_EXECUTION") @db.VarChar(200)
+  estimatedTimeProcedure   String   @map("ESTIMATED_TIME_PROCEDURE") @db.VarChar(200)
+  criticalPointActivities  String   @map("CRITICAL_POINT_ACTIVITIES") @db.VarChar(200)
+  safetyRequirement        String   @map("SAFETY_REQUIREMENT") @db.VarChar(200)
+  validationMethod         String   @map("VALIDATION_METHOD") @db.VarChar(200)
+  stateProcedureActivities Int      @default(1) @map("STATE_PROCEDURE_ACTIVITIES")
+  codUsuarioCargaDl        String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl        DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl        DateTime? @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif           Int      @default(1) @map("FLG_STATUT_ACTIF")
+
+  activities MdActivities @relation(fields: [idDlkActivities], references: [idDlkActivities])
+
+  @@index([idDlkActivities], map: "FK_PROCEDURE_ACTIVITIES_ACTIVITIES")
+  @@map("MD_PROCEDURE_ACTIVITIES")
 }
 
 // Maestro de Fábricas (MD_FACILITY)
@@ -253,7 +608,7 @@ model MdSubbrand {
   codUsuarioCargaDl  String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
   fehProcesoCargaDl  DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL")
   fehProcesoModifDl  DateTime @updatedAt @map("FEH_PROCESO_MODIF_DL")
-  desAccion          String   @map("DES_ACCION")
+  desAccion          String   @map("DES_ACCION") @db.VarChar(20) // INSERT, UPDATE, DELETE
   flgStatutActif     Int      @default(1) @map("FLG_STATUT_ACTIF")
 
   brand MdBrand @relation(fields: [idDlkBrand], references: [idDlkBrand])
@@ -315,14 +670,14 @@ model LgUserAccess {
   browser         String?   @map("BROWSER") @db.VarChar(50)
   browserVersion  String?   @map("BROWSER_VERSION") @db.VarChar(50)
   operatingSystem String?   @map("OPERATING_SYSTEM") @db.VarChar(50)
-  deviceType      String?   @map("DEVICE_TYPE")
+  deviceType      String?   @default("PC") @map("DEVICE_TYPE") @db.VarChar(20) // ENUM: PC, MOBILE, TABLET, BOT
   latitude        Decimal?  @map("LATITUDE") @db.Decimal(10, 8)
   longitude       Decimal?  @map("LONGITUDE") @db.Decimal(11, 8)
   city            String?   @map("CITY") @db.VarChar(100)
   country         String?   @map("COUNTRY") @db.VarChar(100)
-  accessStatus    String    @map("ACCESS_STATUS")
+  accessStatus    String    @map("ACCESS_STATUS") @db.VarChar(20) // ENUM: SUCCESS, FAILED, BLOCKED
   fehAccess       DateTime? @default(now()) @map("FEH_ACCESS")
-  userAgentRaw    String?   @map("USER_AGENT_RAW")
+  userAgentRaw    String?   @map("USER_AGENT_RAW") @db.Text
 
   user MdUserReo @relation(fields: [idDlkUserReo], references: [idDlkUserReo])
 
@@ -349,9 +704,10 @@ model LgParentCompany {
   gpsLocationParent       String?   @map("GPS_LOCATION_PARENT_COMPANY") @db.VarChar(100)
   emailParentCompanyLog   String?   @map("EMAIL_PARENT_COMPANY") @db.VarChar(100)
   cellularParentCompanyLog String?  @map("CELLULAR_PARENT_COMPANY") @db.VarChar(20)
-  webParentCompanyLog     String    @map("WEB_PARENT_COMPANY") @db.VarChar(100)
-  canisterDataParentLog   String    @map("CANISTER_DATA_PARENT_COMPANY") @db.VarChar(100)
-  canisterAssetsParentLog String    @map("CANISTER_ASSETS_PARENT_COMPANY") @db.VarChar(100)
+  webParentCompanyLog     String?   @map("WEB_PARENT_COMPANY") @db.VarChar(100)
+  canisterDataParentLog   String?   @map("CANISTER_DATA_PARENT_COMPANY") @db.VarChar(100)
+  canisterAssetsParentLog String?   @map("CANISTER_ASSETS_PARENT_COMPANY") @db.VarChar(100)
+  logoParentCompanyLog    Bytes?    @map("LOGO_PARENT_COMPANY")
 
   parentCompany MdParentCompany? @relation(fields: [idDlkParentCompany], references: [idDlkParentCompany])
 

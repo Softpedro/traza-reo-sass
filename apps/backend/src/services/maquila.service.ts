@@ -59,9 +59,9 @@ export class MaquilaService {
         webMaquila: data.webMaquila ?? "",
         canisterDataMaquila: data.canisterDataMaquila ?? 0,
         canisterAssetsMaquila: data.canisterAssetsMaquila ?? "",
-        ...(data.logoMaquila
-          ? { logoMaquila: Buffer.from(data.logoMaquila, "base64") }
-          : {}),
+        logoMaquila: data.logoMaquila
+          ? Buffer.from(data.logoMaquila, "base64")
+          : Buffer.alloc(0),
         stateMaquila: data.stateMaquila ?? 1,
         codUsuarioCargaDl: "SYSTEM",
         fehProcesoCargaDl: new Date(),

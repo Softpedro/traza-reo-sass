@@ -1,0 +1,1419 @@
+import type * as runtime from "@prisma/client/runtime/client";
+import type * as Prisma from "../internal/prismaNamespace.js";
+/**
+ * Model LgUserAccess
+ *
+ */
+export type LgUserAccessModel = runtime.Types.Result.DefaultSelection<Prisma.$LgUserAccessPayload>;
+export type AggregateLgUserAccess = {
+    _count: LgUserAccessCountAggregateOutputType | null;
+    _avg: LgUserAccessAvgAggregateOutputType | null;
+    _sum: LgUserAccessSumAggregateOutputType | null;
+    _min: LgUserAccessMinAggregateOutputType | null;
+    _max: LgUserAccessMaxAggregateOutputType | null;
+};
+export type LgUserAccessAvgAggregateOutputType = {
+    idLogAccess: number | null;
+    idDlkUserReo: number | null;
+    latitude: runtime.Decimal | null;
+    longitude: runtime.Decimal | null;
+};
+export type LgUserAccessSumAggregateOutputType = {
+    idLogAccess: bigint | null;
+    idDlkUserReo: number | null;
+    latitude: runtime.Decimal | null;
+    longitude: runtime.Decimal | null;
+};
+export type LgUserAccessMinAggregateOutputType = {
+    idLogAccess: bigint | null;
+    idDlkUserReo: number | null;
+    ipAddress: string | null;
+    browser: string | null;
+    browserVersion: string | null;
+    operatingSystem: string | null;
+    deviceType: string | null;
+    latitude: runtime.Decimal | null;
+    longitude: runtime.Decimal | null;
+    city: string | null;
+    country: string | null;
+    accessStatus: string | null;
+    fehAccess: Date | null;
+    userAgentRaw: string | null;
+};
+export type LgUserAccessMaxAggregateOutputType = {
+    idLogAccess: bigint | null;
+    idDlkUserReo: number | null;
+    ipAddress: string | null;
+    browser: string | null;
+    browserVersion: string | null;
+    operatingSystem: string | null;
+    deviceType: string | null;
+    latitude: runtime.Decimal | null;
+    longitude: runtime.Decimal | null;
+    city: string | null;
+    country: string | null;
+    accessStatus: string | null;
+    fehAccess: Date | null;
+    userAgentRaw: string | null;
+};
+export type LgUserAccessCountAggregateOutputType = {
+    idLogAccess: number;
+    idDlkUserReo: number;
+    ipAddress: number;
+    browser: number;
+    browserVersion: number;
+    operatingSystem: number;
+    deviceType: number;
+    latitude: number;
+    longitude: number;
+    city: number;
+    country: number;
+    accessStatus: number;
+    fehAccess: number;
+    userAgentRaw: number;
+    _all: number;
+};
+export type LgUserAccessAvgAggregateInputType = {
+    idLogAccess?: true;
+    idDlkUserReo?: true;
+    latitude?: true;
+    longitude?: true;
+};
+export type LgUserAccessSumAggregateInputType = {
+    idLogAccess?: true;
+    idDlkUserReo?: true;
+    latitude?: true;
+    longitude?: true;
+};
+export type LgUserAccessMinAggregateInputType = {
+    idLogAccess?: true;
+    idDlkUserReo?: true;
+    ipAddress?: true;
+    browser?: true;
+    browserVersion?: true;
+    operatingSystem?: true;
+    deviceType?: true;
+    latitude?: true;
+    longitude?: true;
+    city?: true;
+    country?: true;
+    accessStatus?: true;
+    fehAccess?: true;
+    userAgentRaw?: true;
+};
+export type LgUserAccessMaxAggregateInputType = {
+    idLogAccess?: true;
+    idDlkUserReo?: true;
+    ipAddress?: true;
+    browser?: true;
+    browserVersion?: true;
+    operatingSystem?: true;
+    deviceType?: true;
+    latitude?: true;
+    longitude?: true;
+    city?: true;
+    country?: true;
+    accessStatus?: true;
+    fehAccess?: true;
+    userAgentRaw?: true;
+};
+export type LgUserAccessCountAggregateInputType = {
+    idLogAccess?: true;
+    idDlkUserReo?: true;
+    ipAddress?: true;
+    browser?: true;
+    browserVersion?: true;
+    operatingSystem?: true;
+    deviceType?: true;
+    latitude?: true;
+    longitude?: true;
+    city?: true;
+    country?: true;
+    accessStatus?: true;
+    fehAccess?: true;
+    userAgentRaw?: true;
+    _all?: true;
+};
+export type LgUserAccessAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which LgUserAccess to aggregate.
+     */
+    where?: Prisma.LgUserAccessWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of LgUserAccesses to fetch.
+     */
+    orderBy?: Prisma.LgUserAccessOrderByWithRelationInput | Prisma.LgUserAccessOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.LgUserAccessWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` LgUserAccesses from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` LgUserAccesses.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned LgUserAccesses
+    **/
+    _count?: true | LgUserAccessCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to average
+    **/
+    _avg?: LgUserAccessAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+    **/
+    _sum?: LgUserAccessSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: LgUserAccessMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: LgUserAccessMaxAggregateInputType;
+};
+export type GetLgUserAccessAggregateType<T extends LgUserAccessAggregateArgs> = {
+    [P in keyof T & keyof AggregateLgUserAccess]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateLgUserAccess[P]> : Prisma.GetScalarType<T[P], AggregateLgUserAccess[P]>;
+};
+export type LgUserAccessGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.LgUserAccessWhereInput;
+    orderBy?: Prisma.LgUserAccessOrderByWithAggregationInput | Prisma.LgUserAccessOrderByWithAggregationInput[];
+    by: Prisma.LgUserAccessScalarFieldEnum[] | Prisma.LgUserAccessScalarFieldEnum;
+    having?: Prisma.LgUserAccessScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: LgUserAccessCountAggregateInputType | true;
+    _avg?: LgUserAccessAvgAggregateInputType;
+    _sum?: LgUserAccessSumAggregateInputType;
+    _min?: LgUserAccessMinAggregateInputType;
+    _max?: LgUserAccessMaxAggregateInputType;
+};
+export type LgUserAccessGroupByOutputType = {
+    idLogAccess: bigint;
+    idDlkUserReo: number;
+    ipAddress: string;
+    browser: string | null;
+    browserVersion: string | null;
+    operatingSystem: string | null;
+    deviceType: string | null;
+    latitude: runtime.Decimal | null;
+    longitude: runtime.Decimal | null;
+    city: string | null;
+    country: string | null;
+    accessStatus: string;
+    fehAccess: Date | null;
+    userAgentRaw: string | null;
+    _count: LgUserAccessCountAggregateOutputType | null;
+    _avg: LgUserAccessAvgAggregateOutputType | null;
+    _sum: LgUserAccessSumAggregateOutputType | null;
+    _min: LgUserAccessMinAggregateOutputType | null;
+    _max: LgUserAccessMaxAggregateOutputType | null;
+};
+type GetLgUserAccessGroupByPayload<T extends LgUserAccessGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<LgUserAccessGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof LgUserAccessGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], LgUserAccessGroupByOutputType[P]> : Prisma.GetScalarType<T[P], LgUserAccessGroupByOutputType[P]>;
+}>>;
+export type LgUserAccessWhereInput = {
+    AND?: Prisma.LgUserAccessWhereInput | Prisma.LgUserAccessWhereInput[];
+    OR?: Prisma.LgUserAccessWhereInput[];
+    NOT?: Prisma.LgUserAccessWhereInput | Prisma.LgUserAccessWhereInput[];
+    idLogAccess?: Prisma.BigIntFilter<"LgUserAccess"> | bigint | number;
+    idDlkUserReo?: Prisma.IntFilter<"LgUserAccess"> | number;
+    ipAddress?: Prisma.StringFilter<"LgUserAccess"> | string;
+    browser?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    browserVersion?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    operatingSystem?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    deviceType?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    latitude?: Prisma.DecimalNullableFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: Prisma.DecimalNullableFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    country?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    accessStatus?: Prisma.StringFilter<"LgUserAccess"> | string;
+    fehAccess?: Prisma.DateTimeNullableFilter<"LgUserAccess"> | Date | string | null;
+    userAgentRaw?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    user?: Prisma.XOR<Prisma.MdUserReoScalarRelationFilter, Prisma.MdUserReoWhereInput>;
+};
+export type LgUserAccessOrderByWithRelationInput = {
+    idLogAccess?: Prisma.SortOrder;
+    idDlkUserReo?: Prisma.SortOrder;
+    ipAddress?: Prisma.SortOrder;
+    browser?: Prisma.SortOrderInput | Prisma.SortOrder;
+    browserVersion?: Prisma.SortOrderInput | Prisma.SortOrder;
+    operatingSystem?: Prisma.SortOrderInput | Prisma.SortOrder;
+    deviceType?: Prisma.SortOrderInput | Prisma.SortOrder;
+    latitude?: Prisma.SortOrderInput | Prisma.SortOrder;
+    longitude?: Prisma.SortOrderInput | Prisma.SortOrder;
+    city?: Prisma.SortOrderInput | Prisma.SortOrder;
+    country?: Prisma.SortOrderInput | Prisma.SortOrder;
+    accessStatus?: Prisma.SortOrder;
+    fehAccess?: Prisma.SortOrderInput | Prisma.SortOrder;
+    userAgentRaw?: Prisma.SortOrderInput | Prisma.SortOrder;
+    user?: Prisma.MdUserReoOrderByWithRelationInput;
+    _relevance?: Prisma.LgUserAccessOrderByRelevanceInput;
+};
+export type LgUserAccessWhereUniqueInput = Prisma.AtLeast<{
+    idLogAccess?: bigint | number;
+    AND?: Prisma.LgUserAccessWhereInput | Prisma.LgUserAccessWhereInput[];
+    OR?: Prisma.LgUserAccessWhereInput[];
+    NOT?: Prisma.LgUserAccessWhereInput | Prisma.LgUserAccessWhereInput[];
+    idDlkUserReo?: Prisma.IntFilter<"LgUserAccess"> | number;
+    ipAddress?: Prisma.StringFilter<"LgUserAccess"> | string;
+    browser?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    browserVersion?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    operatingSystem?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    deviceType?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    latitude?: Prisma.DecimalNullableFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: Prisma.DecimalNullableFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    country?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    accessStatus?: Prisma.StringFilter<"LgUserAccess"> | string;
+    fehAccess?: Prisma.DateTimeNullableFilter<"LgUserAccess"> | Date | string | null;
+    userAgentRaw?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    user?: Prisma.XOR<Prisma.MdUserReoScalarRelationFilter, Prisma.MdUserReoWhereInput>;
+}, "idLogAccess">;
+export type LgUserAccessOrderByWithAggregationInput = {
+    idLogAccess?: Prisma.SortOrder;
+    idDlkUserReo?: Prisma.SortOrder;
+    ipAddress?: Prisma.SortOrder;
+    browser?: Prisma.SortOrderInput | Prisma.SortOrder;
+    browserVersion?: Prisma.SortOrderInput | Prisma.SortOrder;
+    operatingSystem?: Prisma.SortOrderInput | Prisma.SortOrder;
+    deviceType?: Prisma.SortOrderInput | Prisma.SortOrder;
+    latitude?: Prisma.SortOrderInput | Prisma.SortOrder;
+    longitude?: Prisma.SortOrderInput | Prisma.SortOrder;
+    city?: Prisma.SortOrderInput | Prisma.SortOrder;
+    country?: Prisma.SortOrderInput | Prisma.SortOrder;
+    accessStatus?: Prisma.SortOrder;
+    fehAccess?: Prisma.SortOrderInput | Prisma.SortOrder;
+    userAgentRaw?: Prisma.SortOrderInput | Prisma.SortOrder;
+    _count?: Prisma.LgUserAccessCountOrderByAggregateInput;
+    _avg?: Prisma.LgUserAccessAvgOrderByAggregateInput;
+    _max?: Prisma.LgUserAccessMaxOrderByAggregateInput;
+    _min?: Prisma.LgUserAccessMinOrderByAggregateInput;
+    _sum?: Prisma.LgUserAccessSumOrderByAggregateInput;
+};
+export type LgUserAccessScalarWhereWithAggregatesInput = {
+    AND?: Prisma.LgUserAccessScalarWhereWithAggregatesInput | Prisma.LgUserAccessScalarWhereWithAggregatesInput[];
+    OR?: Prisma.LgUserAccessScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.LgUserAccessScalarWhereWithAggregatesInput | Prisma.LgUserAccessScalarWhereWithAggregatesInput[];
+    idLogAccess?: Prisma.BigIntWithAggregatesFilter<"LgUserAccess"> | bigint | number;
+    idDlkUserReo?: Prisma.IntWithAggregatesFilter<"LgUserAccess"> | number;
+    ipAddress?: Prisma.StringWithAggregatesFilter<"LgUserAccess"> | string;
+    browser?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null;
+    browserVersion?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null;
+    operatingSystem?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null;
+    deviceType?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null;
+    latitude?: Prisma.DecimalNullableWithAggregatesFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: Prisma.DecimalNullableWithAggregatesFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null;
+    country?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null;
+    accessStatus?: Prisma.StringWithAggregatesFilter<"LgUserAccess"> | string;
+    fehAccess?: Prisma.DateTimeNullableWithAggregatesFilter<"LgUserAccess"> | Date | string | null;
+    userAgentRaw?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null;
+};
+export type LgUserAccessCreateInput = {
+    idLogAccess?: bigint | number;
+    ipAddress: string;
+    browser?: string | null;
+    browserVersion?: string | null;
+    operatingSystem?: string | null;
+    deviceType?: string | null;
+    latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: string | null;
+    country?: string | null;
+    accessStatus: string;
+    fehAccess?: Date | string | null;
+    userAgentRaw?: string | null;
+    user: Prisma.MdUserReoCreateNestedOneWithoutAccessLogsInput;
+};
+export type LgUserAccessUncheckedCreateInput = {
+    idLogAccess?: bigint | number;
+    idDlkUserReo: number;
+    ipAddress: string;
+    browser?: string | null;
+    browserVersion?: string | null;
+    operatingSystem?: string | null;
+    deviceType?: string | null;
+    latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: string | null;
+    country?: string | null;
+    accessStatus: string;
+    fehAccess?: Date | string | null;
+    userAgentRaw?: string | null;
+};
+export type LgUserAccessUpdateInput = {
+    idLogAccess?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number;
+    ipAddress?: Prisma.StringFieldUpdateOperationsInput | string;
+    browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    accessStatus?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    user?: Prisma.MdUserReoUpdateOneRequiredWithoutAccessLogsNestedInput;
+};
+export type LgUserAccessUncheckedUpdateInput = {
+    idLogAccess?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number;
+    idDlkUserReo?: Prisma.IntFieldUpdateOperationsInput | number;
+    ipAddress?: Prisma.StringFieldUpdateOperationsInput | string;
+    browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    accessStatus?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+export type LgUserAccessCreateManyInput = {
+    idLogAccess?: bigint | number;
+    idDlkUserReo: number;
+    ipAddress: string;
+    browser?: string | null;
+    browserVersion?: string | null;
+    operatingSystem?: string | null;
+    deviceType?: string | null;
+    latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: string | null;
+    country?: string | null;
+    accessStatus: string;
+    fehAccess?: Date | string | null;
+    userAgentRaw?: string | null;
+};
+export type LgUserAccessUpdateManyMutationInput = {
+    idLogAccess?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number;
+    ipAddress?: Prisma.StringFieldUpdateOperationsInput | string;
+    browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    accessStatus?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+export type LgUserAccessUncheckedUpdateManyInput = {
+    idLogAccess?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number;
+    idDlkUserReo?: Prisma.IntFieldUpdateOperationsInput | number;
+    ipAddress?: Prisma.StringFieldUpdateOperationsInput | string;
+    browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    accessStatus?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+export type LgUserAccessListRelationFilter = {
+    every?: Prisma.LgUserAccessWhereInput;
+    some?: Prisma.LgUserAccessWhereInput;
+    none?: Prisma.LgUserAccessWhereInput;
+};
+export type LgUserAccessOrderByRelationAggregateInput = {
+    _count?: Prisma.SortOrder;
+};
+export type LgUserAccessOrderByRelevanceInput = {
+    fields: Prisma.LgUserAccessOrderByRelevanceFieldEnum | Prisma.LgUserAccessOrderByRelevanceFieldEnum[];
+    sort: Prisma.SortOrder;
+    search: string;
+};
+export type LgUserAccessCountOrderByAggregateInput = {
+    idLogAccess?: Prisma.SortOrder;
+    idDlkUserReo?: Prisma.SortOrder;
+    ipAddress?: Prisma.SortOrder;
+    browser?: Prisma.SortOrder;
+    browserVersion?: Prisma.SortOrder;
+    operatingSystem?: Prisma.SortOrder;
+    deviceType?: Prisma.SortOrder;
+    latitude?: Prisma.SortOrder;
+    longitude?: Prisma.SortOrder;
+    city?: Prisma.SortOrder;
+    country?: Prisma.SortOrder;
+    accessStatus?: Prisma.SortOrder;
+    fehAccess?: Prisma.SortOrder;
+    userAgentRaw?: Prisma.SortOrder;
+};
+export type LgUserAccessAvgOrderByAggregateInput = {
+    idLogAccess?: Prisma.SortOrder;
+    idDlkUserReo?: Prisma.SortOrder;
+    latitude?: Prisma.SortOrder;
+    longitude?: Prisma.SortOrder;
+};
+export type LgUserAccessMaxOrderByAggregateInput = {
+    idLogAccess?: Prisma.SortOrder;
+    idDlkUserReo?: Prisma.SortOrder;
+    ipAddress?: Prisma.SortOrder;
+    browser?: Prisma.SortOrder;
+    browserVersion?: Prisma.SortOrder;
+    operatingSystem?: Prisma.SortOrder;
+    deviceType?: Prisma.SortOrder;
+    latitude?: Prisma.SortOrder;
+    longitude?: Prisma.SortOrder;
+    city?: Prisma.SortOrder;
+    country?: Prisma.SortOrder;
+    accessStatus?: Prisma.SortOrder;
+    fehAccess?: Prisma.SortOrder;
+    userAgentRaw?: Prisma.SortOrder;
+};
+export type LgUserAccessMinOrderByAggregateInput = {
+    idLogAccess?: Prisma.SortOrder;
+    idDlkUserReo?: Prisma.SortOrder;
+    ipAddress?: Prisma.SortOrder;
+    browser?: Prisma.SortOrder;
+    browserVersion?: Prisma.SortOrder;
+    operatingSystem?: Prisma.SortOrder;
+    deviceType?: Prisma.SortOrder;
+    latitude?: Prisma.SortOrder;
+    longitude?: Prisma.SortOrder;
+    city?: Prisma.SortOrder;
+    country?: Prisma.SortOrder;
+    accessStatus?: Prisma.SortOrder;
+    fehAccess?: Prisma.SortOrder;
+    userAgentRaw?: Prisma.SortOrder;
+};
+export type LgUserAccessSumOrderByAggregateInput = {
+    idLogAccess?: Prisma.SortOrder;
+    idDlkUserReo?: Prisma.SortOrder;
+    latitude?: Prisma.SortOrder;
+    longitude?: Prisma.SortOrder;
+};
+export type LgUserAccessCreateNestedManyWithoutUserInput = {
+    create?: Prisma.XOR<Prisma.LgUserAccessCreateWithoutUserInput, Prisma.LgUserAccessUncheckedCreateWithoutUserInput> | Prisma.LgUserAccessCreateWithoutUserInput[] | Prisma.LgUserAccessUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.LgUserAccessCreateOrConnectWithoutUserInput | Prisma.LgUserAccessCreateOrConnectWithoutUserInput[];
+    createMany?: Prisma.LgUserAccessCreateManyUserInputEnvelope;
+    connect?: Prisma.LgUserAccessWhereUniqueInput | Prisma.LgUserAccessWhereUniqueInput[];
+};
+export type LgUserAccessUncheckedCreateNestedManyWithoutUserInput = {
+    create?: Prisma.XOR<Prisma.LgUserAccessCreateWithoutUserInput, Prisma.LgUserAccessUncheckedCreateWithoutUserInput> | Prisma.LgUserAccessCreateWithoutUserInput[] | Prisma.LgUserAccessUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.LgUserAccessCreateOrConnectWithoutUserInput | Prisma.LgUserAccessCreateOrConnectWithoutUserInput[];
+    createMany?: Prisma.LgUserAccessCreateManyUserInputEnvelope;
+    connect?: Prisma.LgUserAccessWhereUniqueInput | Prisma.LgUserAccessWhereUniqueInput[];
+};
+export type LgUserAccessUpdateManyWithoutUserNestedInput = {
+    create?: Prisma.XOR<Prisma.LgUserAccessCreateWithoutUserInput, Prisma.LgUserAccessUncheckedCreateWithoutUserInput> | Prisma.LgUserAccessCreateWithoutUserInput[] | Prisma.LgUserAccessUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.LgUserAccessCreateOrConnectWithoutUserInput | Prisma.LgUserAccessCreateOrConnectWithoutUserInput[];
+    upsert?: Prisma.LgUserAccessUpsertWithWhereUniqueWithoutUserInput | Prisma.LgUserAccessUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: Prisma.LgUserAccessCreateManyUserInputEnvelope;
+    set?: Prisma.LgUserAccessWhereUniqueInput | Prisma.LgUserAccessWhereUniqueInput[];
+    disconnect?: Prisma.LgUserAccessWhereUniqueInput | Prisma.LgUserAccessWhereUniqueInput[];
+    delete?: Prisma.LgUserAccessWhereUniqueInput | Prisma.LgUserAccessWhereUniqueInput[];
+    connect?: Prisma.LgUserAccessWhereUniqueInput | Prisma.LgUserAccessWhereUniqueInput[];
+    update?: Prisma.LgUserAccessUpdateWithWhereUniqueWithoutUserInput | Prisma.LgUserAccessUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?: Prisma.LgUserAccessUpdateManyWithWhereWithoutUserInput | Prisma.LgUserAccessUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: Prisma.LgUserAccessScalarWhereInput | Prisma.LgUserAccessScalarWhereInput[];
+};
+export type LgUserAccessUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: Prisma.XOR<Prisma.LgUserAccessCreateWithoutUserInput, Prisma.LgUserAccessUncheckedCreateWithoutUserInput> | Prisma.LgUserAccessCreateWithoutUserInput[] | Prisma.LgUserAccessUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.LgUserAccessCreateOrConnectWithoutUserInput | Prisma.LgUserAccessCreateOrConnectWithoutUserInput[];
+    upsert?: Prisma.LgUserAccessUpsertWithWhereUniqueWithoutUserInput | Prisma.LgUserAccessUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: Prisma.LgUserAccessCreateManyUserInputEnvelope;
+    set?: Prisma.LgUserAccessWhereUniqueInput | Prisma.LgUserAccessWhereUniqueInput[];
+    disconnect?: Prisma.LgUserAccessWhereUniqueInput | Prisma.LgUserAccessWhereUniqueInput[];
+    delete?: Prisma.LgUserAccessWhereUniqueInput | Prisma.LgUserAccessWhereUniqueInput[];
+    connect?: Prisma.LgUserAccessWhereUniqueInput | Prisma.LgUserAccessWhereUniqueInput[];
+    update?: Prisma.LgUserAccessUpdateWithWhereUniqueWithoutUserInput | Prisma.LgUserAccessUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?: Prisma.LgUserAccessUpdateManyWithWhereWithoutUserInput | Prisma.LgUserAccessUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: Prisma.LgUserAccessScalarWhereInput | Prisma.LgUserAccessScalarWhereInput[];
+};
+export type BigIntFieldUpdateOperationsInput = {
+    set?: bigint | number;
+    increment?: bigint | number;
+    decrement?: bigint | number;
+    multiply?: bigint | number;
+    divide?: bigint | number;
+};
+export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    increment?: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    divide?: runtime.Decimal | runtime.DecimalJsLike | number | string;
+};
+export type LgUserAccessCreateWithoutUserInput = {
+    idLogAccess?: bigint | number;
+    ipAddress: string;
+    browser?: string | null;
+    browserVersion?: string | null;
+    operatingSystem?: string | null;
+    deviceType?: string | null;
+    latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: string | null;
+    country?: string | null;
+    accessStatus: string;
+    fehAccess?: Date | string | null;
+    userAgentRaw?: string | null;
+};
+export type LgUserAccessUncheckedCreateWithoutUserInput = {
+    idLogAccess?: bigint | number;
+    ipAddress: string;
+    browser?: string | null;
+    browserVersion?: string | null;
+    operatingSystem?: string | null;
+    deviceType?: string | null;
+    latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: string | null;
+    country?: string | null;
+    accessStatus: string;
+    fehAccess?: Date | string | null;
+    userAgentRaw?: string | null;
+};
+export type LgUserAccessCreateOrConnectWithoutUserInput = {
+    where: Prisma.LgUserAccessWhereUniqueInput;
+    create: Prisma.XOR<Prisma.LgUserAccessCreateWithoutUserInput, Prisma.LgUserAccessUncheckedCreateWithoutUserInput>;
+};
+export type LgUserAccessCreateManyUserInputEnvelope = {
+    data: Prisma.LgUserAccessCreateManyUserInput | Prisma.LgUserAccessCreateManyUserInput[];
+    skipDuplicates?: boolean;
+};
+export type LgUserAccessUpsertWithWhereUniqueWithoutUserInput = {
+    where: Prisma.LgUserAccessWhereUniqueInput;
+    update: Prisma.XOR<Prisma.LgUserAccessUpdateWithoutUserInput, Prisma.LgUserAccessUncheckedUpdateWithoutUserInput>;
+    create: Prisma.XOR<Prisma.LgUserAccessCreateWithoutUserInput, Prisma.LgUserAccessUncheckedCreateWithoutUserInput>;
+};
+export type LgUserAccessUpdateWithWhereUniqueWithoutUserInput = {
+    where: Prisma.LgUserAccessWhereUniqueInput;
+    data: Prisma.XOR<Prisma.LgUserAccessUpdateWithoutUserInput, Prisma.LgUserAccessUncheckedUpdateWithoutUserInput>;
+};
+export type LgUserAccessUpdateManyWithWhereWithoutUserInput = {
+    where: Prisma.LgUserAccessScalarWhereInput;
+    data: Prisma.XOR<Prisma.LgUserAccessUpdateManyMutationInput, Prisma.LgUserAccessUncheckedUpdateManyWithoutUserInput>;
+};
+export type LgUserAccessScalarWhereInput = {
+    AND?: Prisma.LgUserAccessScalarWhereInput | Prisma.LgUserAccessScalarWhereInput[];
+    OR?: Prisma.LgUserAccessScalarWhereInput[];
+    NOT?: Prisma.LgUserAccessScalarWhereInput | Prisma.LgUserAccessScalarWhereInput[];
+    idLogAccess?: Prisma.BigIntFilter<"LgUserAccess"> | bigint | number;
+    idDlkUserReo?: Prisma.IntFilter<"LgUserAccess"> | number;
+    ipAddress?: Prisma.StringFilter<"LgUserAccess"> | string;
+    browser?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    browserVersion?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    operatingSystem?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    deviceType?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    latitude?: Prisma.DecimalNullableFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: Prisma.DecimalNullableFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    country?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+    accessStatus?: Prisma.StringFilter<"LgUserAccess"> | string;
+    fehAccess?: Prisma.DateTimeNullableFilter<"LgUserAccess"> | Date | string | null;
+    userAgentRaw?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null;
+};
+export type LgUserAccessCreateManyUserInput = {
+    idLogAccess?: bigint | number;
+    ipAddress: string;
+    browser?: string | null;
+    browserVersion?: string | null;
+    operatingSystem?: string | null;
+    deviceType?: string | null;
+    latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: string | null;
+    country?: string | null;
+    accessStatus: string;
+    fehAccess?: Date | string | null;
+    userAgentRaw?: string | null;
+};
+export type LgUserAccessUpdateWithoutUserInput = {
+    idLogAccess?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number;
+    ipAddress?: Prisma.StringFieldUpdateOperationsInput | string;
+    browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    accessStatus?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+export type LgUserAccessUncheckedUpdateWithoutUserInput = {
+    idLogAccess?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number;
+    ipAddress?: Prisma.StringFieldUpdateOperationsInput | string;
+    browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    accessStatus?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+export type LgUserAccessUncheckedUpdateManyWithoutUserInput = {
+    idLogAccess?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number;
+    ipAddress?: Prisma.StringFieldUpdateOperationsInput | string;
+    browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    accessStatus?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+};
+export type LgUserAccessSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    idLogAccess?: boolean;
+    idDlkUserReo?: boolean;
+    ipAddress?: boolean;
+    browser?: boolean;
+    browserVersion?: boolean;
+    operatingSystem?: boolean;
+    deviceType?: boolean;
+    latitude?: boolean;
+    longitude?: boolean;
+    city?: boolean;
+    country?: boolean;
+    accessStatus?: boolean;
+    fehAccess?: boolean;
+    userAgentRaw?: boolean;
+    user?: boolean | Prisma.MdUserReoDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["lgUserAccess"]>;
+export type LgUserAccessSelectScalar = {
+    idLogAccess?: boolean;
+    idDlkUserReo?: boolean;
+    ipAddress?: boolean;
+    browser?: boolean;
+    browserVersion?: boolean;
+    operatingSystem?: boolean;
+    deviceType?: boolean;
+    latitude?: boolean;
+    longitude?: boolean;
+    city?: boolean;
+    country?: boolean;
+    accessStatus?: boolean;
+    fehAccess?: boolean;
+    userAgentRaw?: boolean;
+};
+export type LgUserAccessOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idLogAccess" | "idDlkUserReo" | "ipAddress" | "browser" | "browserVersion" | "operatingSystem" | "deviceType" | "latitude" | "longitude" | "city" | "country" | "accessStatus" | "fehAccess" | "userAgentRaw", ExtArgs["result"]["lgUserAccess"]>;
+export type LgUserAccessInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.MdUserReoDefaultArgs<ExtArgs>;
+};
+export type $LgUserAccessPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "LgUserAccess";
+    objects: {
+        user: Prisma.$MdUserReoPayload<ExtArgs>;
+    };
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        idLogAccess: bigint;
+        idDlkUserReo: number;
+        ipAddress: string;
+        browser: string | null;
+        browserVersion: string | null;
+        operatingSystem: string | null;
+        deviceType: string | null;
+        latitude: runtime.Decimal | null;
+        longitude: runtime.Decimal | null;
+        city: string | null;
+        country: string | null;
+        accessStatus: string;
+        fehAccess: Date | null;
+        userAgentRaw: string | null;
+    }, ExtArgs["result"]["lgUserAccess"]>;
+    composites: {};
+};
+export type LgUserAccessGetPayload<S extends boolean | null | undefined | LgUserAccessDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$LgUserAccessPayload, S>;
+export type LgUserAccessCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<LgUserAccessFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: LgUserAccessCountAggregateInputType | true;
+};
+export interface LgUserAccessDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['LgUserAccess'];
+        meta: {
+            name: 'LgUserAccess';
+        };
+    };
+    /**
+     * Find zero or one LgUserAccess that matches the filter.
+     * @param {LgUserAccessFindUniqueArgs} args - Arguments to find a LgUserAccess
+     * @example
+     * // Get one LgUserAccess
+     * const lgUserAccess = await prisma.lgUserAccess.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LgUserAccessFindUniqueArgs>(args: Prisma.SelectSubset<T, LgUserAccessFindUniqueArgs<ExtArgs>>): Prisma.Prisma__LgUserAccessClient<runtime.Types.Result.GetResult<Prisma.$LgUserAccessPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one LgUserAccess that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LgUserAccessFindUniqueOrThrowArgs} args - Arguments to find a LgUserAccess
+     * @example
+     * // Get one LgUserAccess
+     * const lgUserAccess = await prisma.lgUserAccess.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LgUserAccessFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, LgUserAccessFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__LgUserAccessClient<runtime.Types.Result.GetResult<Prisma.$LgUserAccessPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first LgUserAccess that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LgUserAccessFindFirstArgs} args - Arguments to find a LgUserAccess
+     * @example
+     * // Get one LgUserAccess
+     * const lgUserAccess = await prisma.lgUserAccess.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LgUserAccessFindFirstArgs>(args?: Prisma.SelectSubset<T, LgUserAccessFindFirstArgs<ExtArgs>>): Prisma.Prisma__LgUserAccessClient<runtime.Types.Result.GetResult<Prisma.$LgUserAccessPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first LgUserAccess that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LgUserAccessFindFirstOrThrowArgs} args - Arguments to find a LgUserAccess
+     * @example
+     * // Get one LgUserAccess
+     * const lgUserAccess = await prisma.lgUserAccess.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LgUserAccessFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, LgUserAccessFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__LgUserAccessClient<runtime.Types.Result.GetResult<Prisma.$LgUserAccessPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more LgUserAccesses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LgUserAccessFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LgUserAccesses
+     * const lgUserAccesses = await prisma.lgUserAccess.findMany()
+     *
+     * // Get first 10 LgUserAccesses
+     * const lgUserAccesses = await prisma.lgUserAccess.findMany({ take: 10 })
+     *
+     * // Only select the `idLogAccess`
+     * const lgUserAccessWithIdLogAccessOnly = await prisma.lgUserAccess.findMany({ select: { idLogAccess: true } })
+     *
+     */
+    findMany<T extends LgUserAccessFindManyArgs>(args?: Prisma.SelectSubset<T, LgUserAccessFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LgUserAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a LgUserAccess.
+     * @param {LgUserAccessCreateArgs} args - Arguments to create a LgUserAccess.
+     * @example
+     * // Create one LgUserAccess
+     * const LgUserAccess = await prisma.lgUserAccess.create({
+     *   data: {
+     *     // ... data to create a LgUserAccess
+     *   }
+     * })
+     *
+     */
+    create<T extends LgUserAccessCreateArgs>(args: Prisma.SelectSubset<T, LgUserAccessCreateArgs<ExtArgs>>): Prisma.Prisma__LgUserAccessClient<runtime.Types.Result.GetResult<Prisma.$LgUserAccessPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many LgUserAccesses.
+     * @param {LgUserAccessCreateManyArgs} args - Arguments to create many LgUserAccesses.
+     * @example
+     * // Create many LgUserAccesses
+     * const lgUserAccess = await prisma.lgUserAccess.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends LgUserAccessCreateManyArgs>(args?: Prisma.SelectSubset<T, LgUserAccessCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Delete a LgUserAccess.
+     * @param {LgUserAccessDeleteArgs} args - Arguments to delete one LgUserAccess.
+     * @example
+     * // Delete one LgUserAccess
+     * const LgUserAccess = await prisma.lgUserAccess.delete({
+     *   where: {
+     *     // ... filter to delete one LgUserAccess
+     *   }
+     * })
+     *
+     */
+    delete<T extends LgUserAccessDeleteArgs>(args: Prisma.SelectSubset<T, LgUserAccessDeleteArgs<ExtArgs>>): Prisma.Prisma__LgUserAccessClient<runtime.Types.Result.GetResult<Prisma.$LgUserAccessPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one LgUserAccess.
+     * @param {LgUserAccessUpdateArgs} args - Arguments to update one LgUserAccess.
+     * @example
+     * // Update one LgUserAccess
+     * const lgUserAccess = await prisma.lgUserAccess.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends LgUserAccessUpdateArgs>(args: Prisma.SelectSubset<T, LgUserAccessUpdateArgs<ExtArgs>>): Prisma.Prisma__LgUserAccessClient<runtime.Types.Result.GetResult<Prisma.$LgUserAccessPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more LgUserAccesses.
+     * @param {LgUserAccessDeleteManyArgs} args - Arguments to filter LgUserAccesses to delete.
+     * @example
+     * // Delete a few LgUserAccesses
+     * const { count } = await prisma.lgUserAccess.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends LgUserAccessDeleteManyArgs>(args?: Prisma.SelectSubset<T, LgUserAccessDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more LgUserAccesses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LgUserAccessUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LgUserAccesses
+     * const lgUserAccess = await prisma.lgUserAccess.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends LgUserAccessUpdateManyArgs>(args: Prisma.SelectSubset<T, LgUserAccessUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create or update one LgUserAccess.
+     * @param {LgUserAccessUpsertArgs} args - Arguments to update or create a LgUserAccess.
+     * @example
+     * // Update or create a LgUserAccess
+     * const lgUserAccess = await prisma.lgUserAccess.upsert({
+     *   create: {
+     *     // ... data to create a LgUserAccess
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LgUserAccess we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LgUserAccessUpsertArgs>(args: Prisma.SelectSubset<T, LgUserAccessUpsertArgs<ExtArgs>>): Prisma.Prisma__LgUserAccessClient<runtime.Types.Result.GetResult<Prisma.$LgUserAccessPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of LgUserAccesses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LgUserAccessCountArgs} args - Arguments to filter LgUserAccesses to count.
+     * @example
+     * // Count the number of LgUserAccesses
+     * const count = await prisma.lgUserAccess.count({
+     *   where: {
+     *     // ... the filter for the LgUserAccesses we want to count
+     *   }
+     * })
+    **/
+    count<T extends LgUserAccessCountArgs>(args?: Prisma.Subset<T, LgUserAccessCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], LgUserAccessCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a LgUserAccess.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LgUserAccessAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LgUserAccessAggregateArgs>(args: Prisma.Subset<T, LgUserAccessAggregateArgs>): Prisma.PrismaPromise<GetLgUserAccessAggregateType<T>>;
+    /**
+     * Group by LgUserAccess.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LgUserAccessGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends LgUserAccessGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: LgUserAccessGroupByArgs['orderBy'];
+    } : {
+        orderBy?: LgUserAccessGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, LgUserAccessGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLgUserAccessGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the LgUserAccess model
+     */
+    readonly fields: LgUserAccessFieldRefs;
+}
+/**
+ * The delegate class that acts as a "Promise-like" for LgUserAccess.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export interface Prisma__LgUserAccessClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    user<T extends Prisma.MdUserReoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdUserReoDefaultArgs<ExtArgs>>): Prisma.Prisma__MdUserReoClient<runtime.Types.Result.GetResult<Prisma.$MdUserReoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
+}
+/**
+ * Fields of the LgUserAccess model
+ */
+export interface LgUserAccessFieldRefs {
+    readonly idLogAccess: Prisma.FieldRef<"LgUserAccess", 'BigInt'>;
+    readonly idDlkUserReo: Prisma.FieldRef<"LgUserAccess", 'Int'>;
+    readonly ipAddress: Prisma.FieldRef<"LgUserAccess", 'String'>;
+    readonly browser: Prisma.FieldRef<"LgUserAccess", 'String'>;
+    readonly browserVersion: Prisma.FieldRef<"LgUserAccess", 'String'>;
+    readonly operatingSystem: Prisma.FieldRef<"LgUserAccess", 'String'>;
+    readonly deviceType: Prisma.FieldRef<"LgUserAccess", 'String'>;
+    readonly latitude: Prisma.FieldRef<"LgUserAccess", 'Decimal'>;
+    readonly longitude: Prisma.FieldRef<"LgUserAccess", 'Decimal'>;
+    readonly city: Prisma.FieldRef<"LgUserAccess", 'String'>;
+    readonly country: Prisma.FieldRef<"LgUserAccess", 'String'>;
+    readonly accessStatus: Prisma.FieldRef<"LgUserAccess", 'String'>;
+    readonly fehAccess: Prisma.FieldRef<"LgUserAccess", 'DateTime'>;
+    readonly userAgentRaw: Prisma.FieldRef<"LgUserAccess", 'String'>;
+}
+/**
+ * LgUserAccess findUnique
+ */
+export type LgUserAccessFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LgUserAccess
+     */
+    select?: Prisma.LgUserAccessSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LgUserAccess
+     */
+    omit?: Prisma.LgUserAccessOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LgUserAccessInclude<ExtArgs> | null;
+    /**
+     * Filter, which LgUserAccess to fetch.
+     */
+    where: Prisma.LgUserAccessWhereUniqueInput;
+};
+/**
+ * LgUserAccess findUniqueOrThrow
+ */
+export type LgUserAccessFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LgUserAccess
+     */
+    select?: Prisma.LgUserAccessSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LgUserAccess
+     */
+    omit?: Prisma.LgUserAccessOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LgUserAccessInclude<ExtArgs> | null;
+    /**
+     * Filter, which LgUserAccess to fetch.
+     */
+    where: Prisma.LgUserAccessWhereUniqueInput;
+};
+/**
+ * LgUserAccess findFirst
+ */
+export type LgUserAccessFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LgUserAccess
+     */
+    select?: Prisma.LgUserAccessSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LgUserAccess
+     */
+    omit?: Prisma.LgUserAccessOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LgUserAccessInclude<ExtArgs> | null;
+    /**
+     * Filter, which LgUserAccess to fetch.
+     */
+    where?: Prisma.LgUserAccessWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of LgUserAccesses to fetch.
+     */
+    orderBy?: Prisma.LgUserAccessOrderByWithRelationInput | Prisma.LgUserAccessOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for LgUserAccesses.
+     */
+    cursor?: Prisma.LgUserAccessWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` LgUserAccesses from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` LgUserAccesses.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of LgUserAccesses.
+     */
+    distinct?: Prisma.LgUserAccessScalarFieldEnum | Prisma.LgUserAccessScalarFieldEnum[];
+};
+/**
+ * LgUserAccess findFirstOrThrow
+ */
+export type LgUserAccessFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LgUserAccess
+     */
+    select?: Prisma.LgUserAccessSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LgUserAccess
+     */
+    omit?: Prisma.LgUserAccessOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LgUserAccessInclude<ExtArgs> | null;
+    /**
+     * Filter, which LgUserAccess to fetch.
+     */
+    where?: Prisma.LgUserAccessWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of LgUserAccesses to fetch.
+     */
+    orderBy?: Prisma.LgUserAccessOrderByWithRelationInput | Prisma.LgUserAccessOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for LgUserAccesses.
+     */
+    cursor?: Prisma.LgUserAccessWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` LgUserAccesses from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` LgUserAccesses.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of LgUserAccesses.
+     */
+    distinct?: Prisma.LgUserAccessScalarFieldEnum | Prisma.LgUserAccessScalarFieldEnum[];
+};
+/**
+ * LgUserAccess findMany
+ */
+export type LgUserAccessFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LgUserAccess
+     */
+    select?: Prisma.LgUserAccessSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LgUserAccess
+     */
+    omit?: Prisma.LgUserAccessOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LgUserAccessInclude<ExtArgs> | null;
+    /**
+     * Filter, which LgUserAccesses to fetch.
+     */
+    where?: Prisma.LgUserAccessWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of LgUserAccesses to fetch.
+     */
+    orderBy?: Prisma.LgUserAccessOrderByWithRelationInput | Prisma.LgUserAccessOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing LgUserAccesses.
+     */
+    cursor?: Prisma.LgUserAccessWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` LgUserAccesses from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` LgUserAccesses.
+     */
+    skip?: number;
+    distinct?: Prisma.LgUserAccessScalarFieldEnum | Prisma.LgUserAccessScalarFieldEnum[];
+};
+/**
+ * LgUserAccess create
+ */
+export type LgUserAccessCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LgUserAccess
+     */
+    select?: Prisma.LgUserAccessSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LgUserAccess
+     */
+    omit?: Prisma.LgUserAccessOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LgUserAccessInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a LgUserAccess.
+     */
+    data: Prisma.XOR<Prisma.LgUserAccessCreateInput, Prisma.LgUserAccessUncheckedCreateInput>;
+};
+/**
+ * LgUserAccess createMany
+ */
+export type LgUserAccessCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LgUserAccesses.
+     */
+    data: Prisma.LgUserAccessCreateManyInput | Prisma.LgUserAccessCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * LgUserAccess update
+ */
+export type LgUserAccessUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LgUserAccess
+     */
+    select?: Prisma.LgUserAccessSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LgUserAccess
+     */
+    omit?: Prisma.LgUserAccessOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LgUserAccessInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a LgUserAccess.
+     */
+    data: Prisma.XOR<Prisma.LgUserAccessUpdateInput, Prisma.LgUserAccessUncheckedUpdateInput>;
+    /**
+     * Choose, which LgUserAccess to update.
+     */
+    where: Prisma.LgUserAccessWhereUniqueInput;
+};
+/**
+ * LgUserAccess updateMany
+ */
+export type LgUserAccessUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LgUserAccesses.
+     */
+    data: Prisma.XOR<Prisma.LgUserAccessUpdateManyMutationInput, Prisma.LgUserAccessUncheckedUpdateManyInput>;
+    /**
+     * Filter which LgUserAccesses to update
+     */
+    where?: Prisma.LgUserAccessWhereInput;
+    /**
+     * Limit how many LgUserAccesses to update.
+     */
+    limit?: number;
+};
+/**
+ * LgUserAccess upsert
+ */
+export type LgUserAccessUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LgUserAccess
+     */
+    select?: Prisma.LgUserAccessSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LgUserAccess
+     */
+    omit?: Prisma.LgUserAccessOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LgUserAccessInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the LgUserAccess to update in case it exists.
+     */
+    where: Prisma.LgUserAccessWhereUniqueInput;
+    /**
+     * In case the LgUserAccess found by the `where` argument doesn't exist, create a new LgUserAccess with this data.
+     */
+    create: Prisma.XOR<Prisma.LgUserAccessCreateInput, Prisma.LgUserAccessUncheckedCreateInput>;
+    /**
+     * In case the LgUserAccess was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.LgUserAccessUpdateInput, Prisma.LgUserAccessUncheckedUpdateInput>;
+};
+/**
+ * LgUserAccess delete
+ */
+export type LgUserAccessDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LgUserAccess
+     */
+    select?: Prisma.LgUserAccessSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LgUserAccess
+     */
+    omit?: Prisma.LgUserAccessOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LgUserAccessInclude<ExtArgs> | null;
+    /**
+     * Filter which LgUserAccess to delete.
+     */
+    where: Prisma.LgUserAccessWhereUniqueInput;
+};
+/**
+ * LgUserAccess deleteMany
+ */
+export type LgUserAccessDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which LgUserAccesses to delete
+     */
+    where?: Prisma.LgUserAccessWhereInput;
+    /**
+     * Limit how many LgUserAccesses to delete.
+     */
+    limit?: number;
+};
+/**
+ * LgUserAccess without action
+ */
+export type LgUserAccessDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LgUserAccess
+     */
+    select?: Prisma.LgUserAccessSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LgUserAccess
+     */
+    omit?: Prisma.LgUserAccessOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LgUserAccessInclude<ExtArgs> | null;
+};
+export {};

@@ -64,32 +64,34 @@ export class BrandService {
       codBrand = `BRA-${lastNum + 1}`;
     }
 
+    type CreateData = Parameters<PrismaClient["mdBrand"]["create"]>[0]["data"];
+    const createData: CreateData = {
+      codBrand,
+      idDlkParentCompany: data.idDlkParentCompany,
+      codParentCompany: data.codParentCompany,
+      nameBrand: data.nameBrand,
+      codUbigeoBrand: data.codUbigeoBrand,
+      addressBrand: data.addressBrand,
+      locationBrand: data.locationBrand ?? null,
+      emailBrand: data.emailBrand,
+      cellularBrand: data.cellularBrand,
+      facebookBrand: data.facebookBrand ?? null,
+      instagramBrand: data.instagramBrand ?? null,
+      whatsappBrand: data.whatsappBrand ?? null,
+      ecommerceBrand: data.ecommerceBrand ?? null,
+      ...(data.logoBrand
+        ? { logoBrand: Buffer.from(data.logoBrand, "base64") }
+        : {}),
+      stateBrand: data.stateBrand ?? 1,
+      codUsuarioCargaDl: "SYSTEM",
+      fehProcesoCargaDl: new Date(),
+      fehProcesoModifDl: new Date(),
+      desAccion: "INSERT",
+      flgStatutActif: 1,
+    };
+    // desBrand exists in schema; add to payload for runtime (client types updated after prisma generate)
     return this.prisma.mdBrand.create({
-      data: {
-        codBrand,
-        idDlkParentCompany: data.idDlkParentCompany,
-        codParentCompany: data.codParentCompany,
-        nameBrand: data.nameBrand,
-        desBrand: data.desBrand ?? null,
-        codUbigeoBrand: data.codUbigeoBrand,
-        addressBrand: data.addressBrand,
-        locationBrand: data.locationBrand ?? null,
-        emailBrand: data.emailBrand,
-        cellularBrand: data.cellularBrand,
-        facebookBrand: data.facebookBrand ?? null,
-        instagramBrand: data.instagramBrand ?? null,
-        whatsappBrand: data.whatsappBrand ?? null,
-        ecommerceBrand: data.ecommerceBrand ?? null,
-        ...(data.logoBrand
-          ? { logoBrand: Buffer.from(data.logoBrand, "base64") }
-          : {}),
-        stateBrand: data.stateBrand ?? 1,
-        codUsuarioCargaDl: "SYSTEM",
-        fehProcesoCargaDl: new Date(),
-        fehProcesoModifDl: new Date(),
-        desAccion: "INSERT",
-        flgStatutActif: 1,
-      },
+      data: { ...createData, desBrand: data.desBrand ?? null } as CreateData,
     });
   }
 

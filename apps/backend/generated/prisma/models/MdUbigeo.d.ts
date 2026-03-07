@@ -1,0 +1,1183 @@
+import type * as runtime from "@prisma/client/runtime/client";
+import type * as Prisma from "../internal/prismaNamespace.js";
+/**
+ * Model MdUbigeo
+ *
+ */
+export type MdUbigeoModel = runtime.Types.Result.DefaultSelection<Prisma.$MdUbigeoPayload>;
+export type AggregateMdUbigeo = {
+    _count: MdUbigeoCountAggregateOutputType | null;
+    _avg: MdUbigeoAvgAggregateOutputType | null;
+    _sum: MdUbigeoSumAggregateOutputType | null;
+    _min: MdUbigeoMinAggregateOutputType | null;
+    _max: MdUbigeoMaxAggregateOutputType | null;
+};
+export type MdUbigeoAvgAggregateOutputType = {
+    idDlkUbigeo: number | null;
+    codUbigeo: number | null;
+    codRegion: number | null;
+    stateUbigeo: number | null;
+    flgStatutActif: number | null;
+};
+export type MdUbigeoSumAggregateOutputType = {
+    idDlkUbigeo: number | null;
+    codUbigeo: number | null;
+    codRegion: number | null;
+    stateUbigeo: number | null;
+    flgStatutActif: number | null;
+};
+export type MdUbigeoMinAggregateOutputType = {
+    idDlkUbigeo: number | null;
+    codUbigeo: number | null;
+    desDepartamento: string | null;
+    desProvincia: string | null;
+    desDistrito: string | null;
+    desCapital: string | null;
+    codRegion: number | null;
+    desRegion: string | null;
+    stateUbigeo: number | null;
+    codUsuarioCargaDl: string | null;
+    fehProcesoCargaDl: Date | null;
+    fehProcesoModifDl: Date | null;
+    desAccion: string | null;
+    flgStatutActif: number | null;
+};
+export type MdUbigeoMaxAggregateOutputType = {
+    idDlkUbigeo: number | null;
+    codUbigeo: number | null;
+    desDepartamento: string | null;
+    desProvincia: string | null;
+    desDistrito: string | null;
+    desCapital: string | null;
+    codRegion: number | null;
+    desRegion: string | null;
+    stateUbigeo: number | null;
+    codUsuarioCargaDl: string | null;
+    fehProcesoCargaDl: Date | null;
+    fehProcesoModifDl: Date | null;
+    desAccion: string | null;
+    flgStatutActif: number | null;
+};
+export type MdUbigeoCountAggregateOutputType = {
+    idDlkUbigeo: number;
+    codUbigeo: number;
+    desDepartamento: number;
+    desProvincia: number;
+    desDistrito: number;
+    desCapital: number;
+    codRegion: number;
+    desRegion: number;
+    stateUbigeo: number;
+    codUsuarioCargaDl: number;
+    fehProcesoCargaDl: number;
+    fehProcesoModifDl: number;
+    desAccion: number;
+    flgStatutActif: number;
+    _all: number;
+};
+export type MdUbigeoAvgAggregateInputType = {
+    idDlkUbigeo?: true;
+    codUbigeo?: true;
+    codRegion?: true;
+    stateUbigeo?: true;
+    flgStatutActif?: true;
+};
+export type MdUbigeoSumAggregateInputType = {
+    idDlkUbigeo?: true;
+    codUbigeo?: true;
+    codRegion?: true;
+    stateUbigeo?: true;
+    flgStatutActif?: true;
+};
+export type MdUbigeoMinAggregateInputType = {
+    idDlkUbigeo?: true;
+    codUbigeo?: true;
+    desDepartamento?: true;
+    desProvincia?: true;
+    desDistrito?: true;
+    desCapital?: true;
+    codRegion?: true;
+    desRegion?: true;
+    stateUbigeo?: true;
+    codUsuarioCargaDl?: true;
+    fehProcesoCargaDl?: true;
+    fehProcesoModifDl?: true;
+    desAccion?: true;
+    flgStatutActif?: true;
+};
+export type MdUbigeoMaxAggregateInputType = {
+    idDlkUbigeo?: true;
+    codUbigeo?: true;
+    desDepartamento?: true;
+    desProvincia?: true;
+    desDistrito?: true;
+    desCapital?: true;
+    codRegion?: true;
+    desRegion?: true;
+    stateUbigeo?: true;
+    codUsuarioCargaDl?: true;
+    fehProcesoCargaDl?: true;
+    fehProcesoModifDl?: true;
+    desAccion?: true;
+    flgStatutActif?: true;
+};
+export type MdUbigeoCountAggregateInputType = {
+    idDlkUbigeo?: true;
+    codUbigeo?: true;
+    desDepartamento?: true;
+    desProvincia?: true;
+    desDistrito?: true;
+    desCapital?: true;
+    codRegion?: true;
+    desRegion?: true;
+    stateUbigeo?: true;
+    codUsuarioCargaDl?: true;
+    fehProcesoCargaDl?: true;
+    fehProcesoModifDl?: true;
+    desAccion?: true;
+    flgStatutActif?: true;
+    _all?: true;
+};
+export type MdUbigeoAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which MdUbigeo to aggregate.
+     */
+    where?: Prisma.MdUbigeoWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of MdUbigeos to fetch.
+     */
+    orderBy?: Prisma.MdUbigeoOrderByWithRelationInput | Prisma.MdUbigeoOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.MdUbigeoWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` MdUbigeos from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` MdUbigeos.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned MdUbigeos
+    **/
+    _count?: true | MdUbigeoCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to average
+    **/
+    _avg?: MdUbigeoAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+    **/
+    _sum?: MdUbigeoSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: MdUbigeoMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: MdUbigeoMaxAggregateInputType;
+};
+export type GetMdUbigeoAggregateType<T extends MdUbigeoAggregateArgs> = {
+    [P in keyof T & keyof AggregateMdUbigeo]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateMdUbigeo[P]> : Prisma.GetScalarType<T[P], AggregateMdUbigeo[P]>;
+};
+export type MdUbigeoGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.MdUbigeoWhereInput;
+    orderBy?: Prisma.MdUbigeoOrderByWithAggregationInput | Prisma.MdUbigeoOrderByWithAggregationInput[];
+    by: Prisma.MdUbigeoScalarFieldEnum[] | Prisma.MdUbigeoScalarFieldEnum;
+    having?: Prisma.MdUbigeoScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: MdUbigeoCountAggregateInputType | true;
+    _avg?: MdUbigeoAvgAggregateInputType;
+    _sum?: MdUbigeoSumAggregateInputType;
+    _min?: MdUbigeoMinAggregateInputType;
+    _max?: MdUbigeoMaxAggregateInputType;
+};
+export type MdUbigeoGroupByOutputType = {
+    idDlkUbigeo: number;
+    codUbigeo: number;
+    desDepartamento: string;
+    desProvincia: string;
+    desDistrito: string;
+    desCapital: string;
+    codRegion: number;
+    desRegion: string;
+    stateUbigeo: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl: Date;
+    fehProcesoModifDl: Date;
+    desAccion: string;
+    flgStatutActif: number;
+    _count: MdUbigeoCountAggregateOutputType | null;
+    _avg: MdUbigeoAvgAggregateOutputType | null;
+    _sum: MdUbigeoSumAggregateOutputType | null;
+    _min: MdUbigeoMinAggregateOutputType | null;
+    _max: MdUbigeoMaxAggregateOutputType | null;
+};
+type GetMdUbigeoGroupByPayload<T extends MdUbigeoGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<MdUbigeoGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof MdUbigeoGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], MdUbigeoGroupByOutputType[P]> : Prisma.GetScalarType<T[P], MdUbigeoGroupByOutputType[P]>;
+}>>;
+export type MdUbigeoWhereInput = {
+    AND?: Prisma.MdUbigeoWhereInput | Prisma.MdUbigeoWhereInput[];
+    OR?: Prisma.MdUbigeoWhereInput[];
+    NOT?: Prisma.MdUbigeoWhereInput | Prisma.MdUbigeoWhereInput[];
+    idDlkUbigeo?: Prisma.IntFilter<"MdUbigeo"> | number;
+    codUbigeo?: Prisma.IntFilter<"MdUbigeo"> | number;
+    desDepartamento?: Prisma.StringFilter<"MdUbigeo"> | string;
+    desProvincia?: Prisma.StringFilter<"MdUbigeo"> | string;
+    desDistrito?: Prisma.StringFilter<"MdUbigeo"> | string;
+    desCapital?: Prisma.StringFilter<"MdUbigeo"> | string;
+    codRegion?: Prisma.IntFilter<"MdUbigeo"> | number;
+    desRegion?: Prisma.StringFilter<"MdUbigeo"> | string;
+    stateUbigeo?: Prisma.IntFilter<"MdUbigeo"> | number;
+    codUsuarioCargaDl?: Prisma.StringFilter<"MdUbigeo"> | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdUbigeo"> | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFilter<"MdUbigeo"> | Date | string;
+    desAccion?: Prisma.StringFilter<"MdUbigeo"> | string;
+    flgStatutActif?: Prisma.IntFilter<"MdUbigeo"> | number;
+};
+export type MdUbigeoOrderByWithRelationInput = {
+    idDlkUbigeo?: Prisma.SortOrder;
+    codUbigeo?: Prisma.SortOrder;
+    desDepartamento?: Prisma.SortOrder;
+    desProvincia?: Prisma.SortOrder;
+    desDistrito?: Prisma.SortOrder;
+    desCapital?: Prisma.SortOrder;
+    codRegion?: Prisma.SortOrder;
+    desRegion?: Prisma.SortOrder;
+    stateUbigeo?: Prisma.SortOrder;
+    codUsuarioCargaDl?: Prisma.SortOrder;
+    fehProcesoCargaDl?: Prisma.SortOrder;
+    fehProcesoModifDl?: Prisma.SortOrder;
+    desAccion?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+    _relevance?: Prisma.MdUbigeoOrderByRelevanceInput;
+};
+export type MdUbigeoWhereUniqueInput = Prisma.AtLeast<{
+    idDlkUbigeo?: number;
+    AND?: Prisma.MdUbigeoWhereInput | Prisma.MdUbigeoWhereInput[];
+    OR?: Prisma.MdUbigeoWhereInput[];
+    NOT?: Prisma.MdUbigeoWhereInput | Prisma.MdUbigeoWhereInput[];
+    codUbigeo?: Prisma.IntFilter<"MdUbigeo"> | number;
+    desDepartamento?: Prisma.StringFilter<"MdUbigeo"> | string;
+    desProvincia?: Prisma.StringFilter<"MdUbigeo"> | string;
+    desDistrito?: Prisma.StringFilter<"MdUbigeo"> | string;
+    desCapital?: Prisma.StringFilter<"MdUbigeo"> | string;
+    codRegion?: Prisma.IntFilter<"MdUbigeo"> | number;
+    desRegion?: Prisma.StringFilter<"MdUbigeo"> | string;
+    stateUbigeo?: Prisma.IntFilter<"MdUbigeo"> | number;
+    codUsuarioCargaDl?: Prisma.StringFilter<"MdUbigeo"> | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdUbigeo"> | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFilter<"MdUbigeo"> | Date | string;
+    desAccion?: Prisma.StringFilter<"MdUbigeo"> | string;
+    flgStatutActif?: Prisma.IntFilter<"MdUbigeo"> | number;
+}, "idDlkUbigeo">;
+export type MdUbigeoOrderByWithAggregationInput = {
+    idDlkUbigeo?: Prisma.SortOrder;
+    codUbigeo?: Prisma.SortOrder;
+    desDepartamento?: Prisma.SortOrder;
+    desProvincia?: Prisma.SortOrder;
+    desDistrito?: Prisma.SortOrder;
+    desCapital?: Prisma.SortOrder;
+    codRegion?: Prisma.SortOrder;
+    desRegion?: Prisma.SortOrder;
+    stateUbigeo?: Prisma.SortOrder;
+    codUsuarioCargaDl?: Prisma.SortOrder;
+    fehProcesoCargaDl?: Prisma.SortOrder;
+    fehProcesoModifDl?: Prisma.SortOrder;
+    desAccion?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+    _count?: Prisma.MdUbigeoCountOrderByAggregateInput;
+    _avg?: Prisma.MdUbigeoAvgOrderByAggregateInput;
+    _max?: Prisma.MdUbigeoMaxOrderByAggregateInput;
+    _min?: Prisma.MdUbigeoMinOrderByAggregateInput;
+    _sum?: Prisma.MdUbigeoSumOrderByAggregateInput;
+};
+export type MdUbigeoScalarWhereWithAggregatesInput = {
+    AND?: Prisma.MdUbigeoScalarWhereWithAggregatesInput | Prisma.MdUbigeoScalarWhereWithAggregatesInput[];
+    OR?: Prisma.MdUbigeoScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.MdUbigeoScalarWhereWithAggregatesInput | Prisma.MdUbigeoScalarWhereWithAggregatesInput[];
+    idDlkUbigeo?: Prisma.IntWithAggregatesFilter<"MdUbigeo"> | number;
+    codUbigeo?: Prisma.IntWithAggregatesFilter<"MdUbigeo"> | number;
+    desDepartamento?: Prisma.StringWithAggregatesFilter<"MdUbigeo"> | string;
+    desProvincia?: Prisma.StringWithAggregatesFilter<"MdUbigeo"> | string;
+    desDistrito?: Prisma.StringWithAggregatesFilter<"MdUbigeo"> | string;
+    desCapital?: Prisma.StringWithAggregatesFilter<"MdUbigeo"> | string;
+    codRegion?: Prisma.IntWithAggregatesFilter<"MdUbigeo"> | number;
+    desRegion?: Prisma.StringWithAggregatesFilter<"MdUbigeo"> | string;
+    stateUbigeo?: Prisma.IntWithAggregatesFilter<"MdUbigeo"> | number;
+    codUsuarioCargaDl?: Prisma.StringWithAggregatesFilter<"MdUbigeo"> | string;
+    fehProcesoCargaDl?: Prisma.DateTimeWithAggregatesFilter<"MdUbigeo"> | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeWithAggregatesFilter<"MdUbigeo"> | Date | string;
+    desAccion?: Prisma.StringWithAggregatesFilter<"MdUbigeo"> | string;
+    flgStatutActif?: Prisma.IntWithAggregatesFilter<"MdUbigeo"> | number;
+};
+export type MdUbigeoCreateInput = {
+    codUbigeo: number;
+    desDepartamento: string;
+    desProvincia: string;
+    desDistrito: string;
+    desCapital: string;
+    codRegion: number;
+    desRegion: string;
+    stateUbigeo?: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl?: Date | string;
+    fehProcesoModifDl?: Date | string;
+    desAccion: string;
+    flgStatutActif?: number;
+};
+export type MdUbigeoUncheckedCreateInput = {
+    idDlkUbigeo?: number;
+    codUbigeo: number;
+    desDepartamento: string;
+    desProvincia: string;
+    desDistrito: string;
+    desCapital: string;
+    codRegion: number;
+    desRegion: string;
+    stateUbigeo?: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl?: Date | string;
+    fehProcesoModifDl?: Date | string;
+    desAccion: string;
+    flgStatutActif?: number;
+};
+export type MdUbigeoUpdateInput = {
+    codUbigeo?: Prisma.IntFieldUpdateOperationsInput | number;
+    desDepartamento?: Prisma.StringFieldUpdateOperationsInput | string;
+    desProvincia?: Prisma.StringFieldUpdateOperationsInput | string;
+    desDistrito?: Prisma.StringFieldUpdateOperationsInput | string;
+    desCapital?: Prisma.StringFieldUpdateOperationsInput | string;
+    codRegion?: Prisma.IntFieldUpdateOperationsInput | number;
+    desRegion?: Prisma.StringFieldUpdateOperationsInput | string;
+    stateUbigeo?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+};
+export type MdUbigeoUncheckedUpdateInput = {
+    idDlkUbigeo?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUbigeo?: Prisma.IntFieldUpdateOperationsInput | number;
+    desDepartamento?: Prisma.StringFieldUpdateOperationsInput | string;
+    desProvincia?: Prisma.StringFieldUpdateOperationsInput | string;
+    desDistrito?: Prisma.StringFieldUpdateOperationsInput | string;
+    desCapital?: Prisma.StringFieldUpdateOperationsInput | string;
+    codRegion?: Prisma.IntFieldUpdateOperationsInput | number;
+    desRegion?: Prisma.StringFieldUpdateOperationsInput | string;
+    stateUbigeo?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+};
+export type MdUbigeoCreateManyInput = {
+    idDlkUbigeo?: number;
+    codUbigeo: number;
+    desDepartamento: string;
+    desProvincia: string;
+    desDistrito: string;
+    desCapital: string;
+    codRegion: number;
+    desRegion: string;
+    stateUbigeo?: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl?: Date | string;
+    fehProcesoModifDl?: Date | string;
+    desAccion: string;
+    flgStatutActif?: number;
+};
+export type MdUbigeoUpdateManyMutationInput = {
+    codUbigeo?: Prisma.IntFieldUpdateOperationsInput | number;
+    desDepartamento?: Prisma.StringFieldUpdateOperationsInput | string;
+    desProvincia?: Prisma.StringFieldUpdateOperationsInput | string;
+    desDistrito?: Prisma.StringFieldUpdateOperationsInput | string;
+    desCapital?: Prisma.StringFieldUpdateOperationsInput | string;
+    codRegion?: Prisma.IntFieldUpdateOperationsInput | number;
+    desRegion?: Prisma.StringFieldUpdateOperationsInput | string;
+    stateUbigeo?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+};
+export type MdUbigeoUncheckedUpdateManyInput = {
+    idDlkUbigeo?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUbigeo?: Prisma.IntFieldUpdateOperationsInput | number;
+    desDepartamento?: Prisma.StringFieldUpdateOperationsInput | string;
+    desProvincia?: Prisma.StringFieldUpdateOperationsInput | string;
+    desDistrito?: Prisma.StringFieldUpdateOperationsInput | string;
+    desCapital?: Prisma.StringFieldUpdateOperationsInput | string;
+    codRegion?: Prisma.IntFieldUpdateOperationsInput | number;
+    desRegion?: Prisma.StringFieldUpdateOperationsInput | string;
+    stateUbigeo?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+};
+export type MdUbigeoOrderByRelevanceInput = {
+    fields: Prisma.MdUbigeoOrderByRelevanceFieldEnum | Prisma.MdUbigeoOrderByRelevanceFieldEnum[];
+    sort: Prisma.SortOrder;
+    search: string;
+};
+export type MdUbigeoCountOrderByAggregateInput = {
+    idDlkUbigeo?: Prisma.SortOrder;
+    codUbigeo?: Prisma.SortOrder;
+    desDepartamento?: Prisma.SortOrder;
+    desProvincia?: Prisma.SortOrder;
+    desDistrito?: Prisma.SortOrder;
+    desCapital?: Prisma.SortOrder;
+    codRegion?: Prisma.SortOrder;
+    desRegion?: Prisma.SortOrder;
+    stateUbigeo?: Prisma.SortOrder;
+    codUsuarioCargaDl?: Prisma.SortOrder;
+    fehProcesoCargaDl?: Prisma.SortOrder;
+    fehProcesoModifDl?: Prisma.SortOrder;
+    desAccion?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+};
+export type MdUbigeoAvgOrderByAggregateInput = {
+    idDlkUbigeo?: Prisma.SortOrder;
+    codUbigeo?: Prisma.SortOrder;
+    codRegion?: Prisma.SortOrder;
+    stateUbigeo?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+};
+export type MdUbigeoMaxOrderByAggregateInput = {
+    idDlkUbigeo?: Prisma.SortOrder;
+    codUbigeo?: Prisma.SortOrder;
+    desDepartamento?: Prisma.SortOrder;
+    desProvincia?: Prisma.SortOrder;
+    desDistrito?: Prisma.SortOrder;
+    desCapital?: Prisma.SortOrder;
+    codRegion?: Prisma.SortOrder;
+    desRegion?: Prisma.SortOrder;
+    stateUbigeo?: Prisma.SortOrder;
+    codUsuarioCargaDl?: Prisma.SortOrder;
+    fehProcesoCargaDl?: Prisma.SortOrder;
+    fehProcesoModifDl?: Prisma.SortOrder;
+    desAccion?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+};
+export type MdUbigeoMinOrderByAggregateInput = {
+    idDlkUbigeo?: Prisma.SortOrder;
+    codUbigeo?: Prisma.SortOrder;
+    desDepartamento?: Prisma.SortOrder;
+    desProvincia?: Prisma.SortOrder;
+    desDistrito?: Prisma.SortOrder;
+    desCapital?: Prisma.SortOrder;
+    codRegion?: Prisma.SortOrder;
+    desRegion?: Prisma.SortOrder;
+    stateUbigeo?: Prisma.SortOrder;
+    codUsuarioCargaDl?: Prisma.SortOrder;
+    fehProcesoCargaDl?: Prisma.SortOrder;
+    fehProcesoModifDl?: Prisma.SortOrder;
+    desAccion?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+};
+export type MdUbigeoSumOrderByAggregateInput = {
+    idDlkUbigeo?: Prisma.SortOrder;
+    codUbigeo?: Prisma.SortOrder;
+    codRegion?: Prisma.SortOrder;
+    stateUbigeo?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+};
+export type MdUbigeoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    idDlkUbigeo?: boolean;
+    codUbigeo?: boolean;
+    desDepartamento?: boolean;
+    desProvincia?: boolean;
+    desDistrito?: boolean;
+    desCapital?: boolean;
+    codRegion?: boolean;
+    desRegion?: boolean;
+    stateUbigeo?: boolean;
+    codUsuarioCargaDl?: boolean;
+    fehProcesoCargaDl?: boolean;
+    fehProcesoModifDl?: boolean;
+    desAccion?: boolean;
+    flgStatutActif?: boolean;
+}, ExtArgs["result"]["mdUbigeo"]>;
+export type MdUbigeoSelectScalar = {
+    idDlkUbigeo?: boolean;
+    codUbigeo?: boolean;
+    desDepartamento?: boolean;
+    desProvincia?: boolean;
+    desDistrito?: boolean;
+    desCapital?: boolean;
+    codRegion?: boolean;
+    desRegion?: boolean;
+    stateUbigeo?: boolean;
+    codUsuarioCargaDl?: boolean;
+    fehProcesoCargaDl?: boolean;
+    fehProcesoModifDl?: boolean;
+    desAccion?: boolean;
+    flgStatutActif?: boolean;
+};
+export type MdUbigeoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkUbigeo" | "codUbigeo" | "desDepartamento" | "desProvincia" | "desDistrito" | "desCapital" | "codRegion" | "desRegion" | "stateUbigeo" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdUbigeo"]>;
+export type $MdUbigeoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "MdUbigeo";
+    objects: {};
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        idDlkUbigeo: number;
+        codUbigeo: number;
+        desDepartamento: string;
+        desProvincia: string;
+        desDistrito: string;
+        desCapital: string;
+        codRegion: number;
+        desRegion: string;
+        stateUbigeo: number;
+        codUsuarioCargaDl: string;
+        fehProcesoCargaDl: Date;
+        fehProcesoModifDl: Date;
+        desAccion: string;
+        flgStatutActif: number;
+    }, ExtArgs["result"]["mdUbigeo"]>;
+    composites: {};
+};
+export type MdUbigeoGetPayload<S extends boolean | null | undefined | MdUbigeoDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$MdUbigeoPayload, S>;
+export type MdUbigeoCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<MdUbigeoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: MdUbigeoCountAggregateInputType | true;
+};
+export interface MdUbigeoDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['MdUbigeo'];
+        meta: {
+            name: 'MdUbigeo';
+        };
+    };
+    /**
+     * Find zero or one MdUbigeo that matches the filter.
+     * @param {MdUbigeoFindUniqueArgs} args - Arguments to find a MdUbigeo
+     * @example
+     * // Get one MdUbigeo
+     * const mdUbigeo = await prisma.mdUbigeo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MdUbigeoFindUniqueArgs>(args: Prisma.SelectSubset<T, MdUbigeoFindUniqueArgs<ExtArgs>>): Prisma.Prisma__MdUbigeoClient<runtime.Types.Result.GetResult<Prisma.$MdUbigeoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one MdUbigeo that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MdUbigeoFindUniqueOrThrowArgs} args - Arguments to find a MdUbigeo
+     * @example
+     * // Get one MdUbigeo
+     * const mdUbigeo = await prisma.mdUbigeo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MdUbigeoFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, MdUbigeoFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__MdUbigeoClient<runtime.Types.Result.GetResult<Prisma.$MdUbigeoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first MdUbigeo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdUbigeoFindFirstArgs} args - Arguments to find a MdUbigeo
+     * @example
+     * // Get one MdUbigeo
+     * const mdUbigeo = await prisma.mdUbigeo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MdUbigeoFindFirstArgs>(args?: Prisma.SelectSubset<T, MdUbigeoFindFirstArgs<ExtArgs>>): Prisma.Prisma__MdUbigeoClient<runtime.Types.Result.GetResult<Prisma.$MdUbigeoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first MdUbigeo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdUbigeoFindFirstOrThrowArgs} args - Arguments to find a MdUbigeo
+     * @example
+     * // Get one MdUbigeo
+     * const mdUbigeo = await prisma.mdUbigeo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MdUbigeoFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, MdUbigeoFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__MdUbigeoClient<runtime.Types.Result.GetResult<Prisma.$MdUbigeoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more MdUbigeos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdUbigeoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MdUbigeos
+     * const mdUbigeos = await prisma.mdUbigeo.findMany()
+     *
+     * // Get first 10 MdUbigeos
+     * const mdUbigeos = await prisma.mdUbigeo.findMany({ take: 10 })
+     *
+     * // Only select the `idDlkUbigeo`
+     * const mdUbigeoWithIdDlkUbigeoOnly = await prisma.mdUbigeo.findMany({ select: { idDlkUbigeo: true } })
+     *
+     */
+    findMany<T extends MdUbigeoFindManyArgs>(args?: Prisma.SelectSubset<T, MdUbigeoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdUbigeoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a MdUbigeo.
+     * @param {MdUbigeoCreateArgs} args - Arguments to create a MdUbigeo.
+     * @example
+     * // Create one MdUbigeo
+     * const MdUbigeo = await prisma.mdUbigeo.create({
+     *   data: {
+     *     // ... data to create a MdUbigeo
+     *   }
+     * })
+     *
+     */
+    create<T extends MdUbigeoCreateArgs>(args: Prisma.SelectSubset<T, MdUbigeoCreateArgs<ExtArgs>>): Prisma.Prisma__MdUbigeoClient<runtime.Types.Result.GetResult<Prisma.$MdUbigeoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many MdUbigeos.
+     * @param {MdUbigeoCreateManyArgs} args - Arguments to create many MdUbigeos.
+     * @example
+     * // Create many MdUbigeos
+     * const mdUbigeo = await prisma.mdUbigeo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends MdUbigeoCreateManyArgs>(args?: Prisma.SelectSubset<T, MdUbigeoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Delete a MdUbigeo.
+     * @param {MdUbigeoDeleteArgs} args - Arguments to delete one MdUbigeo.
+     * @example
+     * // Delete one MdUbigeo
+     * const MdUbigeo = await prisma.mdUbigeo.delete({
+     *   where: {
+     *     // ... filter to delete one MdUbigeo
+     *   }
+     * })
+     *
+     */
+    delete<T extends MdUbigeoDeleteArgs>(args: Prisma.SelectSubset<T, MdUbigeoDeleteArgs<ExtArgs>>): Prisma.Prisma__MdUbigeoClient<runtime.Types.Result.GetResult<Prisma.$MdUbigeoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one MdUbigeo.
+     * @param {MdUbigeoUpdateArgs} args - Arguments to update one MdUbigeo.
+     * @example
+     * // Update one MdUbigeo
+     * const mdUbigeo = await prisma.mdUbigeo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends MdUbigeoUpdateArgs>(args: Prisma.SelectSubset<T, MdUbigeoUpdateArgs<ExtArgs>>): Prisma.Prisma__MdUbigeoClient<runtime.Types.Result.GetResult<Prisma.$MdUbigeoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more MdUbigeos.
+     * @param {MdUbigeoDeleteManyArgs} args - Arguments to filter MdUbigeos to delete.
+     * @example
+     * // Delete a few MdUbigeos
+     * const { count } = await prisma.mdUbigeo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends MdUbigeoDeleteManyArgs>(args?: Prisma.SelectSubset<T, MdUbigeoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more MdUbigeos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdUbigeoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MdUbigeos
+     * const mdUbigeo = await prisma.mdUbigeo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends MdUbigeoUpdateManyArgs>(args: Prisma.SelectSubset<T, MdUbigeoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create or update one MdUbigeo.
+     * @param {MdUbigeoUpsertArgs} args - Arguments to update or create a MdUbigeo.
+     * @example
+     * // Update or create a MdUbigeo
+     * const mdUbigeo = await prisma.mdUbigeo.upsert({
+     *   create: {
+     *     // ... data to create a MdUbigeo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MdUbigeo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MdUbigeoUpsertArgs>(args: Prisma.SelectSubset<T, MdUbigeoUpsertArgs<ExtArgs>>): Prisma.Prisma__MdUbigeoClient<runtime.Types.Result.GetResult<Prisma.$MdUbigeoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of MdUbigeos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdUbigeoCountArgs} args - Arguments to filter MdUbigeos to count.
+     * @example
+     * // Count the number of MdUbigeos
+     * const count = await prisma.mdUbigeo.count({
+     *   where: {
+     *     // ... the filter for the MdUbigeos we want to count
+     *   }
+     * })
+    **/
+    count<T extends MdUbigeoCountArgs>(args?: Prisma.Subset<T, MdUbigeoCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], MdUbigeoCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a MdUbigeo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdUbigeoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MdUbigeoAggregateArgs>(args: Prisma.Subset<T, MdUbigeoAggregateArgs>): Prisma.PrismaPromise<GetMdUbigeoAggregateType<T>>;
+    /**
+     * Group by MdUbigeo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdUbigeoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends MdUbigeoGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: MdUbigeoGroupByArgs['orderBy'];
+    } : {
+        orderBy?: MdUbigeoGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, MdUbigeoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMdUbigeoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the MdUbigeo model
+     */
+    readonly fields: MdUbigeoFieldRefs;
+}
+/**
+ * The delegate class that acts as a "Promise-like" for MdUbigeo.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export interface Prisma__MdUbigeoClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
+}
+/**
+ * Fields of the MdUbigeo model
+ */
+export interface MdUbigeoFieldRefs {
+    readonly idDlkUbigeo: Prisma.FieldRef<"MdUbigeo", 'Int'>;
+    readonly codUbigeo: Prisma.FieldRef<"MdUbigeo", 'Int'>;
+    readonly desDepartamento: Prisma.FieldRef<"MdUbigeo", 'String'>;
+    readonly desProvincia: Prisma.FieldRef<"MdUbigeo", 'String'>;
+    readonly desDistrito: Prisma.FieldRef<"MdUbigeo", 'String'>;
+    readonly desCapital: Prisma.FieldRef<"MdUbigeo", 'String'>;
+    readonly codRegion: Prisma.FieldRef<"MdUbigeo", 'Int'>;
+    readonly desRegion: Prisma.FieldRef<"MdUbigeo", 'String'>;
+    readonly stateUbigeo: Prisma.FieldRef<"MdUbigeo", 'Int'>;
+    readonly codUsuarioCargaDl: Prisma.FieldRef<"MdUbigeo", 'String'>;
+    readonly fehProcesoCargaDl: Prisma.FieldRef<"MdUbigeo", 'DateTime'>;
+    readonly fehProcesoModifDl: Prisma.FieldRef<"MdUbigeo", 'DateTime'>;
+    readonly desAccion: Prisma.FieldRef<"MdUbigeo", 'String'>;
+    readonly flgStatutActif: Prisma.FieldRef<"MdUbigeo", 'Int'>;
+}
+/**
+ * MdUbigeo findUnique
+ */
+export type MdUbigeoFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdUbigeo
+     */
+    select?: Prisma.MdUbigeoSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdUbigeo
+     */
+    omit?: Prisma.MdUbigeoOmit<ExtArgs> | null;
+    /**
+     * Filter, which MdUbigeo to fetch.
+     */
+    where: Prisma.MdUbigeoWhereUniqueInput;
+};
+/**
+ * MdUbigeo findUniqueOrThrow
+ */
+export type MdUbigeoFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdUbigeo
+     */
+    select?: Prisma.MdUbigeoSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdUbigeo
+     */
+    omit?: Prisma.MdUbigeoOmit<ExtArgs> | null;
+    /**
+     * Filter, which MdUbigeo to fetch.
+     */
+    where: Prisma.MdUbigeoWhereUniqueInput;
+};
+/**
+ * MdUbigeo findFirst
+ */
+export type MdUbigeoFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdUbigeo
+     */
+    select?: Prisma.MdUbigeoSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdUbigeo
+     */
+    omit?: Prisma.MdUbigeoOmit<ExtArgs> | null;
+    /**
+     * Filter, which MdUbigeo to fetch.
+     */
+    where?: Prisma.MdUbigeoWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of MdUbigeos to fetch.
+     */
+    orderBy?: Prisma.MdUbigeoOrderByWithRelationInput | Prisma.MdUbigeoOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for MdUbigeos.
+     */
+    cursor?: Prisma.MdUbigeoWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` MdUbigeos from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` MdUbigeos.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of MdUbigeos.
+     */
+    distinct?: Prisma.MdUbigeoScalarFieldEnum | Prisma.MdUbigeoScalarFieldEnum[];
+};
+/**
+ * MdUbigeo findFirstOrThrow
+ */
+export type MdUbigeoFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdUbigeo
+     */
+    select?: Prisma.MdUbigeoSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdUbigeo
+     */
+    omit?: Prisma.MdUbigeoOmit<ExtArgs> | null;
+    /**
+     * Filter, which MdUbigeo to fetch.
+     */
+    where?: Prisma.MdUbigeoWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of MdUbigeos to fetch.
+     */
+    orderBy?: Prisma.MdUbigeoOrderByWithRelationInput | Prisma.MdUbigeoOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for MdUbigeos.
+     */
+    cursor?: Prisma.MdUbigeoWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` MdUbigeos from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` MdUbigeos.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of MdUbigeos.
+     */
+    distinct?: Prisma.MdUbigeoScalarFieldEnum | Prisma.MdUbigeoScalarFieldEnum[];
+};
+/**
+ * MdUbigeo findMany
+ */
+export type MdUbigeoFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdUbigeo
+     */
+    select?: Prisma.MdUbigeoSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdUbigeo
+     */
+    omit?: Prisma.MdUbigeoOmit<ExtArgs> | null;
+    /**
+     * Filter, which MdUbigeos to fetch.
+     */
+    where?: Prisma.MdUbigeoWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of MdUbigeos to fetch.
+     */
+    orderBy?: Prisma.MdUbigeoOrderByWithRelationInput | Prisma.MdUbigeoOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing MdUbigeos.
+     */
+    cursor?: Prisma.MdUbigeoWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` MdUbigeos from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` MdUbigeos.
+     */
+    skip?: number;
+    distinct?: Prisma.MdUbigeoScalarFieldEnum | Prisma.MdUbigeoScalarFieldEnum[];
+};
+/**
+ * MdUbigeo create
+ */
+export type MdUbigeoCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdUbigeo
+     */
+    select?: Prisma.MdUbigeoSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdUbigeo
+     */
+    omit?: Prisma.MdUbigeoOmit<ExtArgs> | null;
+    /**
+     * The data needed to create a MdUbigeo.
+     */
+    data: Prisma.XOR<Prisma.MdUbigeoCreateInput, Prisma.MdUbigeoUncheckedCreateInput>;
+};
+/**
+ * MdUbigeo createMany
+ */
+export type MdUbigeoCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MdUbigeos.
+     */
+    data: Prisma.MdUbigeoCreateManyInput | Prisma.MdUbigeoCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * MdUbigeo update
+ */
+export type MdUbigeoUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdUbigeo
+     */
+    select?: Prisma.MdUbigeoSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdUbigeo
+     */
+    omit?: Prisma.MdUbigeoOmit<ExtArgs> | null;
+    /**
+     * The data needed to update a MdUbigeo.
+     */
+    data: Prisma.XOR<Prisma.MdUbigeoUpdateInput, Prisma.MdUbigeoUncheckedUpdateInput>;
+    /**
+     * Choose, which MdUbigeo to update.
+     */
+    where: Prisma.MdUbigeoWhereUniqueInput;
+};
+/**
+ * MdUbigeo updateMany
+ */
+export type MdUbigeoUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MdUbigeos.
+     */
+    data: Prisma.XOR<Prisma.MdUbigeoUpdateManyMutationInput, Prisma.MdUbigeoUncheckedUpdateManyInput>;
+    /**
+     * Filter which MdUbigeos to update
+     */
+    where?: Prisma.MdUbigeoWhereInput;
+    /**
+     * Limit how many MdUbigeos to update.
+     */
+    limit?: number;
+};
+/**
+ * MdUbigeo upsert
+ */
+export type MdUbigeoUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdUbigeo
+     */
+    select?: Prisma.MdUbigeoSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdUbigeo
+     */
+    omit?: Prisma.MdUbigeoOmit<ExtArgs> | null;
+    /**
+     * The filter to search for the MdUbigeo to update in case it exists.
+     */
+    where: Prisma.MdUbigeoWhereUniqueInput;
+    /**
+     * In case the MdUbigeo found by the `where` argument doesn't exist, create a new MdUbigeo with this data.
+     */
+    create: Prisma.XOR<Prisma.MdUbigeoCreateInput, Prisma.MdUbigeoUncheckedCreateInput>;
+    /**
+     * In case the MdUbigeo was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.MdUbigeoUpdateInput, Prisma.MdUbigeoUncheckedUpdateInput>;
+};
+/**
+ * MdUbigeo delete
+ */
+export type MdUbigeoDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdUbigeo
+     */
+    select?: Prisma.MdUbigeoSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdUbigeo
+     */
+    omit?: Prisma.MdUbigeoOmit<ExtArgs> | null;
+    /**
+     * Filter which MdUbigeo to delete.
+     */
+    where: Prisma.MdUbigeoWhereUniqueInput;
+};
+/**
+ * MdUbigeo deleteMany
+ */
+export type MdUbigeoDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which MdUbigeos to delete
+     */
+    where?: Prisma.MdUbigeoWhereInput;
+    /**
+     * Limit how many MdUbigeos to delete.
+     */
+    limit?: number;
+};
+/**
+ * MdUbigeo without action
+ */
+export type MdUbigeoDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdUbigeo
+     */
+    select?: Prisma.MdUbigeoSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdUbigeo
+     */
+    omit?: Prisma.MdUbigeoOmit<ExtArgs> | null;
+};
+export {};

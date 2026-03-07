@@ -1,0 +1,1820 @@
+import type * as runtime from "@prisma/client/runtime/client";
+import type * as Prisma from "../internal/prismaNamespace.js";
+/**
+ * Model MdBrand
+ *
+ */
+export type MdBrandModel = runtime.Types.Result.DefaultSelection<Prisma.$MdBrandPayload>;
+export type AggregateMdBrand = {
+    _count: MdBrandCountAggregateOutputType | null;
+    _avg: MdBrandAvgAggregateOutputType | null;
+    _sum: MdBrandSumAggregateOutputType | null;
+    _min: MdBrandMinAggregateOutputType | null;
+    _max: MdBrandMaxAggregateOutputType | null;
+};
+export type MdBrandAvgAggregateOutputType = {
+    idDlkBrand: number | null;
+    idDlkParentCompany: number | null;
+    codUbigeoBrand: number | null;
+    stateBrand: number | null;
+    flgStatutActif: number | null;
+};
+export type MdBrandSumAggregateOutputType = {
+    idDlkBrand: number | null;
+    idDlkParentCompany: number | null;
+    codUbigeoBrand: number | null;
+    stateBrand: number | null;
+    flgStatutActif: number | null;
+};
+export type MdBrandMinAggregateOutputType = {
+    idDlkBrand: number | null;
+    codBrand: string | null;
+    idDlkParentCompany: number | null;
+    codParentCompany: string | null;
+    nameBrand: string | null;
+    codUbigeoBrand: number | null;
+    addressBrand: string | null;
+    locationBrand: string | null;
+    emailBrand: string | null;
+    cellularBrand: string | null;
+    facebookBrand: string | null;
+    instagramBrand: string | null;
+    whatsappBrand: string | null;
+    ecommerceBrand: string | null;
+    logoBrand: runtime.Bytes | null;
+    stateBrand: number | null;
+    codUsuarioCargaDl: string | null;
+    fehProcesoCargaDl: Date | null;
+    fehProcesoModifDl: Date | null;
+    desAccion: string | null;
+    flgStatutActif: number | null;
+};
+export type MdBrandMaxAggregateOutputType = {
+    idDlkBrand: number | null;
+    codBrand: string | null;
+    idDlkParentCompany: number | null;
+    codParentCompany: string | null;
+    nameBrand: string | null;
+    codUbigeoBrand: number | null;
+    addressBrand: string | null;
+    locationBrand: string | null;
+    emailBrand: string | null;
+    cellularBrand: string | null;
+    facebookBrand: string | null;
+    instagramBrand: string | null;
+    whatsappBrand: string | null;
+    ecommerceBrand: string | null;
+    logoBrand: runtime.Bytes | null;
+    stateBrand: number | null;
+    codUsuarioCargaDl: string | null;
+    fehProcesoCargaDl: Date | null;
+    fehProcesoModifDl: Date | null;
+    desAccion: string | null;
+    flgStatutActif: number | null;
+};
+export type MdBrandCountAggregateOutputType = {
+    idDlkBrand: number;
+    codBrand: number;
+    idDlkParentCompany: number;
+    codParentCompany: number;
+    nameBrand: number;
+    codUbigeoBrand: number;
+    addressBrand: number;
+    locationBrand: number;
+    emailBrand: number;
+    cellularBrand: number;
+    facebookBrand: number;
+    instagramBrand: number;
+    whatsappBrand: number;
+    ecommerceBrand: number;
+    logoBrand: number;
+    stateBrand: number;
+    codUsuarioCargaDl: number;
+    fehProcesoCargaDl: number;
+    fehProcesoModifDl: number;
+    desAccion: number;
+    flgStatutActif: number;
+    _all: number;
+};
+export type MdBrandAvgAggregateInputType = {
+    idDlkBrand?: true;
+    idDlkParentCompany?: true;
+    codUbigeoBrand?: true;
+    stateBrand?: true;
+    flgStatutActif?: true;
+};
+export type MdBrandSumAggregateInputType = {
+    idDlkBrand?: true;
+    idDlkParentCompany?: true;
+    codUbigeoBrand?: true;
+    stateBrand?: true;
+    flgStatutActif?: true;
+};
+export type MdBrandMinAggregateInputType = {
+    idDlkBrand?: true;
+    codBrand?: true;
+    idDlkParentCompany?: true;
+    codParentCompany?: true;
+    nameBrand?: true;
+    codUbigeoBrand?: true;
+    addressBrand?: true;
+    locationBrand?: true;
+    emailBrand?: true;
+    cellularBrand?: true;
+    facebookBrand?: true;
+    instagramBrand?: true;
+    whatsappBrand?: true;
+    ecommerceBrand?: true;
+    logoBrand?: true;
+    stateBrand?: true;
+    codUsuarioCargaDl?: true;
+    fehProcesoCargaDl?: true;
+    fehProcesoModifDl?: true;
+    desAccion?: true;
+    flgStatutActif?: true;
+};
+export type MdBrandMaxAggregateInputType = {
+    idDlkBrand?: true;
+    codBrand?: true;
+    idDlkParentCompany?: true;
+    codParentCompany?: true;
+    nameBrand?: true;
+    codUbigeoBrand?: true;
+    addressBrand?: true;
+    locationBrand?: true;
+    emailBrand?: true;
+    cellularBrand?: true;
+    facebookBrand?: true;
+    instagramBrand?: true;
+    whatsappBrand?: true;
+    ecommerceBrand?: true;
+    logoBrand?: true;
+    stateBrand?: true;
+    codUsuarioCargaDl?: true;
+    fehProcesoCargaDl?: true;
+    fehProcesoModifDl?: true;
+    desAccion?: true;
+    flgStatutActif?: true;
+};
+export type MdBrandCountAggregateInputType = {
+    idDlkBrand?: true;
+    codBrand?: true;
+    idDlkParentCompany?: true;
+    codParentCompany?: true;
+    nameBrand?: true;
+    codUbigeoBrand?: true;
+    addressBrand?: true;
+    locationBrand?: true;
+    emailBrand?: true;
+    cellularBrand?: true;
+    facebookBrand?: true;
+    instagramBrand?: true;
+    whatsappBrand?: true;
+    ecommerceBrand?: true;
+    logoBrand?: true;
+    stateBrand?: true;
+    codUsuarioCargaDl?: true;
+    fehProcesoCargaDl?: true;
+    fehProcesoModifDl?: true;
+    desAccion?: true;
+    flgStatutActif?: true;
+    _all?: true;
+};
+export type MdBrandAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which MdBrand to aggregate.
+     */
+    where?: Prisma.MdBrandWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of MdBrands to fetch.
+     */
+    orderBy?: Prisma.MdBrandOrderByWithRelationInput | Prisma.MdBrandOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.MdBrandWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` MdBrands from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` MdBrands.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned MdBrands
+    **/
+    _count?: true | MdBrandCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to average
+    **/
+    _avg?: MdBrandAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+    **/
+    _sum?: MdBrandSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: MdBrandMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: MdBrandMaxAggregateInputType;
+};
+export type GetMdBrandAggregateType<T extends MdBrandAggregateArgs> = {
+    [P in keyof T & keyof AggregateMdBrand]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateMdBrand[P]> : Prisma.GetScalarType<T[P], AggregateMdBrand[P]>;
+};
+export type MdBrandGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.MdBrandWhereInput;
+    orderBy?: Prisma.MdBrandOrderByWithAggregationInput | Prisma.MdBrandOrderByWithAggregationInput[];
+    by: Prisma.MdBrandScalarFieldEnum[] | Prisma.MdBrandScalarFieldEnum;
+    having?: Prisma.MdBrandScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: MdBrandCountAggregateInputType | true;
+    _avg?: MdBrandAvgAggregateInputType;
+    _sum?: MdBrandSumAggregateInputType;
+    _min?: MdBrandMinAggregateInputType;
+    _max?: MdBrandMaxAggregateInputType;
+};
+export type MdBrandGroupByOutputType = {
+    idDlkBrand: number;
+    codBrand: string;
+    idDlkParentCompany: number;
+    codParentCompany: string;
+    nameBrand: string;
+    codUbigeoBrand: number;
+    addressBrand: string;
+    locationBrand: string | null;
+    emailBrand: string;
+    cellularBrand: string;
+    facebookBrand: string | null;
+    instagramBrand: string | null;
+    whatsappBrand: string | null;
+    ecommerceBrand: string | null;
+    logoBrand: runtime.Bytes | null;
+    stateBrand: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl: Date;
+    fehProcesoModifDl: Date;
+    desAccion: string;
+    flgStatutActif: number;
+    _count: MdBrandCountAggregateOutputType | null;
+    _avg: MdBrandAvgAggregateOutputType | null;
+    _sum: MdBrandSumAggregateOutputType | null;
+    _min: MdBrandMinAggregateOutputType | null;
+    _max: MdBrandMaxAggregateOutputType | null;
+};
+type GetMdBrandGroupByPayload<T extends MdBrandGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<MdBrandGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof MdBrandGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], MdBrandGroupByOutputType[P]> : Prisma.GetScalarType<T[P], MdBrandGroupByOutputType[P]>;
+}>>;
+export type MdBrandWhereInput = {
+    AND?: Prisma.MdBrandWhereInput | Prisma.MdBrandWhereInput[];
+    OR?: Prisma.MdBrandWhereInput[];
+    NOT?: Prisma.MdBrandWhereInput | Prisma.MdBrandWhereInput[];
+    idDlkBrand?: Prisma.IntFilter<"MdBrand"> | number;
+    codBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    idDlkParentCompany?: Prisma.IntFilter<"MdBrand"> | number;
+    codParentCompany?: Prisma.StringFilter<"MdBrand"> | string;
+    nameBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    codUbigeoBrand?: Prisma.IntFilter<"MdBrand"> | number;
+    addressBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    locationBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    emailBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    cellularBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    facebookBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    instagramBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    whatsappBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    ecommerceBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    logoBrand?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null;
+    stateBrand?: Prisma.IntFilter<"MdBrand"> | number;
+    codUsuarioCargaDl?: Prisma.StringFilter<"MdBrand"> | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdBrand"> | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFilter<"MdBrand"> | Date | string;
+    desAccion?: Prisma.StringFilter<"MdBrand"> | string;
+    flgStatutActif?: Prisma.IntFilter<"MdBrand"> | number;
+    parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>;
+    subbrands?: Prisma.MdSubbrandListRelationFilter;
+};
+export type MdBrandOrderByWithRelationInput = {
+    idDlkBrand?: Prisma.SortOrder;
+    codBrand?: Prisma.SortOrder;
+    idDlkParentCompany?: Prisma.SortOrder;
+    codParentCompany?: Prisma.SortOrder;
+    nameBrand?: Prisma.SortOrder;
+    codUbigeoBrand?: Prisma.SortOrder;
+    addressBrand?: Prisma.SortOrder;
+    locationBrand?: Prisma.SortOrderInput | Prisma.SortOrder;
+    emailBrand?: Prisma.SortOrder;
+    cellularBrand?: Prisma.SortOrder;
+    facebookBrand?: Prisma.SortOrderInput | Prisma.SortOrder;
+    instagramBrand?: Prisma.SortOrderInput | Prisma.SortOrder;
+    whatsappBrand?: Prisma.SortOrderInput | Prisma.SortOrder;
+    ecommerceBrand?: Prisma.SortOrderInput | Prisma.SortOrder;
+    logoBrand?: Prisma.SortOrderInput | Prisma.SortOrder;
+    stateBrand?: Prisma.SortOrder;
+    codUsuarioCargaDl?: Prisma.SortOrder;
+    fehProcesoCargaDl?: Prisma.SortOrder;
+    fehProcesoModifDl?: Prisma.SortOrder;
+    desAccion?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+    parentCompany?: Prisma.MdParentCompanyOrderByWithRelationInput;
+    subbrands?: Prisma.MdSubbrandOrderByRelationAggregateInput;
+    _relevance?: Prisma.MdBrandOrderByRelevanceInput;
+};
+export type MdBrandWhereUniqueInput = Prisma.AtLeast<{
+    idDlkBrand?: number;
+    codBrand?: string;
+    AND?: Prisma.MdBrandWhereInput | Prisma.MdBrandWhereInput[];
+    OR?: Prisma.MdBrandWhereInput[];
+    NOT?: Prisma.MdBrandWhereInput | Prisma.MdBrandWhereInput[];
+    idDlkParentCompany?: Prisma.IntFilter<"MdBrand"> | number;
+    codParentCompany?: Prisma.StringFilter<"MdBrand"> | string;
+    nameBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    codUbigeoBrand?: Prisma.IntFilter<"MdBrand"> | number;
+    addressBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    locationBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    emailBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    cellularBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    facebookBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    instagramBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    whatsappBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    ecommerceBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    logoBrand?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null;
+    stateBrand?: Prisma.IntFilter<"MdBrand"> | number;
+    codUsuarioCargaDl?: Prisma.StringFilter<"MdBrand"> | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdBrand"> | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFilter<"MdBrand"> | Date | string;
+    desAccion?: Prisma.StringFilter<"MdBrand"> | string;
+    flgStatutActif?: Prisma.IntFilter<"MdBrand"> | number;
+    parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>;
+    subbrands?: Prisma.MdSubbrandListRelationFilter;
+}, "idDlkBrand" | "codBrand">;
+export type MdBrandOrderByWithAggregationInput = {
+    idDlkBrand?: Prisma.SortOrder;
+    codBrand?: Prisma.SortOrder;
+    idDlkParentCompany?: Prisma.SortOrder;
+    codParentCompany?: Prisma.SortOrder;
+    nameBrand?: Prisma.SortOrder;
+    codUbigeoBrand?: Prisma.SortOrder;
+    addressBrand?: Prisma.SortOrder;
+    locationBrand?: Prisma.SortOrderInput | Prisma.SortOrder;
+    emailBrand?: Prisma.SortOrder;
+    cellularBrand?: Prisma.SortOrder;
+    facebookBrand?: Prisma.SortOrderInput | Prisma.SortOrder;
+    instagramBrand?: Prisma.SortOrderInput | Prisma.SortOrder;
+    whatsappBrand?: Prisma.SortOrderInput | Prisma.SortOrder;
+    ecommerceBrand?: Prisma.SortOrderInput | Prisma.SortOrder;
+    logoBrand?: Prisma.SortOrderInput | Prisma.SortOrder;
+    stateBrand?: Prisma.SortOrder;
+    codUsuarioCargaDl?: Prisma.SortOrder;
+    fehProcesoCargaDl?: Prisma.SortOrder;
+    fehProcesoModifDl?: Prisma.SortOrder;
+    desAccion?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+    _count?: Prisma.MdBrandCountOrderByAggregateInput;
+    _avg?: Prisma.MdBrandAvgOrderByAggregateInput;
+    _max?: Prisma.MdBrandMaxOrderByAggregateInput;
+    _min?: Prisma.MdBrandMinOrderByAggregateInput;
+    _sum?: Prisma.MdBrandSumOrderByAggregateInput;
+};
+export type MdBrandScalarWhereWithAggregatesInput = {
+    AND?: Prisma.MdBrandScalarWhereWithAggregatesInput | Prisma.MdBrandScalarWhereWithAggregatesInput[];
+    OR?: Prisma.MdBrandScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.MdBrandScalarWhereWithAggregatesInput | Prisma.MdBrandScalarWhereWithAggregatesInput[];
+    idDlkBrand?: Prisma.IntWithAggregatesFilter<"MdBrand"> | number;
+    codBrand?: Prisma.StringWithAggregatesFilter<"MdBrand"> | string;
+    idDlkParentCompany?: Prisma.IntWithAggregatesFilter<"MdBrand"> | number;
+    codParentCompany?: Prisma.StringWithAggregatesFilter<"MdBrand"> | string;
+    nameBrand?: Prisma.StringWithAggregatesFilter<"MdBrand"> | string;
+    codUbigeoBrand?: Prisma.IntWithAggregatesFilter<"MdBrand"> | number;
+    addressBrand?: Prisma.StringWithAggregatesFilter<"MdBrand"> | string;
+    locationBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null;
+    emailBrand?: Prisma.StringWithAggregatesFilter<"MdBrand"> | string;
+    cellularBrand?: Prisma.StringWithAggregatesFilter<"MdBrand"> | string;
+    facebookBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null;
+    instagramBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null;
+    whatsappBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null;
+    ecommerceBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null;
+    logoBrand?: Prisma.BytesNullableWithAggregatesFilter<"MdBrand"> | runtime.Bytes | null;
+    stateBrand?: Prisma.IntWithAggregatesFilter<"MdBrand"> | number;
+    codUsuarioCargaDl?: Prisma.StringWithAggregatesFilter<"MdBrand"> | string;
+    fehProcesoCargaDl?: Prisma.DateTimeWithAggregatesFilter<"MdBrand"> | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeWithAggregatesFilter<"MdBrand"> | Date | string;
+    desAccion?: Prisma.StringWithAggregatesFilter<"MdBrand"> | string;
+    flgStatutActif?: Prisma.IntWithAggregatesFilter<"MdBrand"> | number;
+};
+export type MdBrandCreateInput = {
+    codBrand: string;
+    codParentCompany: string;
+    nameBrand: string;
+    codUbigeoBrand: number;
+    addressBrand: string;
+    locationBrand?: string | null;
+    emailBrand: string;
+    cellularBrand: string;
+    facebookBrand?: string | null;
+    instagramBrand?: string | null;
+    whatsappBrand?: string | null;
+    ecommerceBrand?: string | null;
+    logoBrand?: runtime.Bytes | null;
+    stateBrand?: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl?: Date | string;
+    fehProcesoModifDl?: Date | string;
+    desAccion: string;
+    flgStatutActif?: number;
+    parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutBrandsInput;
+    subbrands?: Prisma.MdSubbrandCreateNestedManyWithoutBrandInput;
+};
+export type MdBrandUncheckedCreateInput = {
+    idDlkBrand?: number;
+    codBrand: string;
+    idDlkParentCompany: number;
+    codParentCompany: string;
+    nameBrand: string;
+    codUbigeoBrand: number;
+    addressBrand: string;
+    locationBrand?: string | null;
+    emailBrand: string;
+    cellularBrand: string;
+    facebookBrand?: string | null;
+    instagramBrand?: string | null;
+    whatsappBrand?: string | null;
+    ecommerceBrand?: string | null;
+    logoBrand?: runtime.Bytes | null;
+    stateBrand?: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl?: Date | string;
+    fehProcesoModifDl?: Date | string;
+    desAccion: string;
+    flgStatutActif?: number;
+    subbrands?: Prisma.MdSubbrandUncheckedCreateNestedManyWithoutBrandInput;
+};
+export type MdBrandUpdateInput = {
+    codBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string;
+    nameBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codUbigeoBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    addressBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    locationBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    emailBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    cellularBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    facebookBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    instagramBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null;
+    stateBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+    parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutBrandsNestedInput;
+    subbrands?: Prisma.MdSubbrandUpdateManyWithoutBrandNestedInput;
+};
+export type MdBrandUncheckedUpdateInput = {
+    idDlkBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number;
+    codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string;
+    nameBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codUbigeoBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    addressBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    locationBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    emailBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    cellularBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    facebookBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    instagramBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null;
+    stateBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+    subbrands?: Prisma.MdSubbrandUncheckedUpdateManyWithoutBrandNestedInput;
+};
+export type MdBrandCreateManyInput = {
+    idDlkBrand?: number;
+    codBrand: string;
+    idDlkParentCompany: number;
+    codParentCompany: string;
+    nameBrand: string;
+    codUbigeoBrand: number;
+    addressBrand: string;
+    locationBrand?: string | null;
+    emailBrand: string;
+    cellularBrand: string;
+    facebookBrand?: string | null;
+    instagramBrand?: string | null;
+    whatsappBrand?: string | null;
+    ecommerceBrand?: string | null;
+    logoBrand?: runtime.Bytes | null;
+    stateBrand?: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl?: Date | string;
+    fehProcesoModifDl?: Date | string;
+    desAccion: string;
+    flgStatutActif?: number;
+};
+export type MdBrandUpdateManyMutationInput = {
+    codBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string;
+    nameBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codUbigeoBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    addressBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    locationBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    emailBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    cellularBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    facebookBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    instagramBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null;
+    stateBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+};
+export type MdBrandUncheckedUpdateManyInput = {
+    idDlkBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number;
+    codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string;
+    nameBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codUbigeoBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    addressBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    locationBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    emailBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    cellularBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    facebookBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    instagramBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null;
+    stateBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+};
+export type MdBrandListRelationFilter = {
+    every?: Prisma.MdBrandWhereInput;
+    some?: Prisma.MdBrandWhereInput;
+    none?: Prisma.MdBrandWhereInput;
+};
+export type MdBrandOrderByRelationAggregateInput = {
+    _count?: Prisma.SortOrder;
+};
+export type MdBrandOrderByRelevanceInput = {
+    fields: Prisma.MdBrandOrderByRelevanceFieldEnum | Prisma.MdBrandOrderByRelevanceFieldEnum[];
+    sort: Prisma.SortOrder;
+    search: string;
+};
+export type MdBrandCountOrderByAggregateInput = {
+    idDlkBrand?: Prisma.SortOrder;
+    codBrand?: Prisma.SortOrder;
+    idDlkParentCompany?: Prisma.SortOrder;
+    codParentCompany?: Prisma.SortOrder;
+    nameBrand?: Prisma.SortOrder;
+    codUbigeoBrand?: Prisma.SortOrder;
+    addressBrand?: Prisma.SortOrder;
+    locationBrand?: Prisma.SortOrder;
+    emailBrand?: Prisma.SortOrder;
+    cellularBrand?: Prisma.SortOrder;
+    facebookBrand?: Prisma.SortOrder;
+    instagramBrand?: Prisma.SortOrder;
+    whatsappBrand?: Prisma.SortOrder;
+    ecommerceBrand?: Prisma.SortOrder;
+    logoBrand?: Prisma.SortOrder;
+    stateBrand?: Prisma.SortOrder;
+    codUsuarioCargaDl?: Prisma.SortOrder;
+    fehProcesoCargaDl?: Prisma.SortOrder;
+    fehProcesoModifDl?: Prisma.SortOrder;
+    desAccion?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+};
+export type MdBrandAvgOrderByAggregateInput = {
+    idDlkBrand?: Prisma.SortOrder;
+    idDlkParentCompany?: Prisma.SortOrder;
+    codUbigeoBrand?: Prisma.SortOrder;
+    stateBrand?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+};
+export type MdBrandMaxOrderByAggregateInput = {
+    idDlkBrand?: Prisma.SortOrder;
+    codBrand?: Prisma.SortOrder;
+    idDlkParentCompany?: Prisma.SortOrder;
+    codParentCompany?: Prisma.SortOrder;
+    nameBrand?: Prisma.SortOrder;
+    codUbigeoBrand?: Prisma.SortOrder;
+    addressBrand?: Prisma.SortOrder;
+    locationBrand?: Prisma.SortOrder;
+    emailBrand?: Prisma.SortOrder;
+    cellularBrand?: Prisma.SortOrder;
+    facebookBrand?: Prisma.SortOrder;
+    instagramBrand?: Prisma.SortOrder;
+    whatsappBrand?: Prisma.SortOrder;
+    ecommerceBrand?: Prisma.SortOrder;
+    logoBrand?: Prisma.SortOrder;
+    stateBrand?: Prisma.SortOrder;
+    codUsuarioCargaDl?: Prisma.SortOrder;
+    fehProcesoCargaDl?: Prisma.SortOrder;
+    fehProcesoModifDl?: Prisma.SortOrder;
+    desAccion?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+};
+export type MdBrandMinOrderByAggregateInput = {
+    idDlkBrand?: Prisma.SortOrder;
+    codBrand?: Prisma.SortOrder;
+    idDlkParentCompany?: Prisma.SortOrder;
+    codParentCompany?: Prisma.SortOrder;
+    nameBrand?: Prisma.SortOrder;
+    codUbigeoBrand?: Prisma.SortOrder;
+    addressBrand?: Prisma.SortOrder;
+    locationBrand?: Prisma.SortOrder;
+    emailBrand?: Prisma.SortOrder;
+    cellularBrand?: Prisma.SortOrder;
+    facebookBrand?: Prisma.SortOrder;
+    instagramBrand?: Prisma.SortOrder;
+    whatsappBrand?: Prisma.SortOrder;
+    ecommerceBrand?: Prisma.SortOrder;
+    logoBrand?: Prisma.SortOrder;
+    stateBrand?: Prisma.SortOrder;
+    codUsuarioCargaDl?: Prisma.SortOrder;
+    fehProcesoCargaDl?: Prisma.SortOrder;
+    fehProcesoModifDl?: Prisma.SortOrder;
+    desAccion?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+};
+export type MdBrandSumOrderByAggregateInput = {
+    idDlkBrand?: Prisma.SortOrder;
+    idDlkParentCompany?: Prisma.SortOrder;
+    codUbigeoBrand?: Prisma.SortOrder;
+    stateBrand?: Prisma.SortOrder;
+    flgStatutActif?: Prisma.SortOrder;
+};
+export type MdBrandScalarRelationFilter = {
+    is?: Prisma.MdBrandWhereInput;
+    isNot?: Prisma.MdBrandWhereInput;
+};
+export type MdBrandCreateNestedManyWithoutParentCompanyInput = {
+    create?: Prisma.XOR<Prisma.MdBrandCreateWithoutParentCompanyInput, Prisma.MdBrandUncheckedCreateWithoutParentCompanyInput> | Prisma.MdBrandCreateWithoutParentCompanyInput[] | Prisma.MdBrandUncheckedCreateWithoutParentCompanyInput[];
+    connectOrCreate?: Prisma.MdBrandCreateOrConnectWithoutParentCompanyInput | Prisma.MdBrandCreateOrConnectWithoutParentCompanyInput[];
+    createMany?: Prisma.MdBrandCreateManyParentCompanyInputEnvelope;
+    connect?: Prisma.MdBrandWhereUniqueInput | Prisma.MdBrandWhereUniqueInput[];
+};
+export type MdBrandUncheckedCreateNestedManyWithoutParentCompanyInput = {
+    create?: Prisma.XOR<Prisma.MdBrandCreateWithoutParentCompanyInput, Prisma.MdBrandUncheckedCreateWithoutParentCompanyInput> | Prisma.MdBrandCreateWithoutParentCompanyInput[] | Prisma.MdBrandUncheckedCreateWithoutParentCompanyInput[];
+    connectOrCreate?: Prisma.MdBrandCreateOrConnectWithoutParentCompanyInput | Prisma.MdBrandCreateOrConnectWithoutParentCompanyInput[];
+    createMany?: Prisma.MdBrandCreateManyParentCompanyInputEnvelope;
+    connect?: Prisma.MdBrandWhereUniqueInput | Prisma.MdBrandWhereUniqueInput[];
+};
+export type MdBrandUpdateManyWithoutParentCompanyNestedInput = {
+    create?: Prisma.XOR<Prisma.MdBrandCreateWithoutParentCompanyInput, Prisma.MdBrandUncheckedCreateWithoutParentCompanyInput> | Prisma.MdBrandCreateWithoutParentCompanyInput[] | Prisma.MdBrandUncheckedCreateWithoutParentCompanyInput[];
+    connectOrCreate?: Prisma.MdBrandCreateOrConnectWithoutParentCompanyInput | Prisma.MdBrandCreateOrConnectWithoutParentCompanyInput[];
+    upsert?: Prisma.MdBrandUpsertWithWhereUniqueWithoutParentCompanyInput | Prisma.MdBrandUpsertWithWhereUniqueWithoutParentCompanyInput[];
+    createMany?: Prisma.MdBrandCreateManyParentCompanyInputEnvelope;
+    set?: Prisma.MdBrandWhereUniqueInput | Prisma.MdBrandWhereUniqueInput[];
+    disconnect?: Prisma.MdBrandWhereUniqueInput | Prisma.MdBrandWhereUniqueInput[];
+    delete?: Prisma.MdBrandWhereUniqueInput | Prisma.MdBrandWhereUniqueInput[];
+    connect?: Prisma.MdBrandWhereUniqueInput | Prisma.MdBrandWhereUniqueInput[];
+    update?: Prisma.MdBrandUpdateWithWhereUniqueWithoutParentCompanyInput | Prisma.MdBrandUpdateWithWhereUniqueWithoutParentCompanyInput[];
+    updateMany?: Prisma.MdBrandUpdateManyWithWhereWithoutParentCompanyInput | Prisma.MdBrandUpdateManyWithWhereWithoutParentCompanyInput[];
+    deleteMany?: Prisma.MdBrandScalarWhereInput | Prisma.MdBrandScalarWhereInput[];
+};
+export type MdBrandUncheckedUpdateManyWithoutParentCompanyNestedInput = {
+    create?: Prisma.XOR<Prisma.MdBrandCreateWithoutParentCompanyInput, Prisma.MdBrandUncheckedCreateWithoutParentCompanyInput> | Prisma.MdBrandCreateWithoutParentCompanyInput[] | Prisma.MdBrandUncheckedCreateWithoutParentCompanyInput[];
+    connectOrCreate?: Prisma.MdBrandCreateOrConnectWithoutParentCompanyInput | Prisma.MdBrandCreateOrConnectWithoutParentCompanyInput[];
+    upsert?: Prisma.MdBrandUpsertWithWhereUniqueWithoutParentCompanyInput | Prisma.MdBrandUpsertWithWhereUniqueWithoutParentCompanyInput[];
+    createMany?: Prisma.MdBrandCreateManyParentCompanyInputEnvelope;
+    set?: Prisma.MdBrandWhereUniqueInput | Prisma.MdBrandWhereUniqueInput[];
+    disconnect?: Prisma.MdBrandWhereUniqueInput | Prisma.MdBrandWhereUniqueInput[];
+    delete?: Prisma.MdBrandWhereUniqueInput | Prisma.MdBrandWhereUniqueInput[];
+    connect?: Prisma.MdBrandWhereUniqueInput | Prisma.MdBrandWhereUniqueInput[];
+    update?: Prisma.MdBrandUpdateWithWhereUniqueWithoutParentCompanyInput | Prisma.MdBrandUpdateWithWhereUniqueWithoutParentCompanyInput[];
+    updateMany?: Prisma.MdBrandUpdateManyWithWhereWithoutParentCompanyInput | Prisma.MdBrandUpdateManyWithWhereWithoutParentCompanyInput[];
+    deleteMany?: Prisma.MdBrandScalarWhereInput | Prisma.MdBrandScalarWhereInput[];
+};
+export type MdBrandCreateNestedOneWithoutSubbrandsInput = {
+    create?: Prisma.XOR<Prisma.MdBrandCreateWithoutSubbrandsInput, Prisma.MdBrandUncheckedCreateWithoutSubbrandsInput>;
+    connectOrCreate?: Prisma.MdBrandCreateOrConnectWithoutSubbrandsInput;
+    connect?: Prisma.MdBrandWhereUniqueInput;
+};
+export type MdBrandUpdateOneRequiredWithoutSubbrandsNestedInput = {
+    create?: Prisma.XOR<Prisma.MdBrandCreateWithoutSubbrandsInput, Prisma.MdBrandUncheckedCreateWithoutSubbrandsInput>;
+    connectOrCreate?: Prisma.MdBrandCreateOrConnectWithoutSubbrandsInput;
+    upsert?: Prisma.MdBrandUpsertWithoutSubbrandsInput;
+    connect?: Prisma.MdBrandWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.MdBrandUpdateToOneWithWhereWithoutSubbrandsInput, Prisma.MdBrandUpdateWithoutSubbrandsInput>, Prisma.MdBrandUncheckedUpdateWithoutSubbrandsInput>;
+};
+export type MdBrandCreateWithoutParentCompanyInput = {
+    codBrand: string;
+    codParentCompany: string;
+    nameBrand: string;
+    codUbigeoBrand: number;
+    addressBrand: string;
+    locationBrand?: string | null;
+    emailBrand: string;
+    cellularBrand: string;
+    facebookBrand?: string | null;
+    instagramBrand?: string | null;
+    whatsappBrand?: string | null;
+    ecommerceBrand?: string | null;
+    logoBrand?: runtime.Bytes | null;
+    stateBrand?: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl?: Date | string;
+    fehProcesoModifDl?: Date | string;
+    desAccion: string;
+    flgStatutActif?: number;
+    subbrands?: Prisma.MdSubbrandCreateNestedManyWithoutBrandInput;
+};
+export type MdBrandUncheckedCreateWithoutParentCompanyInput = {
+    idDlkBrand?: number;
+    codBrand: string;
+    codParentCompany: string;
+    nameBrand: string;
+    codUbigeoBrand: number;
+    addressBrand: string;
+    locationBrand?: string | null;
+    emailBrand: string;
+    cellularBrand: string;
+    facebookBrand?: string | null;
+    instagramBrand?: string | null;
+    whatsappBrand?: string | null;
+    ecommerceBrand?: string | null;
+    logoBrand?: runtime.Bytes | null;
+    stateBrand?: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl?: Date | string;
+    fehProcesoModifDl?: Date | string;
+    desAccion: string;
+    flgStatutActif?: number;
+    subbrands?: Prisma.MdSubbrandUncheckedCreateNestedManyWithoutBrandInput;
+};
+export type MdBrandCreateOrConnectWithoutParentCompanyInput = {
+    where: Prisma.MdBrandWhereUniqueInput;
+    create: Prisma.XOR<Prisma.MdBrandCreateWithoutParentCompanyInput, Prisma.MdBrandUncheckedCreateWithoutParentCompanyInput>;
+};
+export type MdBrandCreateManyParentCompanyInputEnvelope = {
+    data: Prisma.MdBrandCreateManyParentCompanyInput | Prisma.MdBrandCreateManyParentCompanyInput[];
+    skipDuplicates?: boolean;
+};
+export type MdBrandUpsertWithWhereUniqueWithoutParentCompanyInput = {
+    where: Prisma.MdBrandWhereUniqueInput;
+    update: Prisma.XOR<Prisma.MdBrandUpdateWithoutParentCompanyInput, Prisma.MdBrandUncheckedUpdateWithoutParentCompanyInput>;
+    create: Prisma.XOR<Prisma.MdBrandCreateWithoutParentCompanyInput, Prisma.MdBrandUncheckedCreateWithoutParentCompanyInput>;
+};
+export type MdBrandUpdateWithWhereUniqueWithoutParentCompanyInput = {
+    where: Prisma.MdBrandWhereUniqueInput;
+    data: Prisma.XOR<Prisma.MdBrandUpdateWithoutParentCompanyInput, Prisma.MdBrandUncheckedUpdateWithoutParentCompanyInput>;
+};
+export type MdBrandUpdateManyWithWhereWithoutParentCompanyInput = {
+    where: Prisma.MdBrandScalarWhereInput;
+    data: Prisma.XOR<Prisma.MdBrandUpdateManyMutationInput, Prisma.MdBrandUncheckedUpdateManyWithoutParentCompanyInput>;
+};
+export type MdBrandScalarWhereInput = {
+    AND?: Prisma.MdBrandScalarWhereInput | Prisma.MdBrandScalarWhereInput[];
+    OR?: Prisma.MdBrandScalarWhereInput[];
+    NOT?: Prisma.MdBrandScalarWhereInput | Prisma.MdBrandScalarWhereInput[];
+    idDlkBrand?: Prisma.IntFilter<"MdBrand"> | number;
+    codBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    idDlkParentCompany?: Prisma.IntFilter<"MdBrand"> | number;
+    codParentCompany?: Prisma.StringFilter<"MdBrand"> | string;
+    nameBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    codUbigeoBrand?: Prisma.IntFilter<"MdBrand"> | number;
+    addressBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    locationBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    emailBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    cellularBrand?: Prisma.StringFilter<"MdBrand"> | string;
+    facebookBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    instagramBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    whatsappBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    ecommerceBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null;
+    logoBrand?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null;
+    stateBrand?: Prisma.IntFilter<"MdBrand"> | number;
+    codUsuarioCargaDl?: Prisma.StringFilter<"MdBrand"> | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdBrand"> | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFilter<"MdBrand"> | Date | string;
+    desAccion?: Prisma.StringFilter<"MdBrand"> | string;
+    flgStatutActif?: Prisma.IntFilter<"MdBrand"> | number;
+};
+export type MdBrandCreateWithoutSubbrandsInput = {
+    codBrand: string;
+    codParentCompany: string;
+    nameBrand: string;
+    codUbigeoBrand: number;
+    addressBrand: string;
+    locationBrand?: string | null;
+    emailBrand: string;
+    cellularBrand: string;
+    facebookBrand?: string | null;
+    instagramBrand?: string | null;
+    whatsappBrand?: string | null;
+    ecommerceBrand?: string | null;
+    logoBrand?: runtime.Bytes | null;
+    stateBrand?: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl?: Date | string;
+    fehProcesoModifDl?: Date | string;
+    desAccion: string;
+    flgStatutActif?: number;
+    parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutBrandsInput;
+};
+export type MdBrandUncheckedCreateWithoutSubbrandsInput = {
+    idDlkBrand?: number;
+    codBrand: string;
+    idDlkParentCompany: number;
+    codParentCompany: string;
+    nameBrand: string;
+    codUbigeoBrand: number;
+    addressBrand: string;
+    locationBrand?: string | null;
+    emailBrand: string;
+    cellularBrand: string;
+    facebookBrand?: string | null;
+    instagramBrand?: string | null;
+    whatsappBrand?: string | null;
+    ecommerceBrand?: string | null;
+    logoBrand?: runtime.Bytes | null;
+    stateBrand?: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl?: Date | string;
+    fehProcesoModifDl?: Date | string;
+    desAccion: string;
+    flgStatutActif?: number;
+};
+export type MdBrandCreateOrConnectWithoutSubbrandsInput = {
+    where: Prisma.MdBrandWhereUniqueInput;
+    create: Prisma.XOR<Prisma.MdBrandCreateWithoutSubbrandsInput, Prisma.MdBrandUncheckedCreateWithoutSubbrandsInput>;
+};
+export type MdBrandUpsertWithoutSubbrandsInput = {
+    update: Prisma.XOR<Prisma.MdBrandUpdateWithoutSubbrandsInput, Prisma.MdBrandUncheckedUpdateWithoutSubbrandsInput>;
+    create: Prisma.XOR<Prisma.MdBrandCreateWithoutSubbrandsInput, Prisma.MdBrandUncheckedCreateWithoutSubbrandsInput>;
+    where?: Prisma.MdBrandWhereInput;
+};
+export type MdBrandUpdateToOneWithWhereWithoutSubbrandsInput = {
+    where?: Prisma.MdBrandWhereInput;
+    data: Prisma.XOR<Prisma.MdBrandUpdateWithoutSubbrandsInput, Prisma.MdBrandUncheckedUpdateWithoutSubbrandsInput>;
+};
+export type MdBrandUpdateWithoutSubbrandsInput = {
+    codBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string;
+    nameBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codUbigeoBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    addressBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    locationBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    emailBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    cellularBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    facebookBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    instagramBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null;
+    stateBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+    parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutBrandsNestedInput;
+};
+export type MdBrandUncheckedUpdateWithoutSubbrandsInput = {
+    idDlkBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number;
+    codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string;
+    nameBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codUbigeoBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    addressBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    locationBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    emailBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    cellularBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    facebookBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    instagramBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null;
+    stateBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+};
+export type MdBrandCreateManyParentCompanyInput = {
+    idDlkBrand?: number;
+    codBrand: string;
+    codParentCompany: string;
+    nameBrand: string;
+    codUbigeoBrand: number;
+    addressBrand: string;
+    locationBrand?: string | null;
+    emailBrand: string;
+    cellularBrand: string;
+    facebookBrand?: string | null;
+    instagramBrand?: string | null;
+    whatsappBrand?: string | null;
+    ecommerceBrand?: string | null;
+    logoBrand?: runtime.Bytes | null;
+    stateBrand?: number;
+    codUsuarioCargaDl: string;
+    fehProcesoCargaDl?: Date | string;
+    fehProcesoModifDl?: Date | string;
+    desAccion: string;
+    flgStatutActif?: number;
+};
+export type MdBrandUpdateWithoutParentCompanyInput = {
+    codBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string;
+    nameBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codUbigeoBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    addressBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    locationBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    emailBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    cellularBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    facebookBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    instagramBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null;
+    stateBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+    subbrands?: Prisma.MdSubbrandUpdateManyWithoutBrandNestedInput;
+};
+export type MdBrandUncheckedUpdateWithoutParentCompanyInput = {
+    idDlkBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string;
+    nameBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codUbigeoBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    addressBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    locationBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    emailBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    cellularBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    facebookBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    instagramBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null;
+    stateBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+    subbrands?: Prisma.MdSubbrandUncheckedUpdateManyWithoutBrandNestedInput;
+};
+export type MdBrandUncheckedUpdateManyWithoutParentCompanyInput = {
+    idDlkBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string;
+    nameBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    codUbigeoBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    addressBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    locationBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    emailBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    cellularBrand?: Prisma.StringFieldUpdateOperationsInput | string;
+    facebookBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    instagramBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null;
+    stateBrand?: Prisma.IntFieldUpdateOperationsInput | number;
+    codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string;
+    fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    desAccion?: Prisma.StringFieldUpdateOperationsInput | string;
+    flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number;
+};
+/**
+ * Count Type MdBrandCountOutputType
+ */
+export type MdBrandCountOutputType = {
+    subbrands: number;
+};
+export type MdBrandCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    subbrands?: boolean | MdBrandCountOutputTypeCountSubbrandsArgs;
+};
+/**
+ * MdBrandCountOutputType without action
+ */
+export type MdBrandCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdBrandCountOutputType
+     */
+    select?: Prisma.MdBrandCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * MdBrandCountOutputType without action
+ */
+export type MdBrandCountOutputTypeCountSubbrandsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.MdSubbrandWhereInput;
+};
+export type MdBrandSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    idDlkBrand?: boolean;
+    codBrand?: boolean;
+    idDlkParentCompany?: boolean;
+    codParentCompany?: boolean;
+    nameBrand?: boolean;
+    codUbigeoBrand?: boolean;
+    addressBrand?: boolean;
+    locationBrand?: boolean;
+    emailBrand?: boolean;
+    cellularBrand?: boolean;
+    facebookBrand?: boolean;
+    instagramBrand?: boolean;
+    whatsappBrand?: boolean;
+    ecommerceBrand?: boolean;
+    logoBrand?: boolean;
+    stateBrand?: boolean;
+    codUsuarioCargaDl?: boolean;
+    fehProcesoCargaDl?: boolean;
+    fehProcesoModifDl?: boolean;
+    desAccion?: boolean;
+    flgStatutActif?: boolean;
+    parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>;
+    subbrands?: boolean | Prisma.MdBrand$subbrandsArgs<ExtArgs>;
+    _count?: boolean | Prisma.MdBrandCountOutputTypeDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["mdBrand"]>;
+export type MdBrandSelectScalar = {
+    idDlkBrand?: boolean;
+    codBrand?: boolean;
+    idDlkParentCompany?: boolean;
+    codParentCompany?: boolean;
+    nameBrand?: boolean;
+    codUbigeoBrand?: boolean;
+    addressBrand?: boolean;
+    locationBrand?: boolean;
+    emailBrand?: boolean;
+    cellularBrand?: boolean;
+    facebookBrand?: boolean;
+    instagramBrand?: boolean;
+    whatsappBrand?: boolean;
+    ecommerceBrand?: boolean;
+    logoBrand?: boolean;
+    stateBrand?: boolean;
+    codUsuarioCargaDl?: boolean;
+    fehProcesoCargaDl?: boolean;
+    fehProcesoModifDl?: boolean;
+    desAccion?: boolean;
+    flgStatutActif?: boolean;
+};
+export type MdBrandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkBrand" | "codBrand" | "idDlkParentCompany" | "codParentCompany" | "nameBrand" | "codUbigeoBrand" | "addressBrand" | "locationBrand" | "emailBrand" | "cellularBrand" | "facebookBrand" | "instagramBrand" | "whatsappBrand" | "ecommerceBrand" | "logoBrand" | "stateBrand" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdBrand"]>;
+export type MdBrandInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>;
+    subbrands?: boolean | Prisma.MdBrand$subbrandsArgs<ExtArgs>;
+    _count?: boolean | Prisma.MdBrandCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type $MdBrandPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "MdBrand";
+    objects: {
+        parentCompany: Prisma.$MdParentCompanyPayload<ExtArgs>;
+        subbrands: Prisma.$MdSubbrandPayload<ExtArgs>[];
+    };
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        idDlkBrand: number;
+        codBrand: string;
+        idDlkParentCompany: number;
+        codParentCompany: string;
+        nameBrand: string;
+        codUbigeoBrand: number;
+        addressBrand: string;
+        locationBrand: string | null;
+        emailBrand: string;
+        cellularBrand: string;
+        facebookBrand: string | null;
+        instagramBrand: string | null;
+        whatsappBrand: string | null;
+        ecommerceBrand: string | null;
+        logoBrand: runtime.Bytes | null;
+        stateBrand: number;
+        codUsuarioCargaDl: string;
+        fehProcesoCargaDl: Date;
+        fehProcesoModifDl: Date;
+        desAccion: string;
+        flgStatutActif: number;
+    }, ExtArgs["result"]["mdBrand"]>;
+    composites: {};
+};
+export type MdBrandGetPayload<S extends boolean | null | undefined | MdBrandDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$MdBrandPayload, S>;
+export type MdBrandCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<MdBrandFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: MdBrandCountAggregateInputType | true;
+};
+export interface MdBrandDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['MdBrand'];
+        meta: {
+            name: 'MdBrand';
+        };
+    };
+    /**
+     * Find zero or one MdBrand that matches the filter.
+     * @param {MdBrandFindUniqueArgs} args - Arguments to find a MdBrand
+     * @example
+     * // Get one MdBrand
+     * const mdBrand = await prisma.mdBrand.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MdBrandFindUniqueArgs>(args: Prisma.SelectSubset<T, MdBrandFindUniqueArgs<ExtArgs>>): Prisma.Prisma__MdBrandClient<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one MdBrand that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MdBrandFindUniqueOrThrowArgs} args - Arguments to find a MdBrand
+     * @example
+     * // Get one MdBrand
+     * const mdBrand = await prisma.mdBrand.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MdBrandFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, MdBrandFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__MdBrandClient<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first MdBrand that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdBrandFindFirstArgs} args - Arguments to find a MdBrand
+     * @example
+     * // Get one MdBrand
+     * const mdBrand = await prisma.mdBrand.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MdBrandFindFirstArgs>(args?: Prisma.SelectSubset<T, MdBrandFindFirstArgs<ExtArgs>>): Prisma.Prisma__MdBrandClient<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first MdBrand that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdBrandFindFirstOrThrowArgs} args - Arguments to find a MdBrand
+     * @example
+     * // Get one MdBrand
+     * const mdBrand = await prisma.mdBrand.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MdBrandFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, MdBrandFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__MdBrandClient<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more MdBrands that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdBrandFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MdBrands
+     * const mdBrands = await prisma.mdBrand.findMany()
+     *
+     * // Get first 10 MdBrands
+     * const mdBrands = await prisma.mdBrand.findMany({ take: 10 })
+     *
+     * // Only select the `idDlkBrand`
+     * const mdBrandWithIdDlkBrandOnly = await prisma.mdBrand.findMany({ select: { idDlkBrand: true } })
+     *
+     */
+    findMany<T extends MdBrandFindManyArgs>(args?: Prisma.SelectSubset<T, MdBrandFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a MdBrand.
+     * @param {MdBrandCreateArgs} args - Arguments to create a MdBrand.
+     * @example
+     * // Create one MdBrand
+     * const MdBrand = await prisma.mdBrand.create({
+     *   data: {
+     *     // ... data to create a MdBrand
+     *   }
+     * })
+     *
+     */
+    create<T extends MdBrandCreateArgs>(args: Prisma.SelectSubset<T, MdBrandCreateArgs<ExtArgs>>): Prisma.Prisma__MdBrandClient<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many MdBrands.
+     * @param {MdBrandCreateManyArgs} args - Arguments to create many MdBrands.
+     * @example
+     * // Create many MdBrands
+     * const mdBrand = await prisma.mdBrand.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends MdBrandCreateManyArgs>(args?: Prisma.SelectSubset<T, MdBrandCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Delete a MdBrand.
+     * @param {MdBrandDeleteArgs} args - Arguments to delete one MdBrand.
+     * @example
+     * // Delete one MdBrand
+     * const MdBrand = await prisma.mdBrand.delete({
+     *   where: {
+     *     // ... filter to delete one MdBrand
+     *   }
+     * })
+     *
+     */
+    delete<T extends MdBrandDeleteArgs>(args: Prisma.SelectSubset<T, MdBrandDeleteArgs<ExtArgs>>): Prisma.Prisma__MdBrandClient<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one MdBrand.
+     * @param {MdBrandUpdateArgs} args - Arguments to update one MdBrand.
+     * @example
+     * // Update one MdBrand
+     * const mdBrand = await prisma.mdBrand.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends MdBrandUpdateArgs>(args: Prisma.SelectSubset<T, MdBrandUpdateArgs<ExtArgs>>): Prisma.Prisma__MdBrandClient<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more MdBrands.
+     * @param {MdBrandDeleteManyArgs} args - Arguments to filter MdBrands to delete.
+     * @example
+     * // Delete a few MdBrands
+     * const { count } = await prisma.mdBrand.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends MdBrandDeleteManyArgs>(args?: Prisma.SelectSubset<T, MdBrandDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more MdBrands.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdBrandUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MdBrands
+     * const mdBrand = await prisma.mdBrand.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends MdBrandUpdateManyArgs>(args: Prisma.SelectSubset<T, MdBrandUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create or update one MdBrand.
+     * @param {MdBrandUpsertArgs} args - Arguments to update or create a MdBrand.
+     * @example
+     * // Update or create a MdBrand
+     * const mdBrand = await prisma.mdBrand.upsert({
+     *   create: {
+     *     // ... data to create a MdBrand
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MdBrand we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MdBrandUpsertArgs>(args: Prisma.SelectSubset<T, MdBrandUpsertArgs<ExtArgs>>): Prisma.Prisma__MdBrandClient<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of MdBrands.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdBrandCountArgs} args - Arguments to filter MdBrands to count.
+     * @example
+     * // Count the number of MdBrands
+     * const count = await prisma.mdBrand.count({
+     *   where: {
+     *     // ... the filter for the MdBrands we want to count
+     *   }
+     * })
+    **/
+    count<T extends MdBrandCountArgs>(args?: Prisma.Subset<T, MdBrandCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], MdBrandCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a MdBrand.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdBrandAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MdBrandAggregateArgs>(args: Prisma.Subset<T, MdBrandAggregateArgs>): Prisma.PrismaPromise<GetMdBrandAggregateType<T>>;
+    /**
+     * Group by MdBrand.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MdBrandGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends MdBrandGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: MdBrandGroupByArgs['orderBy'];
+    } : {
+        orderBy?: MdBrandGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, MdBrandGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMdBrandGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the MdBrand model
+     */
+    readonly fields: MdBrandFieldRefs;
+}
+/**
+ * The delegate class that acts as a "Promise-like" for MdBrand.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export interface Prisma__MdBrandClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    parentCompany<T extends Prisma.MdParentCompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__MdParentCompanyClient<runtime.Types.Result.GetResult<Prisma.$MdParentCompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    subbrands<T extends Prisma.MdBrand$subbrandsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdBrand$subbrandsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdSubbrandPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
+}
+/**
+ * Fields of the MdBrand model
+ */
+export interface MdBrandFieldRefs {
+    readonly idDlkBrand: Prisma.FieldRef<"MdBrand", 'Int'>;
+    readonly codBrand: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly idDlkParentCompany: Prisma.FieldRef<"MdBrand", 'Int'>;
+    readonly codParentCompany: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly nameBrand: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly codUbigeoBrand: Prisma.FieldRef<"MdBrand", 'Int'>;
+    readonly addressBrand: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly locationBrand: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly emailBrand: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly cellularBrand: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly facebookBrand: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly instagramBrand: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly whatsappBrand: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly ecommerceBrand: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly logoBrand: Prisma.FieldRef<"MdBrand", 'Bytes'>;
+    readonly stateBrand: Prisma.FieldRef<"MdBrand", 'Int'>;
+    readonly codUsuarioCargaDl: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly fehProcesoCargaDl: Prisma.FieldRef<"MdBrand", 'DateTime'>;
+    readonly fehProcesoModifDl: Prisma.FieldRef<"MdBrand", 'DateTime'>;
+    readonly desAccion: Prisma.FieldRef<"MdBrand", 'String'>;
+    readonly flgStatutActif: Prisma.FieldRef<"MdBrand", 'Int'>;
+}
+/**
+ * MdBrand findUnique
+ */
+export type MdBrandFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdBrand
+     */
+    select?: Prisma.MdBrandSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdBrand
+     */
+    omit?: Prisma.MdBrandOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MdBrandInclude<ExtArgs> | null;
+    /**
+     * Filter, which MdBrand to fetch.
+     */
+    where: Prisma.MdBrandWhereUniqueInput;
+};
+/**
+ * MdBrand findUniqueOrThrow
+ */
+export type MdBrandFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdBrand
+     */
+    select?: Prisma.MdBrandSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdBrand
+     */
+    omit?: Prisma.MdBrandOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MdBrandInclude<ExtArgs> | null;
+    /**
+     * Filter, which MdBrand to fetch.
+     */
+    where: Prisma.MdBrandWhereUniqueInput;
+};
+/**
+ * MdBrand findFirst
+ */
+export type MdBrandFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdBrand
+     */
+    select?: Prisma.MdBrandSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdBrand
+     */
+    omit?: Prisma.MdBrandOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MdBrandInclude<ExtArgs> | null;
+    /**
+     * Filter, which MdBrand to fetch.
+     */
+    where?: Prisma.MdBrandWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of MdBrands to fetch.
+     */
+    orderBy?: Prisma.MdBrandOrderByWithRelationInput | Prisma.MdBrandOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for MdBrands.
+     */
+    cursor?: Prisma.MdBrandWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` MdBrands from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` MdBrands.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of MdBrands.
+     */
+    distinct?: Prisma.MdBrandScalarFieldEnum | Prisma.MdBrandScalarFieldEnum[];
+};
+/**
+ * MdBrand findFirstOrThrow
+ */
+export type MdBrandFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdBrand
+     */
+    select?: Prisma.MdBrandSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdBrand
+     */
+    omit?: Prisma.MdBrandOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MdBrandInclude<ExtArgs> | null;
+    /**
+     * Filter, which MdBrand to fetch.
+     */
+    where?: Prisma.MdBrandWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of MdBrands to fetch.
+     */
+    orderBy?: Prisma.MdBrandOrderByWithRelationInput | Prisma.MdBrandOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for MdBrands.
+     */
+    cursor?: Prisma.MdBrandWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` MdBrands from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` MdBrands.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of MdBrands.
+     */
+    distinct?: Prisma.MdBrandScalarFieldEnum | Prisma.MdBrandScalarFieldEnum[];
+};
+/**
+ * MdBrand findMany
+ */
+export type MdBrandFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdBrand
+     */
+    select?: Prisma.MdBrandSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdBrand
+     */
+    omit?: Prisma.MdBrandOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MdBrandInclude<ExtArgs> | null;
+    /**
+     * Filter, which MdBrands to fetch.
+     */
+    where?: Prisma.MdBrandWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of MdBrands to fetch.
+     */
+    orderBy?: Prisma.MdBrandOrderByWithRelationInput | Prisma.MdBrandOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing MdBrands.
+     */
+    cursor?: Prisma.MdBrandWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` MdBrands from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` MdBrands.
+     */
+    skip?: number;
+    distinct?: Prisma.MdBrandScalarFieldEnum | Prisma.MdBrandScalarFieldEnum[];
+};
+/**
+ * MdBrand create
+ */
+export type MdBrandCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdBrand
+     */
+    select?: Prisma.MdBrandSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdBrand
+     */
+    omit?: Prisma.MdBrandOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MdBrandInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a MdBrand.
+     */
+    data: Prisma.XOR<Prisma.MdBrandCreateInput, Prisma.MdBrandUncheckedCreateInput>;
+};
+/**
+ * MdBrand createMany
+ */
+export type MdBrandCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MdBrands.
+     */
+    data: Prisma.MdBrandCreateManyInput | Prisma.MdBrandCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * MdBrand update
+ */
+export type MdBrandUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdBrand
+     */
+    select?: Prisma.MdBrandSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdBrand
+     */
+    omit?: Prisma.MdBrandOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MdBrandInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a MdBrand.
+     */
+    data: Prisma.XOR<Prisma.MdBrandUpdateInput, Prisma.MdBrandUncheckedUpdateInput>;
+    /**
+     * Choose, which MdBrand to update.
+     */
+    where: Prisma.MdBrandWhereUniqueInput;
+};
+/**
+ * MdBrand updateMany
+ */
+export type MdBrandUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MdBrands.
+     */
+    data: Prisma.XOR<Prisma.MdBrandUpdateManyMutationInput, Prisma.MdBrandUncheckedUpdateManyInput>;
+    /**
+     * Filter which MdBrands to update
+     */
+    where?: Prisma.MdBrandWhereInput;
+    /**
+     * Limit how many MdBrands to update.
+     */
+    limit?: number;
+};
+/**
+ * MdBrand upsert
+ */
+export type MdBrandUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdBrand
+     */
+    select?: Prisma.MdBrandSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdBrand
+     */
+    omit?: Prisma.MdBrandOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MdBrandInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the MdBrand to update in case it exists.
+     */
+    where: Prisma.MdBrandWhereUniqueInput;
+    /**
+     * In case the MdBrand found by the `where` argument doesn't exist, create a new MdBrand with this data.
+     */
+    create: Prisma.XOR<Prisma.MdBrandCreateInput, Prisma.MdBrandUncheckedCreateInput>;
+    /**
+     * In case the MdBrand was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.MdBrandUpdateInput, Prisma.MdBrandUncheckedUpdateInput>;
+};
+/**
+ * MdBrand delete
+ */
+export type MdBrandDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdBrand
+     */
+    select?: Prisma.MdBrandSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdBrand
+     */
+    omit?: Prisma.MdBrandOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MdBrandInclude<ExtArgs> | null;
+    /**
+     * Filter which MdBrand to delete.
+     */
+    where: Prisma.MdBrandWhereUniqueInput;
+};
+/**
+ * MdBrand deleteMany
+ */
+export type MdBrandDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which MdBrands to delete
+     */
+    where?: Prisma.MdBrandWhereInput;
+    /**
+     * Limit how many MdBrands to delete.
+     */
+    limit?: number;
+};
+/**
+ * MdBrand.subbrands
+ */
+export type MdBrand$subbrandsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdSubbrand
+     */
+    select?: Prisma.MdSubbrandSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdSubbrand
+     */
+    omit?: Prisma.MdSubbrandOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MdSubbrandInclude<ExtArgs> | null;
+    where?: Prisma.MdSubbrandWhereInput;
+    orderBy?: Prisma.MdSubbrandOrderByWithRelationInput | Prisma.MdSubbrandOrderByWithRelationInput[];
+    cursor?: Prisma.MdSubbrandWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.MdSubbrandScalarFieldEnum | Prisma.MdSubbrandScalarFieldEnum[];
+};
+/**
+ * MdBrand without action
+ */
+export type MdBrandDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MdBrand
+     */
+    select?: Prisma.MdBrandSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the MdBrand
+     */
+    omit?: Prisma.MdBrandOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MdBrandInclude<ExtArgs> | null;
+};
+export {};

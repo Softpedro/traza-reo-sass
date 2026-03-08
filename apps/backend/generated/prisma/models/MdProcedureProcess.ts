@@ -46,12 +46,11 @@ export type MdProcedureProcessMinAggregateOutputType = {
   codProcedureProcess: string | null
   nameProcedureProcess: string | null
   descriptionProcedureProcess: string | null
-  typeProcedureProcess: string | null
   responsibleProcedureProcess: string | null
-  estimatedTimeProcess: string | null
-  criticalityProcess: string | null
-  validationMethodProcess: string | null
-  pccProcess: string | null
+  timeProcedureProcess: string | null
+  criticallyProcedureProcess: string | null
+  validationProcedureProcess: string | null
+  pccProcedureProcess: string | null
   stateProcedureProcess: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -66,12 +65,11 @@ export type MdProcedureProcessMaxAggregateOutputType = {
   codProcedureProcess: string | null
   nameProcedureProcess: string | null
   descriptionProcedureProcess: string | null
-  typeProcedureProcess: string | null
   responsibleProcedureProcess: string | null
-  estimatedTimeProcess: string | null
-  criticalityProcess: string | null
-  validationMethodProcess: string | null
-  pccProcess: string | null
+  timeProcedureProcess: string | null
+  criticallyProcedureProcess: string | null
+  validationProcedureProcess: string | null
+  pccProcedureProcess: string | null
   stateProcedureProcess: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -86,12 +84,11 @@ export type MdProcedureProcessCountAggregateOutputType = {
   codProcedureProcess: number
   nameProcedureProcess: number
   descriptionProcedureProcess: number
-  typeProcedureProcess: number
   responsibleProcedureProcess: number
-  estimatedTimeProcess: number
-  criticalityProcess: number
-  validationMethodProcess: number
-  pccProcess: number
+  timeProcedureProcess: number
+  criticallyProcedureProcess: number
+  validationProcedureProcess: number
+  pccProcedureProcess: number
   stateProcedureProcess: number
   codUsuarioCargaDl: number
   fehProcesoCargaDl: number
@@ -122,12 +119,11 @@ export type MdProcedureProcessMinAggregateInputType = {
   codProcedureProcess?: true
   nameProcedureProcess?: true
   descriptionProcedureProcess?: true
-  typeProcedureProcess?: true
   responsibleProcedureProcess?: true
-  estimatedTimeProcess?: true
-  criticalityProcess?: true
-  validationMethodProcess?: true
-  pccProcess?: true
+  timeProcedureProcess?: true
+  criticallyProcedureProcess?: true
+  validationProcedureProcess?: true
+  pccProcedureProcess?: true
   stateProcedureProcess?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -142,12 +138,11 @@ export type MdProcedureProcessMaxAggregateInputType = {
   codProcedureProcess?: true
   nameProcedureProcess?: true
   descriptionProcedureProcess?: true
-  typeProcedureProcess?: true
   responsibleProcedureProcess?: true
-  estimatedTimeProcess?: true
-  criticalityProcess?: true
-  validationMethodProcess?: true
-  pccProcess?: true
+  timeProcedureProcess?: true
+  criticallyProcedureProcess?: true
+  validationProcedureProcess?: true
+  pccProcedureProcess?: true
   stateProcedureProcess?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -162,12 +157,11 @@ export type MdProcedureProcessCountAggregateInputType = {
   codProcedureProcess?: true
   nameProcedureProcess?: true
   descriptionProcedureProcess?: true
-  typeProcedureProcess?: true
   responsibleProcedureProcess?: true
-  estimatedTimeProcess?: true
-  criticalityProcess?: true
-  validationMethodProcess?: true
-  pccProcess?: true
+  timeProcedureProcess?: true
+  criticallyProcedureProcess?: true
+  validationProcedureProcess?: true
+  pccProcedureProcess?: true
   stateProcedureProcess?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -269,12 +263,11 @@ export type MdProcedureProcessGroupByOutputType = {
   codProcedureProcess: string
   nameProcedureProcess: string
   descriptionProcedureProcess: string
-  typeProcedureProcess: string
   responsibleProcedureProcess: string
-  estimatedTimeProcess: string
-  criticalityProcess: string
-  validationMethodProcess: string
-  pccProcess: string
+  timeProcedureProcess: string
+  criticallyProcedureProcess: string
+  validationProcedureProcess: string
+  pccProcedureProcess: string
   stateProcedureProcess: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl: Date
@@ -312,12 +305,11 @@ export type MdProcedureProcessWhereInput = {
   codProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
   nameProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
   descriptionProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  typeProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
   responsibleProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  estimatedTimeProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  criticalityProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  validationMethodProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  pccProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
+  timeProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
+  criticallyProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
+  validationProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
+  pccProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
   stateProcedureProcess?: Prisma.IntFilter<"MdProcedureProcess"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdProcedureProcess"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdProcedureProcess"> | Date | string
@@ -333,12 +325,11 @@ export type MdProcedureProcessOrderByWithRelationInput = {
   codProcedureProcess?: Prisma.SortOrder
   nameProcedureProcess?: Prisma.SortOrder
   descriptionProcedureProcess?: Prisma.SortOrder
-  typeProcedureProcess?: Prisma.SortOrder
   responsibleProcedureProcess?: Prisma.SortOrder
-  estimatedTimeProcess?: Prisma.SortOrder
-  criticalityProcess?: Prisma.SortOrder
-  validationMethodProcess?: Prisma.SortOrder
-  pccProcess?: Prisma.SortOrder
+  timeProcedureProcess?: Prisma.SortOrder
+  criticallyProcedureProcess?: Prisma.SortOrder
+  validationProcedureProcess?: Prisma.SortOrder
+  pccProcedureProcess?: Prisma.SortOrder
   stateProcedureProcess?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -358,12 +349,11 @@ export type MdProcedureProcessWhereUniqueInput = Prisma.AtLeast<{
   codProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
   nameProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
   descriptionProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  typeProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
   responsibleProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  estimatedTimeProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  criticalityProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  validationMethodProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  pccProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
+  timeProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
+  criticallyProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
+  validationProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
+  pccProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
   stateProcedureProcess?: Prisma.IntFilter<"MdProcedureProcess"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdProcedureProcess"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdProcedureProcess"> | Date | string
@@ -379,12 +369,11 @@ export type MdProcedureProcessOrderByWithAggregationInput = {
   codProcedureProcess?: Prisma.SortOrder
   nameProcedureProcess?: Prisma.SortOrder
   descriptionProcedureProcess?: Prisma.SortOrder
-  typeProcedureProcess?: Prisma.SortOrder
   responsibleProcedureProcess?: Prisma.SortOrder
-  estimatedTimeProcess?: Prisma.SortOrder
-  criticalityProcess?: Prisma.SortOrder
-  validationMethodProcess?: Prisma.SortOrder
-  pccProcess?: Prisma.SortOrder
+  timeProcedureProcess?: Prisma.SortOrder
+  criticallyProcedureProcess?: Prisma.SortOrder
+  validationProcedureProcess?: Prisma.SortOrder
+  pccProcedureProcess?: Prisma.SortOrder
   stateProcedureProcess?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -407,12 +396,11 @@ export type MdProcedureProcessScalarWhereWithAggregatesInput = {
   codProcedureProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
   nameProcedureProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
   descriptionProcedureProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
-  typeProcedureProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
   responsibleProcedureProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
-  estimatedTimeProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
-  criticalityProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
-  validationMethodProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
-  pccProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
+  timeProcedureProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
+  criticallyProcedureProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
+  validationProcedureProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
+  pccProcedureProcess?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
   stateProcedureProcess?: Prisma.IntWithAggregatesFilter<"MdProcedureProcess"> | number
   codUsuarioCargaDl?: Prisma.StringWithAggregatesFilter<"MdProcedureProcess"> | string
   fehProcesoCargaDl?: Prisma.DateTimeWithAggregatesFilter<"MdProcedureProcess"> | Date | string
@@ -425,12 +413,11 @@ export type MdProcedureProcessCreateInput = {
   codProcedureProcess: string
   nameProcedureProcess: string
   descriptionProcedureProcess: string
-  typeProcedureProcess: string
   responsibleProcedureProcess: string
-  estimatedTimeProcess: string
-  criticalityProcess: string
-  validationMethodProcess: string
-  pccProcess: string
+  timeProcedureProcess?: string
+  criticallyProcedureProcess: string
+  validationProcedureProcess: string
+  pccProcedureProcess?: string
   stateProcedureProcess?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -446,12 +433,11 @@ export type MdProcedureProcessUncheckedCreateInput = {
   codProcedureProcess: string
   nameProcedureProcess: string
   descriptionProcedureProcess: string
-  typeProcedureProcess: string
   responsibleProcedureProcess: string
-  estimatedTimeProcess: string
-  criticalityProcess: string
-  validationMethodProcess: string
-  pccProcess: string
+  timeProcedureProcess?: string
+  criticallyProcedureProcess: string
+  validationProcedureProcess: string
+  pccProcedureProcess?: string
   stateProcedureProcess?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -464,12 +450,11 @@ export type MdProcedureProcessUpdateInput = {
   codProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   nameProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   descriptionProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  typeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  estimatedTimeProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  criticalityProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  validationMethodProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  pccProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  timeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  criticallyProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  validationProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  pccProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   stateProcedureProcess?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -485,12 +470,11 @@ export type MdProcedureProcessUncheckedUpdateInput = {
   codProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   nameProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   descriptionProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  typeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  estimatedTimeProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  criticalityProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  validationMethodProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  pccProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  timeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  criticallyProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  validationProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  pccProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   stateProcedureProcess?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -505,12 +489,11 @@ export type MdProcedureProcessCreateManyInput = {
   codProcedureProcess: string
   nameProcedureProcess: string
   descriptionProcedureProcess: string
-  typeProcedureProcess: string
   responsibleProcedureProcess: string
-  estimatedTimeProcess: string
-  criticalityProcess: string
-  validationMethodProcess: string
-  pccProcess: string
+  timeProcedureProcess?: string
+  criticallyProcedureProcess: string
+  validationProcedureProcess: string
+  pccProcedureProcess?: string
   stateProcedureProcess?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -523,12 +506,11 @@ export type MdProcedureProcessUpdateManyMutationInput = {
   codProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   nameProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   descriptionProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  typeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  estimatedTimeProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  criticalityProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  validationMethodProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  pccProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  timeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  criticallyProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  validationProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  pccProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   stateProcedureProcess?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -543,12 +525,11 @@ export type MdProcedureProcessUncheckedUpdateManyInput = {
   codProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   nameProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   descriptionProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  typeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  estimatedTimeProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  criticalityProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  validationMethodProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  pccProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  timeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  criticallyProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  validationProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  pccProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   stateProcedureProcess?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -579,12 +560,11 @@ export type MdProcedureProcessCountOrderByAggregateInput = {
   codProcedureProcess?: Prisma.SortOrder
   nameProcedureProcess?: Prisma.SortOrder
   descriptionProcedureProcess?: Prisma.SortOrder
-  typeProcedureProcess?: Prisma.SortOrder
   responsibleProcedureProcess?: Prisma.SortOrder
-  estimatedTimeProcess?: Prisma.SortOrder
-  criticalityProcess?: Prisma.SortOrder
-  validationMethodProcess?: Prisma.SortOrder
-  pccProcess?: Prisma.SortOrder
+  timeProcedureProcess?: Prisma.SortOrder
+  criticallyProcedureProcess?: Prisma.SortOrder
+  validationProcedureProcess?: Prisma.SortOrder
+  pccProcedureProcess?: Prisma.SortOrder
   stateProcedureProcess?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -606,12 +586,11 @@ export type MdProcedureProcessMaxOrderByAggregateInput = {
   codProcedureProcess?: Prisma.SortOrder
   nameProcedureProcess?: Prisma.SortOrder
   descriptionProcedureProcess?: Prisma.SortOrder
-  typeProcedureProcess?: Prisma.SortOrder
   responsibleProcedureProcess?: Prisma.SortOrder
-  estimatedTimeProcess?: Prisma.SortOrder
-  criticalityProcess?: Prisma.SortOrder
-  validationMethodProcess?: Prisma.SortOrder
-  pccProcess?: Prisma.SortOrder
+  timeProcedureProcess?: Prisma.SortOrder
+  criticallyProcedureProcess?: Prisma.SortOrder
+  validationProcedureProcess?: Prisma.SortOrder
+  pccProcedureProcess?: Prisma.SortOrder
   stateProcedureProcess?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -626,12 +605,11 @@ export type MdProcedureProcessMinOrderByAggregateInput = {
   codProcedureProcess?: Prisma.SortOrder
   nameProcedureProcess?: Prisma.SortOrder
   descriptionProcedureProcess?: Prisma.SortOrder
-  typeProcedureProcess?: Prisma.SortOrder
   responsibleProcedureProcess?: Prisma.SortOrder
-  estimatedTimeProcess?: Prisma.SortOrder
-  criticalityProcess?: Prisma.SortOrder
-  validationMethodProcess?: Prisma.SortOrder
-  pccProcess?: Prisma.SortOrder
+  timeProcedureProcess?: Prisma.SortOrder
+  criticallyProcedureProcess?: Prisma.SortOrder
+  validationProcedureProcess?: Prisma.SortOrder
+  pccProcedureProcess?: Prisma.SortOrder
   stateProcedureProcess?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -693,12 +671,11 @@ export type MdProcedureProcessCreateWithoutProcessInput = {
   codProcedureProcess: string
   nameProcedureProcess: string
   descriptionProcedureProcess: string
-  typeProcedureProcess: string
   responsibleProcedureProcess: string
-  estimatedTimeProcess: string
-  criticalityProcess: string
-  validationMethodProcess: string
-  pccProcess: string
+  timeProcedureProcess?: string
+  criticallyProcedureProcess: string
+  validationProcedureProcess: string
+  pccProcedureProcess?: string
   stateProcedureProcess?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -712,12 +689,11 @@ export type MdProcedureProcessUncheckedCreateWithoutProcessInput = {
   codProcedureProcess: string
   nameProcedureProcess: string
   descriptionProcedureProcess: string
-  typeProcedureProcess: string
   responsibleProcedureProcess: string
-  estimatedTimeProcess: string
-  criticalityProcess: string
-  validationMethodProcess: string
-  pccProcess: string
+  timeProcedureProcess?: string
+  criticallyProcedureProcess: string
+  validationProcedureProcess: string
+  pccProcedureProcess?: string
   stateProcedureProcess?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -761,12 +737,11 @@ export type MdProcedureProcessScalarWhereInput = {
   codProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
   nameProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
   descriptionProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  typeProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
   responsibleProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  estimatedTimeProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  criticalityProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  validationMethodProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
-  pccProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
+  timeProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
+  criticallyProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
+  validationProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
+  pccProcedureProcess?: Prisma.StringFilter<"MdProcedureProcess"> | string
   stateProcedureProcess?: Prisma.IntFilter<"MdProcedureProcess"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdProcedureProcess"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdProcedureProcess"> | Date | string
@@ -780,12 +755,11 @@ export type MdProcedureProcessCreateManyProcessInput = {
   codProcedureProcess: string
   nameProcedureProcess: string
   descriptionProcedureProcess: string
-  typeProcedureProcess: string
   responsibleProcedureProcess: string
-  estimatedTimeProcess: string
-  criticalityProcess: string
-  validationMethodProcess: string
-  pccProcess: string
+  timeProcedureProcess?: string
+  criticallyProcedureProcess: string
+  validationProcedureProcess: string
+  pccProcedureProcess?: string
   stateProcedureProcess?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -798,12 +772,11 @@ export type MdProcedureProcessUpdateWithoutProcessInput = {
   codProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   nameProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   descriptionProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  typeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  estimatedTimeProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  criticalityProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  validationMethodProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  pccProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  timeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  criticallyProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  validationProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  pccProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   stateProcedureProcess?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -817,12 +790,11 @@ export type MdProcedureProcessUncheckedUpdateWithoutProcessInput = {
   codProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   nameProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   descriptionProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  typeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  estimatedTimeProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  criticalityProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  validationMethodProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  pccProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  timeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  criticallyProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  validationProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  pccProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   stateProcedureProcess?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -836,12 +808,11 @@ export type MdProcedureProcessUncheckedUpdateManyWithoutProcessInput = {
   codProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   nameProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   descriptionProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  typeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  estimatedTimeProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  criticalityProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  validationMethodProcess?: Prisma.StringFieldUpdateOperationsInput | string
-  pccProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  timeProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  criticallyProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  validationProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  pccProcedureProcess?: Prisma.StringFieldUpdateOperationsInput | string
   stateProcedureProcess?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -858,12 +829,11 @@ export type MdProcedureProcessSelect<ExtArgs extends runtime.Types.Extensions.In
   codProcedureProcess?: boolean
   nameProcedureProcess?: boolean
   descriptionProcedureProcess?: boolean
-  typeProcedureProcess?: boolean
   responsibleProcedureProcess?: boolean
-  estimatedTimeProcess?: boolean
-  criticalityProcess?: boolean
-  validationMethodProcess?: boolean
-  pccProcess?: boolean
+  timeProcedureProcess?: boolean
+  criticallyProcedureProcess?: boolean
+  validationProcedureProcess?: boolean
+  pccProcedureProcess?: boolean
   stateProcedureProcess?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
@@ -881,12 +851,11 @@ export type MdProcedureProcessSelectScalar = {
   codProcedureProcess?: boolean
   nameProcedureProcess?: boolean
   descriptionProcedureProcess?: boolean
-  typeProcedureProcess?: boolean
   responsibleProcedureProcess?: boolean
-  estimatedTimeProcess?: boolean
-  criticalityProcess?: boolean
-  validationMethodProcess?: boolean
-  pccProcess?: boolean
+  timeProcedureProcess?: boolean
+  criticallyProcedureProcess?: boolean
+  validationProcedureProcess?: boolean
+  pccProcedureProcess?: boolean
   stateProcedureProcess?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
@@ -895,7 +864,7 @@ export type MdProcedureProcessSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type MdProcedureProcessOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkProcedureProcess" | "idDlkProcess" | "codProcedureProcess" | "nameProcedureProcess" | "descriptionProcedureProcess" | "typeProcedureProcess" | "responsibleProcedureProcess" | "estimatedTimeProcess" | "criticalityProcess" | "validationMethodProcess" | "pccProcess" | "stateProcedureProcess" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdProcedureProcess"]>
+export type MdProcedureProcessOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkProcedureProcess" | "idDlkProcess" | "codProcedureProcess" | "nameProcedureProcess" | "descriptionProcedureProcess" | "responsibleProcedureProcess" | "timeProcedureProcess" | "criticallyProcedureProcess" | "validationProcedureProcess" | "pccProcedureProcess" | "stateProcedureProcess" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdProcedureProcess"]>
 export type MdProcedureProcessInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   process?: boolean | Prisma.MdProcessDefaultArgs<ExtArgs>
 }
@@ -911,12 +880,11 @@ export type $MdProcedureProcessPayload<ExtArgs extends runtime.Types.Extensions.
     codProcedureProcess: string
     nameProcedureProcess: string
     descriptionProcedureProcess: string
-    typeProcedureProcess: string
     responsibleProcedureProcess: string
-    estimatedTimeProcess: string
-    criticalityProcess: string
-    validationMethodProcess: string
-    pccProcess: string
+    timeProcedureProcess: string
+    criticallyProcedureProcess: string
+    validationProcedureProcess: string
+    pccProcedureProcess: string
     stateProcedureProcess: number
     codUsuarioCargaDl: string
     fehProcesoCargaDl: Date
@@ -1298,12 +1266,11 @@ export interface MdProcedureProcessFieldRefs {
   readonly codProcedureProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
   readonly nameProcedureProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
   readonly descriptionProcedureProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
-  readonly typeProcedureProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
   readonly responsibleProcedureProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
-  readonly estimatedTimeProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
-  readonly criticalityProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
-  readonly validationMethodProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
-  readonly pccProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
+  readonly timeProcedureProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
+  readonly criticallyProcedureProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
+  readonly validationProcedureProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
+  readonly pccProcedureProcess: Prisma.FieldRef<"MdProcedureProcess", 'String'>
   readonly stateProcedureProcess: Prisma.FieldRef<"MdProcedureProcess", 'Int'>
   readonly codUsuarioCargaDl: Prisma.FieldRef<"MdProcedureProcess", 'String'>
   readonly fehProcesoCargaDl: Prisma.FieldRef<"MdProcedureProcess", 'DateTime'>

@@ -17,6 +17,8 @@ import { SubbrandService } from "./services/subbrand.service.js";
 import { subbrandRoutes } from "./routes/subbrand.routes.js";
 import { UserReoService } from "./services/user-reo.service.js";
 import { userReoRoutes } from "./routes/user-reo.routes.js";
+import { ProductionChainService } from "./services/production-chain.service.js";
+import { productionChainRoutes } from "./routes/production-chain.routes.js";
 
 function parseDatabaseUrl(url: string) {
   const u = new URL(url);
@@ -41,9 +43,9 @@ const adapter = new PrismaMariaDb({
   user: dbConfig.user,
   password: dbConfig.password,
   database: dbConfig.database,
-  connectionLimit: 3,
-  acquireTimeout: 30000,
-  connectTimeout: 30000,
+  connectionLimit: 5,
+  acquireTimeout: 60000,
+  connectTimeout: 15000,
 });
 const prisma = new PrismaClient({ adapter });
 
@@ -86,6 +88,7 @@ const facilityMaquilaService = new FacilityMaquilaService(prisma);
 const brandService = new BrandService(prisma);
 const subbrandService = new SubbrandService(prisma);
 const userReoService = new UserReoService(prisma);
+const productionChainService = new ProductionChainService(prisma);
 
 // ── Rutas ────────────────────────────────────────────────────────────
 app.use("/api/parent-companies", parentCompanyRoutes(parentCompanyService));
@@ -95,6 +98,7 @@ app.use("/api/facilities-maquila", facilityMaquilaRoutes(facilityMaquilaService)
 app.use("/api/brands", brandRoutes(brandService));
 app.use("/api/subbrands", subbrandRoutes(subbrandService));
 app.use("/api/users", userReoRoutes(userReoService));
+app.use("/api/production-chains", productionChainRoutes(productionChainService));
 
 // ── Ubigeo ───────────────────────────────────────────────────────────
 

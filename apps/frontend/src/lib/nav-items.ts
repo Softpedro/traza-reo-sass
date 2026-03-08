@@ -12,12 +12,20 @@ export type NavSectionHeader = {
   label: string;
 };
 
+/** Subsección colapsable dentro de un collapsible (ej. REO, Cadena de suministro) */
+export type NavGroupItem = {
+  type: "group";
+  id: string;
+  label: string;
+  children: NavLeafItem[];
+};
+
 export type NavCollapsibleItem = {
   type: "collapsible";
   label: string;
   icon?: LucideIcon;
   basePath: string;
-  children: (NavSectionHeader | NavLeafItem)[];
+  children: (NavSectionHeader | NavGroupItem | NavLeafItem)[];
 };
 
 export type NavItem = NavLeafItem | NavCollapsibleItem;
@@ -37,14 +45,31 @@ export const navItems: NavItem[] = [
     icon: Settings,
     basePath: "/configuracion",
     children: [
-      { type: "section-header", label: "REO" },
-      { type: "leaf", label: "Empresa", href: "/configuracion/reo/empresa" },
-      { type: "leaf", label: "Fábrica", href: "/configuracion/reo/fabrica" },
-      { type: "leaf", label: "Maquila", href: "/configuracion/reo/maquila" },
-      { type: "leaf", label: "Fábrica Maquila", href: "/configuracion/reo/fabrica-maquila" },
-      { type: "leaf", label: "Marca", href: "/configuracion/reo/marca" },
-      { type: "leaf", label: "Submarca", href: "/configuracion/reo/submarca" },
-      { type: "leaf", label: "Usuario", href: "/configuracion/reo/usuario" },
+      {
+        type: "group",
+        id: "reo",
+        label: "REO",
+        children: [
+          { type: "leaf", label: "Empresa", href: "/configuracion/reo/empresa" },
+          { type: "leaf", label: "Fábrica", href: "/configuracion/reo/fabrica" },
+          { type: "leaf", label: "Maquila", href: "/configuracion/reo/maquila" },
+          { type: "leaf", label: "Fábrica Maquila", href: "/configuracion/reo/fabrica-maquila" },
+          { type: "leaf", label: "Marca", href: "/configuracion/reo/marca" },
+          { type: "leaf", label: "Submarca", href: "/configuracion/reo/submarca" },
+          { type: "leaf", label: "Usuario", href: "/configuracion/reo/usuario" },
+        ],
+      },
+      {
+        type: "group",
+        id: "cadena-suministro",
+        label: "Cadena de suministro",
+        children: [
+          { type: "leaf", label: "Eslabón", href: "/configuracion/cadena-produccion/eslabon" },
+          { type: "leaf", label: "Proceso", href: "/configuracion/cadena-produccion/proceso" },
+          { type: "leaf", label: "Subproceso", href: "/configuracion/cadena-produccion/subproceso" },
+          { type: "leaf", label: "Actividad", href: "/configuracion/cadena-produccion/actividad" },
+        ],
+      },
     ],
   },
 ];

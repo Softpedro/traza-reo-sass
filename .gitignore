@@ -28,6 +28,10 @@ npm-debug.log*
 # Prisma
 apps/backend/prisma/migrations/**/migration_lock.toml
 
+# Local dev
+docker-compose.yml
+.env.development
+
 # Misc
 *.tsbuildinfo
 .turbo

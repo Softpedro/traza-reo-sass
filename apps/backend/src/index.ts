@@ -19,6 +19,14 @@ import { UserReoService } from "./services/user-reo.service.js";
 import { userReoRoutes } from "./routes/user-reo.routes.js";
 import { ProductionChainService } from "./services/production-chain.service.js";
 import { productionChainRoutes } from "./routes/production-chain.routes.js";
+import { ProcessService } from "./services/process.service.js";
+import { processRoutes } from "./routes/process.routes.js";
+import { InputProcessService } from "./services/input-process.service.js";
+import { inputProcessRoutes } from "./routes/input-process.routes.js";
+import { OutputProcessService } from "./services/output-process.service.js";
+import { outputProcessRoutes } from "./routes/output-process.routes.js";
+import { ProcedureProcessService } from "./services/procedure-process.service.js";
+import { procedureProcessRoutes } from "./routes/procedure-process.routes.js";
 
 function parseDatabaseUrl(url: string) {
   const u = new URL(url);
@@ -53,14 +61,11 @@ const app = express();
 const PORT = process.env.PORT ?? 4000;
 
 const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:3000";
-console.log(`[CORS] CORS_ORIGIN env value: "${corsOrigin}"`);
 app.use(cors({
   origin: (origin, callback) => {
-    console.log(`[CORS] Request origin: "${origin}"`);
     if (!origin || origin === corsOrigin) {
       callback(null, true);
     } else {
-      console.log(`[CORS] BLOCKED: "${origin}" !== "${corsOrigin}"`);
       callback(new Error("Not allowed by CORS"));
     }
   },
@@ -89,6 +94,10 @@ const brandService = new BrandService(prisma);
 const subbrandService = new SubbrandService(prisma);
 const userReoService = new UserReoService(prisma);
 const productionChainService = new ProductionChainService(prisma);
+const processService = new ProcessService(prisma);
+const inputProcessService = new InputProcessService(prisma);
+const outputProcessService = new OutputProcessService(prisma);
+const procedureProcessService = new ProcedureProcessService(prisma);
 
 // ── Rutas ────────────────────────────────────────────────────────────
 app.use("/api/parent-companies", parentCompanyRoutes(parentCompanyService));
@@ -99,6 +108,10 @@ app.use("/api/brands", brandRoutes(brandService));
 app.use("/api/subbrands", subbrandRoutes(subbrandService));
 app.use("/api/users", userReoRoutes(userReoService));
 app.use("/api/production-chains", productionChainRoutes(productionChainService));
+app.use("/api/processes", processRoutes(processService));
+app.use("/api/input-processes", inputProcessRoutes(inputProcessService));
+app.use("/api/output-processes", outputProcessRoutes(outputProcessService));
+app.use("/api/procedure-processes", procedureProcessRoutes(procedureProcessService));
 
 // ── Ubigeo ───────────────────────────────────────────────────────────
 
@@ -236,8 +249,6 @@ app.delete("/api/ordenes/:id", async (req, res) => {
 
 // ── Levantar servidor inmediatamente, luego verificar DB ─────────
 app.listen(Number(PORT), "0.0.0.0", () => {
-  console.log(`Backend escuchando en http://0.0.0.0:${PORT}`);
-  console.log("[CORS] Origin configurado:", process.env.CORS_ORIGIN);
 
   prisma.$queryRawUnsafe("SELECT 1")
     .then(() => console.log("[DB] Conexión verificada correctamente"))

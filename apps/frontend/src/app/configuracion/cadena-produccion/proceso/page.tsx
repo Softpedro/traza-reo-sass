@@ -12,6 +12,7 @@ import { OutputListDialog } from "./output-list-dialog";
 import { ProcedureProcessModal, type ProcedureProcessRow } from "./procedure-process-modal";
 import { ProcedureListDialog } from "./procedure-list-dialog";
 import { ProcessDiagramDialog } from "./process-diagram-dialog";
+import { ProcessGeneralDiagramDialog } from "./process-general-diagram-dialog";
 
 type ModalState = {
   open: boolean;
@@ -101,6 +102,7 @@ export default function ProcesoPage() {
     mode: "edit",
   });
   const [diagramProcess, setDiagramProcess] = useState<ProcessRow | null>(null);
+  const [generalDiagramOpen, setGeneralDiagramOpen] = useState(false);
 
   const fetchItems = useCallback(() => {
     setLoading(true);
@@ -259,12 +261,20 @@ export default function ProcesoPage() {
             onChange={(e) => setSearch(e.target.value)}
             className="h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
-          <button
-            onClick={openCreate}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-          >
-            Crear +
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setGeneralDiagramOpen(true)}
+              className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+            >
+              Diagrama general
+            </button>
+            <button
+              onClick={openCreate}
+              className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              Crear +
+            </button>
+          </div>
         </div>
       </div>
 
@@ -340,6 +350,11 @@ export default function ProcesoPage() {
         open={!!diagramProcess}
         onOpenChange={(open) => !open && setDiagramProcess(null)}
         process={diagramProcess}
+      />
+
+      <ProcessGeneralDiagramDialog
+        open={generalDiagramOpen}
+        onOpenChange={setGeneralDiagramOpen}
       />
     </div>
   );

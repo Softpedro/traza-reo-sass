@@ -5,6 +5,7 @@ import { DataTable } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
 import { getColumns, type Eslabon } from "./columns";
 import { EslabonModal } from "./eslabon-modal";
+import { EslabonDiagramDialog } from "./eslabon-diagram-dialog";
 
 type ModalState = {
   open: boolean;
@@ -21,6 +22,7 @@ export default function EslabonPage() {
     mode: "create",
     eslabon: null,
   });
+  const [diagramOpen, setDiagramOpen] = useState(false);
 
   const fetchItems = useCallback(() => {
     setLoading(true);
@@ -66,12 +68,20 @@ export default function EslabonPage() {
             onChange={(e) => setSearch(e.target.value)}
             className="h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
-          <button
-            onClick={openCreate}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-          >
-            Crear +
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setDiagramOpen(true)}
+              className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+            >
+              Diagrama general
+            </button>
+            <button
+              onClick={openCreate}
+              className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              Crear +
+            </button>
+          </div>
         </div>
       </div>
 
@@ -87,6 +97,12 @@ export default function EslabonPage() {
         mode={modal.mode}
         eslabon={modal.eslabon}
         onSuccess={fetchItems}
+      />
+
+      <EslabonDiagramDialog
+        open={diagramOpen}
+        onOpenChange={setDiagramOpen}
+        eslabones={items}
       />
     </div>
   );

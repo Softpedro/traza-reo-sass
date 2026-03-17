@@ -11,6 +11,8 @@ import { InputSubprocessModal, type InputSubprocessRow } from "./input-subproces
 import { InputSubprocessListDialog } from "./input-subprocess-list-dialog";
 import { OutputSubprocessModal, type OutputSubprocessRow } from "./output-subprocess-modal";
 import { OutputSubprocessListDialog } from "./output-subprocess-list-dialog";
+import { SubprocessDiagramDialog } from "./subprocess-diagram-dialog";
+import { ProcessGeneralDiagramDialog } from "../proceso/process-general-diagram-dialog";
 
 type ModalState = {
   open: boolean;
@@ -30,6 +32,7 @@ export default function SubprocesoPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [generalDiagramOpen, setGeneralDiagramOpen] = useState(false);
+  const [diagramSubprocess, setDiagramSubprocess] = useState<SubprocessRow | null>(null);
   const [modal, setModal] = useState<ModalState>({ open: false, mode: "create", subprocess: null });
   const [procedureListOpen, setProcedureListOpen] = useState<ProcedureListState>({ open: false, subprocess: null, mode: "edit" });
   const [procedureModal, setProcedureModal] = useState<ProcedureModalState>({ open: false, mode: "create", subprocess: null, procedure: null });
@@ -66,7 +69,7 @@ export default function SubprocesoPage() {
 
   const openCreate = () => setModal({ open: true, mode: "create", subprocess: null });
   const openEdit = useCallback((row: SubprocessRow) => setModal({ open: true, mode: "edit", subprocess: row }), []);
-  const openVerDiagrama = useCallback((_row: SubprocessRow) => {}, []);
+  const openVerDiagrama = useCallback((row: SubprocessRow) => setDiagramSubprocess(row), []);
 
   const openProcedureCreate = useCallback((row: SubprocessRow) => {
     setProcedureListOpen((prev) => ({ ...prev, open: false }));
@@ -270,18 +273,16 @@ export default function SubprocesoPage() {
         onSuccess={fetchItems}
       />
 
-      {generalDiagramOpen && (
-        <div className="rounded-md border p-4 text-sm text-muted-foreground">
-          Modal Diagrama general (por implementar).
-          <button
-            type="button"
-            className="ml-2 text-primary hover:underline"
-            onClick={() => setGeneralDiagramOpen(false)}
-          >
-            Cerrar
-          </button>
-        </div>
-      )}
+      <SubprocessDiagramDialog
+        open={!!diagramSubprocess}
+        onOpenChange={(open) => !open && setDiagramSubprocess(null)}
+        subprocess={diagramSubprocess}
+      />
+
+      <ProcessGeneralDiagramDialog
+        open={generalDiagramOpen}
+        onOpenChange={setGeneralDiagramOpen}
+      />
     </div>
   );
 }

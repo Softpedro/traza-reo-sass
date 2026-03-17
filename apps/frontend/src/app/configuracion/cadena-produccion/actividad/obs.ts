@@ -11,7 +11,7 @@ export const OBS_ESTADO: Record<number, string> = {
 };
 
 export function getTipoActividadLabel(value: string): string {
-  return OBS_TIPO_ACTIVIDAD[value] ?? value || "—";
+  return (OBS_TIPO_ACTIVIDAD[value] ?? value) || "—";
 }
 
 export function getEstadoLabel(value: number): string {

@@ -35,6 +35,14 @@ import { InputSubprocessService } from "./services/input-subprocess.service.js";
 import { inputSubprocessRoutes } from "./routes/input-subprocess.routes.js";
 import { OutputSubprocessService } from "./services/output-subprocess.service.js";
 import { outputSubprocessRoutes } from "./routes/output-subprocess.routes.js";
+import { ActivityService } from "./services/activity.service.js";
+import { activityRoutes } from "./routes/activity.routes.js";
+import { ProcedureActivitiesService } from "./services/procedure-activities.service.js";
+import { procedureActivitiesRoutes } from "./routes/procedure-activities.routes.js";
+import { InputActivitiesService } from "./services/input-activities.service.js";
+import { inputActivitiesRoutes } from "./routes/input-activities.routes.js";
+import { OutputActivitiesService } from "./services/output-activities.service.js";
+import { outputActivitiesRoutes } from "./routes/output-activities.routes.js";
 
 function parseDatabaseUrl(url: string) {
   const u = new URL(url);
@@ -110,6 +118,10 @@ const subprocessService = new SubprocessService(prisma);
 const procedureSubprocessService = new ProcedureSubprocessService(prisma);
 const inputSubprocessService = new InputSubprocessService(prisma);
 const outputSubprocessService = new OutputSubprocessService(prisma);
+const activityService = new ActivityService(prisma);
+const procedureActivitiesService = new ProcedureActivitiesService(prisma);
+const inputActivitiesService = new InputActivitiesService(prisma);
+const outputActivitiesService = new OutputActivitiesService(prisma);
 
 // ── Rutas ────────────────────────────────────────────────────────────
 app.use("/api/parent-companies", parentCompanyRoutes(parentCompanyService));
@@ -128,6 +140,10 @@ app.use("/api/subprocesses", subprocessRoutes(subprocessService));
 app.use("/api/procedure-subprocesses", procedureSubprocessRoutes(procedureSubprocessService));
 app.use("/api/input-subprocesses", inputSubprocessRoutes(inputSubprocessService));
 app.use("/api/output-subprocesses", outputSubprocessRoutes(outputSubprocessService));
+app.use("/api/activities", activityRoutes(activityService));
+app.use("/api/procedure-activities", procedureActivitiesRoutes(procedureActivitiesService));
+app.use("/api/input-activities", inputActivitiesRoutes(inputActivitiesService));
+app.use("/api/output-activities", outputActivitiesRoutes(outputActivitiesService));
 
 // ── Ubigeo ───────────────────────────────────────────────────────────
 

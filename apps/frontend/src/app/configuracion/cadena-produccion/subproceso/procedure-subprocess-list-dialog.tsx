@@ -37,6 +37,7 @@ export function ProcedureSubprocessListDialog({
   }, [open, subprocess]);
 
   const subprocessLabel = subprocess ? `${subprocess.codSubprocess} - ${subprocess.nameSubprocess}` : "";
+  const modeLabel = mode === "edit" ? "Elija uno para editar" : "Elija uno para ver";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -44,6 +45,7 @@ export function ProcedureSubprocessListDialog({
         <DialogHeader>
           <DialogTitle>Procedures del subproceso</DialogTitle>
           <p className="text-sm text-muted-foreground">{subprocessLabel}</p>
+          <p className="text-xs text-muted-foreground">{modeLabel}. Use el botón de cada fila para abrir el modal.</p>
         </DialogHeader>
         <div className="flex flex-col gap-4 py-2">
           <div className="flex justify-end">
@@ -52,13 +54,15 @@ export function ProcedureSubprocessListDialog({
           {loading ? (
             <p className="text-sm text-muted-foreground">Cargando...</p>
           ) : procedures.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No hay procedures. Haz clic en Crear para agregar uno.</p>
+            <p className="text-sm text-muted-foreground">
+              No hay procedures. Use &quot;Crear&quot; para agregar uno; luego podrá usar &quot;Editar&quot; o &quot;Ver&quot; desde la tabla para abrir esta lista y el modal.
+            </p>
           ) : (
             <ul className="space-y-2">
               {procedures.map((proc) => (
                 <li key={proc.idDlkProcedureSubprocess} className="flex items-center justify-between rounded-md border px-3 py-2">
                   <span className="font-medium">{proc.codProcedureSubprocess} - {proc.nameProcedureSubprocess}</span>
-                  <Button variant="link" size="sm" className="h-auto p-0" onClick={() => { onOpenChange(false); onSelectProcedure(proc); }}>
+                  <Button variant="default" size="sm" onClick={() => { onOpenChange(false); onSelectProcedure(proc); }}>
                     {mode === "edit" ? "Editar" : "Ver"}
                   </Button>
                 </li>

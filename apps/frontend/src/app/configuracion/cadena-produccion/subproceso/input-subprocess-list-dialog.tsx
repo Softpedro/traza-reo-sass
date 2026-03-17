@@ -37,6 +37,7 @@ export function InputSubprocessListDialog({
   }, [open, subprocess]);
 
   const subprocessLabel = subprocess ? `${subprocess.codSubprocess} - ${subprocess.nameSubprocess}` : "";
+  const modeLabel = mode === "edit" ? "Elija uno para editar" : "Elija uno para ver";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -44,6 +45,7 @@ export function InputSubprocessListDialog({
         <DialogHeader>
           <DialogTitle>Inputs del subproceso</DialogTitle>
           <p className="text-sm text-muted-foreground">{subprocessLabel}</p>
+          <p className="text-xs text-muted-foreground">{modeLabel}. Use el botón de cada fila para abrir el modal.</p>
         </DialogHeader>
         <div className="flex flex-col gap-4 py-2">
           <div className="flex justify-end">
@@ -52,13 +54,15 @@ export function InputSubprocessListDialog({
           {loading ? (
             <p className="text-sm text-muted-foreground">Cargando...</p>
           ) : inputs.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No hay inputs. Haz clic en Crear para agregar uno.</p>
+            <p className="text-sm text-muted-foreground">
+              No hay inputs. Use &quot;Crear&quot; para agregar uno; luego podrá usar &quot;Editar&quot; o &quot;Ver&quot; desde la tabla para abrir esta lista y el modal.
+            </p>
           ) : (
             <ul className="space-y-2">
               {inputs.map((inp) => (
                 <li key={inp.idDlkInputSubprocess} className="flex items-center justify-between rounded-md border px-3 py-2">
                   <span className="font-medium">{inp.codInputSubprocess} - {inp.nameInputSubprocess}</span>
-                  <Button variant="link" size="sm" className="h-auto p-0" onClick={() => { onOpenChange(false); onSelectInput(inp); }}>
+                  <Button variant="default" size="sm" onClick={() => { onOpenChange(false); onSelectInput(inp); }}>
                     {mode === "edit" ? "Editar" : "Ver"}
                   </Button>
                 </li>

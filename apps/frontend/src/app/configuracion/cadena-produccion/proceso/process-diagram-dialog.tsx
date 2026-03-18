@@ -11,7 +11,7 @@ import type { ProcedureProcessRow } from "./procedure-process-modal";
 const BOX_CLASS =
   "rounded-lg border-2 border-[#2a9d9d] bg-[#40B2B2] text-white p-4 min-w-[200px] max-w-[280px] shadow-md";
 const PROCESS_BOX_CLASS =
-  "rounded-lg border-[3px] border-black bg-white text-black p-4 min-w-[220px] max-w-[320px] shadow-md";
+  "rounded-lg border-[3px] border-black bg-white text-black p-4 min-w-[220px] max-w-[200px] shadow-md";
 
 interface ProcessDiagramDialogProps {
   open: boolean;

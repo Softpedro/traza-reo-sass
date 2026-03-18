@@ -186,7 +186,7 @@ export function ProcedureActivityModal({
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <p className="text-xs text-muted-foreground">
-          Configuración &gt; Cadena de Producción &gt; Proceso &gt; Sub Proceso &gt; Actividad &gt; Procedure (Modal)
+          Configuración &gt; Cadena de Producción &gt; Proceso &gt; Sub Proceso &gt; Actividad &gt; Procedure
         </p>
 
         <div className="grid gap-4 py-4 sm:grid-cols-2">

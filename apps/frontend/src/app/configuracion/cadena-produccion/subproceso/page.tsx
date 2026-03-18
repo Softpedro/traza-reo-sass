@@ -12,7 +12,7 @@ import { InputSubprocessListDialog } from "./input-subprocess-list-dialog";
 import { OutputSubprocessModal, type OutputSubprocessRow } from "./output-subprocess-modal";
 import { OutputSubprocessListDialog } from "./output-subprocess-list-dialog";
 import { SubprocessDiagramDialog } from "./subprocess-diagram-dialog";
-import { ProcessGeneralDiagramDialog } from "../proceso/process-general-diagram-dialog";
+import { SubprocessGeneralDiagramDialog } from "./subprocess-general-diagram-dialog";
 
 type ModalState = {
   open: boolean;
@@ -279,7 +279,7 @@ export default function SubprocesoPage() {
         subprocess={diagramSubprocess}
       />
 
-      <ProcessGeneralDiagramDialog
+      <SubprocessGeneralDiagramDialog
         open={generalDiagramOpen}
         onOpenChange={setGeneralDiagramOpen}
       />

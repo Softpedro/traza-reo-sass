@@ -178,7 +178,7 @@ export function OutputActivityModal({
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <p className="text-xs text-muted-foreground">
-          Configuración &gt; Cadena de Producción &gt; Proceso &gt; Sub Proceso &gt; Actividad &gt; Output (Modal)
+          Configuración &gt; Cadena de Producción &gt; Proceso &gt; Sub Proceso &gt; Actividad &gt; Output
         </p>
 
         <div className="grid gap-4 py-4 sm:grid-cols-2">

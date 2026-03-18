@@ -9,9 +9,9 @@ import type { InputSubprocessRow } from "./input-subprocess-modal";
 import type { OutputSubprocessRow } from "./output-subprocess-modal";
 
 const BOX_CLASS =
-  "rounded-lg border-2 border-[#2a9d9d] bg-[#40B2B2] text-white p-4 min-w-[200px] max-w-[280px] shadow-md";
+  "rounded-none border-2 border-[#2a9d9d] bg-[#0f9bb6] text-black p-4 min-w-[220px] max-w-[300px] shadow-md";
 const SUBPROCESS_BOX_CLASS =
-  "rounded-lg border-2 border-[#2a9d9d] bg-white text-[#2a9d9d] p-4 min-w-[220px] max-w-[320px] shadow-md font-medium";
+  "rounded-none border-[3px] border-black bg-white text-black p-6 min-w-[220px] max-w-[320px] shadow-md";
 
 interface SubprocessDiagramDialogProps {
   open: boolean;
@@ -74,7 +74,7 @@ export function SubprocessDiagramDialog({
           <DialogTitle>Diagrama - Sub Proceso</DialogTitle>
         </DialogHeader>
         <p className="text-sm text-muted-foreground">
-          Configuración &gt; Cadena de Producción &gt; Proceso &gt; Sub Proceso &gt; Diagrama (Modal)
+          Configuración &gt; Cadena de Producción &gt; Proceso &gt; Sub Proceso &gt; Diagrama
         </p>
 
         {loading ? (
@@ -83,7 +83,7 @@ export function SubprocessDiagramDialog({
           <div className="flex flex-col items-center gap-6 py-4">
             {/* PROCEDURE (arriba) */}
             <div className={`${BOX_CLASS} w-full max-w-md`}>
-              <div className="font-semibold mb-2 border-b border-white/50 pb-1">PROCEDURE</div>
+              <div className="font-semibold mb-2 text-center">PROCEDURE</div>
               <div className="flex flex-col gap-0.5">
                 {procedureItems.length ? procedureItems : <span className="text-sm opacity-80">Sin procedures</span>}
               </div>
@@ -91,40 +91,37 @@ export function SubprocessDiagramDialog({
 
             {/* Flecha abajo Procedure -> Sub Proceso */}
             <div className="flex flex-col items-center">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-muted-foreground">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#0f9bb6]">
                 <path d="M12 4v16M12 20l-4-4M12 20l4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
 
             {/* Fila: INPUT - SUB PROCESO - OUTPUT */}
-            <div className="flex flex-row items-center justify-center gap-4 flex-wrap">
-              {/* INPUT */}
+            <div className="flex flex-row items-center justify-center gap-0 flex-wrap">
               <div className={BOX_CLASS}>
-                <div className="font-semibold mb-2 border-b border-white/50 pb-1">INPUT</div>
+                <div className="font-semibold mb-2 text-center">INPUT</div>
                 <div className="flex flex-col gap-0.5">
                   {inputItems.length ? inputItems : <span className="text-sm opacity-80">Sin inputs</span>}
                 </div>
               </div>
 
-              {/* Flecha Input -> Sub Proceso */}
-              <svg width="32" height="24" viewBox="0 0 32 24" fill="none" className="shrink-0 text-muted-foreground">
-                <path d="M0 12h28M24 8l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-
-              {/* SUB PROCESO (centro) */}
-              <div className={SUBPROCESS_BOX_CLASS}>
-                <div className="text-xs text-[#2a9d9d] font-semibold mb-1">SUB PROCESO</div>
-                <div className="text-sm">{subprocessLabel || "—"}</div>
-              </div>
-
-              {/* Flecha Sub Proceso -> Output */}
-              <svg width="32" height="24" viewBox="0 0 32 24" fill="none" className="shrink-0 text-muted-foreground">
+              <svg width="32" height="24" viewBox="0 0 32 24" fill="none" className="shrink-0 text-[#0f9bb6]">
                 <path d="M0 12h24M24 8L32 12L24 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
 
-              {/* OUTPUT */}
+              <div className={SUBPROCESS_BOX_CLASS}>
+                <div className="text-sm text-[#0f9bb6] font-semibold underline text-center mb-3">
+                  SUB PROCESO
+                </div>
+                <div className="text-base font-semibold text-center">{subprocessLabel || "—"}</div>
+              </div>
+
+              <svg width="32" height="24" viewBox="0 0 32 24" fill="none" className="shrink-0 text-[#0f9bb6]">
+                <path d="M0 12h24M24 8L32 12L24 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+
               <div className={BOX_CLASS}>
-                <div className="font-semibold mb-2 border-b border-white/50 pb-1">OUTPUT</div>
+                <div className="font-semibold mb-2 text-center">OUTPUT</div>
                 <div className="flex flex-col gap-0.5">
                   {outputItems.length ? outputItems : <span className="text-sm opacity-80">Sin outputs</span>}
                 </div>

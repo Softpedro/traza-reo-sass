@@ -5,7 +5,7 @@ import { DataTable } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
 import { getColumns, type ActivityRow } from "./columns";
 import { ActividadModal } from "./actividad-modal";
-import { ProcessGeneralDiagramDialog } from "../proceso/process-general-diagram-dialog";
+import { ActivityGeneralDiagramDialog } from "./activity-general-diagram-dialog";
 import { ProcedureActivityModal, type ProcedureActivityRow } from "./procedure-activity-modal";
 import { ProcedureActivityListDialog } from "./procedure-activity-list-dialog";
 import { InputActivityModal, type InputActivityRow } from "./input-activity-modal";
@@ -274,7 +274,7 @@ export default function ActividadPage() {
         onSuccess={fetchItems}
       />
 
-      <ProcessGeneralDiagramDialog
+      <ActivityGeneralDiagramDialog
         open={generalDiagramOpen}
         onOpenChange={setGeneralDiagramOpen}
       />

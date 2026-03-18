@@ -178,7 +178,7 @@ export function InputActivityModal({
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <p className="text-xs text-muted-foreground">
-          Configuración &gt; Cadena de Producción &gt; Proceso &gt; Sub proceso &gt; Actividad &gt; Input (Modal)
+          Configuración &gt; Cadena de Producción &gt; Proceso &gt; Sub proceso &gt; Actividad &gt; Input
         </p>
 
         <div className="grid gap-4 py-4 sm:grid-cols-2">

@@ -2,6 +2,7 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@fullstack-reo/ui";
+import { labelEmpresaCategoria } from "./empresa-categories";
 
 export type ParentCompany = {
   idDlkParentCompany: number;
@@ -10,14 +11,16 @@ export type ParentCompany = {
   nameParentCompany: string;
   categoryParentCompany: number;
   numRucParentCompany: string;
-  codUbigeoParentCompany: string;
+  codUbigeoParentCompany: number;
   addressParentCompany: string;
-  locationParentCompany: string;
+  /** GPS / localización (columna GPS_LOCATION_PARENT_COMPANY en BD) */
+  gpsLocationParentCompany: string | null;
   emailParentCompany: string;
   cellularParentCompany: string;
   webParentCompany: string;
   canisterDataParentCompany: string;
   canisterAssetsParentCompany: string;
+  /** Data URL del logo (API serializa Bytes → `data:image/...;base64,...`) */
   logoParentCompany: string | null;
   stateParentCompany: number;
 };
@@ -41,6 +44,11 @@ export function getColumns(
       ),
     },
     {
+      id: "categoria",
+      header: "Categoría",
+      cell: ({ row }) => labelEmpresaCategoria(row.original.categoryParentCompany),
+    },
+    {
       accessorKey: "numRucParentCompany",
       header: "RUC",
     },
@@ -55,7 +63,7 @@ export function getColumns(
         const state = row.getValue("stateParentCompany") as number;
         return (
           <span className={state === 1 ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
-            {state === 1 ? "On" : "Off"}
+            {state === 1 ? "Activa" : "Desactivada"}
           </span>
         );
       },

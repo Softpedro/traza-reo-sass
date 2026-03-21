@@ -18,6 +18,13 @@ import {
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
 import type { UserReo } from "./columns";
+import { POSITION_USER_LABELS, ROL_USER_LABELS } from "./columns";
+
+function photoSrcFromApi(photo: string | null | undefined): string | null {
+  if (photo == null || photo === "") return null;
+  if (photo.startsWith("data:")) return photo;
+  return `data:image/png;base64,${photo}`;
+}
 
 type ModalMode = "create" | "edit" | "view";
 
@@ -47,12 +54,6 @@ const SEX_OPTIONS: Record<string, string> = {
   O: "Otro",
 };
 
-const ROL_LABELS: Record<number, string> = {
-  1: "Rol 1",
-  2: "Rol 2",
-  3: "Rol 3",
-};
-
 const emptyForm = {
   idDlkParentCompany: 0,
   codParentCompany: "",
@@ -62,13 +63,14 @@ const emptyForm = {
   paternalLastNameUser: "",
   maternalLastNameUser: "",
   sexUser: "M",
-  positionUser: 0,
+  positionUser: 1,
   rolUser: 1,
   emailUser: "",
   cellularUser: "",
   userLogin: "",
   password: "",
   photograph: "",
+  stateUser: 1,
 };
 
 export function UsuarioModal({
@@ -81,6 +83,7 @@ export function UsuarioModal({
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [detailUser, setDetailUser] = useState<UserReo | null>(null);
   const [empresas, setEmpresas] = useState<ParentCompanyOption[]>([]);
   const readOnly = mode === "view";
 
@@ -93,30 +96,66 @@ export function UsuarioModal({
   }, [open]);
 
   useEffect(() => {
-    if (usuario && (mode === "edit" || mode === "view")) {
-      setForm({
-        idDlkParentCompany: usuario.parentCompany?.idDlkParentCompany ?? 0,
-        codParentCompany: usuario.parentCompany?.codParentCompany ?? "",
-        documentType: 1,
-        documentNumber: "",
-        nameUser: usuario.nameUser,
-        paternalLastNameUser: usuario.paternalLastNameUser,
-        maternalLastNameUser: usuario.maternalLastNameUser,
-        sexUser: "M",
-        positionUser: usuario.positionUser,
-        rolUser: usuario.rolUser,
-        emailUser: usuario.emailUser,
-        cellularUser: "",
-        userLogin: "",
+    if (!open) {
+      setDetailUser(null);
+      return;
+    }
+
+    if (mode === "create") {
+      setForm(emptyForm);
+      setDetailUser(null);
+      setPhotoPreview(null);
+      return;
+    }
+
+    if (!usuario?.idDlkUserReo) return;
+
+    function userRowToForm(u: UserReo) {
+      const sex = u.sexUser && ["M", "F", "O"].includes(u.sexUser) ? u.sexUser : "M";
+      const pos = Number(u.positionUser);
+      const rol = Number(u.rolUser);
+      return {
+        idDlkParentCompany: u.parentCompany?.idDlkParentCompany ?? 0,
+        codParentCompany: u.codParentCompany ?? u.parentCompany?.codParentCompany ?? "",
+        documentType: Number(u.documentType) > 0 ? Number(u.documentType) : 1,
+        documentNumber: u.documentNumber ?? "",
+        nameUser: u.nameUser ?? "",
+        paternalLastNameUser: u.paternalLastNameUser ?? "",
+        maternalLastNameUser: u.maternalLastNameUser ?? "",
+        sexUser: sex,
+        positionUser: pos >= 1 && pos <= 3 ? pos : 1,
+        rolUser: rol >= 1 && rol <= 3 ? rol : 1,
+        emailUser: u.emailUser ?? "",
+        cellularUser: u.cellularUser ?? "",
+        userLogin: u.userLogin ?? "",
         password: "",
         photograph: "",
-      });
-      setPhotoPreview(null);
-    } else {
-      setForm(emptyForm);
-      setPhotoPreview(null);
+        stateUser: u.stateUser === 1 ? 1 : 0,
+      };
     }
-  }, [usuario, mode, open]);
+
+    setPhotoPreview(null);
+    setForm(userRowToForm(usuario));
+    setDetailUser(null);
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const res = await fetch(apiUrl(`/api/users/${usuario.idDlkUserReo}`));
+        if (!res.ok) return;
+        const detail = (await res.json()) as UserReo;
+        if (cancelled) return;
+        setForm(userRowToForm(detail));
+        setDetailUser(detail);
+      } catch {
+        if (!cancelled) setDetailUser(usuario);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [open, mode, usuario]);
 
   function handleChange(field: string, value: string | number) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -175,7 +214,14 @@ export function UsuarioModal({
           : apiUrl("/api/users");
       const method = mode === "edit" ? "PUT" : "POST";
 
-      const payload: Record<string, unknown> = { ...form };
+      const payload: Record<string, unknown> = {
+        ...form,
+        idDlkParentCompany: Number(form.idDlkParentCompany),
+        documentType: Number(form.documentType),
+        positionUser: Number(form.positionUser),
+        rolUser: Number(form.rolUser),
+        stateUser: Number(form.stateUser),
+      };
       if (!payload.photograph) {
         delete payload.photograph;
       }
@@ -218,6 +264,12 @@ export function UsuarioModal({
         : "Detalle de Usuario";
 
   const selectedEmpresa = empresas.find((e) => e.idDlkParentCompany === form.idDlkParentCompany);
+
+  const storedPhotoSrc =
+    mode !== "create" && (detailUser?.photograph ?? usuario?.photograph)
+      ? photoSrcFromApi(detailUser?.photograph ?? usuario?.photograph)
+      : null;
+  const photoDisplaySrc = photoPreview ?? storedPhotoSrc;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -367,19 +419,42 @@ export function UsuarioModal({
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right text-primary font-semibold">Cargo:</Label>
-            <Input
-              className="col-span-3"
-              value={form.positionUser}
-              onChange={(e) => handleChange("positionUser", Number(e.target.value) || 0)}
-              readOnly={readOnly}
-            />
+            <div className="col-span-3">
+              {readOnly ? (
+                <Input
+                  readOnly
+                  value={
+                    POSITION_USER_LABELS[form.positionUser] ?? `Cargo ${form.positionUser}`
+                  }
+                />
+              ) : (
+                <Select
+                  value={String(form.positionUser)}
+                  onValueChange={(v) => handleChange("positionUser", Number(v))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleccionar cargo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(POSITION_USER_LABELS).map(([k, v]) => (
+                      <SelectItem key={k} value={k}>
+                        {v}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right text-primary font-semibold">Rol:</Label>
             <div className="col-span-3">
               {readOnly ? (
-                <Input readOnly value={ROL_LABELS[form.rolUser] ?? `Rol ${form.rolUser}`} />
+                <Input
+                  readOnly
+                  value={ROL_USER_LABELS[form.rolUser] ?? `Rol ${form.rolUser}`}
+                />
               ) : (
                 <Select
                   value={String(form.rolUser)}
@@ -389,7 +464,7 @@ export function UsuarioModal({
                     <SelectValue placeholder="Seleccionar rol" />
                   </SelectTrigger>
                   <SelectContent>
-                    {Object.entries(ROL_LABELS).map(([k, v]) => (
+                    {Object.entries(ROL_USER_LABELS).map(([k, v]) => (
                       <SelectItem key={k} value={k}>
                         {v}
                       </SelectItem>
@@ -424,47 +499,81 @@ export function UsuarioModal({
           {!readOnly && (
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right text-primary font-semibold">Contraseña:</Label>
-              <Input
-                className="col-span-3"
-                type="password"
-                value={form.password}
-                onChange={(e) => handleChange("password", e.target.value)}
-              />
+              <div className="col-span-3 space-y-1">
+                <Input
+                  className="col-span-3"
+                  type="password"
+                  value={form.password}
+                  onChange={(e) => handleChange("password", e.target.value)}
+                  placeholder={mode === "edit" ? "Dejar vacío para no cambiar" : ""}
+                  autoComplete={mode === "create" ? "new-password" : "new-password"}
+                />
+                {mode === "edit" && (
+                  <p className="text-xs text-muted-foreground">
+                    Solo completa si quieres cambiar la contraseña.
+                  </p>
+                )}
+              </div>
             </div>
           )}
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right text-primary font-semibold">Foto:</Label>
-            <div className="col-span-3">
-              {readOnly ? (
-                <span className="text-sm text-muted-foreground">
-                  {usuario ? "Archivo cargado" : "Sin foto"}
-                </span>
+          <div className="grid grid-cols-4 items-start gap-4">
+            <Label className="text-right text-primary font-semibold pt-2">Foto:</Label>
+            <div className="col-span-3 space-y-3">
+              {photoDisplaySrc ? (
+                <img
+                  src={photoDisplaySrc}
+                  alt="Fotografía del usuario"
+                  className="h-32 w-32 rounded-full object-cover border bg-muted/30"
+                />
               ) : (
-                <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">Sin foto</p>
+              )}
+              {!readOnly && (
+                <>
                   <Input type="file" accept="image/*" onChange={handlePhotoChange} />
-                  {photoPreview && (
-                    <img
-                      src={photoPreview}
-                      alt="Foto"
-                      className="h-16 w-16 rounded-full object-cover border"
-                    />
+                  {(mode === "edit" || mode === "create") && storedPhotoSrc && !photoPreview && (
+                    <p className="text-xs text-muted-foreground">
+                      La foto actual se mantiene si no eliges otra.
+                    </p>
                   )}
-                </div>
+                  {(mode === "edit" || mode === "create") && photoPreview && (
+                    <p className="text-xs text-muted-foreground">
+                      Vista previa. Guarda para aplicar el cambio.
+                    </p>
+                  )}
+                </>
               )}
             </div>
           </div>
 
-          {mode === "view" && usuario && (
+          {(mode === "edit" || mode === "view") && (
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right text-primary font-semibold">Estado:</Label>
-              <span
-                className={`col-span-3 font-medium ${
-                  usuario.stateUser === 1 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {usuario.stateUser === 1 ? "Online" : "Offline"}
-              </span>
+              <div className="col-span-3">
+                {readOnly ? (
+                  <span
+                    className={`font-medium ${
+                      form.stateUser === 1 ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    {form.stateUser === 1 ? "Activa" : "Desactivada"}
+                  </span>
+                ) : (
+                  <Select
+                    value={String(form.stateUser)}
+                    onValueChange={(v) => handleChange("stateUser", Number(v))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Estado" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Activa</SelectItem>
+                      <SelectItem value="0">Desactivada</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
             </div>
           )}
         </div>

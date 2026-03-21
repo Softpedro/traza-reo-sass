@@ -78,7 +78,13 @@ export default function MarcaPage() {
 
       <MarcaModal
         open={modal.open}
-        onOpenChange={(open) => setModal((prev) => ({ ...prev, open }))}
+        onOpenChange={(open) =>
+          setModal((prev) => ({
+            ...prev,
+            open,
+            marca: open ? prev.marca : null,
+          }))
+        }
         mode={modal.mode}
         marca={modal.marca}
         onSuccess={fetchMarcas}

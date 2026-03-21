@@ -78,7 +78,13 @@ export default function UsuarioPage() {
 
       <UsuarioModal
         open={modal.open}
-        onOpenChange={(open) => setModal((prev) => ({ ...prev, open }))}
+        onOpenChange={(open) =>
+          setModal((prev) => ({
+            ...prev,
+            open,
+            usuario: open ? prev.usuario : null,
+          }))
+        }
         mode={modal.mode}
         usuario={modal.usuario}
         onSuccess={fetchUsuarios}

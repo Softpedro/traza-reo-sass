@@ -59,7 +59,7 @@ export function getColumns(
         const state = row.getValue("stateFacility") as number;
         return (
           <span className={state === 1 ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
-            {state === 1 ? "On" : "Off"}
+            {state === 1 ? "Activa" : "Desactivada"}
           </span>
         );
       },

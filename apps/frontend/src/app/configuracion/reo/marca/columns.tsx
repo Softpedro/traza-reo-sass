@@ -6,9 +6,21 @@ import { Button } from "@fullstack-reo/ui";
 export type Brand = {
   idDlkBrand: number;
   codBrand: string;
+  /** Denormalizado en MD_BRAND */
+  codParentCompany?: string;
   nameBrand: string;
   desBrand?: string | null;
+  codUbigeoBrand?: number;
+  addressBrand?: string;
+  locationBrand?: string | null;
   emailBrand: string;
+  cellularBrand?: string;
+  facebookBrand?: string | null;
+  instagramBrand?: string | null;
+  whatsappBrand?: string | null;
+  ecommerceBrand?: string | null;
+  /** Data URL desde API (logo binario mapeado en backend) */
+  logoBrand?: string | null;
   stateBrand: number;
   parentCompany?: {
     idDlkParentCompany: number;
@@ -52,7 +64,7 @@ export function getColumns(
         const state = row.getValue("stateBrand") as number;
         return (
           <span className={state === 1 ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
-            {state === 1 ? "On" : "Off"}
+            {state === 1 ? "Activa" : "Desactivada"}
           </span>
         );
       },

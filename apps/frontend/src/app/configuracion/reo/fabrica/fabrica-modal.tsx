@@ -54,6 +54,8 @@ const emptyForm = {
   gpsLocationFacility: "",
   emailFacility: "",
   cellularFacility: "",
+  /** 1 = activa, 0 = desactivada (sigue en listado; DELETE es baja lógica) */
+  stateFacility: 1,
 };
 
 export function FabricaModal({
@@ -76,8 +78,8 @@ export function FabricaModal({
       .then((res) => res.json())
       .then((data: ParentCompanyOption[]) => setEmpresas(data))
       .catch((err) => console.error("Error al cargar empresas:", err));
-    // cargar ubigeo (limit 500 para selects)
-    fetch(apiUrl("/api/ubigeo?limit=500"))
+    // maestro completo de ubigeo (API sin limit devuelve todas las filas)
+    fetch(apiUrl("/api/ubigeo"))
       .then((res) => res.json())
       .then((data: UbigeoOption[]) => setUbigeos(data))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
@@ -96,6 +98,7 @@ export function FabricaModal({
         gpsLocationFacility: facility.gpsLocationFacility ?? "",
         emailFacility: facility.emailFacility,
         cellularFacility: facility.cellularFacility,
+        stateFacility: facility.stateFacility === 1 ? 1 : 0,
       });
     } else {
       setForm(emptyForm);
@@ -132,6 +135,7 @@ export function FabricaModal({
         ...form,
         codUbigeo: Number(form.codUbigeo),
         idDlkParentCompany: Number(form.idDlkParentCompany),
+        stateFacility: Number(form.stateFacility),
       };
 
       const res = await fetch(url, {
@@ -319,16 +323,33 @@ export function FabricaModal({
             />
           </div>
 
-          {mode === "view" && facility && (
+          {(mode === "edit" || mode === "view") && (
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right text-primary font-semibold">Estado:</Label>
-              <span
-                className={`col-span-3 font-medium ${
-                  facility.stateFacility === 1 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {facility.stateFacility === 1 ? "On" : "Off"}
-              </span>
+              <div className="col-span-3">
+                {readOnly ? (
+                  <span
+                    className={`font-medium ${
+                      form.stateFacility === 1 ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    {form.stateFacility === 1 ? "Activa" : "Desactivada"}
+                  </span>
+                ) : (
+                  <Select
+                    value={String(form.stateFacility)}
+                    onValueChange={(v) => handleChange("stateFacility", Number(v))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Estado" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Activa</SelectItem>
+                      <SelectItem value="0">Desactivada</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
             </div>
           )}
         </div>

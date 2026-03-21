@@ -6,10 +6,17 @@ import { Button } from "@fullstack-reo/ui";
 export type FacilityMaquila = {
   idDlkFacilityMaquila: number;
   codFacilityMaquila: string;
+  /** Denormalizado en MD_FACILITY_MAQUILA; útil si la relación maquila no viene en el listado */
+  codMaquila?: string;
   nameFacilityMaquila: string;
   codGlnFacilityMaquila: string | null;
   registryFacilityMaquila: string;
   identifierFacilityMaquila: string;
+  codUbigeo: number;
+  addressFacilityMaquila: string;
+  gpsLocationFacilityMaquila: string | null;
+  emailFacilityMaquila: string;
+  cellularFacilityMaquila: string;
   stateFacilityMaquila: number;
   maquila?: {
     idDlkMaquila: number;
@@ -54,7 +61,7 @@ export function getColumns(
         const state = row.getValue("stateFacilityMaquila") as number;
         return (
           <span className={state === 1 ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
-            {state === 1 ? "On" : "Off"}
+            {state === 1 ? "Activa" : "Desactivada"}
           </span>
         );
       },

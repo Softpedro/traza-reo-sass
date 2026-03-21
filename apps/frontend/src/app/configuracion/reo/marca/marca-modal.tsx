@@ -20,6 +20,12 @@ import { UbigeoSelector } from "@/components/ubigeo-selector";
 import { apiUrl } from "@/lib/api";
 import type { Brand } from "./columns";
 
+function logoSrcFromApi(logo: string | null | undefined): string | null {
+  if (logo == null || logo === "") return null;
+  if (logo.startsWith("data:")) return logo;
+  return `data:image/png;base64,${logo}`;
+}
+
 type ModalMode = "create" | "edit" | "view";
 
 interface MarcaModalProps {
@@ -58,6 +64,8 @@ const emptyForm = {
   whatsappBrand: "",
   ecommerceBrand: "",
   logoBrand: "",
+  /** 1 = activa, 0 = desactivada */
+  stateBrand: 1,
 };
 
 export function MarcaModal({
@@ -70,6 +78,7 @@ export function MarcaModal({
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [detailBrand, setDetailBrand] = useState<Brand | null>(null);
   const [empresas, setEmpresas] = useState<ParentCompanyOption[]>([]);
   const [ubigeos, setUbigeos] = useState<UbigeoOption[]>([]);
   const readOnly = mode === "view";
@@ -81,36 +90,70 @@ export function MarcaModal({
       .then((data: ParentCompanyOption[]) => setEmpresas(data))
       .catch((err) => console.error("Error al cargar empresas:", err));
 
-    fetch(apiUrl("/api/ubigeo?limit=500"))
+    fetch(apiUrl("/api/ubigeo"))
       .then((res) => res.json())
       .then((data: UbigeoOption[]) => setUbigeos(data))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
   }, [open]);
 
   useEffect(() => {
-    if (marca && (mode === "edit" || mode === "view")) {
-      setForm({
-        idDlkParentCompany: marca.parentCompany?.idDlkParentCompany ?? 0,
-        codParentCompany: marca.parentCompany?.codParentCompany ?? "",
-        nameBrand: marca.nameBrand,
-        desBrand: marca.desBrand ?? "",
-        codUbigeoBrand: 0,
-        addressBrand: "",
-        locationBrand: "",
-        emailBrand: marca.emailBrand,
-        cellularBrand: "",
-        facebookBrand: "",
-        instagramBrand: "",
-        whatsappBrand: "",
-        ecommerceBrand: "",
-        logoBrand: "",
-      });
-      setLogoPreview(null);
-    } else {
-      setForm(emptyForm);
-      setLogoPreview(null);
+    if (!open) {
+      setDetailBrand(null);
+      return;
     }
-  }, [marca, mode, open]);
+
+    if (mode === "create") {
+      setForm(emptyForm);
+      setDetailBrand(null);
+      setLogoPreview(null);
+      return;
+    }
+
+    if (!marca?.idDlkBrand) return;
+
+    function brandRowToForm(b: Brand) {
+      const u = Number(b.codUbigeoBrand);
+      return {
+        idDlkParentCompany: b.parentCompany?.idDlkParentCompany ?? 0,
+        codParentCompany: b.codParentCompany ?? b.parentCompany?.codParentCompany ?? "",
+        nameBrand: b.nameBrand ?? "",
+        desBrand: b.desBrand ?? "",
+        codUbigeoBrand: Number.isFinite(u) ? u : 0,
+        addressBrand: b.addressBrand ?? "",
+        locationBrand: b.locationBrand ?? "",
+        emailBrand: b.emailBrand ?? "",
+        cellularBrand: b.cellularBrand ?? "",
+        facebookBrand: b.facebookBrand ?? "",
+        instagramBrand: b.instagramBrand ?? "",
+        whatsappBrand: b.whatsappBrand ?? "",
+        ecommerceBrand: b.ecommerceBrand ?? "",
+        logoBrand: "",
+        stateBrand: b.stateBrand === 1 ? 1 : 0,
+      };
+    }
+
+    setLogoPreview(null);
+    setForm(brandRowToForm(marca));
+    setDetailBrand(null);
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const res = await fetch(apiUrl(`/api/brands/${marca.idDlkBrand}`));
+        if (!res.ok) return;
+        const detail = (await res.json()) as Brand;
+        if (cancelled) return;
+        setForm(brandRowToForm(detail));
+        setDetailBrand(detail);
+      } catch {
+        if (!cancelled) setDetailBrand(marca);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [open, mode, marca]);
 
   function handleChange(field: string, value: string | number) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -148,6 +191,10 @@ export function MarcaModal({
       alert("El nombre de la marca es obligatorio");
       return;
     }
+    if (!form.codUbigeoBrand) {
+      alert("Debes seleccionar un ubigeo (departamento, provincia y distrito).");
+      return;
+    }
 
     setSaving(true);
     try {
@@ -159,7 +206,9 @@ export function MarcaModal({
 
       const payload = {
         ...form,
-        codUbigeoBrand: form.codUbigeoBrand || undefined,
+        codUbigeoBrand: Number(form.codUbigeoBrand),
+        idDlkParentCompany: Number(form.idDlkParentCompany),
+        stateBrand: Number(form.stateBrand),
       };
       if (!payload.logoBrand) {
         delete (payload as Record<string, unknown>).logoBrand;
@@ -200,7 +249,12 @@ export function MarcaModal({
         : "Detalle de Marca";
 
   const selectedEmpresa = empresas.find((e) => e.idDlkParentCompany === form.idDlkParentCompany);
-  const selectedUbigeo = ubigeos.find((u) => u.codUbigeo === form.codUbigeoBrand);
+
+  const storedLogoSrc =
+    mode !== "create" && (detailBrand?.logoBrand ?? marca?.logoBrand)
+      ? logoSrcFromApi(detailBrand?.logoBrand ?? marca?.logoBrand)
+      : null;
+  const logoDisplaySrc = logoPreview ?? storedLogoSrc;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -280,28 +334,32 @@ export function MarcaModal({
             </div>
           </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right text-primary font-semibold">Logo:</Label>
-            <div className="col-span-3">
-              {readOnly ? (
-                <span className="text-sm text-muted-foreground">
-                  {marca ? "Archivo cargado" : "Sin logo"}
-                </span>
+          <div className="grid grid-cols-4 items-start gap-4">
+            <Label className="text-right text-primary font-semibold pt-2">Logo:</Label>
+            <div className="col-span-3 space-y-3">
+              {logoDisplaySrc ? (
+                <img
+                  src={logoDisplaySrc}
+                  alt="Logo de la marca"
+                  className="max-h-40 max-w-full rounded-md border bg-muted/30 object-contain p-1"
+                />
               ) : (
-                <div className="space-y-2">
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                  />
-                  {logoPreview && (
-                    <img
-                      src={logoPreview}
-                      alt="Vista previa"
-                      className="h-16 w-16 rounded object-contain border"
-                    />
+                <p className="text-sm text-muted-foreground">Sin logo</p>
+              )}
+              {!readOnly && (
+                <>
+                  <Input type="file" accept="image/*" onChange={handleFileChange} />
+                  {(mode === "edit" || mode === "create") && storedLogoSrc && !logoPreview && (
+                    <p className="text-xs text-muted-foreground">
+                      El archivo actual se mantiene si no eliges otro.
+                    </p>
                   )}
-                </div>
+                  {(mode === "edit" || mode === "create") && logoPreview && (
+                    <p className="text-xs text-muted-foreground">
+                      Vista previa del archivo seleccionado. Guarda para aplicar el cambio.
+                    </p>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -396,16 +454,33 @@ export function MarcaModal({
             />
           </div>
 
-          {mode === "view" && marca && (
+          {(mode === "edit" || mode === "view") && (
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right text-primary font-semibold">Estado:</Label>
-              <span
-                className={`col-span-3 font-medium ${
-                  marca.stateBrand === 1 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {marca.stateBrand === 1 ? "On" : "Off"}
-              </span>
+              <div className="col-span-3">
+                {readOnly ? (
+                  <span
+                    className={`font-medium ${
+                      form.stateBrand === 1 ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    {form.stateBrand === 1 ? "Activa" : "Desactivada"}
+                  </span>
+                ) : (
+                  <Select
+                    value={String(form.stateBrand)}
+                    onValueChange={(v) => handleChange("stateBrand", Number(v))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Estado" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Activa</SelectItem>
+                      <SelectItem value="0">Desactivada</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
             </div>
           )}
         </div>

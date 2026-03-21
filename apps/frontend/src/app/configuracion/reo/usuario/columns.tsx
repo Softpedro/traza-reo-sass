@@ -6,11 +6,19 @@ import { Button } from "@fullstack-reo/ui";
 export type UserReo = {
   idDlkUserReo: number;
   codUserReo: string;
+  codParentCompany?: string;
+  documentType?: number;
+  documentNumber?: string;
   nameUser: string;
   paternalLastNameUser: string;
   maternalLastNameUser: string;
+  sexUser?: string;
   positionUser: number;
   emailUser: string;
+  cellularUser?: string;
+  userLogin?: string;
+  /** Data URL desde API (foto binaria mapeada en backend). La contraseña no se expone en el API. */
+  photograph?: string | null;
   rolUser: number;
   stateUser: number;
   parentCompany?: {
@@ -20,10 +28,18 @@ export type UserReo = {
   } | null;
 };
 
-const ROL_LABELS: Record<number, string> = {
-  1: "Rol 1",
-  2: "Rol 2",
-  3: "Rol 3",
+/** Valores almacenados en POSITION_USER (MD_USER_REO) */
+export const POSITION_USER_LABELS: Record<number, string> = {
+  1: "Gerente General",
+  2: "Gerente Comercial",
+  3: "Gerente Financiero",
+};
+
+/** Valores almacenados en ROL_USER */
+export const ROL_USER_LABELS: Record<number, string> = {
+  1: "Operador",
+  2: "Administrador",
+  3: "Auditor",
 };
 
 export function getColumns(
@@ -54,6 +70,10 @@ export function getColumns(
     {
       accessorKey: "positionUser",
       header: "Cargo",
+      cell: ({ row }) => {
+        const pos = row.getValue("positionUser") as number;
+        return POSITION_USER_LABELS[pos] ?? `Cargo ${pos}`;
+      },
     },
     {
       accessorKey: "emailUser",
@@ -64,7 +84,7 @@ export function getColumns(
       header: "Rol",
       cell: ({ row }) => {
         const rol = row.getValue("rolUser") as number;
-        return ROL_LABELS[rol] ?? `Rol ${rol}`;
+        return ROL_USER_LABELS[rol] ?? `Rol ${rol}`;
       },
     },
     {
@@ -74,7 +94,7 @@ export function getColumns(
         const state = row.getValue("stateUser") as number;
         return (
           <span className={state === 1 ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
-            {state === 1 ? "Online" : "Offline"}
+            {state === 1 ? "Activa" : "Desactivada"}
           </span>
         );
       },

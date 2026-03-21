@@ -6,7 +6,18 @@ import { Button } from "@fullstack-reo/ui";
 export type Subbrand = {
   idDlkSubbrand: number;
   codSubbrand: string;
+  codBrand?: string;
   nameSubbrand: string;
+  codUbigeoSubbrand?: number;
+  addressSubbrand?: string;
+  locationSubbrand?: string | null;
+  emailSubbrand?: string;
+  cellularSubbrand?: string;
+  facebookSubbrand?: string | null;
+  instagramSubbrand?: string | null;
+  whatsappSubbrand?: string | null;
+  ecommerceSubbrand?: string | null;
+  logoSubbrand?: string | null;
   stateSubbrand: number;
   brand?: {
     idDlkBrand: number;
@@ -63,7 +74,7 @@ export function getColumns(
         const state = row.getValue("stateSubbrand") as number;
         return (
           <span className={state === 1 ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
-            {state === 1 ? "On" : "Off"}
+            {state === 1 ? "Activa" : "Desactivada"}
           </span>
         );
       },

@@ -10,10 +10,21 @@ import {
   Input,
   Label,
   Button,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
 } from "@fullstack-reo/ui";
 import { UbigeoSelector } from "@/components/ubigeo-selector";
 import { apiUrl } from "@/lib/api";
 import type { Maquila } from "./columns";
+
+function logoSrcFromApi(logo: string | null | undefined): string | null {
+  if (logo == null || logo === "") return null;
+  if (logo.startsWith("data:")) return logo;
+  return `data:image/png;base64,${logo}`;
+}
 
 type ModalMode = "create" | "edit" | "view";
 
@@ -43,6 +54,8 @@ const emptyForm = {
   cellularMaquila: "",
   webMaquila: "",
   logoMaquila: "",
+  /** 1 = activa, 0 = desactivada (flgStatutActif solo en DELETE) */
+  stateMaquila: 1,
 };
 
 export function MaquilaModal({
@@ -58,9 +71,15 @@ export function MaquilaModal({
   const [ubigeos, setUbigeos] = useState<UbigeoOption[]>([]);
   const readOnly = mode === "view";
 
+  const storedLogoSrc =
+    mode !== "create" && maquila?.logoMaquila
+      ? logoSrcFromApi(maquila.logoMaquila)
+      : null;
+  const logoDisplaySrc = logoPreview ?? storedLogoSrc;
+
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/ubigeo?limit=500"))
+    fetch(apiUrl("/api/ubigeo"))
       .then((res) => res.json())
       .then((data: UbigeoOption[]) => setUbigeos(data))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
@@ -72,13 +91,14 @@ export function MaquilaModal({
         nameMaquila: maquila.nameMaquila,
         numRucMaquila: maquila.numRucMaquila,
         codGlnMaquila: maquila.codGlnMaquila ?? "",
-        codUbigeo: 0, // se ajusta al cargar detalle completo si hace falta
-        addressMaquila: "",
-        gpsLocationMaquila: "",
-        emailMaquila: "",
-        cellularMaquila: "",
-        webMaquila: "",
+        codUbigeo: Number(maquila.codUbigeo) || 0,
+        addressMaquila: maquila.addressMaquila ?? "",
+        gpsLocationMaquila: maquila.gpsLocationMaquila ?? "",
+        emailMaquila: maquila.emailMaquila ?? "",
+        cellularMaquila: maquila.cellularMaquila ?? "",
+        webMaquila: maquila.webMaquila ?? "",
         logoMaquila: "",
+        stateMaquila: maquila.stateMaquila === 1 ? 1 : 0,
       });
       setLogoPreview(null);
     } else {
@@ -113,6 +133,10 @@ export function MaquilaModal({
       alert("El RUC es obligatorio");
       return;
     }
+    if (!form.codUbigeo) {
+      alert("Debes seleccionar un ubigeo (departamento, provincia y distrito).");
+      return;
+    }
 
     setSaving(true);
     try {
@@ -124,7 +148,8 @@ export function MaquilaModal({
 
       const payload = {
         ...form,
-        codUbigeo: form.codUbigeo || undefined,
+        codUbigeo: Number(form.codUbigeo),
+        stateMaquila: Number(form.stateMaquila),
       };
       if (!payload.logoMaquila) {
         delete (payload as Record<string, unknown>).logoMaquila;
@@ -163,8 +188,6 @@ export function MaquilaModal({
       : mode === "edit"
         ? "Editar Maquila"
         : "Detalle de Maquila";
-
-  const selectedUbigeo = ubigeos.find((u) => u.codUbigeo === form.codUbigeo);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -281,42 +304,63 @@ export function MaquilaModal({
             />
           </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right text-primary font-semibold">Logo:</Label>
-            <div className="col-span-3">
-              {readOnly ? (
-                <span className="text-sm text-muted-foreground">
-                  {maquila ? "Archivo cargado" : "Sin logo"}
-                </span>
+          <div className="grid grid-cols-4 items-start gap-4">
+            <Label className="text-right text-primary font-semibold pt-2">Logo:</Label>
+            <div className="col-span-3 space-y-3">
+              {logoDisplaySrc ? (
+                <img
+                  src={logoDisplaySrc}
+                  alt="Logo de la maquila"
+                  className="max-h-40 max-w-full rounded-md border bg-muted/30 object-contain p-1"
+                />
               ) : (
-                <div className="space-y-2">
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                  />
-                  {logoPreview && (
-                    <img
-                      src={logoPreview}
-                      alt="Vista previa"
-                      className="h-16 w-16 rounded object-contain border"
-                    />
+                <p className="text-sm text-muted-foreground">Sin logo</p>
+              )}
+              {!readOnly && (
+                <>
+                  <Input type="file" accept="image/*" onChange={handleFileChange} />
+                  {(mode === "edit" || mode === "create") && storedLogoSrc && !logoPreview && (
+                    <p className="text-xs text-muted-foreground">
+                      El archivo actual se mantiene si no eliges otro.
+                    </p>
                   )}
-                </div>
+                  {(mode === "edit" || mode === "create") && logoPreview && (
+                    <p className="text-xs text-muted-foreground">
+                      Vista previa del archivo seleccionado. Guarda para aplicar el cambio.
+                    </p>
+                  )}
+                </>
               )}
             </div>
           </div>
 
-          {mode === "view" && maquila && (
+          {(mode === "edit" || mode === "view") && (
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right text-primary font-semibold">Estado:</Label>
-              <span
-                className={`col-span-3 font-medium ${
-                  maquila.stateMaquila === 1 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {maquila.stateMaquila === 1 ? "On" : "Off"}
-              </span>
+              <div className="col-span-3">
+                {readOnly ? (
+                  <span
+                    className={`font-medium ${
+                      form.stateMaquila === 1 ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    {form.stateMaquila === 1 ? "Activa" : "Desactivada"}
+                  </span>
+                ) : (
+                  <Select
+                    value={String(form.stateMaquila)}
+                    onValueChange={(v) => handleChange("stateMaquila", Number(v))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Estado" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Activa</SelectItem>
+                      <SelectItem value="0">Desactivada</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
             </div>
           )}
         </div>

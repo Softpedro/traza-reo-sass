@@ -16,6 +16,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@fullstack-reo/ui";
+import { UbigeoSelector } from "@/components/ubigeo-selector";
 import { apiUrl } from "@/lib/api";
 import type { FacilityMaquila } from "./columns";
 
@@ -54,6 +55,8 @@ const emptyForm = {
   gpsLocationFacilityMaquila: "",
   emailFacilityMaquila: "",
   cellularFacilityMaquila: "",
+  /** 1 = activa, 0 = desactivada (sigue en listado; eliminar es baja lógica) */
+  stateFacilityMaquila: 1,
 };
 
 export function FabricaMaquilaModal({
@@ -76,28 +79,60 @@ export function FabricaMaquilaModal({
       .then((data: MaquilaOption[]) => setMaquilas(data))
       .catch((err) => console.error("Error al cargar maquilas:", err));
 
-    fetch(apiUrl("/api/ubigeo?limit=500"))
+    fetch(apiUrl("/api/ubigeo"))
       .then((res) => res.json())
       .then((data: UbigeoOption[]) => setUbigeos(data))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
   }, [open]);
 
   useEffect(() => {
-    if (item && (mode === "edit" || mode === "view")) {
-      setForm((prev) => ({
-        ...prev,
-        idDlkMaquila: item.maquila?.idDlkMaquila ?? 0,
-        codMaquila: item.maquila?.codMaquila ?? "",
-        nameFacilityMaquila: item.nameFacilityMaquila,
-        codGlnFacilityMaquila: item.codGlnFacilityMaquila ?? "",
-        registryFacilityMaquila: item.registryFacilityMaquila,
-        identifierFacilityMaquila: item.identifierFacilityMaquila,
-        // codUbigeo, address, etc. podrían cargarse de un endpoint de detalle si hace falta
-      }));
-    } else {
+    if (!open) return;
+
+    if (mode === "create") {
       setForm(emptyForm);
+      return;
     }
-  }, [item, mode, open]);
+
+    if (!item?.idDlkFacilityMaquila) return;
+
+    function facilityRowToForm(d: FacilityMaquila) {
+      const codUbigeo = Number(d.codUbigeo);
+      return {
+        idDlkMaquila: d.maquila?.idDlkMaquila ?? 0,
+        codMaquila: d.codMaquila ?? d.maquila?.codMaquila ?? "",
+        nameFacilityMaquila: d.nameFacilityMaquila ?? "",
+        codGlnFacilityMaquila: d.codGlnFacilityMaquila ?? "",
+        registryFacilityMaquila: d.registryFacilityMaquila ?? "",
+        identifierFacilityMaquila: d.identifierFacilityMaquila ?? "",
+        codUbigeo: Number.isFinite(codUbigeo) ? codUbigeo : 0,
+        addressFacilityMaquila: d.addressFacilityMaquila ?? "",
+        gpsLocationFacilityMaquila: d.gpsLocationFacilityMaquila ?? "",
+        emailFacilityMaquila: d.emailFacilityMaquila ?? "",
+        cellularFacilityMaquila: d.cellularFacilityMaquila ?? "",
+        stateFacilityMaquila: d.stateFacilityMaquila === 1 ? 1 : 0,
+      };
+    }
+
+    // Primero pintamos con la fila del listado (respuesta inmediata)
+    setForm(facilityRowToForm(item));
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const res = await fetch(apiUrl(`/api/facilities-maquila/${item.idDlkFacilityMaquila}`));
+        if (!res.ok) return;
+        const detail = (await res.json()) as FacilityMaquila;
+        if (cancelled) return;
+        setForm(facilityRowToForm(detail));
+      } catch {
+        /* mantener datos del listado */
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [open, mode, item]);
 
   function handleChange(field: string, value: string | number) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -122,6 +157,10 @@ export function FabricaMaquilaModal({
       alert("El nombre de la fábrica es obligatorio");
       return;
     }
+    if (!form.codUbigeo) {
+      alert("Debes seleccionar un ubigeo (departamento, provincia y distrito).");
+      return;
+    }
 
     setSaving(true);
     try {
@@ -133,7 +172,9 @@ export function FabricaMaquilaModal({
 
       const payload = {
         ...form,
-        codUbigeo: form.codUbigeo || undefined,
+        codUbigeo: Number(form.codUbigeo),
+        idDlkMaquila: Number(form.idDlkMaquila),
+        stateFacilityMaquila: Number(form.stateFacilityMaquila),
       };
 
       const res = await fetch(url, {
@@ -171,7 +212,6 @@ export function FabricaMaquilaModal({
         : "Detalle de Fábrica de Maquila";
 
   const selectedMaquila = maquilas.find((m) => m.idDlkMaquila === form.idDlkMaquila);
-  const selectedUbigeo = ubigeos.find((u) => u.codUbigeo === form.codUbigeo);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -270,35 +310,15 @@ export function FabricaMaquilaModal({
             />
           </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right text-primary font-semibold">Ubigeo:</Label>
-            <div className="col-span-3">
-              {readOnly ? (
-                <Input
-                  readOnly
-                  value={
-                    selectedUbigeo
-                      ? `${selectedUbigeo.codUbigeo} - ${selectedUbigeo.desDepartamento}/${selectedUbigeo.desProvincia}/${selectedUbigeo.desDistrito}`
-                      : form.codUbigeo || ""
-                  }
-                />
-              ) : (
-                <Select
-                  value={form.codUbigeo ? String(form.codUbigeo) : ""}
-                  onValueChange={(v) => handleChange("codUbigeo", Number(v))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Seleccionar ubigeo" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {ubigeos.map((u) => (
-                      <SelectItem key={u.codUbigeo} value={String(u.codUbigeo)}>
-                        {u.codUbigeo} - {u.desDepartamento}/{u.desProvincia}/{u.desDistrito}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
+          <div className="grid grid-cols-4 gap-4">
+            <div className="col-span-4">
+              <UbigeoSelector
+                label="Ubigeo"
+                value={form.codUbigeo}
+                onChange={(cod) => handleChange("codUbigeo", cod)}
+                ubigeos={ubigeos}
+                readOnly={readOnly}
+              />
             </div>
           </div>
 
@@ -345,16 +365,33 @@ export function FabricaMaquilaModal({
             />
           </div>
 
-          {mode === "view" && item && (
+          {(mode === "edit" || mode === "view") && (
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right text-primary font-semibold">Estado:</Label>
-              <span
-                className={`col-span-3 font-medium ${
-                  item.stateFacilityMaquila === 1 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {item.stateFacilityMaquila === 1 ? "On" : "Off"}
-              </span>
+              <div className="col-span-3">
+                {readOnly ? (
+                  <span
+                    className={`font-medium ${
+                      form.stateFacilityMaquila === 1 ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    {form.stateFacilityMaquila === 1 ? "Activa" : "Desactivada"}
+                  </span>
+                ) : (
+                  <Select
+                    value={String(form.stateFacilityMaquila)}
+                    onValueChange={(v) => handleChange("stateFacilityMaquila", Number(v))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Estado" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Activa</SelectItem>
+                      <SelectItem value="0">Desactivada</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
             </div>
           )}
         </div>

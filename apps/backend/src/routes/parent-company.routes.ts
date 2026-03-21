@@ -1,5 +1,8 @@
 import { Router } from "express";
-import type { ParentCompanyService } from "../services/parent-company.service.js";
+import {
+  parseUbigeoParentCompanyInput,
+  type ParentCompanyService,
+} from "../services/parent-company.service.js";
 
 function errorResponse(e: unknown) {
   const message = e instanceof Error ? e.message : "Error desconocido";
@@ -43,6 +46,13 @@ export function parentCompanyRoutes(service: ParentCompanyService): Router {
     try {
       if (!req.body.nameParentCompany?.trim()) {
         return res.status(400).json({ error: "La razón social es obligatoria", type: "VALIDATION" });
+      }
+      const codUbigeo = parseUbigeoParentCompanyInput(req.body.codUbigeoParentCompany);
+      if (!codUbigeo) {
+        return res.status(400).json({
+          error: "El ubigeo es obligatorio. Selecciona departamento, provincia y distrito.",
+          type: "VALIDATION",
+        });
       }
       const empresa = await service.create(req.body);
       res.status(201).json(empresa);

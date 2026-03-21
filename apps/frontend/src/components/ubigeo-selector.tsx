@@ -37,8 +37,14 @@ export function UbigeoSelector({
   const [distrito, setDistrito] = useState<string>("");
 
   useEffect(() => {
-    if (!value) return;
-    const found = ubigeos.find((u) => u.codUbigeo === value);
+    if (!value) {
+      setDepartamento("");
+      setProvincia("");
+      setDistrito("");
+      return;
+    }
+    const v = Number(value);
+    const found = ubigeos.find((u) => Number(u.codUbigeo) === v);
     if (found) {
       setDepartamento(found.desDepartamento);
       setProvincia(found.desProvincia);
@@ -103,7 +109,8 @@ export function UbigeoSelector({
   }
 
   if (readOnly) {
-    const found = ubigeos.find((u) => u.codUbigeo === value);
+    const v = Number(value);
+    const found = ubigeos.find((u) => Number(u.codUbigeo) === v);
     return (
       <div className="grid grid-cols-4 items-center gap-4">
         <Label className="text-right text-primary font-semibold">{label}:</Label>

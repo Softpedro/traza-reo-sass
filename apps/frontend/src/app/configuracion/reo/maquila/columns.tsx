@@ -9,6 +9,15 @@ export type Maquila = {
   nameMaquila: string;
   numRucMaquila: string;
   codGlnMaquila: string | null;
+  categoryMaquila?: number;
+  codUbigeo: number;
+  addressMaquila: string;
+  gpsLocationMaquila: string | null;
+  emailMaquila: string;
+  cellularMaquila: string;
+  webMaquila: string;
+  /** Data URL del logo (API serializa Bytes → `data:image/...;base64,...`) */
+  logoMaquila: string | null;
   stateMaquila: number;
 };
 
@@ -45,7 +54,7 @@ export function getColumns(
         const state = row.getValue("stateMaquila") as number;
         return (
           <span className={state === 1 ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
-            {state === 1 ? "On" : "Off"}
+            {state === 1 ? "Activa" : "Desactivada"}
           </span>
         );
       },

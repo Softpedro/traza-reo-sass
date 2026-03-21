@@ -80,7 +80,14 @@ export default function FabricaMaquilaPage() {
 
       <FabricaMaquilaModal
         open={modal.open}
-        onOpenChange={(open) => setModal((prev) => ({ ...prev, open }))}
+        onOpenChange={(open) =>
+          setModal((prev) => ({
+            ...prev,
+            open,
+            // Al cerrar, limpiar item para que al reabrir el efecto del modal vuelva a hidratar bien
+            item: open ? prev.item : null,
+          }))
+        }
         mode={modal.mode}
         item={modal.item}
         onSuccess={fetchItems}

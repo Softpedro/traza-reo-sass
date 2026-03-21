@@ -1,37 +1,72 @@
-import type { PrismaClient } from "../../generated/prisma/client.js";
+import { Buffer } from "node:buffer";
+import type { MdUserReo, PrismaClient } from "../../generated/prisma/client.js";
+
+function photoBytesToDataUrl(photo: Uint8Array | Buffer | null | undefined): string | null {
+  if (photo == null || photo.byteLength === 0) return null;
+  const buf = Buffer.isBuffer(photo) ? photo : Buffer.from(photo);
+  const b64 = buf.toString("base64");
+  if (buf.length >= 2 && buf[0] === 0xff && buf[1] === 0xd8) {
+    return `data:image/jpeg;base64,${b64}`;
+  }
+  if (buf.length >= 4 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47) {
+    return `data:image/png;base64,${b64}`;
+  }
+  if (buf.length >= 3 && buf[0] === 0x47 && buf[1] === 0x49 && buf[2] === 0x46) {
+    return `data:image/gif;base64,${b64}`;
+  }
+  if (buf.length >= 12 && buf.subarray(0, 4).toString("ascii") === "RIFF" && buf.subarray(8, 12).toString("ascii") === "WEBP") {
+    return `data:image/webp;base64,${b64}`;
+  }
+  return `data:image/png;base64,${b64}`;
+}
+
+const parentCompanyInclude = {
+  select: {
+    idDlkParentCompany: true,
+    codParentCompany: true,
+    nameParentCompany: true,
+  },
+} as const;
+
+type UserWithCompany = MdUserReo & {
+  parentCompany: {
+    idDlkParentCompany: number;
+    codParentCompany: string;
+    nameParentCompany: string;
+  } | null;
+};
+
+/** Respuesta API: sin contraseña; foto como data URL */
+function mapUserForApi(row: UserWithCompany) {
+  const { password, photograph, ...rest } = row;
+  return {
+    ...rest,
+    photograph: photoBytesToDataUrl(photograph),
+  };
+}
 
 export class UserReoService {
   constructor(private prisma: PrismaClient) {}
 
   async list() {
-    return this.prisma.mdUserReo.findMany({
+    const rows = await this.prisma.mdUserReo.findMany({
       where: { flgStatutActif: 1 },
       orderBy: { idDlkUserReo: "desc" },
       include: {
-        parentCompany: {
-          select: {
-            idDlkParentCompany: true,
-            codParentCompany: true,
-            nameParentCompany: true,
-          },
-        },
+        parentCompany: parentCompanyInclude,
       },
     });
+    return rows.map((r) => mapUserForApi(r as UserWithCompany));
   }
 
   async getById(id: number) {
-    return this.prisma.mdUserReo.findUnique({
+    const row = await this.prisma.mdUserReo.findUnique({
       where: { idDlkUserReo: id },
       include: {
-        parentCompany: {
-          select: {
-            idDlkParentCompany: true,
-            codParentCompany: true,
-            nameParentCompany: true,
-          },
-        },
+        parentCompany: parentCompanyInclude,
       },
     });
+    return row ? mapUserForApi(row as UserWithCompany) : null;
   }
 
   async create(data: {
@@ -64,7 +99,7 @@ export class UserReoService {
       codUserReo = `US-${lastNum + 1}`;
     }
 
-    return this.prisma.mdUserReo.create({
+    const created = await this.prisma.mdUserReo.create({
       data: {
         codUserReo,
         idDlkParentCompany: data.idDlkParentCompany,
@@ -94,7 +129,9 @@ export class UserReoService {
         desAccion: "INSERT",
         flgStatutActif: 1,
       },
+      include: { parentCompany: parentCompanyInclude },
     });
+    return mapUserForApi(created as UserWithCompany);
   }
 
   async update(
@@ -150,10 +187,12 @@ export class UserReoService {
       updateData.photograph = Buffer.from(data.photograph, "base64");
     }
 
-    return this.prisma.mdUserReo.update({
+    const updated = await this.prisma.mdUserReo.update({
       where: { idDlkUserReo: id },
       data: updateData,
+      include: { parentCompany: parentCompanyInclude },
     });
+    return mapUserForApi(updated as UserWithCompany);
   }
 
   async softDelete(id: number) {

@@ -17,14 +17,16 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { UbigeoSelector, type UbigeoOption } from "@/components/ubigeo-selector";
 import type { ParentCompany } from "./columns";
+import { EMPRESA_CATEGORIAS } from "./empresa-categories";
 
-const CATEGORIAS: Record<number, string> = {
-  1: "Textil",
-  2: "Alimentos",
-  3: "Farmacéutico",
-  4: "Tecnología",
-};
+/** `src` para `<img>` desde lo que devuelve el API (data URL o base64 crudo legado). */
+function logoSrcFromApi(logo: string | null | undefined): string | null {
+  if (logo == null || logo === "") return null;
+  if (logo.startsWith("data:")) return logo;
+  return `data:image/png;base64,${logo}`;
+}
 
 type ModalMode = "create" | "edit" | "view";
 
@@ -41,13 +43,15 @@ const emptyForm = {
   categoryParentCompany: 0,
   numRucParentCompany: "",
   codGlnParentCompany: "",
-  codUbigeoParentCompany: "",
+  codUbigeoParentCompany: 0,
   addressParentCompany: "",
-  locationParentCompany: "",
+  gpsLocationParentCompany: "",
   emailParentCompany: "",
   cellularParentCompany: "",
   webParentCompany: "",
   logoParentCompany: "",
+  /** 1 = activa (On), 0 = desactivada (Off) */
+  stateParentCompany: 1,
 };
 
 export function EmpresaModal({
@@ -60,7 +64,21 @@ export function EmpresaModal({
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [ubigeos, setUbigeos] = useState<UbigeoOption[]>([]);
   const readOnly = mode === "view";
+
+  const storedLogoSrc =
+    mode !== "create" && empresa?.logoParentCompany
+      ? logoSrcFromApi(empresa.logoParentCompany)
+      : null;
+  const logoDisplaySrc = logoPreview ?? storedLogoSrc;
+
+  useEffect(() => {
+    fetch(apiUrl("/api/ubigeo"))
+      .then((r) => r.json())
+      .then((data: UbigeoOption[]) => setUbigeos(Array.isArray(data) ? data : []))
+      .catch((err) => console.error("Error al cargar ubigeo:", err));
+  }, [open]);
 
   useEffect(() => {
     if (empresa && (mode === "edit" || mode === "view")) {
@@ -69,13 +87,14 @@ export function EmpresaModal({
         categoryParentCompany: empresa.categoryParentCompany,
         numRucParentCompany: empresa.numRucParentCompany,
         codGlnParentCompany: empresa.codGlnParentCompany,
-        codUbigeoParentCompany: empresa.codUbigeoParentCompany,
+        codUbigeoParentCompany: Number(empresa.codUbigeoParentCompany) || 0,
         addressParentCompany: empresa.addressParentCompany,
-        locationParentCompany: empresa.locationParentCompany,
+        gpsLocationParentCompany: empresa.gpsLocationParentCompany ?? "",
         emailParentCompany: empresa.emailParentCompany,
         cellularParentCompany: empresa.cellularParentCompany,
         webParentCompany: empresa.webParentCompany,
         logoParentCompany: "",
+        stateParentCompany: empresa.stateParentCompany === 1 ? 1 : 0,
       });
       setLogoPreview(null);
     } else {
@@ -106,6 +125,10 @@ export function EmpresaModal({
       alert("La razón social es obligatoria");
       return;
     }
+    if (!form.codUbigeoParentCompany) {
+      alert("Debes seleccionar un ubigeo (departamento, provincia y distrito).");
+      return;
+    }
     setSaving(true);
     try {
       const url =
@@ -114,7 +137,10 @@ export function EmpresaModal({
           : apiUrl("/api/parent-companies");
       const method = mode === "edit" ? "PUT" : "POST";
 
-      const payload = { ...form };
+      const payload = {
+        ...form,
+        codUbigeoParentCompany: Number(form.codUbigeoParentCompany),
+      };
       if (!payload.logoParentCompany) {
         delete (payload as Record<string, unknown>).logoParentCompany;
       }
@@ -189,7 +215,7 @@ export function EmpresaModal({
             <div className="col-span-3">
               {readOnly ? (
                 <Input
-                  value={CATEGORIAS[form.categoryParentCompany] ?? String(form.categoryParentCompany)}
+                  value={EMPRESA_CATEGORIAS[form.categoryParentCompany] ?? String(form.categoryParentCompany)}
                   readOnly
                 />
               ) : (
@@ -201,7 +227,7 @@ export function EmpresaModal({
                     <SelectValue placeholder="Seleccionar categoría" />
                   </SelectTrigger>
                   <SelectContent>
-                    {Object.entries(CATEGORIAS).map(([k, v]) => (
+                    {Object.entries(EMPRESA_CATEGORIAS).map(([k, v]) => (
                       <SelectItem key={k} value={k}>
                         {v}
                       </SelectItem>
@@ -234,16 +260,16 @@ export function EmpresaModal({
             />
           </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right text-primary font-semibold">Ubigeo:</Label>
-            <Input
-              className="col-span-3"
-              value={form.codUbigeoParentCompany}
-              onChange={(e) => handleChange("codUbigeoParentCompany", e.target.value)}
-              readOnly={readOnly}
-              maxLength={6}
-              placeholder="Código ubigeo"
-            />
+          <div className="grid grid-cols-4 gap-4">
+            <div className="col-span-4">
+              <UbigeoSelector
+                label="Ubigeo"
+                value={form.codUbigeoParentCompany}
+                onChange={(cod) => handleChange("codUbigeoParentCompany", cod)}
+                ubigeos={ubigeos}
+                readOnly={readOnly}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-4 items-center gap-4">
@@ -260,8 +286,8 @@ export function EmpresaModal({
             <Label className="text-right text-primary font-semibold">Localización:</Label>
             <Input
               className="col-span-3"
-              value={form.locationParentCompany}
-              onChange={(e) => handleChange("locationParentCompany", e.target.value)}
+              value={form.gpsLocationParentCompany}
+              onChange={(e) => handleChange("gpsLocationParentCompany", e.target.value)}
               readOnly={readOnly}
             />
           </div>
@@ -298,40 +324,64 @@ export function EmpresaModal({
             />
           </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right text-primary font-semibold">Logo:</Label>
-            <div className="col-span-3">
-              {readOnly ? (
-                <span className="text-sm text-muted-foreground">
-                  {empresa?.logoParentCompany ? "Archivo cargado" : "Sin logo"}
-                </span>
+          {(mode === "edit" || mode === "view") && (
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-right text-primary font-semibold">Estado:</Label>
+              <div className="col-span-3">
+                {readOnly ? (
+                  <span
+                    className={`font-medium ${form.stateParentCompany === 1 ? "text-green-600" : "text-red-600"}`}
+                  >
+                    {form.stateParentCompany === 1 ? "Activa" : "Desactivada"}
+                  </span>
+                ) : (
+                  <Select
+                    value={String(form.stateParentCompany)}
+                    onValueChange={(v) => handleChange("stateParentCompany", Number(v))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Estado" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Activa</SelectItem>
+                      <SelectItem value="0">Desactivada</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
+            </div>
+          )}
+
+          <div className="grid grid-cols-4 items-start gap-4">
+            <Label className="text-right text-primary font-semibold pt-2">Logo:</Label>
+            <div className="col-span-3 space-y-3">
+              {logoDisplaySrc ? (
+                <img
+                  src={logoDisplaySrc}
+                  alt="Logo de la empresa"
+                  className="max-h-40 max-w-full rounded-md border bg-muted/30 object-contain p-1"
+                />
               ) : (
-                <div className="space-y-2">
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                  />
-                  {logoPreview && (
-                    <img
-                      src={logoPreview}
-                      alt="Vista previa"
-                      className="h-16 w-16 rounded object-contain border"
-                    />
+                <p className="text-sm text-muted-foreground">Sin logo</p>
+              )}
+              {!readOnly && (
+                <>
+                  <Input type="file" accept="image/*" onChange={handleFileChange} />
+                  {(mode === "edit" || mode === "create") && storedLogoSrc && !logoPreview && (
+                    <p className="text-xs text-muted-foreground">
+                      El archivo actual se mantiene si no eliges otro.
+                    </p>
                   )}
-                </div>
+                  {(mode === "edit" || mode === "create") && logoPreview && (
+                    <p className="text-xs text-muted-foreground">
+                      Vista previa del archivo seleccionado. Guarda para aplicar el cambio.
+                    </p>
+                  )}
+                </>
               )}
             </div>
           </div>
 
-          {mode === "view" && empresa && (
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label className="text-right text-primary font-semibold">Estado:</Label>
-              <span className={`col-span-3 font-medium ${empresa.stateParentCompany === 1 ? "text-green-600" : "text-red-600"}`}>
-                {empresa.stateParentCompany === 1 ? "On" : "Off"}
-              </span>
-            </div>
-          )}
         </div>
 
         {!readOnly && (

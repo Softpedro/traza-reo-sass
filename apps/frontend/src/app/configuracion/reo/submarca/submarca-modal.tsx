@@ -20,6 +20,12 @@ import { UbigeoSelector } from "@/components/ubigeo-selector";
 import { apiUrl } from "@/lib/api";
 import type { Subbrand } from "./columns";
 
+function logoSrcFromApi(logo: string | null | undefined): string | null {
+  if (logo == null || logo === "") return null;
+  if (logo.startsWith("data:")) return logo;
+  return `data:image/png;base64,${logo}`;
+}
+
 type ModalMode = "create" | "edit" | "view";
 
 interface SubmarcaModalProps {
@@ -66,6 +72,7 @@ const emptyForm = {
   whatsappSubbrand: "",
   ecommerceSubbrand: "",
   logoSubbrand: "",
+  stateSubbrand: 1,
 };
 
 export function SubmarcaModal({
@@ -78,6 +85,7 @@ export function SubmarcaModal({
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [detailSubbrand, setDetailSubbrand] = useState<Subbrand | null>(null);
   const [empresas, setEmpresas] = useState<ParentCompanyOption[]>([]);
   const [brands, setBrands] = useState<BrandOption[]>([]);
   const [ubigeos, setUbigeos] = useState<UbigeoOption[]>([]);
@@ -95,37 +103,71 @@ export function SubmarcaModal({
       .then((data: BrandOption[]) => setBrands(data))
       .catch((err) => console.error("Error al cargar marcas:", err));
 
-    fetch(apiUrl("/api/ubigeo?limit=500"))
+    fetch(apiUrl("/api/ubigeo"))
       .then((res) => res.json())
       .then((data: UbigeoOption[]) => setUbigeos(data))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
   }, [open]);
 
   useEffect(() => {
-    if (item && (mode === "edit" || mode === "view")) {
-      setForm({
-        idDlkParentCompany: item.brand?.parentCompany?.idDlkParentCompany ?? 0,
-        codParentCompany: item.brand?.parentCompany?.codParentCompany ?? "",
-        idDlkBrand: item.brand?.idDlkBrand ?? 0,
-        codBrand: item.brand?.codBrand ?? "",
-        nameSubbrand: item.nameSubbrand,
-        codUbigeoSubbrand: 0,
-        addressSubbrand: "",
-        locationSubbrand: "",
-        emailSubbrand: "",
-        cellularSubbrand: "",
-        facebookSubbrand: "",
-        instagramSubbrand: "",
-        whatsappSubbrand: "",
-        ecommerceSubbrand: "",
-        logoSubbrand: "",
-      });
-      setLogoPreview(null);
-    } else {
-      setForm(emptyForm);
-      setLogoPreview(null);
+    if (!open) {
+      setDetailSubbrand(null);
+      return;
     }
-  }, [item, mode, open]);
+
+    if (mode === "create") {
+      setForm(emptyForm);
+      setDetailSubbrand(null);
+      setLogoPreview(null);
+      return;
+    }
+
+    if (!item?.idDlkSubbrand) return;
+
+    function subRowToForm(s: Subbrand) {
+      const u = Number(s.codUbigeoSubbrand);
+      return {
+        idDlkParentCompany: s.brand?.parentCompany?.idDlkParentCompany ?? 0,
+        codParentCompany: s.brand?.parentCompany?.codParentCompany ?? "",
+        idDlkBrand: s.brand?.idDlkBrand ?? 0,
+        codBrand: s.codBrand ?? s.brand?.codBrand ?? "",
+        nameSubbrand: s.nameSubbrand ?? "",
+        codUbigeoSubbrand: Number.isFinite(u) ? u : 0,
+        addressSubbrand: s.addressSubbrand ?? "",
+        locationSubbrand: s.locationSubbrand ?? "",
+        emailSubbrand: s.emailSubbrand ?? "",
+        cellularSubbrand: s.cellularSubbrand ?? "",
+        facebookSubbrand: s.facebookSubbrand ?? "",
+        instagramSubbrand: s.instagramSubbrand ?? "",
+        whatsappSubbrand: s.whatsappSubbrand ?? "",
+        ecommerceSubbrand: s.ecommerceSubbrand ?? "",
+        logoSubbrand: "",
+        stateSubbrand: s.stateSubbrand === 1 ? 1 : 0,
+      };
+    }
+
+    setLogoPreview(null);
+    setForm(subRowToForm(item));
+    setDetailSubbrand(null);
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const res = await fetch(apiUrl(`/api/subbrands/${item.idDlkSubbrand}`));
+        if (!res.ok) return;
+        const detail = (await res.json()) as Subbrand;
+        if (cancelled) return;
+        setForm(subRowToForm(detail));
+        setDetailSubbrand(detail);
+      } catch {
+        if (!cancelled) setDetailSubbrand(item);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [open, mode, item]);
 
   function handleChange(field: string, value: string | number) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -182,6 +224,10 @@ export function SubmarcaModal({
       alert("El nombre de la submarca es obligatorio");
       return;
     }
+    if (!form.codUbigeoSubbrand) {
+      alert("Debes seleccionar un ubigeo (departamento, provincia y distrito).");
+      return;
+    }
 
     setSaving(true);
     try {
@@ -193,7 +239,10 @@ export function SubmarcaModal({
 
       const payload = {
         ...form,
-        codUbigeoSubbrand: form.codUbigeoSubbrand || undefined,
+        codUbigeoSubbrand: Number(form.codUbigeoSubbrand),
+        idDlkBrand: Number(form.idDlkBrand),
+        idDlkParentCompany: Number(form.idDlkParentCompany),
+        stateSubbrand: Number(form.stateSubbrand),
       };
       if (!payload.logoSubbrand) {
         delete (payload as Record<string, unknown>).logoSubbrand;
@@ -234,7 +283,13 @@ export function SubmarcaModal({
         : "Detalle de Submarca";
 
   const selectedEmpresa = empresas.find((e) => e.idDlkParentCompany === form.idDlkParentCompany);
-  const selectedUbigeo = ubigeos.find((u) => u.codUbigeo === form.codUbigeoSubbrand);
+
+  const storedLogoSrc =
+    mode !== "create" && (detailSubbrand?.logoSubbrand ?? item?.logoSubbrand)
+      ? logoSrcFromApi(detailSubbrand?.logoSubbrand ?? item?.logoSubbrand)
+      : null;
+  const logoDisplaySrc = logoPreview ?? storedLogoSrc;
+
   const filteredBrands =
     form.idDlkParentCompany
       ? brands.filter((b) => b.parentCompany?.idDlkParentCompany === form.idDlkParentCompany)
@@ -338,28 +393,32 @@ export function SubmarcaModal({
             />
           </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right text-primary font-semibold">Logo:</Label>
-            <div className="col-span-3">
-              {readOnly ? (
-                <span className="text-sm text-muted-foreground">
-                  {item ? "Archivo cargado" : "Sin logo"}
-                </span>
+          <div className="grid grid-cols-4 items-start gap-4">
+            <Label className="text-right text-primary font-semibold pt-2">Logo:</Label>
+            <div className="col-span-3 space-y-3">
+              {logoDisplaySrc ? (
+                <img
+                  src={logoDisplaySrc}
+                  alt="Logo de la submarca"
+                  className="max-h-40 max-w-full rounded-md border bg-muted/30 object-contain p-1"
+                />
               ) : (
-                <div className="space-y-2">
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                  />
-                  {logoPreview && (
-                    <img
-                      src={logoPreview}
-                      alt="Vista previa"
-                      className="h-16 w-16 rounded object-contain border"
-                    />
+                <p className="text-sm text-muted-foreground">Sin logo</p>
+              )}
+              {!readOnly && (
+                <>
+                  <Input type="file" accept="image/*" onChange={handleFileChange} />
+                  {(mode === "edit" || mode === "create") && storedLogoSrc && !logoPreview && (
+                    <p className="text-xs text-muted-foreground">
+                      El archivo actual se mantiene si no eliges otro.
+                    </p>
                   )}
-                </div>
+                  {(mode === "edit" || mode === "create") && logoPreview && (
+                    <p className="text-xs text-muted-foreground">
+                      Vista previa del archivo seleccionado. Guarda para aplicar el cambio.
+                    </p>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -454,16 +513,33 @@ export function SubmarcaModal({
             />
           </div>
 
-          {mode === "view" && item && (
+          {(mode === "edit" || mode === "view") && (
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right text-primary font-semibold">Estado:</Label>
-              <span
-                className={`col-span-3 font-medium ${
-                  item.stateSubbrand === 1 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {item.stateSubbrand === 1 ? "On" : "Off"}
-              </span>
+              <div className="col-span-3">
+                {readOnly ? (
+                  <span
+                    className={`font-medium ${
+                      form.stateSubbrand === 1 ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    {form.stateSubbrand === 1 ? "Activa" : "Desactivada"}
+                  </span>
+                ) : (
+                  <Select
+                    value={String(form.stateSubbrand)}
+                    onValueChange={(v) => handleChange("stateSubbrand", Number(v))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Estado" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Activa</SelectItem>
+                      <SelectItem value="0">Desactivada</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
             </div>
           )}
         </div>

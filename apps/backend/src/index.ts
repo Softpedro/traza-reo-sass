@@ -89,7 +89,10 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
-app.use(express.json());
+// Logos/fotos en base64 superan el límite por defecto (~100kb) y provocan 413 Payload Too Large
+const jsonBodyLimit = process.env.JSON_BODY_LIMIT ?? "15mb";
+app.use(express.json({ limit: jsonBodyLimit }));
+app.use(express.urlencoded({ extended: true, limit: jsonBodyLimit }));
 
 app.get("/health", async (_req, res) => {
   try {
@@ -160,12 +163,22 @@ function errorResponse(e: unknown) {
   };
 }
 
-app.get("/api/ubigeo", async (_req, res) => {
+app.get("/api/ubigeo", async (req, res) => {
   try {
-    const { limit = "50" } = _req.query;
+    // Sin `limit` (o limit=all): devuelve todo el maestro (~1.9k filas Perú).
+    // Con limit=N: paginación opcional (máx. 25000). Antes el tope 500 ocultaba departamentos.
+    const raw = req.query.limit;
+    const wantAll =
+      raw === undefined || raw === "" || String(raw).toLowerCase() === "all";
+    const parsedNum = wantAll ? NaN : Number(raw);
+    const take =
+      wantAll || !Number.isFinite(parsedNum) || parsedNum <= 0
+        ? undefined
+        : Math.min(parsedNum, 25000);
+
     const list = await prisma.mdUbigeo.findMany({
-      take: Math.min(Number(limit) || 50, 500),
-      orderBy: { idDlkUbigeo: "asc" },
+      ...(take !== undefined ? { take } : {}),
+      orderBy: { codUbigeo: "asc" },
     });
     res.json(list);
   } catch (e) {

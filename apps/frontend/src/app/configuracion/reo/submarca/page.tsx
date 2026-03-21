@@ -78,7 +78,13 @@ export default function SubmarcaPage() {
 
       <SubmarcaModal
         open={modal.open}
-        onOpenChange={(open) => setModal((prev) => ({ ...prev, open }))}
+        onOpenChange={(open) =>
+          setModal((prev) => ({
+            ...prev,
+            open,
+            item: open ? prev.item : null,
+          }))
+        }
         mode={modal.mode}
         item={modal.item}
         onSuccess={fetchItems}

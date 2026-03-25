@@ -20,6 +20,7 @@ import { apiUrl } from "@/lib/api";
 import { UbigeoSelector, type UbigeoOption } from "@/components/ubigeo-selector";
 import type { ParentCompany } from "./columns";
 import { EMPRESA_CATEGORIAS } from "./empresa-categories";
+import { TIPO_REO_PARENT_COMPANY } from "./empresa-tipo-reo";
 
 /** `src` para `<img>` desde lo que devuelve el API (data URL o base64 crudo legado). */
 function logoSrcFromApi(logo: string | null | undefined): string | null {
@@ -39,6 +40,8 @@ interface EmpresaModalProps {
 }
 
 const emptyForm = {
+  idDlkAdmReo: "",
+  typeParentCompany: 1,
   nameParentCompany: "",
   categoryParentCompany: 0,
   numRucParentCompany: "",
@@ -83,6 +86,11 @@ export function EmpresaModal({
   useEffect(() => {
     if (empresa && (mode === "edit" || mode === "view")) {
       setForm({
+        idDlkAdmReo: empresa.idDlkAdmReo ?? "",
+        typeParentCompany:
+          [1, 2, 3, 4].includes(Number(empresa.typeParentCompany))
+            ? Number(empresa.typeParentCompany)
+            : 1,
         nameParentCompany: empresa.nameParentCompany,
         categoryParentCompany: empresa.categoryParentCompany,
         numRucParentCompany: empresa.numRucParentCompany,
@@ -199,6 +207,51 @@ export function EmpresaModal({
               <span className="col-span-3">{empresa.codParentCompany}</span>
             </div>
           )}
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label className="text-right text-primary font-semibold">Código REO SaaS:</Label>
+            <Input
+              className="col-span-3"
+              value={form.idDlkAdmReo}
+              onChange={(e) =>
+                handleChange("idDlkAdmReo", e.target.value.slice(0, 10))
+              }
+              readOnly={readOnly}
+              maxLength={10}
+              placeholder="Opcional, máx. 10 caracteres"
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label className="text-right text-primary font-semibold">Tipo REO:</Label>
+            <div className="col-span-3">
+              {readOnly ? (
+                <Input
+                  readOnly
+                  value={
+                    TIPO_REO_PARENT_COMPANY[form.typeParentCompany] ??
+                    String(form.typeParentCompany)
+                  }
+                />
+              ) : (
+                <Select
+                  value={String(form.typeParentCompany)}
+                  onValueChange={(v) => handleChange("typeParentCompany", Number(v))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Tipo de empresa en REO" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(TIPO_REO_PARENT_COMPANY).map(([k, v]) => (
+                      <SelectItem key={k} value={k}>
+                        {v}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            </div>
+          </div>
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right text-primary font-semibold">Razón Social:</Label>

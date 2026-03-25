@@ -20,7 +20,7 @@ export default function RootLayout({
           <Header />
           <div className="flex flex-1">
             <Sidebar />
-            <main className="flex-1 overflow-auto p-6">{children}</main>
+            <main className="min-w-0 flex-1 overflow-auto p-6">{children}</main>
           </div>
           <footer className="flex items-center justify-between border-t px-6 py-3 text-xs text-muted-foreground">
             <span className="font-semibold">MREO-01</span>

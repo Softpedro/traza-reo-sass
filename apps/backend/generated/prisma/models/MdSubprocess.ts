@@ -348,11 +348,11 @@ export type MdSubprocessWhereInput = {
   fehProcesoModifDl?: Prisma.DateTimeNullableFilter<"MdSubprocess"> | Date | string | null
   desAccion?: Prisma.StringFilter<"MdSubprocess"> | string
   flgStatutActif?: Prisma.IntFilter<"MdSubprocess"> | number
-  process?: Prisma.XOR<Prisma.MdProcessScalarRelationFilter, Prisma.MdProcessWhereInput>
   activities?: Prisma.MdActivitiesListRelationFilter
   inputSubprocesses?: Prisma.MdInputSubprocessListRelationFilter
   outputSubprocesses?: Prisma.MdOutputSubprocessListRelationFilter
   procedureSubprocesses?: Prisma.MdProcedureSubprocessListRelationFilter
+  process?: Prisma.XOR<Prisma.MdProcessScalarRelationFilter, Prisma.MdProcessWhereInput>
 }
 
 export type MdSubprocessOrderByWithRelationInput = {
@@ -375,11 +375,11 @@ export type MdSubprocessOrderByWithRelationInput = {
   fehProcesoModifDl?: Prisma.SortOrderInput | Prisma.SortOrder
   desAccion?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
-  process?: Prisma.MdProcessOrderByWithRelationInput
   activities?: Prisma.MdActivitiesOrderByRelationAggregateInput
   inputSubprocesses?: Prisma.MdInputSubprocessOrderByRelationAggregateInput
   outputSubprocesses?: Prisma.MdOutputSubprocessOrderByRelationAggregateInput
   procedureSubprocesses?: Prisma.MdProcedureSubprocessOrderByRelationAggregateInput
+  process?: Prisma.MdProcessOrderByWithRelationInput
   _relevance?: Prisma.MdSubprocessOrderByRelevanceInput
 }
 
@@ -406,11 +406,11 @@ export type MdSubprocessWhereUniqueInput = Prisma.AtLeast<{
   fehProcesoModifDl?: Prisma.DateTimeNullableFilter<"MdSubprocess"> | Date | string | null
   desAccion?: Prisma.StringFilter<"MdSubprocess"> | string
   flgStatutActif?: Prisma.IntFilter<"MdSubprocess"> | number
-  process?: Prisma.XOR<Prisma.MdProcessScalarRelationFilter, Prisma.MdProcessWhereInput>
   activities?: Prisma.MdActivitiesListRelationFilter
   inputSubprocesses?: Prisma.MdInputSubprocessListRelationFilter
   outputSubprocesses?: Prisma.MdOutputSubprocessListRelationFilter
   procedureSubprocesses?: Prisma.MdProcedureSubprocessListRelationFilter
+  process?: Prisma.XOR<Prisma.MdProcessScalarRelationFilter, Prisma.MdProcessWhereInput>
 }, "idDlkSubprocess">
 
 export type MdSubprocessOrderByWithAggregationInput = {
@@ -483,11 +483,11 @@ export type MdSubprocessCreateInput = {
   fehProcesoModifDl?: Date | string | null
   desAccion?: string
   flgStatutActif?: number
-  process: Prisma.MdProcessCreateNestedOneWithoutSubprocessesInput
   activities?: Prisma.MdActivitiesCreateNestedManyWithoutSubprocessInput
   inputSubprocesses?: Prisma.MdInputSubprocessCreateNestedManyWithoutSubprocessInput
   outputSubprocesses?: Prisma.MdOutputSubprocessCreateNestedManyWithoutSubprocessInput
   procedureSubprocesses?: Prisma.MdProcedureSubprocessCreateNestedManyWithoutSubprocessInput
+  process: Prisma.MdProcessCreateNestedOneWithoutSubprocessesInput
 }
 
 export type MdSubprocessUncheckedCreateInput = {
@@ -534,11 +534,11 @@ export type MdSubprocessUpdateInput = {
   fehProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  process?: Prisma.MdProcessUpdateOneRequiredWithoutSubprocessesNestedInput
   activities?: Prisma.MdActivitiesUpdateManyWithoutSubprocessNestedInput
   inputSubprocesses?: Prisma.MdInputSubprocessUpdateManyWithoutSubprocessNestedInput
   outputSubprocesses?: Prisma.MdOutputSubprocessUpdateManyWithoutSubprocessNestedInput
   procedureSubprocesses?: Prisma.MdProcedureSubprocessUpdateManyWithoutSubprocessNestedInput
+  process?: Prisma.MdProcessUpdateOneRequiredWithoutSubprocessesNestedInput
 }
 
 export type MdSubprocessUncheckedUpdateInput = {
@@ -964,10 +964,10 @@ export type MdSubprocessCreateWithoutActivitiesInput = {
   fehProcesoModifDl?: Date | string | null
   desAccion?: string
   flgStatutActif?: number
-  process: Prisma.MdProcessCreateNestedOneWithoutSubprocessesInput
   inputSubprocesses?: Prisma.MdInputSubprocessCreateNestedManyWithoutSubprocessInput
   outputSubprocesses?: Prisma.MdOutputSubprocessCreateNestedManyWithoutSubprocessInput
   procedureSubprocesses?: Prisma.MdProcedureSubprocessCreateNestedManyWithoutSubprocessInput
+  process: Prisma.MdProcessCreateNestedOneWithoutSubprocessesInput
 }
 
 export type MdSubprocessUncheckedCreateWithoutActivitiesInput = {
@@ -1029,10 +1029,10 @@ export type MdSubprocessUpdateWithoutActivitiesInput = {
   fehProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  process?: Prisma.MdProcessUpdateOneRequiredWithoutSubprocessesNestedInput
   inputSubprocesses?: Prisma.MdInputSubprocessUpdateManyWithoutSubprocessNestedInput
   outputSubprocesses?: Prisma.MdOutputSubprocessUpdateManyWithoutSubprocessNestedInput
   procedureSubprocesses?: Prisma.MdProcedureSubprocessUpdateManyWithoutSubprocessNestedInput
+  process?: Prisma.MdProcessUpdateOneRequiredWithoutSubprocessesNestedInput
 }
 
 export type MdSubprocessUncheckedUpdateWithoutActivitiesInput = {
@@ -1078,10 +1078,10 @@ export type MdSubprocessCreateWithoutInputSubprocessesInput = {
   fehProcesoModifDl?: Date | string | null
   desAccion?: string
   flgStatutActif?: number
-  process: Prisma.MdProcessCreateNestedOneWithoutSubprocessesInput
   activities?: Prisma.MdActivitiesCreateNestedManyWithoutSubprocessInput
   outputSubprocesses?: Prisma.MdOutputSubprocessCreateNestedManyWithoutSubprocessInput
   procedureSubprocesses?: Prisma.MdProcedureSubprocessCreateNestedManyWithoutSubprocessInput
+  process: Prisma.MdProcessCreateNestedOneWithoutSubprocessesInput
 }
 
 export type MdSubprocessUncheckedCreateWithoutInputSubprocessesInput = {
@@ -1143,10 +1143,10 @@ export type MdSubprocessUpdateWithoutInputSubprocessesInput = {
   fehProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  process?: Prisma.MdProcessUpdateOneRequiredWithoutSubprocessesNestedInput
   activities?: Prisma.MdActivitiesUpdateManyWithoutSubprocessNestedInput
   outputSubprocesses?: Prisma.MdOutputSubprocessUpdateManyWithoutSubprocessNestedInput
   procedureSubprocesses?: Prisma.MdProcedureSubprocessUpdateManyWithoutSubprocessNestedInput
+  process?: Prisma.MdProcessUpdateOneRequiredWithoutSubprocessesNestedInput
 }
 
 export type MdSubprocessUncheckedUpdateWithoutInputSubprocessesInput = {
@@ -1192,10 +1192,10 @@ export type MdSubprocessCreateWithoutOutputSubprocessesInput = {
   fehProcesoModifDl?: Date | string | null
   desAccion?: string
   flgStatutActif?: number
-  process: Prisma.MdProcessCreateNestedOneWithoutSubprocessesInput
   activities?: Prisma.MdActivitiesCreateNestedManyWithoutSubprocessInput
   inputSubprocesses?: Prisma.MdInputSubprocessCreateNestedManyWithoutSubprocessInput
   procedureSubprocesses?: Prisma.MdProcedureSubprocessCreateNestedManyWithoutSubprocessInput
+  process: Prisma.MdProcessCreateNestedOneWithoutSubprocessesInput
 }
 
 export type MdSubprocessUncheckedCreateWithoutOutputSubprocessesInput = {
@@ -1257,10 +1257,10 @@ export type MdSubprocessUpdateWithoutOutputSubprocessesInput = {
   fehProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  process?: Prisma.MdProcessUpdateOneRequiredWithoutSubprocessesNestedInput
   activities?: Prisma.MdActivitiesUpdateManyWithoutSubprocessNestedInput
   inputSubprocesses?: Prisma.MdInputSubprocessUpdateManyWithoutSubprocessNestedInput
   procedureSubprocesses?: Prisma.MdProcedureSubprocessUpdateManyWithoutSubprocessNestedInput
+  process?: Prisma.MdProcessUpdateOneRequiredWithoutSubprocessesNestedInput
 }
 
 export type MdSubprocessUncheckedUpdateWithoutOutputSubprocessesInput = {
@@ -1306,10 +1306,10 @@ export type MdSubprocessCreateWithoutProcedureSubprocessesInput = {
   fehProcesoModifDl?: Date | string | null
   desAccion?: string
   flgStatutActif?: number
-  process: Prisma.MdProcessCreateNestedOneWithoutSubprocessesInput
   activities?: Prisma.MdActivitiesCreateNestedManyWithoutSubprocessInput
   inputSubprocesses?: Prisma.MdInputSubprocessCreateNestedManyWithoutSubprocessInput
   outputSubprocesses?: Prisma.MdOutputSubprocessCreateNestedManyWithoutSubprocessInput
+  process: Prisma.MdProcessCreateNestedOneWithoutSubprocessesInput
 }
 
 export type MdSubprocessUncheckedCreateWithoutProcedureSubprocessesInput = {
@@ -1371,10 +1371,10 @@ export type MdSubprocessUpdateWithoutProcedureSubprocessesInput = {
   fehProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  process?: Prisma.MdProcessUpdateOneRequiredWithoutSubprocessesNestedInput
   activities?: Prisma.MdActivitiesUpdateManyWithoutSubprocessNestedInput
   inputSubprocesses?: Prisma.MdInputSubprocessUpdateManyWithoutSubprocessNestedInput
   outputSubprocesses?: Prisma.MdOutputSubprocessUpdateManyWithoutSubprocessNestedInput
+  process?: Prisma.MdProcessUpdateOneRequiredWithoutSubprocessesNestedInput
 }
 
 export type MdSubprocessUncheckedUpdateWithoutProcedureSubprocessesInput = {
@@ -1571,11 +1571,11 @@ export type MdSubprocessSelect<ExtArgs extends runtime.Types.Extensions.Internal
   fehProcesoModifDl?: boolean
   desAccion?: boolean
   flgStatutActif?: boolean
-  process?: boolean | Prisma.MdProcessDefaultArgs<ExtArgs>
   activities?: boolean | Prisma.MdSubprocess$activitiesArgs<ExtArgs>
   inputSubprocesses?: boolean | Prisma.MdSubprocess$inputSubprocessesArgs<ExtArgs>
   outputSubprocesses?: boolean | Prisma.MdSubprocess$outputSubprocessesArgs<ExtArgs>
   procedureSubprocesses?: boolean | Prisma.MdSubprocess$procedureSubprocessesArgs<ExtArgs>
+  process?: boolean | Prisma.MdProcessDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.MdSubprocessCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mdSubprocess"]>
 
@@ -1605,22 +1605,22 @@ export type MdSubprocessSelectScalar = {
 
 export type MdSubprocessOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkSubprocess" | "idDlkProcess" | "ordenPrecedenciaSubprocess" | "codSubprocess" | "nameSubprocess" | "descriptionSubprocess" | "objectiveSubprocess" | "criticalitySubprocess" | "outsourcedSubprocess" | "estimatedTimeSubprocess" | "responsibleUnit" | "responsibleRole" | "certificationSubprocess" | "stateSubprocess" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdSubprocess"]>
 export type MdSubprocessInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  process?: boolean | Prisma.MdProcessDefaultArgs<ExtArgs>
   activities?: boolean | Prisma.MdSubprocess$activitiesArgs<ExtArgs>
   inputSubprocesses?: boolean | Prisma.MdSubprocess$inputSubprocessesArgs<ExtArgs>
   outputSubprocesses?: boolean | Prisma.MdSubprocess$outputSubprocessesArgs<ExtArgs>
   procedureSubprocesses?: boolean | Prisma.MdSubprocess$procedureSubprocessesArgs<ExtArgs>
+  process?: boolean | Prisma.MdProcessDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.MdSubprocessCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $MdSubprocessPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MdSubprocess"
   objects: {
-    process: Prisma.$MdProcessPayload<ExtArgs>
     activities: Prisma.$MdActivitiesPayload<ExtArgs>[]
     inputSubprocesses: Prisma.$MdInputSubprocessPayload<ExtArgs>[]
     outputSubprocesses: Prisma.$MdOutputSubprocessPayload<ExtArgs>[]
     procedureSubprocesses: Prisma.$MdProcedureSubprocessPayload<ExtArgs>[]
+    process: Prisma.$MdProcessPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkSubprocess: number
@@ -1982,11 +1982,11 @@ readonly fields: MdSubprocessFieldRefs;
  */
 export interface Prisma__MdSubprocessClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  process<T extends Prisma.MdProcessDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdProcessDefaultArgs<ExtArgs>>): Prisma.Prisma__MdProcessClient<runtime.Types.Result.GetResult<Prisma.$MdProcessPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   activities<T extends Prisma.MdSubprocess$activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdSubprocess$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdActivitiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   inputSubprocesses<T extends Prisma.MdSubprocess$inputSubprocessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdSubprocess$inputSubprocessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdInputSubprocessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   outputSubprocesses<T extends Prisma.MdSubprocess$outputSubprocessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdSubprocess$outputSubprocessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdOutputSubprocessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   procedureSubprocesses<T extends Prisma.MdSubprocess$procedureSubprocessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdSubprocess$procedureSubprocessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdProcedureSubprocessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  process<T extends Prisma.MdProcessDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdProcessDefaultArgs<ExtArgs>>): Prisma.Prisma__MdProcessClient<runtime.Types.Result.GetResult<Prisma.$MdProcessPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

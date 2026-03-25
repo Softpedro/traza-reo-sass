@@ -54,6 +54,9 @@ export const ModelName = {
   MdParentCompany: 'MdParentCompany',
   MdUbigeo: 'MdUbigeo',
   MdBrand: 'MdBrand',
+  MdSupplier: 'MdSupplier',
+  MdMaterial: 'MdMaterial',
+  MdAvios: 'MdAvios',
   MdOrdenPedido: 'MdOrdenPedido',
   MdProductionChain: 'MdProductionChain',
   MdProcess: 'MdProcess',
@@ -97,6 +100,8 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const MdParentCompanyScalarFieldEnum = {
   idDlkParentCompany: 'idDlkParentCompany',
   codParentCompany: 'codParentCompany',
+  idDlkAdmReo: 'idDlkAdmReo',
+  typeParentCompany: 'typeParentCompany',
   codGlnParentCompany: 'codGlnParentCompany',
   nameParentCompany: 'nameParentCompany',
   categoryParentCompany: 'categoryParentCompany',
@@ -167,6 +172,66 @@ export const MdBrandScalarFieldEnum = {
 } as const
 
 export type MdBrandScalarFieldEnum = (typeof MdBrandScalarFieldEnum)[keyof typeof MdBrandScalarFieldEnum]
+
+
+export const MdSupplierScalarFieldEnum = {
+  idDlkSupplier: 'idDlkSupplier',
+  codSupplier: 'codSupplier',
+  nameSupplier: 'nameSupplier',
+  rucSupplier: 'rucSupplier',
+  typeSupplier: 'typeSupplier',
+  ubigeoSupplier: 'ubigeoSupplier',
+  addressSupplier: 'addressSupplier',
+  gpsSupplier: 'gpsSupplier',
+  emailSupplier: 'emailSupplier',
+  cellularSupplier: 'cellularSupplier',
+  webSupplier: 'webSupplier',
+  logoSupplier: 'logoSupplier',
+  stateSupplier: 'stateSupplier',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdSupplierScalarFieldEnum = (typeof MdSupplierScalarFieldEnum)[keyof typeof MdSupplierScalarFieldEnum]
+
+
+export const MdMaterialScalarFieldEnum = {
+  idDlkMaterials: 'idDlkMaterials',
+  idDlkSupplier: 'idDlkSupplier',
+  codMaterial: 'codMaterial',
+  nameMaterial: 'nameMaterial',
+  desMaterial: 'desMaterial',
+  obsMaterial: 'obsMaterial',
+  stateMaterial: 'stateMaterial',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdMaterialScalarFieldEnum = (typeof MdMaterialScalarFieldEnum)[keyof typeof MdMaterialScalarFieldEnum]
+
+
+export const MdAviosScalarFieldEnum = {
+  idDlkAvios: 'idDlkAvios',
+  idDlkSupplier: 'idDlkSupplier',
+  codAvios: 'codAvios',
+  nameAvios: 'nameAvios',
+  desAvios: 'desAvios',
+  obsAvios: 'obsAvios',
+  stateAvios: 'stateAvios',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdAviosScalarFieldEnum = (typeof MdAviosScalarFieldEnum)[keyof typeof MdAviosScalarFieldEnum]
 
 
 export const MdOrdenPedidoScalarFieldEnum = {
@@ -429,16 +494,16 @@ export const MdProcedureProcessScalarFieldEnum = {
   nameProcedureProcess: 'nameProcedureProcess',
   descriptionProcedureProcess: 'descriptionProcedureProcess',
   responsibleProcedureProcess: 'responsibleProcedureProcess',
-  timeProcedureProcess: 'timeProcedureProcess',
-  criticallyProcedureProcess: 'criticallyProcedureProcess',
-  validationProcedureProcess: 'validationProcedureProcess',
-  pccProcedureProcess: 'pccProcedureProcess',
   stateProcedureProcess: 'stateProcedureProcess',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fehProcesoCargaDl: 'fehProcesoCargaDl',
   fehProcesoModifDl: 'fehProcesoModifDl',
   desAccion: 'desAccion',
-  flgStatutActif: 'flgStatutActif'
+  flgStatutActif: 'flgStatutActif',
+  criticallyProcedureProcess: 'criticallyProcedureProcess',
+  pccProcedureProcess: 'pccProcedureProcess',
+  timeProcedureProcess: 'timeProcedureProcess',
+  validationProcedureProcess: 'validationProcedureProcess'
 } as const
 
 export type MdProcedureProcessScalarFieldEnum = (typeof MdProcedureProcessScalarFieldEnum)[keyof typeof MdProcedureProcessScalarFieldEnum]
@@ -709,6 +774,7 @@ export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 export const MdParentCompanyOrderByRelevanceFieldEnum = {
   codParentCompany: 'codParentCompany',
+  idDlkAdmReo: 'idDlkAdmReo',
   codGlnParentCompany: 'codGlnParentCompany',
   nameParentCompany: 'nameParentCompany',
   numRucParentCompany: 'numRucParentCompany',
@@ -757,6 +823,47 @@ export const MdBrandOrderByRelevanceFieldEnum = {
 } as const
 
 export type MdBrandOrderByRelevanceFieldEnum = (typeof MdBrandOrderByRelevanceFieldEnum)[keyof typeof MdBrandOrderByRelevanceFieldEnum]
+
+
+export const MdSupplierOrderByRelevanceFieldEnum = {
+  codSupplier: 'codSupplier',
+  nameSupplier: 'nameSupplier',
+  rucSupplier: 'rucSupplier',
+  ubigeoSupplier: 'ubigeoSupplier',
+  addressSupplier: 'addressSupplier',
+  gpsSupplier: 'gpsSupplier',
+  emailSupplier: 'emailSupplier',
+  cellularSupplier: 'cellularSupplier',
+  webSupplier: 'webSupplier',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdSupplierOrderByRelevanceFieldEnum = (typeof MdSupplierOrderByRelevanceFieldEnum)[keyof typeof MdSupplierOrderByRelevanceFieldEnum]
+
+
+export const MdMaterialOrderByRelevanceFieldEnum = {
+  codMaterial: 'codMaterial',
+  nameMaterial: 'nameMaterial',
+  desMaterial: 'desMaterial',
+  obsMaterial: 'obsMaterial',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdMaterialOrderByRelevanceFieldEnum = (typeof MdMaterialOrderByRelevanceFieldEnum)[keyof typeof MdMaterialOrderByRelevanceFieldEnum]
+
+
+export const MdAviosOrderByRelevanceFieldEnum = {
+  codAvios: 'codAvios',
+  nameAvios: 'nameAvios',
+  desAvios: 'desAvios',
+  obsAvios: 'obsAvios',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdAviosOrderByRelevanceFieldEnum = (typeof MdAviosOrderByRelevanceFieldEnum)[keyof typeof MdAviosOrderByRelevanceFieldEnum]
 
 
 export const MdOrdenPedidoOrderByRelevanceFieldEnum = {
@@ -939,12 +1046,12 @@ export const MdProcedureProcessOrderByRelevanceFieldEnum = {
   nameProcedureProcess: 'nameProcedureProcess',
   descriptionProcedureProcess: 'descriptionProcedureProcess',
   responsibleProcedureProcess: 'responsibleProcedureProcess',
-  timeProcedureProcess: 'timeProcedureProcess',
-  criticallyProcedureProcess: 'criticallyProcedureProcess',
-  validationProcedureProcess: 'validationProcedureProcess',
-  pccProcedureProcess: 'pccProcedureProcess',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
-  desAccion: 'desAccion'
+  desAccion: 'desAccion',
+  criticallyProcedureProcess: 'criticallyProcedureProcess',
+  pccProcedureProcess: 'pccProcedureProcess',
+  timeProcedureProcess: 'timeProcedureProcess',
+  validationProcedureProcess: 'validationProcedureProcess'
 } as const
 
 export type MdProcedureProcessOrderByRelevanceFieldEnum = (typeof MdProcedureProcessOrderByRelevanceFieldEnum)[keyof typeof MdProcedureProcessOrderByRelevanceFieldEnum]

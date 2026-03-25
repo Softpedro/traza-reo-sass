@@ -387,6 +387,9 @@ export const ModelName = {
   MdParentCompany: 'MdParentCompany',
   MdUbigeo: 'MdUbigeo',
   MdBrand: 'MdBrand',
+  MdSupplier: 'MdSupplier',
+  MdMaterial: 'MdMaterial',
+  MdAvios: 'MdAvios',
   MdOrdenPedido: 'MdOrdenPedido',
   MdProductionChain: 'MdProductionChain',
   MdProcess: 'MdProcess',
@@ -424,7 +427,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdOrdenPedido" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "lgUserAccess" | "lgParentCompany"
+    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvios" | "mdOrdenPedido" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "lgUserAccess" | "lgParentCompany"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -623,6 +626,204 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MdBrandCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MdBrandCountAggregateOutputType> | number
+        }
+      }
+    }
+    MdSupplier: {
+      payload: Prisma.$MdSupplierPayload<ExtArgs>
+      fields: Prisma.MdSupplierFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MdSupplierFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdSupplierPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MdSupplierFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdSupplierPayload>
+        }
+        findFirst: {
+          args: Prisma.MdSupplierFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdSupplierPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MdSupplierFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdSupplierPayload>
+        }
+        findMany: {
+          args: Prisma.MdSupplierFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdSupplierPayload>[]
+        }
+        create: {
+          args: Prisma.MdSupplierCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdSupplierPayload>
+        }
+        createMany: {
+          args: Prisma.MdSupplierCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MdSupplierDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdSupplierPayload>
+        }
+        update: {
+          args: Prisma.MdSupplierUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdSupplierPayload>
+        }
+        deleteMany: {
+          args: Prisma.MdSupplierDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MdSupplierUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MdSupplierUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdSupplierPayload>
+        }
+        aggregate: {
+          args: Prisma.MdSupplierAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMdSupplier>
+        }
+        groupBy: {
+          args: Prisma.MdSupplierGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdSupplierGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MdSupplierCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdSupplierCountAggregateOutputType> | number
+        }
+      }
+    }
+    MdMaterial: {
+      payload: Prisma.$MdMaterialPayload<ExtArgs>
+      fields: Prisma.MdMaterialFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MdMaterialFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdMaterialPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MdMaterialFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdMaterialPayload>
+        }
+        findFirst: {
+          args: Prisma.MdMaterialFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdMaterialPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MdMaterialFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdMaterialPayload>
+        }
+        findMany: {
+          args: Prisma.MdMaterialFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdMaterialPayload>[]
+        }
+        create: {
+          args: Prisma.MdMaterialCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdMaterialPayload>
+        }
+        createMany: {
+          args: Prisma.MdMaterialCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MdMaterialDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdMaterialPayload>
+        }
+        update: {
+          args: Prisma.MdMaterialUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdMaterialPayload>
+        }
+        deleteMany: {
+          args: Prisma.MdMaterialDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MdMaterialUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MdMaterialUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdMaterialPayload>
+        }
+        aggregate: {
+          args: Prisma.MdMaterialAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMdMaterial>
+        }
+        groupBy: {
+          args: Prisma.MdMaterialGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdMaterialGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MdMaterialCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdMaterialCountAggregateOutputType> | number
+        }
+      }
+    }
+    MdAvios: {
+      payload: Prisma.$MdAviosPayload<ExtArgs>
+      fields: Prisma.MdAviosFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MdAviosFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdAviosPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MdAviosFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdAviosPayload>
+        }
+        findFirst: {
+          args: Prisma.MdAviosFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdAviosPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MdAviosFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdAviosPayload>
+        }
+        findMany: {
+          args: Prisma.MdAviosFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdAviosPayload>[]
+        }
+        create: {
+          args: Prisma.MdAviosCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdAviosPayload>
+        }
+        createMany: {
+          args: Prisma.MdAviosCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MdAviosDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdAviosPayload>
+        }
+        update: {
+          args: Prisma.MdAviosUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdAviosPayload>
+        }
+        deleteMany: {
+          args: Prisma.MdAviosDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MdAviosUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MdAviosUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdAviosPayload>
+        }
+        aggregate: {
+          args: Prisma.MdAviosAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMdAvios>
+        }
+        groupBy: {
+          args: Prisma.MdAviosGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdAviosGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MdAviosCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdAviosCountAggregateOutputType> | number
         }
       }
     }
@@ -2120,6 +2321,8 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const MdParentCompanyScalarFieldEnum = {
   idDlkParentCompany: 'idDlkParentCompany',
   codParentCompany: 'codParentCompany',
+  idDlkAdmReo: 'idDlkAdmReo',
+  typeParentCompany: 'typeParentCompany',
   codGlnParentCompany: 'codGlnParentCompany',
   nameParentCompany: 'nameParentCompany',
   categoryParentCompany: 'categoryParentCompany',
@@ -2190,6 +2393,66 @@ export const MdBrandScalarFieldEnum = {
 } as const
 
 export type MdBrandScalarFieldEnum = (typeof MdBrandScalarFieldEnum)[keyof typeof MdBrandScalarFieldEnum]
+
+
+export const MdSupplierScalarFieldEnum = {
+  idDlkSupplier: 'idDlkSupplier',
+  codSupplier: 'codSupplier',
+  nameSupplier: 'nameSupplier',
+  rucSupplier: 'rucSupplier',
+  typeSupplier: 'typeSupplier',
+  ubigeoSupplier: 'ubigeoSupplier',
+  addressSupplier: 'addressSupplier',
+  gpsSupplier: 'gpsSupplier',
+  emailSupplier: 'emailSupplier',
+  cellularSupplier: 'cellularSupplier',
+  webSupplier: 'webSupplier',
+  logoSupplier: 'logoSupplier',
+  stateSupplier: 'stateSupplier',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdSupplierScalarFieldEnum = (typeof MdSupplierScalarFieldEnum)[keyof typeof MdSupplierScalarFieldEnum]
+
+
+export const MdMaterialScalarFieldEnum = {
+  idDlkMaterials: 'idDlkMaterials',
+  idDlkSupplier: 'idDlkSupplier',
+  codMaterial: 'codMaterial',
+  nameMaterial: 'nameMaterial',
+  desMaterial: 'desMaterial',
+  obsMaterial: 'obsMaterial',
+  stateMaterial: 'stateMaterial',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdMaterialScalarFieldEnum = (typeof MdMaterialScalarFieldEnum)[keyof typeof MdMaterialScalarFieldEnum]
+
+
+export const MdAviosScalarFieldEnum = {
+  idDlkAvios: 'idDlkAvios',
+  idDlkSupplier: 'idDlkSupplier',
+  codAvios: 'codAvios',
+  nameAvios: 'nameAvios',
+  desAvios: 'desAvios',
+  obsAvios: 'obsAvios',
+  stateAvios: 'stateAvios',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdAviosScalarFieldEnum = (typeof MdAviosScalarFieldEnum)[keyof typeof MdAviosScalarFieldEnum]
 
 
 export const MdOrdenPedidoScalarFieldEnum = {
@@ -2452,16 +2715,16 @@ export const MdProcedureProcessScalarFieldEnum = {
   nameProcedureProcess: 'nameProcedureProcess',
   descriptionProcedureProcess: 'descriptionProcedureProcess',
   responsibleProcedureProcess: 'responsibleProcedureProcess',
-  timeProcedureProcess: 'timeProcedureProcess',
-  criticallyProcedureProcess: 'criticallyProcedureProcess',
-  validationProcedureProcess: 'validationProcedureProcess',
-  pccProcedureProcess: 'pccProcedureProcess',
   stateProcedureProcess: 'stateProcedureProcess',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fehProcesoCargaDl: 'fehProcesoCargaDl',
   fehProcesoModifDl: 'fehProcesoModifDl',
   desAccion: 'desAccion',
-  flgStatutActif: 'flgStatutActif'
+  flgStatutActif: 'flgStatutActif',
+  criticallyProcedureProcess: 'criticallyProcedureProcess',
+  pccProcedureProcess: 'pccProcedureProcess',
+  timeProcedureProcess: 'timeProcedureProcess',
+  validationProcedureProcess: 'validationProcedureProcess'
 } as const
 
 export type MdProcedureProcessScalarFieldEnum = (typeof MdProcedureProcessScalarFieldEnum)[keyof typeof MdProcedureProcessScalarFieldEnum]
@@ -2732,6 +2995,7 @@ export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 export const MdParentCompanyOrderByRelevanceFieldEnum = {
   codParentCompany: 'codParentCompany',
+  idDlkAdmReo: 'idDlkAdmReo',
   codGlnParentCompany: 'codGlnParentCompany',
   nameParentCompany: 'nameParentCompany',
   numRucParentCompany: 'numRucParentCompany',
@@ -2780,6 +3044,47 @@ export const MdBrandOrderByRelevanceFieldEnum = {
 } as const
 
 export type MdBrandOrderByRelevanceFieldEnum = (typeof MdBrandOrderByRelevanceFieldEnum)[keyof typeof MdBrandOrderByRelevanceFieldEnum]
+
+
+export const MdSupplierOrderByRelevanceFieldEnum = {
+  codSupplier: 'codSupplier',
+  nameSupplier: 'nameSupplier',
+  rucSupplier: 'rucSupplier',
+  ubigeoSupplier: 'ubigeoSupplier',
+  addressSupplier: 'addressSupplier',
+  gpsSupplier: 'gpsSupplier',
+  emailSupplier: 'emailSupplier',
+  cellularSupplier: 'cellularSupplier',
+  webSupplier: 'webSupplier',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdSupplierOrderByRelevanceFieldEnum = (typeof MdSupplierOrderByRelevanceFieldEnum)[keyof typeof MdSupplierOrderByRelevanceFieldEnum]
+
+
+export const MdMaterialOrderByRelevanceFieldEnum = {
+  codMaterial: 'codMaterial',
+  nameMaterial: 'nameMaterial',
+  desMaterial: 'desMaterial',
+  obsMaterial: 'obsMaterial',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdMaterialOrderByRelevanceFieldEnum = (typeof MdMaterialOrderByRelevanceFieldEnum)[keyof typeof MdMaterialOrderByRelevanceFieldEnum]
+
+
+export const MdAviosOrderByRelevanceFieldEnum = {
+  codAvios: 'codAvios',
+  nameAvios: 'nameAvios',
+  desAvios: 'desAvios',
+  obsAvios: 'obsAvios',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdAviosOrderByRelevanceFieldEnum = (typeof MdAviosOrderByRelevanceFieldEnum)[keyof typeof MdAviosOrderByRelevanceFieldEnum]
 
 
 export const MdOrdenPedidoOrderByRelevanceFieldEnum = {
@@ -2962,12 +3267,12 @@ export const MdProcedureProcessOrderByRelevanceFieldEnum = {
   nameProcedureProcess: 'nameProcedureProcess',
   descriptionProcedureProcess: 'descriptionProcedureProcess',
   responsibleProcedureProcess: 'responsibleProcedureProcess',
-  timeProcedureProcess: 'timeProcedureProcess',
-  criticallyProcedureProcess: 'criticallyProcedureProcess',
-  validationProcedureProcess: 'validationProcedureProcess',
-  pccProcedureProcess: 'pccProcedureProcess',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
-  desAccion: 'desAccion'
+  desAccion: 'desAccion',
+  criticallyProcedureProcess: 'criticallyProcedureProcess',
+  pccProcedureProcess: 'pccProcedureProcess',
+  timeProcedureProcess: 'timeProcedureProcess',
+  validationProcedureProcess: 'validationProcedureProcess'
 } as const
 
 export type MdProcedureProcessOrderByRelevanceFieldEnum = (typeof MdProcedureProcessOrderByRelevanceFieldEnum)[keyof typeof MdProcedureProcessOrderByRelevanceFieldEnum]
@@ -3298,6 +3603,9 @@ export type GlobalOmitConfig = {
   mdParentCompany?: Prisma.MdParentCompanyOmit
   mdUbigeo?: Prisma.MdUbigeoOmit
   mdBrand?: Prisma.MdBrandOmit
+  mdSupplier?: Prisma.MdSupplierOmit
+  mdMaterial?: Prisma.MdMaterialOmit
+  mdAvios?: Prisma.MdAviosOmit
   mdOrdenPedido?: Prisma.MdOrdenPedidoOmit
   mdProductionChain?: Prisma.MdProductionChainOmit
   mdProcess?: Prisma.MdProcessOmit

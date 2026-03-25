@@ -15,6 +15,12 @@ import { BrandService } from "./services/brand.service.js";
 import { brandRoutes } from "./routes/brand.routes.js";
 import { SubbrandService } from "./services/subbrand.service.js";
 import { subbrandRoutes } from "./routes/subbrand.routes.js";
+import { SupplierService } from "./services/supplier.service.js";
+import { supplierRoutes } from "./routes/supplier.routes.js";
+import { MaterialService } from "./services/material.service.js";
+import { materialRoutes } from "./routes/material.routes.js";
+import { AviosService } from "./services/avios.service.js";
+import { aviosRoutes } from "./routes/avios.routes.js";
 import { UserReoService } from "./services/user-reo.service.js";
 import { userReoRoutes } from "./routes/user-reo.routes.js";
 import { ProductionChainService } from "./services/production-chain.service.js";
@@ -43,6 +49,7 @@ import { InputActivitiesService } from "./services/input-activities.service.js";
 import { inputActivitiesRoutes } from "./routes/input-activities.routes.js";
 import { OutputActivitiesService } from "./services/output-activities.service.js";
 import { outputActivitiesRoutes } from "./routes/output-activities.routes.js";
+import { jsonBigIntMiddleware } from "./middleware/json-bigint.js";
 
 function parseDatabaseUrl(url: string) {
   const u = new URL(url);
@@ -93,6 +100,7 @@ app.use(cors({
 const jsonBodyLimit = process.env.JSON_BODY_LIMIT ?? "15mb";
 app.use(express.json({ limit: jsonBodyLimit }));
 app.use(express.urlencoded({ extended: true, limit: jsonBodyLimit }));
+app.use(jsonBigIntMiddleware);
 
 app.get("/health", async (_req, res) => {
   try {
@@ -111,6 +119,9 @@ const maquilaService = new MaquilaService(prisma);
 const facilityMaquilaService = new FacilityMaquilaService(prisma);
 const brandService = new BrandService(prisma);
 const subbrandService = new SubbrandService(prisma);
+const supplierService = new SupplierService(prisma);
+const materialService = new MaterialService(prisma);
+const aviosService = new AviosService(prisma);
 const userReoService = new UserReoService(prisma);
 const productionChainService = new ProductionChainService(prisma);
 const processService = new ProcessService(prisma);
@@ -133,6 +144,9 @@ app.use("/api/maquilas", maquilaRoutes(maquilaService));
 app.use("/api/facilities-maquila", facilityMaquilaRoutes(facilityMaquilaService));
 app.use("/api/brands", brandRoutes(brandService));
 app.use("/api/subbrands", subbrandRoutes(subbrandService));
+app.use("/api/suppliers", supplierRoutes(supplierService));
+app.use("/api/materials", materialRoutes(materialService));
+app.use("/api/avios", aviosRoutes(aviosService));
 app.use("/api/users", userReoRoutes(userReoService));
 app.use("/api/production-chains", productionChainRoutes(productionChainService));
 app.use("/api/processes", processRoutes(processService));

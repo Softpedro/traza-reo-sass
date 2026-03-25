@@ -256,8 +256,8 @@ export type MdParentCompanyMaquilaWhereInput = {
   fehProcesoModifDl?: Prisma.DateTimeFilter<"MdParentCompanyMaquila"> | Date | string
   desAccion?: Prisma.StringFilter<"MdParentCompanyMaquila"> | string
   flgStatutActif?: Prisma.IntFilter<"MdParentCompanyMaquila"> | number
-  parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
   maquila?: Prisma.XOR<Prisma.MdMaquilaScalarRelationFilter, Prisma.MdMaquilaWhereInput>
+  parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
 }
 
 export type MdParentCompanyMaquilaOrderByWithRelationInput = {
@@ -270,8 +270,8 @@ export type MdParentCompanyMaquilaOrderByWithRelationInput = {
   fehProcesoModifDl?: Prisma.SortOrder
   desAccion?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
-  parentCompany?: Prisma.MdParentCompanyOrderByWithRelationInput
   maquila?: Prisma.MdMaquilaOrderByWithRelationInput
+  parentCompany?: Prisma.MdParentCompanyOrderByWithRelationInput
   _relevance?: Prisma.MdParentCompanyMaquilaOrderByRelevanceInput
 }
 
@@ -289,8 +289,8 @@ export type MdParentCompanyMaquilaWhereUniqueInput = Prisma.AtLeast<{
   fehProcesoModifDl?: Prisma.DateTimeFilter<"MdParentCompanyMaquila"> | Date | string
   desAccion?: Prisma.StringFilter<"MdParentCompanyMaquila"> | string
   flgStatutActif?: Prisma.IntFilter<"MdParentCompanyMaquila"> | number
-  parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
   maquila?: Prisma.XOR<Prisma.MdMaquilaScalarRelationFilter, Prisma.MdMaquilaWhereInput>
+  parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
 }, "idDlkParentCompanyMaquila" | "codParentCompany_codMaquila">
 
 export type MdParentCompanyMaquilaOrderByWithAggregationInput = {
@@ -332,8 +332,8 @@ export type MdParentCompanyMaquilaCreateInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
-  parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutMaquilaRelationsInput
   maquila: Prisma.MdMaquilaCreateNestedOneWithoutParentCompaniesInput
+  parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutMaquilaRelationsInput
 }
 
 export type MdParentCompanyMaquilaUncheckedCreateInput = {
@@ -355,8 +355,8 @@ export type MdParentCompanyMaquilaUpdateInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutMaquilaRelationsNestedInput
   maquila?: Prisma.MdMaquilaUpdateOneRequiredWithoutParentCompaniesNestedInput
+  parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutMaquilaRelationsNestedInput
 }
 
 export type MdParentCompanyMaquilaUncheckedUpdateInput = {
@@ -764,8 +764,8 @@ export type MdParentCompanyMaquilaSelect<ExtArgs extends runtime.Types.Extension
   fehProcesoModifDl?: boolean
   desAccion?: boolean
   flgStatutActif?: boolean
-  parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   maquila?: boolean | Prisma.MdMaquilaDefaultArgs<ExtArgs>
+  parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mdParentCompanyMaquila"]>
 
 
@@ -784,15 +784,15 @@ export type MdParentCompanyMaquilaSelectScalar = {
 
 export type MdParentCompanyMaquilaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkParentCompanyMaquila" | "codParentCompany" | "codMaquila" | "stateParentCompanyMaquila" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdParentCompanyMaquila"]>
 export type MdParentCompanyMaquilaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   maquila?: boolean | Prisma.MdMaquilaDefaultArgs<ExtArgs>
+  parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
 }
 
 export type $MdParentCompanyMaquilaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MdParentCompanyMaquila"
   objects: {
-    parentCompany: Prisma.$MdParentCompanyPayload<ExtArgs>
     maquila: Prisma.$MdMaquilaPayload<ExtArgs>
+    parentCompany: Prisma.$MdParentCompanyPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkParentCompanyMaquila: number
@@ -1144,8 +1144,8 @@ readonly fields: MdParentCompanyMaquilaFieldRefs;
  */
 export interface Prisma__MdParentCompanyMaquilaClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  parentCompany<T extends Prisma.MdParentCompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__MdParentCompanyClient<runtime.Types.Result.GetResult<Prisma.$MdParentCompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   maquila<T extends Prisma.MdMaquilaDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdMaquilaDefaultArgs<ExtArgs>>): Prisma.Prisma__MdMaquilaClient<runtime.Types.Result.GetResult<Prisma.$MdMaquilaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  parentCompany<T extends Prisma.MdParentCompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__MdParentCompanyClient<runtime.Types.Result.GetResult<Prisma.$MdParentCompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

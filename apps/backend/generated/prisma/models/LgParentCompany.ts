@@ -356,7 +356,7 @@ export type LgParentCompanyWhereInput = {
   canisterDataParentLog?: Prisma.StringNullableFilter<"LgParentCompany"> | string | null
   canisterAssetsParentLog?: Prisma.StringNullableFilter<"LgParentCompany"> | string | null
   logoParentCompanyLog?: Prisma.BytesNullableFilter<"LgParentCompany"> | runtime.Bytes | null
-  parentCompany?: Prisma.XOR<Prisma.MdParentCompanyNullableScalarRelationFilter, Prisma.MdParentCompanyWhereInput> | null
+  parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
 }
 
 export type LgParentCompanyOrderByWithRelationInput = {
@@ -410,7 +410,7 @@ export type LgParentCompanyWhereUniqueInput = Prisma.AtLeast<{
   canisterDataParentLog?: Prisma.StringNullableFilter<"LgParentCompany"> | string | null
   canisterAssetsParentLog?: Prisma.StringNullableFilter<"LgParentCompany"> | string | null
   logoParentCompanyLog?: Prisma.BytesNullableFilter<"LgParentCompany"> | runtime.Bytes | null
-  parentCompany?: Prisma.XOR<Prisma.MdParentCompanyNullableScalarRelationFilter, Prisma.MdParentCompanyWhereInput> | null
+  parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
 }, "idAudit">
 
 export type LgParentCompanyOrderByWithAggregationInput = {
@@ -490,7 +490,7 @@ export type LgParentCompanyCreateInput = {
   canisterDataParentLog?: string | null
   canisterAssetsParentLog?: string | null
   logoParentCompanyLog?: runtime.Bytes | null
-  parentCompany?: Prisma.MdParentCompanyCreateNestedOneWithoutAuditLogsInput
+  parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutAuditLogsInput
 }
 
 export type LgParentCompanyUncheckedCreateInput = {
@@ -538,7 +538,7 @@ export type LgParentCompanyUpdateInput = {
   canisterDataParentLog?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   canisterAssetsParentLog?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoParentCompanyLog?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  parentCompany?: Prisma.MdParentCompanyUpdateOneWithoutAuditLogsNestedInput
+  parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutAuditLogsNestedInput
 }
 
 export type LgParentCompanyUncheckedUpdateInput = {
@@ -995,7 +995,7 @@ export type LgParentCompanySelect<ExtArgs extends runtime.Types.Extensions.Inter
   canisterDataParentLog?: boolean
   canisterAssetsParentLog?: boolean
   logoParentCompanyLog?: boolean
-  parentCompany?: boolean | Prisma.LgParentCompany$parentCompanyArgs<ExtArgs>
+  parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lgParentCompany"]>
 
 
@@ -1026,13 +1026,13 @@ export type LgParentCompanySelectScalar = {
 
 export type LgParentCompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idAudit" | "idDlkParentCompany" | "typeOperation" | "ipAcceso" | "userAgent" | "auditUsuario" | "fechaCambio" | "codParentCompany" | "codGlnParentCompany" | "nameParentCompany" | "categoryParentCompany" | "numRucParentCompany" | "codUbigeoParentCompany" | "addressParentCompany" | "gpsLocationParent" | "emailParentCompanyLog" | "cellularParentCompanyLog" | "webParentCompanyLog" | "canisterDataParentLog" | "canisterAssetsParentLog" | "logoParentCompanyLog", ExtArgs["result"]["lgParentCompany"]>
 export type LgParentCompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  parentCompany?: boolean | Prisma.LgParentCompany$parentCompanyArgs<ExtArgs>
+  parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
 }
 
 export type $LgParentCompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LgParentCompany"
   objects: {
-    parentCompany: Prisma.$MdParentCompanyPayload<ExtArgs> | null
+    parentCompany: Prisma.$MdParentCompanyPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idAudit: bigint
@@ -1396,7 +1396,7 @@ readonly fields: LgParentCompanyFieldRefs;
  */
 export interface Prisma__LgParentCompanyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  parentCompany<T extends Prisma.LgParentCompany$parentCompanyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LgParentCompany$parentCompanyArgs<ExtArgs>>): Prisma.Prisma__MdParentCompanyClient<runtime.Types.Result.GetResult<Prisma.$MdParentCompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  parentCompany<T extends Prisma.MdParentCompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__MdParentCompanyClient<runtime.Types.Result.GetResult<Prisma.$MdParentCompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1787,25 +1787,6 @@ export type LgParentCompanyDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many LgParentCompanies to delete.
    */
   limit?: number
-}
-
-/**
- * LgParentCompany.parentCompany
- */
-export type LgParentCompany$parentCompanyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the MdParentCompany
-   */
-  select?: Prisma.MdParentCompanySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the MdParentCompany
-   */
-  omit?: Prisma.MdParentCompanyOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.MdParentCompanyInclude<ExtArgs> | null
-  where?: Prisma.MdParentCompanyWhereInput
 }
 
 /**

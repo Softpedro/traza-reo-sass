@@ -57,6 +57,21 @@ export type MdUbigeo = Prisma.MdUbigeoModel
  */
 export type MdBrand = Prisma.MdBrandModel
 /**
+ * Model MdSupplier
+ * * Tabla física MD_SUPPLIER (DDL negocio: sin empresa matriz).
+ */
+export type MdSupplier = Prisma.MdSupplierModel
+/**
+ * Model MdMaterial
+ * * Tabla física MD_MATERIALS
+ */
+export type MdMaterial = Prisma.MdMaterialModel
+/**
+ * Model MdAvios
+ * * Tabla física MD_AVIOS (módulo UI pendiente)
+ */
+export type MdAvios = Prisma.MdAviosModel
+/**
  * Model MdOrdenPedido
  * 
  */

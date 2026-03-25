@@ -448,8 +448,8 @@ export type MdUserReoWhereInput = {
   fehProcesoModifDl?: Prisma.DateTimeFilter<"MdUserReo"> | Date | string
   desAccion?: Prisma.StringFilter<"MdUserReo"> | string
   flgStatutActif?: Prisma.IntFilter<"MdUserReo"> | number
-  parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
   accessLogs?: Prisma.LgUserAccessListRelationFilter
+  parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
 }
 
 export type MdUserReoOrderByWithRelationInput = {
@@ -483,8 +483,8 @@ export type MdUserReoOrderByWithRelationInput = {
   fehProcesoModifDl?: Prisma.SortOrder
   desAccion?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
-  parentCompany?: Prisma.MdParentCompanyOrderByWithRelationInput
   accessLogs?: Prisma.LgUserAccessOrderByRelationAggregateInput
+  parentCompany?: Prisma.MdParentCompanyOrderByWithRelationInput
   _relevance?: Prisma.MdUserReoOrderByRelevanceInput
 }
 
@@ -522,8 +522,8 @@ export type MdUserReoWhereUniqueInput = Prisma.AtLeast<{
   fehProcesoModifDl?: Prisma.DateTimeFilter<"MdUserReo"> | Date | string
   desAccion?: Prisma.StringFilter<"MdUserReo"> | string
   flgStatutActif?: Prisma.IntFilter<"MdUserReo"> | number
-  parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
   accessLogs?: Prisma.LgUserAccessListRelationFilter
+  parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
 }, "idDlkUserReo" | "codUserReo" | "userLogin">
 
 export type MdUserReoOrderByWithAggregationInput = {
@@ -629,8 +629,8 @@ export type MdUserReoCreateInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
-  parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutUsersInput
   accessLogs?: Prisma.LgUserAccessCreateNestedManyWithoutUserInput
+  parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutUsersInput
 }
 
 export type MdUserReoUncheckedCreateInput = {
@@ -696,8 +696,8 @@ export type MdUserReoUpdateInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutUsersNestedInput
   accessLogs?: Prisma.LgUserAccessUpdateManyWithoutUserNestedInput
+  parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type MdUserReoUncheckedUpdateInput = {
@@ -1495,8 +1495,8 @@ export type MdUserReoSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   fehProcesoModifDl?: boolean
   desAccion?: boolean
   flgStatutActif?: boolean
-  parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   accessLogs?: boolean | Prisma.MdUserReo$accessLogsArgs<ExtArgs>
+  parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.MdUserReoCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mdUserReo"]>
 
@@ -1537,16 +1537,16 @@ export type MdUserReoSelectScalar = {
 
 export type MdUserReoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkUserReo" | "codUserReo" | "idDlkParentCompany" | "codParentCompany" | "documentType" | "documentNumber" | "nameUser" | "paternalLastNameUser" | "maternalLastNameUser" | "sexUser" | "positionUser" | "rolUser" | "emailUser" | "cellularUser" | "userLogin" | "password" | "photograph" | "failedAttempts" | "isLocked" | "lockedUntil" | "lastLoginDate" | "lastLoginIp" | "passwordExpiresAt" | "twoFactorSecret" | "stateUser" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdUserReo"]>
 export type MdUserReoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   accessLogs?: boolean | Prisma.MdUserReo$accessLogsArgs<ExtArgs>
+  parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.MdUserReoCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $MdUserReoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MdUserReo"
   objects: {
-    parentCompany: Prisma.$MdParentCompanyPayload<ExtArgs>
     accessLogs: Prisma.$LgUserAccessPayload<ExtArgs>[]
+    parentCompany: Prisma.$MdParentCompanyPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkUserReo: number
@@ -1919,8 +1919,8 @@ readonly fields: MdUserReoFieldRefs;
  */
 export interface Prisma__MdUserReoClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  parentCompany<T extends Prisma.MdParentCompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__MdParentCompanyClient<runtime.Types.Result.GetResult<Prisma.$MdParentCompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   accessLogs<T extends Prisma.MdUserReo$accessLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdUserReo$accessLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LgUserAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  parentCompany<T extends Prisma.MdParentCompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__MdParentCompanyClient<runtime.Types.Result.GetResult<Prisma.$MdParentCompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

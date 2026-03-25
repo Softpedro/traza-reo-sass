@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+import { Home, Settings, type LucideIcon } from "lucide-react";
 
 export type NavLeafItem = {
   type: "leaf";
@@ -29,8 +29,6 @@ export type NavCollapsibleItem = {
 };
 
 export type NavItem = NavLeafItem | NavCollapsibleItem;
-
-import { Home, Settings } from "lucide-react";
 
 export const navItems: NavItem[] = [
   {
@@ -68,6 +66,16 @@ export const navItems: NavItem[] = [
           { type: "leaf", label: "Proceso", href: "/configuracion/cadena-produccion/proceso" },
           { type: "leaf", label: "Subproceso", href: "/configuracion/cadena-produccion/subproceso" },
           { type: "leaf", label: "Actividad", href: "/configuracion/cadena-produccion/actividad" },
+        ],
+      },
+      {
+        type: "group",
+        id: "insumos",
+        label: "Insumos",
+        children: [
+          { type: "leaf", label: "Proveedores", href: "/configuracion/insumos/proveedores" },
+          { type: "leaf", label: "Materiales", href: "/configuracion/insumos/materiales" },
+          { type: "leaf", label: "Avíos", href: "/configuracion/insumos/avios" },
         ],
       },
     ],

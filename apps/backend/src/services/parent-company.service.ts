@@ -44,6 +44,20 @@ export function parseUbigeoParentCompanyInput(value: unknown): number {
   return 0;
 }
 
+/** Código REO SaaS (VARCHAR 10); vacío → null */
+export function normalizeIdDlkAdmReo(value: unknown): string | null {
+  if (value == null) return null;
+  const s = String(value).trim().slice(0, 10);
+  return s === "" ? null : s;
+}
+
+/** 1=Marca Propia, 2=Maquila, 3=Híbrido, 4=Comercializadora */
+export function parseTypeParentCompany(value: unknown): number {
+  const n = Number(value);
+  if (n === 1 || n === 2 || n === 3 || n === 4) return n;
+  return 1;
+}
+
 export class ParentCompanyService {
   constructor(private prisma: PrismaClient) {}
 
@@ -79,6 +93,8 @@ export class ParentCompanyService {
     canisterAssetsParentCompany?: string;
     logoParentCompany?: string;
     stateParentCompany?: number;
+    idDlkAdmReo?: string | null;
+    typeParentCompany?: number;
   }) {
     let codParentCompany = data.codParentCompany;
     if (!codParentCompany) {
@@ -99,6 +115,8 @@ export class ParentCompanyService {
     const created = await this.prisma.mdParentCompany.create({
       data: {
         codParentCompany,
+        idDlkAdmReo: normalizeIdDlkAdmReo(data.idDlkAdmReo),
+        typeParentCompany: parseTypeParentCompany(data.typeParentCompany),
         codGlnParentCompany: data.codGlnParentCompany ?? "",
         nameParentCompany: data.nameParentCompany,
         categoryParentCompany: data.categoryParentCompany ?? 0,
@@ -123,7 +141,7 @@ export class ParentCompanyService {
         fehProcesoModifDl: new Date(),
         desAccion: "INSERT",
         flgStatutActif: 1,
-      },
+      } as never,
     });
     return mapParentCompanyForApi(created);
   }
@@ -147,6 +165,8 @@ export class ParentCompanyService {
       canisterAssetsParentCompany: string;
       logoParentCompany: string;
       stateParentCompany: number;
+      idDlkAdmReo: string | null;
+      typeParentCompany: number;
     }>
   ) {
     const updateData: Record<string, unknown> = { desAccion: "UPDATE" };
@@ -191,6 +211,13 @@ export class ParentCompanyService {
       updateData.logoParentCompany = Buffer.from(data.logoParentCompany, "base64");
     }
 
+    if (data.idDlkAdmReo !== undefined) {
+      updateData.idDlkAdmReo = normalizeIdDlkAdmReo(data.idDlkAdmReo);
+    }
+    if (data.typeParentCompany !== undefined) {
+      updateData.typeParentCompany = parseTypeParentCompany(data.typeParentCompany);
+    }
+
     // Mantener alineado con el patrón de baja lógica del resto de maestros
     if (data.stateParentCompany !== undefined) {
       const s = Number(data.stateParentCompany);
@@ -199,7 +226,7 @@ export class ParentCompanyService {
 
     const updated = await this.prisma.mdParentCompany.update({
       where: { idDlkParentCompany: id },
-      data: updateData,
+      data: updateData as never,
     });
     return mapParentCompanyForApi(updated);
   }

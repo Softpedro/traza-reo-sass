@@ -10,6 +10,10 @@ datasource db {
 model MdParentCompany {
   idDlkParentCompany          Int                      @id @default(autoincrement()) @map("ID_DLK_PARENT_COMPANY")
   codParentCompany            String                   @unique(map: "uk_cod_parent") @map("COD_PARENT_COMPANY") @db.VarChar(10)
+  /** Código REO SaaS (enlace con administración multi-tenant) */
+  idDlkAdmReo                 String?                  @map("ID_DLK_ADM_REO") @db.VarChar(10)
+  /** 1=Marca Propia, 2=Maquila, 3=Híbrido, 4=Comercializadora */
+  typeParentCompany           Int                      @default(1) @map("TYPE_PARENT_COMPANY") @db.TinyInt
   codGlnParentCompany         String                   @map("COD_GLN_PARENT_COMPANY") @db.VarChar(13)
   nameParentCompany           String                   @map("NAME_PARENT_COMPANY") @db.VarChar(100)
   categoryParentCompany       Int                      @map("CATEGORY_PARENT_COMPANY")
@@ -88,6 +92,74 @@ model MdBrand {
   @@index([idDlkParentCompany], map: "FK_BRAND_PARENT_COMPANY")
   @@index([codUbigeoBrand], map: "FK_BRAND_UBIGEO")
   @@map("MD_BRAND")
+}
+
+/** Tabla física MD_SUPPLIER (DDL negocio: sin empresa matriz). */
+model MdSupplier {
+  idDlkSupplier    Int         @id @default(autoincrement()) @map("ID_DLK_SUPPLIER")
+  codSupplier      String?     @map("COD_SUPPLIER") @db.VarChar(20)
+  nameSupplier     String      @map("NAME_SUPPLIER") @db.VarChar(200)
+  rucSupplier      String      @map("RUC_SUPPLIER") @db.VarChar(11)
+  /** 1=Fibra, 2=Hilado, 3=Tela, 4=Químico, 5=Servicios, 6=Otro */
+  typeSupplier     Int         @map("TYPE_SUPPLIER")
+  /** Código ubigeo 6 caracteres (ej. 150101) */
+  ubigeoSupplier   String      @map("UBIGEO_SUPPLIER") @db.VarChar(6)
+  addressSupplier  String      @map("ADDRESS_SUPPLIER") @db.VarChar(200)
+  gpsSupplier      String?     @map("GPS_SUPPLIER") @db.VarChar(100)
+  emailSupplier    String      @map("EMAIL_SUPPLIER") @db.VarChar(100)
+  cellularSupplier String      @map("CELLULAR_SUPPLIER") @db.VarChar(25)
+  webSupplier      String?     @map("WEB_SUPPLIER") @db.VarChar(100)
+  logoSupplier     Bytes?      @map("LOGO_SUPPLIER")
+  stateSupplier    Int         @map("STATE_SUPPLIER")
+  codUsuarioCargaDl String     @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl DateTime   @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl DateTime   @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion        String      @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif   Int         @default(1) @map("FLG_STATUT_ACTIF")
+  materials        MdMaterial[]
+  avios            MdAvios[]
+
+  @@map("MD_SUPPLIER")
+}
+
+/** Tabla física MD_MATERIALS */
+model MdMaterial {
+  idDlkMaterials   Int        @id @default(autoincrement()) @map("ID_DLK_MATERIALS")
+  idDlkSupplier    Int        @map("ID_DLK_SUPPLIER")
+  codMaterial      String?    @map("COD_MATERIALS") @db.VarChar(100)
+  nameMaterial     String     @map("NAME_MATERIALS") @db.VarChar(100)
+  desMaterial      String?    @map("DES_MATERIALS") @db.VarChar(500)
+  obsMaterial      String?    @map("OBS_MATERIALS") @db.VarChar(500)
+  stateMaterial    Int        @map("STATE_MATERIALS")
+  codUsuarioCargaDl String    @map("COD_USUARIO_CARGA_DL") @db.VarChar(50)
+  fehProcesoCargaDl DateTime  @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl DateTime  @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion        String     @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif   Int        @default(1) @map("FLG_STATUT_ACTIF")
+  supplier         MdSupplier @relation(fields: [idDlkSupplier], references: [idDlkSupplier])
+
+  @@index([idDlkSupplier], map: "FK_MATERIAL_SUPPLIER")
+  @@map("MD_MATERIALS")
+}
+
+/** Tabla física MD_AVIOS (módulo UI pendiente) */
+model MdAvios {
+  idDlkAvios       Int        @id @default(autoincrement()) @map("ID_DLK_AVIOS")
+  idDlkSupplier    Int        @map("ID_DLK_SUPPLIER")
+  codAvios         String?    @map("COD_AVIOS") @db.VarChar(100)
+  nameAvios        String     @map("NAME_AVIOS") @db.VarChar(100)
+  desAvios         String?    @map("DES_AVIOS") @db.VarChar(500)
+  obsAvios         String?    @map("OBS_AVIOS") @db.VarChar(500)
+  stateAvios       Int        @map("STATE_AVIOS")
+  codUsuarioCargaDl String    @map("COD_USUARIO_CARGA_DL") @db.VarChar(50)
+  fehProcesoCargaDl DateTime  @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl DateTime  @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion        String     @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif   Int        @default(1) @map("FLG_STATUT_ACTIF")
+  supplier         MdSupplier @relation(fields: [idDlkSupplier], references: [idDlkSupplier])
+
+  @@index([idDlkSupplier], map: "FK_AVIOS_SUPPLIER")
+  @@map("MD_AVIOS")
 }
 
 model MdOrdenPedido {

@@ -3,10 +3,15 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@fullstack-reo/ui";
 import { labelEmpresaCategoria } from "./empresa-categories";
+import { labelTipoReoParentCompany } from "./empresa-tipo-reo";
 
 export type ParentCompany = {
   idDlkParentCompany: number;
   codParentCompany: string;
+  /** Código REO SaaS */
+  idDlkAdmReo?: string | null;
+  /** 1–4: Marca Propia, Maquila, Híbrido, Comercializadora */
+  typeParentCompany?: number;
   codGlnParentCompany: string;
   nameParentCompany: string;
   categoryParentCompany: number;
@@ -47,6 +52,12 @@ export function getColumns(
       id: "categoria",
       header: "Categoría",
       cell: ({ row }) => labelEmpresaCategoria(row.original.categoryParentCompany),
+    },
+    {
+      id: "tipoReo",
+      header: "Tipo REO",
+      cell: ({ row }) =>
+        labelTipoReoParentCompany(Number(row.original.typeParentCompany) || 1),
     },
     {
       accessorKey: "numRucParentCompany",

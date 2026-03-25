@@ -28,6 +28,7 @@ export type AggregateMdParentCompany = {
 
 export type MdParentCompanyAvgAggregateOutputType = {
   idDlkParentCompany: number | null
+  typeParentCompany: number | null
   categoryParentCompany: number | null
   codUbigeoParentCompany: number | null
   stateParentCompany: number | null
@@ -36,6 +37,7 @@ export type MdParentCompanyAvgAggregateOutputType = {
 
 export type MdParentCompanySumAggregateOutputType = {
   idDlkParentCompany: number | null
+  typeParentCompany: number | null
   categoryParentCompany: number | null
   codUbigeoParentCompany: number | null
   stateParentCompany: number | null
@@ -45,6 +47,8 @@ export type MdParentCompanySumAggregateOutputType = {
 export type MdParentCompanyMinAggregateOutputType = {
   idDlkParentCompany: number | null
   codParentCompany: string | null
+  idDlkAdmReo: string | null
+  typeParentCompany: number | null
   codGlnParentCompany: string | null
   nameParentCompany: string | null
   categoryParentCompany: number | null
@@ -69,6 +73,8 @@ export type MdParentCompanyMinAggregateOutputType = {
 export type MdParentCompanyMaxAggregateOutputType = {
   idDlkParentCompany: number | null
   codParentCompany: string | null
+  idDlkAdmReo: string | null
+  typeParentCompany: number | null
   codGlnParentCompany: string | null
   nameParentCompany: string | null
   categoryParentCompany: number | null
@@ -93,6 +99,8 @@ export type MdParentCompanyMaxAggregateOutputType = {
 export type MdParentCompanyCountAggregateOutputType = {
   idDlkParentCompany: number
   codParentCompany: number
+  idDlkAdmReo: number
+  typeParentCompany: number
   codGlnParentCompany: number
   nameParentCompany: number
   categoryParentCompany: number
@@ -118,6 +126,7 @@ export type MdParentCompanyCountAggregateOutputType = {
 
 export type MdParentCompanyAvgAggregateInputType = {
   idDlkParentCompany?: true
+  typeParentCompany?: true
   categoryParentCompany?: true
   codUbigeoParentCompany?: true
   stateParentCompany?: true
@@ -126,6 +135,7 @@ export type MdParentCompanyAvgAggregateInputType = {
 
 export type MdParentCompanySumAggregateInputType = {
   idDlkParentCompany?: true
+  typeParentCompany?: true
   categoryParentCompany?: true
   codUbigeoParentCompany?: true
   stateParentCompany?: true
@@ -135,6 +145,8 @@ export type MdParentCompanySumAggregateInputType = {
 export type MdParentCompanyMinAggregateInputType = {
   idDlkParentCompany?: true
   codParentCompany?: true
+  idDlkAdmReo?: true
+  typeParentCompany?: true
   codGlnParentCompany?: true
   nameParentCompany?: true
   categoryParentCompany?: true
@@ -159,6 +171,8 @@ export type MdParentCompanyMinAggregateInputType = {
 export type MdParentCompanyMaxAggregateInputType = {
   idDlkParentCompany?: true
   codParentCompany?: true
+  idDlkAdmReo?: true
+  typeParentCompany?: true
   codGlnParentCompany?: true
   nameParentCompany?: true
   categoryParentCompany?: true
@@ -183,6 +197,8 @@ export type MdParentCompanyMaxAggregateInputType = {
 export type MdParentCompanyCountAggregateInputType = {
   idDlkParentCompany?: true
   codParentCompany?: true
+  idDlkAdmReo?: true
+  typeParentCompany?: true
   codGlnParentCompany?: true
   nameParentCompany?: true
   categoryParentCompany?: true
@@ -294,6 +310,8 @@ export type MdParentCompanyGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 export type MdParentCompanyGroupByOutputType = {
   idDlkParentCompany: number
   codParentCompany: string
+  idDlkAdmReo: string | null
+  typeParentCompany: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -341,6 +359,8 @@ export type MdParentCompanyWhereInput = {
   NOT?: Prisma.MdParentCompanyWhereInput | Prisma.MdParentCompanyWhereInput[]
   idDlkParentCompany?: Prisma.IntFilter<"MdParentCompany"> | number
   codParentCompany?: Prisma.StringFilter<"MdParentCompany"> | string
+  idDlkAdmReo?: Prisma.StringNullableFilter<"MdParentCompany"> | string | null
+  typeParentCompany?: Prisma.IntFilter<"MdParentCompany"> | number
   codGlnParentCompany?: Prisma.StringFilter<"MdParentCompany"> | string
   nameParentCompany?: Prisma.StringFilter<"MdParentCompany"> | string
   categoryParentCompany?: Prisma.IntFilter<"MdParentCompany"> | number
@@ -360,18 +380,20 @@ export type MdParentCompanyWhereInput = {
   fehProcesoModifDl?: Prisma.DateTimeFilter<"MdParentCompany"> | Date | string
   desAccion?: Prisma.StringFilter<"MdParentCompany"> | string
   flgStatutActif?: Prisma.IntFilter<"MdParentCompany"> | number
-  brands?: Prisma.MdBrandListRelationFilter
-  ordenes?: Prisma.MdOrdenPedidoListRelationFilter
-  processes?: Prisma.MdProcessListRelationFilter
-  facilities?: Prisma.MdFacilityListRelationFilter
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaListRelationFilter
-  users?: Prisma.MdUserReoListRelationFilter
   auditLogs?: Prisma.LgParentCompanyListRelationFilter
+  brands?: Prisma.MdBrandListRelationFilter
+  facilities?: Prisma.MdFacilityListRelationFilter
+  ordenes?: Prisma.MdOrdenPedidoListRelationFilter
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaListRelationFilter
+  processes?: Prisma.MdProcessListRelationFilter
+  users?: Prisma.MdUserReoListRelationFilter
 }
 
 export type MdParentCompanyOrderByWithRelationInput = {
   idDlkParentCompany?: Prisma.SortOrder
   codParentCompany?: Prisma.SortOrder
+  idDlkAdmReo?: Prisma.SortOrderInput | Prisma.SortOrder
+  typeParentCompany?: Prisma.SortOrder
   codGlnParentCompany?: Prisma.SortOrder
   nameParentCompany?: Prisma.SortOrder
   categoryParentCompany?: Prisma.SortOrder
@@ -391,13 +413,13 @@ export type MdParentCompanyOrderByWithRelationInput = {
   fehProcesoModifDl?: Prisma.SortOrder
   desAccion?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
-  brands?: Prisma.MdBrandOrderByRelationAggregateInput
-  ordenes?: Prisma.MdOrdenPedidoOrderByRelationAggregateInput
-  processes?: Prisma.MdProcessOrderByRelationAggregateInput
-  facilities?: Prisma.MdFacilityOrderByRelationAggregateInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaOrderByRelationAggregateInput
-  users?: Prisma.MdUserReoOrderByRelationAggregateInput
   auditLogs?: Prisma.LgParentCompanyOrderByRelationAggregateInput
+  brands?: Prisma.MdBrandOrderByRelationAggregateInput
+  facilities?: Prisma.MdFacilityOrderByRelationAggregateInput
+  ordenes?: Prisma.MdOrdenPedidoOrderByRelationAggregateInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaOrderByRelationAggregateInput
+  processes?: Prisma.MdProcessOrderByRelationAggregateInput
+  users?: Prisma.MdUserReoOrderByRelationAggregateInput
   _relevance?: Prisma.MdParentCompanyOrderByRelevanceInput
 }
 
@@ -408,6 +430,8 @@ export type MdParentCompanyWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.MdParentCompanyWhereInput | Prisma.MdParentCompanyWhereInput[]
   OR?: Prisma.MdParentCompanyWhereInput[]
   NOT?: Prisma.MdParentCompanyWhereInput | Prisma.MdParentCompanyWhereInput[]
+  idDlkAdmReo?: Prisma.StringNullableFilter<"MdParentCompany"> | string | null
+  typeParentCompany?: Prisma.IntFilter<"MdParentCompany"> | number
   codGlnParentCompany?: Prisma.StringFilter<"MdParentCompany"> | string
   nameParentCompany?: Prisma.StringFilter<"MdParentCompany"> | string
   categoryParentCompany?: Prisma.IntFilter<"MdParentCompany"> | number
@@ -426,18 +450,20 @@ export type MdParentCompanyWhereUniqueInput = Prisma.AtLeast<{
   fehProcesoModifDl?: Prisma.DateTimeFilter<"MdParentCompany"> | Date | string
   desAccion?: Prisma.StringFilter<"MdParentCompany"> | string
   flgStatutActif?: Prisma.IntFilter<"MdParentCompany"> | number
-  brands?: Prisma.MdBrandListRelationFilter
-  ordenes?: Prisma.MdOrdenPedidoListRelationFilter
-  processes?: Prisma.MdProcessListRelationFilter
-  facilities?: Prisma.MdFacilityListRelationFilter
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaListRelationFilter
-  users?: Prisma.MdUserReoListRelationFilter
   auditLogs?: Prisma.LgParentCompanyListRelationFilter
+  brands?: Prisma.MdBrandListRelationFilter
+  facilities?: Prisma.MdFacilityListRelationFilter
+  ordenes?: Prisma.MdOrdenPedidoListRelationFilter
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaListRelationFilter
+  processes?: Prisma.MdProcessListRelationFilter
+  users?: Prisma.MdUserReoListRelationFilter
 }, "idDlkParentCompany" | "codParentCompany" | "numRucParentCompany">
 
 export type MdParentCompanyOrderByWithAggregationInput = {
   idDlkParentCompany?: Prisma.SortOrder
   codParentCompany?: Prisma.SortOrder
+  idDlkAdmReo?: Prisma.SortOrderInput | Prisma.SortOrder
+  typeParentCompany?: Prisma.SortOrder
   codGlnParentCompany?: Prisma.SortOrder
   nameParentCompany?: Prisma.SortOrder
   categoryParentCompany?: Prisma.SortOrder
@@ -470,6 +496,8 @@ export type MdParentCompanyScalarWhereWithAggregatesInput = {
   NOT?: Prisma.MdParentCompanyScalarWhereWithAggregatesInput | Prisma.MdParentCompanyScalarWhereWithAggregatesInput[]
   idDlkParentCompany?: Prisma.IntWithAggregatesFilter<"MdParentCompany"> | number
   codParentCompany?: Prisma.StringWithAggregatesFilter<"MdParentCompany"> | string
+  idDlkAdmReo?: Prisma.StringNullableWithAggregatesFilter<"MdParentCompany"> | string | null
+  typeParentCompany?: Prisma.IntWithAggregatesFilter<"MdParentCompany"> | number
   codGlnParentCompany?: Prisma.StringWithAggregatesFilter<"MdParentCompany"> | string
   nameParentCompany?: Prisma.StringWithAggregatesFilter<"MdParentCompany"> | string
   categoryParentCompany?: Prisma.IntWithAggregatesFilter<"MdParentCompany"> | number
@@ -493,6 +521,8 @@ export type MdParentCompanyScalarWhereWithAggregatesInput = {
 
 export type MdParentCompanyCreateInput = {
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -512,18 +542,20 @@ export type MdParentCompanyCreateInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
-  brands?: Prisma.MdBrandCreateNestedManyWithoutParentCompanyInput
-  ordenes?: Prisma.MdOrdenPedidoCreateNestedManyWithoutParentCompanyInput
-  processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
-  facilities?: Prisma.MdFacilityCreateNestedManyWithoutParentCompanyInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaCreateNestedManyWithoutParentCompanyInput
-  users?: Prisma.MdUserReoCreateNestedManyWithoutParentCompanyInput
   auditLogs?: Prisma.LgParentCompanyCreateNestedManyWithoutParentCompanyInput
+  brands?: Prisma.MdBrandCreateNestedManyWithoutParentCompanyInput
+  facilities?: Prisma.MdFacilityCreateNestedManyWithoutParentCompanyInput
+  ordenes?: Prisma.MdOrdenPedidoCreateNestedManyWithoutParentCompanyInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaCreateNestedManyWithoutParentCompanyInput
+  processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
+  users?: Prisma.MdUserReoCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyUncheckedCreateInput = {
   idDlkParentCompany?: number
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -543,17 +575,19 @@ export type MdParentCompanyUncheckedCreateInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
-  brands?: Prisma.MdBrandUncheckedCreateNestedManyWithoutParentCompanyInput
-  ordenes?: Prisma.MdOrdenPedidoUncheckedCreateNestedManyWithoutParentCompanyInput
-  processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
-  facilities?: Prisma.MdFacilityUncheckedCreateNestedManyWithoutParentCompanyInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedCreateNestedManyWithoutParentCompanyInput
-  users?: Prisma.MdUserReoUncheckedCreateNestedManyWithoutParentCompanyInput
   auditLogs?: Prisma.LgParentCompanyUncheckedCreateNestedManyWithoutParentCompanyInput
+  brands?: Prisma.MdBrandUncheckedCreateNestedManyWithoutParentCompanyInput
+  facilities?: Prisma.MdFacilityUncheckedCreateNestedManyWithoutParentCompanyInput
+  ordenes?: Prisma.MdOrdenPedidoUncheckedCreateNestedManyWithoutParentCompanyInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedCreateNestedManyWithoutParentCompanyInput
+  processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
+  users?: Prisma.MdUserReoUncheckedCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyUpdateInput = {
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -573,18 +607,20 @@ export type MdParentCompanyUpdateInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  brands?: Prisma.MdBrandUpdateManyWithoutParentCompanyNestedInput
-  ordenes?: Prisma.MdOrdenPedidoUpdateManyWithoutParentCompanyNestedInput
-  processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
-  facilities?: Prisma.MdFacilityUpdateManyWithoutParentCompanyNestedInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaUpdateManyWithoutParentCompanyNestedInput
-  users?: Prisma.MdUserReoUpdateManyWithoutParentCompanyNestedInput
   auditLogs?: Prisma.LgParentCompanyUpdateManyWithoutParentCompanyNestedInput
+  brands?: Prisma.MdBrandUpdateManyWithoutParentCompanyNestedInput
+  facilities?: Prisma.MdFacilityUpdateManyWithoutParentCompanyNestedInput
+  ordenes?: Prisma.MdOrdenPedidoUpdateManyWithoutParentCompanyNestedInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaUpdateManyWithoutParentCompanyNestedInput
+  processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
+  users?: Prisma.MdUserReoUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyUncheckedUpdateInput = {
   idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -604,18 +640,20 @@ export type MdParentCompanyUncheckedUpdateInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  brands?: Prisma.MdBrandUncheckedUpdateManyWithoutParentCompanyNestedInput
-  ordenes?: Prisma.MdOrdenPedidoUncheckedUpdateManyWithoutParentCompanyNestedInput
-  processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
-  facilities?: Prisma.MdFacilityUncheckedUpdateManyWithoutParentCompanyNestedInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedUpdateManyWithoutParentCompanyNestedInput
-  users?: Prisma.MdUserReoUncheckedUpdateManyWithoutParentCompanyNestedInput
   auditLogs?: Prisma.LgParentCompanyUncheckedUpdateManyWithoutParentCompanyNestedInput
+  brands?: Prisma.MdBrandUncheckedUpdateManyWithoutParentCompanyNestedInput
+  facilities?: Prisma.MdFacilityUncheckedUpdateManyWithoutParentCompanyNestedInput
+  ordenes?: Prisma.MdOrdenPedidoUncheckedUpdateManyWithoutParentCompanyNestedInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedUpdateManyWithoutParentCompanyNestedInput
+  processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
+  users?: Prisma.MdUserReoUncheckedUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyCreateManyInput = {
   idDlkParentCompany?: number
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -639,6 +677,8 @@ export type MdParentCompanyCreateManyInput = {
 
 export type MdParentCompanyUpdateManyMutationInput = {
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -663,6 +703,8 @@ export type MdParentCompanyUpdateManyMutationInput = {
 export type MdParentCompanyUncheckedUpdateManyInput = {
   idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -693,6 +735,8 @@ export type MdParentCompanyOrderByRelevanceInput = {
 export type MdParentCompanyCountOrderByAggregateInput = {
   idDlkParentCompany?: Prisma.SortOrder
   codParentCompany?: Prisma.SortOrder
+  idDlkAdmReo?: Prisma.SortOrder
+  typeParentCompany?: Prisma.SortOrder
   codGlnParentCompany?: Prisma.SortOrder
   nameParentCompany?: Prisma.SortOrder
   categoryParentCompany?: Prisma.SortOrder
@@ -716,6 +760,7 @@ export type MdParentCompanyCountOrderByAggregateInput = {
 
 export type MdParentCompanyAvgOrderByAggregateInput = {
   idDlkParentCompany?: Prisma.SortOrder
+  typeParentCompany?: Prisma.SortOrder
   categoryParentCompany?: Prisma.SortOrder
   codUbigeoParentCompany?: Prisma.SortOrder
   stateParentCompany?: Prisma.SortOrder
@@ -725,6 +770,8 @@ export type MdParentCompanyAvgOrderByAggregateInput = {
 export type MdParentCompanyMaxOrderByAggregateInput = {
   idDlkParentCompany?: Prisma.SortOrder
   codParentCompany?: Prisma.SortOrder
+  idDlkAdmReo?: Prisma.SortOrder
+  typeParentCompany?: Prisma.SortOrder
   codGlnParentCompany?: Prisma.SortOrder
   nameParentCompany?: Prisma.SortOrder
   categoryParentCompany?: Prisma.SortOrder
@@ -749,6 +796,8 @@ export type MdParentCompanyMaxOrderByAggregateInput = {
 export type MdParentCompanyMinOrderByAggregateInput = {
   idDlkParentCompany?: Prisma.SortOrder
   codParentCompany?: Prisma.SortOrder
+  idDlkAdmReo?: Prisma.SortOrder
+  typeParentCompany?: Prisma.SortOrder
   codGlnParentCompany?: Prisma.SortOrder
   nameParentCompany?: Prisma.SortOrder
   categoryParentCompany?: Prisma.SortOrder
@@ -772,6 +821,7 @@ export type MdParentCompanyMinOrderByAggregateInput = {
 
 export type MdParentCompanySumOrderByAggregateInput = {
   idDlkParentCompany?: Prisma.SortOrder
+  typeParentCompany?: Prisma.SortOrder
   categoryParentCompany?: Prisma.SortOrder
   codUbigeoParentCompany?: Prisma.SortOrder
   stateParentCompany?: Prisma.SortOrder
@@ -783,13 +833,12 @@ export type MdParentCompanyScalarRelationFilter = {
   isNot?: Prisma.MdParentCompanyWhereInput
 }
 
-export type MdParentCompanyNullableScalarRelationFilter = {
-  is?: Prisma.MdParentCompanyWhereInput | null
-  isNot?: Prisma.MdParentCompanyWhereInput | null
-}
-
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -798,10 +847,6 @@ export type IntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 export type NullableBytesFieldUpdateOperationsInput = {
@@ -902,18 +947,18 @@ export type MdParentCompanyCreateNestedOneWithoutAuditLogsInput = {
   connect?: Prisma.MdParentCompanyWhereUniqueInput
 }
 
-export type MdParentCompanyUpdateOneWithoutAuditLogsNestedInput = {
+export type MdParentCompanyUpdateOneRequiredWithoutAuditLogsNestedInput = {
   create?: Prisma.XOR<Prisma.MdParentCompanyCreateWithoutAuditLogsInput, Prisma.MdParentCompanyUncheckedCreateWithoutAuditLogsInput>
   connectOrCreate?: Prisma.MdParentCompanyCreateOrConnectWithoutAuditLogsInput
   upsert?: Prisma.MdParentCompanyUpsertWithoutAuditLogsInput
-  disconnect?: Prisma.MdParentCompanyWhereInput | boolean
-  delete?: Prisma.MdParentCompanyWhereInput | boolean
   connect?: Prisma.MdParentCompanyWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.MdParentCompanyUpdateToOneWithWhereWithoutAuditLogsInput, Prisma.MdParentCompanyUpdateWithoutAuditLogsInput>, Prisma.MdParentCompanyUncheckedUpdateWithoutAuditLogsInput>
 }
 
 export type MdParentCompanyCreateWithoutBrandsInput = {
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -933,17 +978,19 @@ export type MdParentCompanyCreateWithoutBrandsInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
-  ordenes?: Prisma.MdOrdenPedidoCreateNestedManyWithoutParentCompanyInput
-  processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
-  facilities?: Prisma.MdFacilityCreateNestedManyWithoutParentCompanyInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaCreateNestedManyWithoutParentCompanyInput
-  users?: Prisma.MdUserReoCreateNestedManyWithoutParentCompanyInput
   auditLogs?: Prisma.LgParentCompanyCreateNestedManyWithoutParentCompanyInput
+  facilities?: Prisma.MdFacilityCreateNestedManyWithoutParentCompanyInput
+  ordenes?: Prisma.MdOrdenPedidoCreateNestedManyWithoutParentCompanyInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaCreateNestedManyWithoutParentCompanyInput
+  processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
+  users?: Prisma.MdUserReoCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyUncheckedCreateWithoutBrandsInput = {
   idDlkParentCompany?: number
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -963,12 +1010,12 @@ export type MdParentCompanyUncheckedCreateWithoutBrandsInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
-  ordenes?: Prisma.MdOrdenPedidoUncheckedCreateNestedManyWithoutParentCompanyInput
-  processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
-  facilities?: Prisma.MdFacilityUncheckedCreateNestedManyWithoutParentCompanyInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedCreateNestedManyWithoutParentCompanyInput
-  users?: Prisma.MdUserReoUncheckedCreateNestedManyWithoutParentCompanyInput
   auditLogs?: Prisma.LgParentCompanyUncheckedCreateNestedManyWithoutParentCompanyInput
+  facilities?: Prisma.MdFacilityUncheckedCreateNestedManyWithoutParentCompanyInput
+  ordenes?: Prisma.MdOrdenPedidoUncheckedCreateNestedManyWithoutParentCompanyInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedCreateNestedManyWithoutParentCompanyInput
+  processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
+  users?: Prisma.MdUserReoUncheckedCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyCreateOrConnectWithoutBrandsInput = {
@@ -989,6 +1036,8 @@ export type MdParentCompanyUpdateToOneWithWhereWithoutBrandsInput = {
 
 export type MdParentCompanyUpdateWithoutBrandsInput = {
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1008,17 +1057,19 @@ export type MdParentCompanyUpdateWithoutBrandsInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  ordenes?: Prisma.MdOrdenPedidoUpdateManyWithoutParentCompanyNestedInput
-  processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
-  facilities?: Prisma.MdFacilityUpdateManyWithoutParentCompanyNestedInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaUpdateManyWithoutParentCompanyNestedInput
-  users?: Prisma.MdUserReoUpdateManyWithoutParentCompanyNestedInput
   auditLogs?: Prisma.LgParentCompanyUpdateManyWithoutParentCompanyNestedInput
+  facilities?: Prisma.MdFacilityUpdateManyWithoutParentCompanyNestedInput
+  ordenes?: Prisma.MdOrdenPedidoUpdateManyWithoutParentCompanyNestedInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaUpdateManyWithoutParentCompanyNestedInput
+  processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
+  users?: Prisma.MdUserReoUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyUncheckedUpdateWithoutBrandsInput = {
   idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1038,16 +1089,18 @@ export type MdParentCompanyUncheckedUpdateWithoutBrandsInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  ordenes?: Prisma.MdOrdenPedidoUncheckedUpdateManyWithoutParentCompanyNestedInput
-  processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
-  facilities?: Prisma.MdFacilityUncheckedUpdateManyWithoutParentCompanyNestedInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedUpdateManyWithoutParentCompanyNestedInput
-  users?: Prisma.MdUserReoUncheckedUpdateManyWithoutParentCompanyNestedInput
   auditLogs?: Prisma.LgParentCompanyUncheckedUpdateManyWithoutParentCompanyNestedInput
+  facilities?: Prisma.MdFacilityUncheckedUpdateManyWithoutParentCompanyNestedInput
+  ordenes?: Prisma.MdOrdenPedidoUncheckedUpdateManyWithoutParentCompanyNestedInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedUpdateManyWithoutParentCompanyNestedInput
+  processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
+  users?: Prisma.MdUserReoUncheckedUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyCreateWithoutOrdenesInput = {
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -1067,17 +1120,19 @@ export type MdParentCompanyCreateWithoutOrdenesInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  auditLogs?: Prisma.LgParentCompanyCreateNestedManyWithoutParentCompanyInput
   brands?: Prisma.MdBrandCreateNestedManyWithoutParentCompanyInput
-  processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
   facilities?: Prisma.MdFacilityCreateNestedManyWithoutParentCompanyInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaCreateNestedManyWithoutParentCompanyInput
+  processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
   users?: Prisma.MdUserReoCreateNestedManyWithoutParentCompanyInput
-  auditLogs?: Prisma.LgParentCompanyCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyUncheckedCreateWithoutOrdenesInput = {
   idDlkParentCompany?: number
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -1097,12 +1152,12 @@ export type MdParentCompanyUncheckedCreateWithoutOrdenesInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  auditLogs?: Prisma.LgParentCompanyUncheckedCreateNestedManyWithoutParentCompanyInput
   brands?: Prisma.MdBrandUncheckedCreateNestedManyWithoutParentCompanyInput
-  processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
   facilities?: Prisma.MdFacilityUncheckedCreateNestedManyWithoutParentCompanyInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedCreateNestedManyWithoutParentCompanyInput
+  processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
   users?: Prisma.MdUserReoUncheckedCreateNestedManyWithoutParentCompanyInput
-  auditLogs?: Prisma.LgParentCompanyUncheckedCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyCreateOrConnectWithoutOrdenesInput = {
@@ -1123,6 +1178,8 @@ export type MdParentCompanyUpdateToOneWithWhereWithoutOrdenesInput = {
 
 export type MdParentCompanyUpdateWithoutOrdenesInput = {
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1142,17 +1199,19 @@ export type MdParentCompanyUpdateWithoutOrdenesInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  auditLogs?: Prisma.LgParentCompanyUpdateManyWithoutParentCompanyNestedInput
   brands?: Prisma.MdBrandUpdateManyWithoutParentCompanyNestedInput
-  processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
   facilities?: Prisma.MdFacilityUpdateManyWithoutParentCompanyNestedInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaUpdateManyWithoutParentCompanyNestedInput
+  processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
   users?: Prisma.MdUserReoUpdateManyWithoutParentCompanyNestedInput
-  auditLogs?: Prisma.LgParentCompanyUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyUncheckedUpdateWithoutOrdenesInput = {
   idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1172,16 +1231,18 @@ export type MdParentCompanyUncheckedUpdateWithoutOrdenesInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  auditLogs?: Prisma.LgParentCompanyUncheckedUpdateManyWithoutParentCompanyNestedInput
   brands?: Prisma.MdBrandUncheckedUpdateManyWithoutParentCompanyNestedInput
-  processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
   facilities?: Prisma.MdFacilityUncheckedUpdateManyWithoutParentCompanyNestedInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedUpdateManyWithoutParentCompanyNestedInput
+  processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
   users?: Prisma.MdUserReoUncheckedUpdateManyWithoutParentCompanyNestedInput
-  auditLogs?: Prisma.LgParentCompanyUncheckedUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyCreateWithoutProcessesInput = {
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -1201,17 +1262,19 @@ export type MdParentCompanyCreateWithoutProcessesInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  auditLogs?: Prisma.LgParentCompanyCreateNestedManyWithoutParentCompanyInput
   brands?: Prisma.MdBrandCreateNestedManyWithoutParentCompanyInput
-  ordenes?: Prisma.MdOrdenPedidoCreateNestedManyWithoutParentCompanyInput
   facilities?: Prisma.MdFacilityCreateNestedManyWithoutParentCompanyInput
+  ordenes?: Prisma.MdOrdenPedidoCreateNestedManyWithoutParentCompanyInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaCreateNestedManyWithoutParentCompanyInput
   users?: Prisma.MdUserReoCreateNestedManyWithoutParentCompanyInput
-  auditLogs?: Prisma.LgParentCompanyCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyUncheckedCreateWithoutProcessesInput = {
   idDlkParentCompany?: number
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -1231,12 +1294,12 @@ export type MdParentCompanyUncheckedCreateWithoutProcessesInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  auditLogs?: Prisma.LgParentCompanyUncheckedCreateNestedManyWithoutParentCompanyInput
   brands?: Prisma.MdBrandUncheckedCreateNestedManyWithoutParentCompanyInput
-  ordenes?: Prisma.MdOrdenPedidoUncheckedCreateNestedManyWithoutParentCompanyInput
   facilities?: Prisma.MdFacilityUncheckedCreateNestedManyWithoutParentCompanyInput
+  ordenes?: Prisma.MdOrdenPedidoUncheckedCreateNestedManyWithoutParentCompanyInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedCreateNestedManyWithoutParentCompanyInput
   users?: Prisma.MdUserReoUncheckedCreateNestedManyWithoutParentCompanyInput
-  auditLogs?: Prisma.LgParentCompanyUncheckedCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyCreateOrConnectWithoutProcessesInput = {
@@ -1257,6 +1320,8 @@ export type MdParentCompanyUpdateToOneWithWhereWithoutProcessesInput = {
 
 export type MdParentCompanyUpdateWithoutProcessesInput = {
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1276,17 +1341,19 @@ export type MdParentCompanyUpdateWithoutProcessesInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  auditLogs?: Prisma.LgParentCompanyUpdateManyWithoutParentCompanyNestedInput
   brands?: Prisma.MdBrandUpdateManyWithoutParentCompanyNestedInput
-  ordenes?: Prisma.MdOrdenPedidoUpdateManyWithoutParentCompanyNestedInput
   facilities?: Prisma.MdFacilityUpdateManyWithoutParentCompanyNestedInput
+  ordenes?: Prisma.MdOrdenPedidoUpdateManyWithoutParentCompanyNestedInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaUpdateManyWithoutParentCompanyNestedInput
   users?: Prisma.MdUserReoUpdateManyWithoutParentCompanyNestedInput
-  auditLogs?: Prisma.LgParentCompanyUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyUncheckedUpdateWithoutProcessesInput = {
   idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1306,16 +1373,18 @@ export type MdParentCompanyUncheckedUpdateWithoutProcessesInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  auditLogs?: Prisma.LgParentCompanyUncheckedUpdateManyWithoutParentCompanyNestedInput
   brands?: Prisma.MdBrandUncheckedUpdateManyWithoutParentCompanyNestedInput
-  ordenes?: Prisma.MdOrdenPedidoUncheckedUpdateManyWithoutParentCompanyNestedInput
   facilities?: Prisma.MdFacilityUncheckedUpdateManyWithoutParentCompanyNestedInput
+  ordenes?: Prisma.MdOrdenPedidoUncheckedUpdateManyWithoutParentCompanyNestedInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedUpdateManyWithoutParentCompanyNestedInput
   users?: Prisma.MdUserReoUncheckedUpdateManyWithoutParentCompanyNestedInput
-  auditLogs?: Prisma.LgParentCompanyUncheckedUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyCreateWithoutFacilitiesInput = {
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -1335,17 +1404,19 @@ export type MdParentCompanyCreateWithoutFacilitiesInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  auditLogs?: Prisma.LgParentCompanyCreateNestedManyWithoutParentCompanyInput
   brands?: Prisma.MdBrandCreateNestedManyWithoutParentCompanyInput
   ordenes?: Prisma.MdOrdenPedidoCreateNestedManyWithoutParentCompanyInput
-  processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaCreateNestedManyWithoutParentCompanyInput
+  processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
   users?: Prisma.MdUserReoCreateNestedManyWithoutParentCompanyInput
-  auditLogs?: Prisma.LgParentCompanyCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyUncheckedCreateWithoutFacilitiesInput = {
   idDlkParentCompany?: number
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -1365,12 +1436,12 @@ export type MdParentCompanyUncheckedCreateWithoutFacilitiesInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  auditLogs?: Prisma.LgParentCompanyUncheckedCreateNestedManyWithoutParentCompanyInput
   brands?: Prisma.MdBrandUncheckedCreateNestedManyWithoutParentCompanyInput
   ordenes?: Prisma.MdOrdenPedidoUncheckedCreateNestedManyWithoutParentCompanyInput
-  processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedCreateNestedManyWithoutParentCompanyInput
+  processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
   users?: Prisma.MdUserReoUncheckedCreateNestedManyWithoutParentCompanyInput
-  auditLogs?: Prisma.LgParentCompanyUncheckedCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyCreateOrConnectWithoutFacilitiesInput = {
@@ -1391,6 +1462,8 @@ export type MdParentCompanyUpdateToOneWithWhereWithoutFacilitiesInput = {
 
 export type MdParentCompanyUpdateWithoutFacilitiesInput = {
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1410,17 +1483,19 @@ export type MdParentCompanyUpdateWithoutFacilitiesInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  auditLogs?: Prisma.LgParentCompanyUpdateManyWithoutParentCompanyNestedInput
   brands?: Prisma.MdBrandUpdateManyWithoutParentCompanyNestedInput
   ordenes?: Prisma.MdOrdenPedidoUpdateManyWithoutParentCompanyNestedInput
-  processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaUpdateManyWithoutParentCompanyNestedInput
+  processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
   users?: Prisma.MdUserReoUpdateManyWithoutParentCompanyNestedInput
-  auditLogs?: Prisma.LgParentCompanyUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyUncheckedUpdateWithoutFacilitiesInput = {
   idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1440,16 +1515,18 @@ export type MdParentCompanyUncheckedUpdateWithoutFacilitiesInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  auditLogs?: Prisma.LgParentCompanyUncheckedUpdateManyWithoutParentCompanyNestedInput
   brands?: Prisma.MdBrandUncheckedUpdateManyWithoutParentCompanyNestedInput
   ordenes?: Prisma.MdOrdenPedidoUncheckedUpdateManyWithoutParentCompanyNestedInput
-  processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedUpdateManyWithoutParentCompanyNestedInput
+  processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
   users?: Prisma.MdUserReoUncheckedUpdateManyWithoutParentCompanyNestedInput
-  auditLogs?: Prisma.LgParentCompanyUncheckedUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyCreateWithoutMaquilaRelationsInput = {
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -1469,17 +1546,19 @@ export type MdParentCompanyCreateWithoutMaquilaRelationsInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  auditLogs?: Prisma.LgParentCompanyCreateNestedManyWithoutParentCompanyInput
   brands?: Prisma.MdBrandCreateNestedManyWithoutParentCompanyInput
+  facilities?: Prisma.MdFacilityCreateNestedManyWithoutParentCompanyInput
   ordenes?: Prisma.MdOrdenPedidoCreateNestedManyWithoutParentCompanyInput
   processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
-  facilities?: Prisma.MdFacilityCreateNestedManyWithoutParentCompanyInput
   users?: Prisma.MdUserReoCreateNestedManyWithoutParentCompanyInput
-  auditLogs?: Prisma.LgParentCompanyCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyUncheckedCreateWithoutMaquilaRelationsInput = {
   idDlkParentCompany?: number
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -1499,12 +1578,12 @@ export type MdParentCompanyUncheckedCreateWithoutMaquilaRelationsInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  auditLogs?: Prisma.LgParentCompanyUncheckedCreateNestedManyWithoutParentCompanyInput
   brands?: Prisma.MdBrandUncheckedCreateNestedManyWithoutParentCompanyInput
+  facilities?: Prisma.MdFacilityUncheckedCreateNestedManyWithoutParentCompanyInput
   ordenes?: Prisma.MdOrdenPedidoUncheckedCreateNestedManyWithoutParentCompanyInput
   processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
-  facilities?: Prisma.MdFacilityUncheckedCreateNestedManyWithoutParentCompanyInput
   users?: Prisma.MdUserReoUncheckedCreateNestedManyWithoutParentCompanyInput
-  auditLogs?: Prisma.LgParentCompanyUncheckedCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyCreateOrConnectWithoutMaquilaRelationsInput = {
@@ -1525,6 +1604,8 @@ export type MdParentCompanyUpdateToOneWithWhereWithoutMaquilaRelationsInput = {
 
 export type MdParentCompanyUpdateWithoutMaquilaRelationsInput = {
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1544,17 +1625,19 @@ export type MdParentCompanyUpdateWithoutMaquilaRelationsInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  auditLogs?: Prisma.LgParentCompanyUpdateManyWithoutParentCompanyNestedInput
   brands?: Prisma.MdBrandUpdateManyWithoutParentCompanyNestedInput
+  facilities?: Prisma.MdFacilityUpdateManyWithoutParentCompanyNestedInput
   ordenes?: Prisma.MdOrdenPedidoUpdateManyWithoutParentCompanyNestedInput
   processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
-  facilities?: Prisma.MdFacilityUpdateManyWithoutParentCompanyNestedInput
   users?: Prisma.MdUserReoUpdateManyWithoutParentCompanyNestedInput
-  auditLogs?: Prisma.LgParentCompanyUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyUncheckedUpdateWithoutMaquilaRelationsInput = {
   idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1574,16 +1657,18 @@ export type MdParentCompanyUncheckedUpdateWithoutMaquilaRelationsInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  auditLogs?: Prisma.LgParentCompanyUncheckedUpdateManyWithoutParentCompanyNestedInput
   brands?: Prisma.MdBrandUncheckedUpdateManyWithoutParentCompanyNestedInput
+  facilities?: Prisma.MdFacilityUncheckedUpdateManyWithoutParentCompanyNestedInput
   ordenes?: Prisma.MdOrdenPedidoUncheckedUpdateManyWithoutParentCompanyNestedInput
   processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
-  facilities?: Prisma.MdFacilityUncheckedUpdateManyWithoutParentCompanyNestedInput
   users?: Prisma.MdUserReoUncheckedUpdateManyWithoutParentCompanyNestedInput
-  auditLogs?: Prisma.LgParentCompanyUncheckedUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyCreateWithoutUsersInput = {
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -1603,17 +1688,19 @@ export type MdParentCompanyCreateWithoutUsersInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
-  brands?: Prisma.MdBrandCreateNestedManyWithoutParentCompanyInput
-  ordenes?: Prisma.MdOrdenPedidoCreateNestedManyWithoutParentCompanyInput
-  processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
-  facilities?: Prisma.MdFacilityCreateNestedManyWithoutParentCompanyInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaCreateNestedManyWithoutParentCompanyInput
   auditLogs?: Prisma.LgParentCompanyCreateNestedManyWithoutParentCompanyInput
+  brands?: Prisma.MdBrandCreateNestedManyWithoutParentCompanyInput
+  facilities?: Prisma.MdFacilityCreateNestedManyWithoutParentCompanyInput
+  ordenes?: Prisma.MdOrdenPedidoCreateNestedManyWithoutParentCompanyInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaCreateNestedManyWithoutParentCompanyInput
+  processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyUncheckedCreateWithoutUsersInput = {
   idDlkParentCompany?: number
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -1633,12 +1720,12 @@ export type MdParentCompanyUncheckedCreateWithoutUsersInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
-  brands?: Prisma.MdBrandUncheckedCreateNestedManyWithoutParentCompanyInput
-  ordenes?: Prisma.MdOrdenPedidoUncheckedCreateNestedManyWithoutParentCompanyInput
-  processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
-  facilities?: Prisma.MdFacilityUncheckedCreateNestedManyWithoutParentCompanyInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedCreateNestedManyWithoutParentCompanyInput
   auditLogs?: Prisma.LgParentCompanyUncheckedCreateNestedManyWithoutParentCompanyInput
+  brands?: Prisma.MdBrandUncheckedCreateNestedManyWithoutParentCompanyInput
+  facilities?: Prisma.MdFacilityUncheckedCreateNestedManyWithoutParentCompanyInput
+  ordenes?: Prisma.MdOrdenPedidoUncheckedCreateNestedManyWithoutParentCompanyInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedCreateNestedManyWithoutParentCompanyInput
+  processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyCreateOrConnectWithoutUsersInput = {
@@ -1659,6 +1746,8 @@ export type MdParentCompanyUpdateToOneWithWhereWithoutUsersInput = {
 
 export type MdParentCompanyUpdateWithoutUsersInput = {
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1678,17 +1767,19 @@ export type MdParentCompanyUpdateWithoutUsersInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  brands?: Prisma.MdBrandUpdateManyWithoutParentCompanyNestedInput
-  ordenes?: Prisma.MdOrdenPedidoUpdateManyWithoutParentCompanyNestedInput
-  processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
-  facilities?: Prisma.MdFacilityUpdateManyWithoutParentCompanyNestedInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaUpdateManyWithoutParentCompanyNestedInput
   auditLogs?: Prisma.LgParentCompanyUpdateManyWithoutParentCompanyNestedInput
+  brands?: Prisma.MdBrandUpdateManyWithoutParentCompanyNestedInput
+  facilities?: Prisma.MdFacilityUpdateManyWithoutParentCompanyNestedInput
+  ordenes?: Prisma.MdOrdenPedidoUpdateManyWithoutParentCompanyNestedInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaUpdateManyWithoutParentCompanyNestedInput
+  processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyUncheckedUpdateWithoutUsersInput = {
   idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1708,16 +1799,18 @@ export type MdParentCompanyUncheckedUpdateWithoutUsersInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  brands?: Prisma.MdBrandUncheckedUpdateManyWithoutParentCompanyNestedInput
-  ordenes?: Prisma.MdOrdenPedidoUncheckedUpdateManyWithoutParentCompanyNestedInput
-  processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
-  facilities?: Prisma.MdFacilityUncheckedUpdateManyWithoutParentCompanyNestedInput
-  maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedUpdateManyWithoutParentCompanyNestedInput
   auditLogs?: Prisma.LgParentCompanyUncheckedUpdateManyWithoutParentCompanyNestedInput
+  brands?: Prisma.MdBrandUncheckedUpdateManyWithoutParentCompanyNestedInput
+  facilities?: Prisma.MdFacilityUncheckedUpdateManyWithoutParentCompanyNestedInput
+  ordenes?: Prisma.MdOrdenPedidoUncheckedUpdateManyWithoutParentCompanyNestedInput
+  maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedUpdateManyWithoutParentCompanyNestedInput
+  processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyCreateWithoutAuditLogsInput = {
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -1738,16 +1831,18 @@ export type MdParentCompanyCreateWithoutAuditLogsInput = {
   desAccion: string
   flgStatutActif?: number
   brands?: Prisma.MdBrandCreateNestedManyWithoutParentCompanyInput
-  ordenes?: Prisma.MdOrdenPedidoCreateNestedManyWithoutParentCompanyInput
-  processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
   facilities?: Prisma.MdFacilityCreateNestedManyWithoutParentCompanyInput
+  ordenes?: Prisma.MdOrdenPedidoCreateNestedManyWithoutParentCompanyInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaCreateNestedManyWithoutParentCompanyInput
+  processes?: Prisma.MdProcessCreateNestedManyWithoutParentCompanyInput
   users?: Prisma.MdUserReoCreateNestedManyWithoutParentCompanyInput
 }
 
 export type MdParentCompanyUncheckedCreateWithoutAuditLogsInput = {
   idDlkParentCompany?: number
   codParentCompany: string
+  idDlkAdmReo?: string | null
+  typeParentCompany?: number
   codGlnParentCompany: string
   nameParentCompany: string
   categoryParentCompany: number
@@ -1768,10 +1863,10 @@ export type MdParentCompanyUncheckedCreateWithoutAuditLogsInput = {
   desAccion: string
   flgStatutActif?: number
   brands?: Prisma.MdBrandUncheckedCreateNestedManyWithoutParentCompanyInput
-  ordenes?: Prisma.MdOrdenPedidoUncheckedCreateNestedManyWithoutParentCompanyInput
-  processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
   facilities?: Prisma.MdFacilityUncheckedCreateNestedManyWithoutParentCompanyInput
+  ordenes?: Prisma.MdOrdenPedidoUncheckedCreateNestedManyWithoutParentCompanyInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedCreateNestedManyWithoutParentCompanyInput
+  processes?: Prisma.MdProcessUncheckedCreateNestedManyWithoutParentCompanyInput
   users?: Prisma.MdUserReoUncheckedCreateNestedManyWithoutParentCompanyInput
 }
 
@@ -1793,6 +1888,8 @@ export type MdParentCompanyUpdateToOneWithWhereWithoutAuditLogsInput = {
 
 export type MdParentCompanyUpdateWithoutAuditLogsInput = {
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1813,16 +1910,18 @@ export type MdParentCompanyUpdateWithoutAuditLogsInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   brands?: Prisma.MdBrandUpdateManyWithoutParentCompanyNestedInput
-  ordenes?: Prisma.MdOrdenPedidoUpdateManyWithoutParentCompanyNestedInput
-  processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
   facilities?: Prisma.MdFacilityUpdateManyWithoutParentCompanyNestedInput
+  ordenes?: Prisma.MdOrdenPedidoUpdateManyWithoutParentCompanyNestedInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaUpdateManyWithoutParentCompanyNestedInput
+  processes?: Prisma.MdProcessUpdateManyWithoutParentCompanyNestedInput
   users?: Prisma.MdUserReoUpdateManyWithoutParentCompanyNestedInput
 }
 
 export type MdParentCompanyUncheckedUpdateWithoutAuditLogsInput = {
   idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkAdmReo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
   codGlnParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   nameParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
   categoryParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1843,10 +1942,10 @@ export type MdParentCompanyUncheckedUpdateWithoutAuditLogsInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   brands?: Prisma.MdBrandUncheckedUpdateManyWithoutParentCompanyNestedInput
-  ordenes?: Prisma.MdOrdenPedidoUncheckedUpdateManyWithoutParentCompanyNestedInput
-  processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
   facilities?: Prisma.MdFacilityUncheckedUpdateManyWithoutParentCompanyNestedInput
+  ordenes?: Prisma.MdOrdenPedidoUncheckedUpdateManyWithoutParentCompanyNestedInput
   maquilaRelations?: Prisma.MdParentCompanyMaquilaUncheckedUpdateManyWithoutParentCompanyNestedInput
+  processes?: Prisma.MdProcessUncheckedUpdateManyWithoutParentCompanyNestedInput
   users?: Prisma.MdUserReoUncheckedUpdateManyWithoutParentCompanyNestedInput
 }
 
@@ -1856,23 +1955,23 @@ export type MdParentCompanyUncheckedUpdateWithoutAuditLogsInput = {
  */
 
 export type MdParentCompanyCountOutputType = {
-  brands: number
-  ordenes: number
-  processes: number
-  facilities: number
-  maquilaRelations: number
-  users: number
   auditLogs: number
+  brands: number
+  facilities: number
+  ordenes: number
+  maquilaRelations: number
+  processes: number
+  users: number
 }
 
 export type MdParentCompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  brands?: boolean | MdParentCompanyCountOutputTypeCountBrandsArgs
-  ordenes?: boolean | MdParentCompanyCountOutputTypeCountOrdenesArgs
-  processes?: boolean | MdParentCompanyCountOutputTypeCountProcessesArgs
-  facilities?: boolean | MdParentCompanyCountOutputTypeCountFacilitiesArgs
-  maquilaRelations?: boolean | MdParentCompanyCountOutputTypeCountMaquilaRelationsArgs
-  users?: boolean | MdParentCompanyCountOutputTypeCountUsersArgs
   auditLogs?: boolean | MdParentCompanyCountOutputTypeCountAuditLogsArgs
+  brands?: boolean | MdParentCompanyCountOutputTypeCountBrandsArgs
+  facilities?: boolean | MdParentCompanyCountOutputTypeCountFacilitiesArgs
+  ordenes?: boolean | MdParentCompanyCountOutputTypeCountOrdenesArgs
+  maquilaRelations?: boolean | MdParentCompanyCountOutputTypeCountMaquilaRelationsArgs
+  processes?: boolean | MdParentCompanyCountOutputTypeCountProcessesArgs
+  users?: boolean | MdParentCompanyCountOutputTypeCountUsersArgs
 }
 
 /**
@@ -1888,22 +1987,15 @@ export type MdParentCompanyCountOutputTypeDefaultArgs<ExtArgs extends runtime.Ty
 /**
  * MdParentCompanyCountOutputType without action
  */
+export type MdParentCompanyCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LgParentCompanyWhereInput
+}
+
+/**
+ * MdParentCompanyCountOutputType without action
+ */
 export type MdParentCompanyCountOutputTypeCountBrandsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.MdBrandWhereInput
-}
-
-/**
- * MdParentCompanyCountOutputType without action
- */
-export type MdParentCompanyCountOutputTypeCountOrdenesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.MdOrdenPedidoWhereInput
-}
-
-/**
- * MdParentCompanyCountOutputType without action
- */
-export type MdParentCompanyCountOutputTypeCountProcessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.MdProcessWhereInput
 }
 
 /**
@@ -1916,8 +2008,22 @@ export type MdParentCompanyCountOutputTypeCountFacilitiesArgs<ExtArgs extends ru
 /**
  * MdParentCompanyCountOutputType without action
  */
+export type MdParentCompanyCountOutputTypeCountOrdenesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MdOrdenPedidoWhereInput
+}
+
+/**
+ * MdParentCompanyCountOutputType without action
+ */
 export type MdParentCompanyCountOutputTypeCountMaquilaRelationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.MdParentCompanyMaquilaWhereInput
+}
+
+/**
+ * MdParentCompanyCountOutputType without action
+ */
+export type MdParentCompanyCountOutputTypeCountProcessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MdProcessWhereInput
 }
 
 /**
@@ -1927,17 +2033,12 @@ export type MdParentCompanyCountOutputTypeCountUsersArgs<ExtArgs extends runtime
   where?: Prisma.MdUserReoWhereInput
 }
 
-/**
- * MdParentCompanyCountOutputType without action
- */
-export type MdParentCompanyCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LgParentCompanyWhereInput
-}
-
 
 export type MdParentCompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idDlkParentCompany?: boolean
   codParentCompany?: boolean
+  idDlkAdmReo?: boolean
+  typeParentCompany?: boolean
   codGlnParentCompany?: boolean
   nameParentCompany?: boolean
   categoryParentCompany?: boolean
@@ -1957,13 +2058,13 @@ export type MdParentCompanySelect<ExtArgs extends runtime.Types.Extensions.Inter
   fehProcesoModifDl?: boolean
   desAccion?: boolean
   flgStatutActif?: boolean
-  brands?: boolean | Prisma.MdParentCompany$brandsArgs<ExtArgs>
-  ordenes?: boolean | Prisma.MdParentCompany$ordenesArgs<ExtArgs>
-  processes?: boolean | Prisma.MdParentCompany$processesArgs<ExtArgs>
-  facilities?: boolean | Prisma.MdParentCompany$facilitiesArgs<ExtArgs>
-  maquilaRelations?: boolean | Prisma.MdParentCompany$maquilaRelationsArgs<ExtArgs>
-  users?: boolean | Prisma.MdParentCompany$usersArgs<ExtArgs>
   auditLogs?: boolean | Prisma.MdParentCompany$auditLogsArgs<ExtArgs>
+  brands?: boolean | Prisma.MdParentCompany$brandsArgs<ExtArgs>
+  facilities?: boolean | Prisma.MdParentCompany$facilitiesArgs<ExtArgs>
+  ordenes?: boolean | Prisma.MdParentCompany$ordenesArgs<ExtArgs>
+  maquilaRelations?: boolean | Prisma.MdParentCompany$maquilaRelationsArgs<ExtArgs>
+  processes?: boolean | Prisma.MdParentCompany$processesArgs<ExtArgs>
+  users?: boolean | Prisma.MdParentCompany$usersArgs<ExtArgs>
   _count?: boolean | Prisma.MdParentCompanyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mdParentCompany"]>
 
@@ -1972,6 +2073,8 @@ export type MdParentCompanySelect<ExtArgs extends runtime.Types.Extensions.Inter
 export type MdParentCompanySelectScalar = {
   idDlkParentCompany?: boolean
   codParentCompany?: boolean
+  idDlkAdmReo?: boolean
+  typeParentCompany?: boolean
   codGlnParentCompany?: boolean
   nameParentCompany?: boolean
   categoryParentCompany?: boolean
@@ -1993,32 +2096,40 @@ export type MdParentCompanySelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type MdParentCompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkParentCompany" | "codParentCompany" | "codGlnParentCompany" | "nameParentCompany" | "categoryParentCompany" | "numRucParentCompany" | "codUbigeoParentCompany" | "addressParentCompany" | "gpsLocationParentCompany" | "emailParentCompany" | "cellularParentCompany" | "webParentCompany" | "canisterDataParentCompany" | "canisterAssetsParentCompany" | "logoParentCompany" | "stateParentCompany" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdParentCompany"]>
+export type MdParentCompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkParentCompany" | "codParentCompany" | "idDlkAdmReo" | "typeParentCompany" | "codGlnParentCompany" | "nameParentCompany" | "categoryParentCompany" | "numRucParentCompany" | "codUbigeoParentCompany" | "addressParentCompany" | "gpsLocationParentCompany" | "emailParentCompany" | "cellularParentCompany" | "webParentCompany" | "canisterDataParentCompany" | "canisterAssetsParentCompany" | "logoParentCompany" | "stateParentCompany" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdParentCompany"]>
 export type MdParentCompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  brands?: boolean | Prisma.MdParentCompany$brandsArgs<ExtArgs>
-  ordenes?: boolean | Prisma.MdParentCompany$ordenesArgs<ExtArgs>
-  processes?: boolean | Prisma.MdParentCompany$processesArgs<ExtArgs>
-  facilities?: boolean | Prisma.MdParentCompany$facilitiesArgs<ExtArgs>
-  maquilaRelations?: boolean | Prisma.MdParentCompany$maquilaRelationsArgs<ExtArgs>
-  users?: boolean | Prisma.MdParentCompany$usersArgs<ExtArgs>
   auditLogs?: boolean | Prisma.MdParentCompany$auditLogsArgs<ExtArgs>
+  brands?: boolean | Prisma.MdParentCompany$brandsArgs<ExtArgs>
+  facilities?: boolean | Prisma.MdParentCompany$facilitiesArgs<ExtArgs>
+  ordenes?: boolean | Prisma.MdParentCompany$ordenesArgs<ExtArgs>
+  maquilaRelations?: boolean | Prisma.MdParentCompany$maquilaRelationsArgs<ExtArgs>
+  processes?: boolean | Prisma.MdParentCompany$processesArgs<ExtArgs>
+  users?: boolean | Prisma.MdParentCompany$usersArgs<ExtArgs>
   _count?: boolean | Prisma.MdParentCompanyCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $MdParentCompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MdParentCompany"
   objects: {
-    brands: Prisma.$MdBrandPayload<ExtArgs>[]
-    ordenes: Prisma.$MdOrdenPedidoPayload<ExtArgs>[]
-    processes: Prisma.$MdProcessPayload<ExtArgs>[]
-    facilities: Prisma.$MdFacilityPayload<ExtArgs>[]
-    maquilaRelations: Prisma.$MdParentCompanyMaquilaPayload<ExtArgs>[]
-    users: Prisma.$MdUserReoPayload<ExtArgs>[]
     auditLogs: Prisma.$LgParentCompanyPayload<ExtArgs>[]
+    brands: Prisma.$MdBrandPayload<ExtArgs>[]
+    facilities: Prisma.$MdFacilityPayload<ExtArgs>[]
+    ordenes: Prisma.$MdOrdenPedidoPayload<ExtArgs>[]
+    maquilaRelations: Prisma.$MdParentCompanyMaquilaPayload<ExtArgs>[]
+    processes: Prisma.$MdProcessPayload<ExtArgs>[]
+    users: Prisma.$MdUserReoPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkParentCompany: number
     codParentCompany: string
+    /**
+     * * Código REO SaaS (enlace con administración multi-tenant)
+     */
+    idDlkAdmReo: string | null
+    /**
+     * * 1=Marca Propia, 2=Maquila, 3=Híbrido, 4=Comercializadora
+     */
+    typeParentCompany: number
     codGlnParentCompany: string
     nameParentCompany: string
     categoryParentCompany: number
@@ -2378,13 +2489,13 @@ readonly fields: MdParentCompanyFieldRefs;
  */
 export interface Prisma__MdParentCompanyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  brands<T extends Prisma.MdParentCompany$brandsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$brandsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  ordenes<T extends Prisma.MdParentCompany$ordenesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$ordenesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdOrdenPedidoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  processes<T extends Prisma.MdParentCompany$processesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$processesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdProcessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  facilities<T extends Prisma.MdParentCompany$facilitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$facilitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdFacilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  maquilaRelations<T extends Prisma.MdParentCompany$maquilaRelationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$maquilaRelationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdParentCompanyMaquilaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  users<T extends Prisma.MdParentCompany$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdUserReoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.MdParentCompany$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LgParentCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  brands<T extends Prisma.MdParentCompany$brandsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$brandsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  facilities<T extends Prisma.MdParentCompany$facilitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$facilitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdFacilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ordenes<T extends Prisma.MdParentCompany$ordenesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$ordenesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdOrdenPedidoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  maquilaRelations<T extends Prisma.MdParentCompany$maquilaRelationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$maquilaRelationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdParentCompanyMaquilaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  processes<T extends Prisma.MdParentCompany$processesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$processesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdProcessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  users<T extends Prisma.MdParentCompany$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompany$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdUserReoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2416,6 +2527,8 @@ export interface Prisma__MdParentCompanyClient<T, Null = never, ExtArgs extends 
 export interface MdParentCompanyFieldRefs {
   readonly idDlkParentCompany: Prisma.FieldRef<"MdParentCompany", 'Int'>
   readonly codParentCompany: Prisma.FieldRef<"MdParentCompany", 'String'>
+  readonly idDlkAdmReo: Prisma.FieldRef<"MdParentCompany", 'String'>
+  readonly typeParentCompany: Prisma.FieldRef<"MdParentCompany", 'Int'>
   readonly codGlnParentCompany: Prisma.FieldRef<"MdParentCompany", 'String'>
   readonly nameParentCompany: Prisma.FieldRef<"MdParentCompany", 'String'>
   readonly categoryParentCompany: Prisma.FieldRef<"MdParentCompany", 'Int'>
@@ -2778,6 +2891,30 @@ export type MdParentCompanyDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 /**
+ * MdParentCompany.auditLogs
+ */
+export type MdParentCompany$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LgParentCompany
+   */
+  select?: Prisma.LgParentCompanySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LgParentCompany
+   */
+  omit?: Prisma.LgParentCompanyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LgParentCompanyInclude<ExtArgs> | null
+  where?: Prisma.LgParentCompanyWhereInput
+  orderBy?: Prisma.LgParentCompanyOrderByWithRelationInput | Prisma.LgParentCompanyOrderByWithRelationInput[]
+  cursor?: Prisma.LgParentCompanyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LgParentCompanyScalarFieldEnum | Prisma.LgParentCompanyScalarFieldEnum[]
+}
+
+/**
  * MdParentCompany.brands
  */
 export type MdParentCompany$brandsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2799,54 +2936,6 @@ export type MdParentCompany$brandsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.MdBrandScalarFieldEnum | Prisma.MdBrandScalarFieldEnum[]
-}
-
-/**
- * MdParentCompany.ordenes
- */
-export type MdParentCompany$ordenesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the MdOrdenPedido
-   */
-  select?: Prisma.MdOrdenPedidoSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the MdOrdenPedido
-   */
-  omit?: Prisma.MdOrdenPedidoOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.MdOrdenPedidoInclude<ExtArgs> | null
-  where?: Prisma.MdOrdenPedidoWhereInput
-  orderBy?: Prisma.MdOrdenPedidoOrderByWithRelationInput | Prisma.MdOrdenPedidoOrderByWithRelationInput[]
-  cursor?: Prisma.MdOrdenPedidoWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.MdOrdenPedidoScalarFieldEnum | Prisma.MdOrdenPedidoScalarFieldEnum[]
-}
-
-/**
- * MdParentCompany.processes
- */
-export type MdParentCompany$processesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the MdProcess
-   */
-  select?: Prisma.MdProcessSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the MdProcess
-   */
-  omit?: Prisma.MdProcessOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.MdProcessInclude<ExtArgs> | null
-  where?: Prisma.MdProcessWhereInput
-  orderBy?: Prisma.MdProcessOrderByWithRelationInput | Prisma.MdProcessOrderByWithRelationInput[]
-  cursor?: Prisma.MdProcessWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.MdProcessScalarFieldEnum | Prisma.MdProcessScalarFieldEnum[]
 }
 
 /**
@@ -2874,6 +2963,30 @@ export type MdParentCompany$facilitiesArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
+ * MdParentCompany.ordenes
+ */
+export type MdParentCompany$ordenesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MdOrdenPedido
+   */
+  select?: Prisma.MdOrdenPedidoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MdOrdenPedido
+   */
+  omit?: Prisma.MdOrdenPedidoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MdOrdenPedidoInclude<ExtArgs> | null
+  where?: Prisma.MdOrdenPedidoWhereInput
+  orderBy?: Prisma.MdOrdenPedidoOrderByWithRelationInput | Prisma.MdOrdenPedidoOrderByWithRelationInput[]
+  cursor?: Prisma.MdOrdenPedidoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MdOrdenPedidoScalarFieldEnum | Prisma.MdOrdenPedidoScalarFieldEnum[]
+}
+
+/**
  * MdParentCompany.maquilaRelations
  */
 export type MdParentCompany$maquilaRelationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2898,6 +3011,30 @@ export type MdParentCompany$maquilaRelationsArgs<ExtArgs extends runtime.Types.E
 }
 
 /**
+ * MdParentCompany.processes
+ */
+export type MdParentCompany$processesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MdProcess
+   */
+  select?: Prisma.MdProcessSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MdProcess
+   */
+  omit?: Prisma.MdProcessOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MdProcessInclude<ExtArgs> | null
+  where?: Prisma.MdProcessWhereInput
+  orderBy?: Prisma.MdProcessOrderByWithRelationInput | Prisma.MdProcessOrderByWithRelationInput[]
+  cursor?: Prisma.MdProcessWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MdProcessScalarFieldEnum | Prisma.MdProcessScalarFieldEnum[]
+}
+
+/**
  * MdParentCompany.users
  */
 export type MdParentCompany$usersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2919,30 +3056,6 @@ export type MdParentCompany$usersArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.MdUserReoScalarFieldEnum | Prisma.MdUserReoScalarFieldEnum[]
-}
-
-/**
- * MdParentCompany.auditLogs
- */
-export type MdParentCompany$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LgParentCompany
-   */
-  select?: Prisma.LgParentCompanySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LgParentCompany
-   */
-  omit?: Prisma.LgParentCompanyOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LgParentCompanyInclude<ExtArgs> | null
-  where?: Prisma.LgParentCompanyWhereInput
-  orderBy?: Prisma.LgParentCompanyOrderByWithRelationInput | Prisma.LgParentCompanyOrderByWithRelationInput[]
-  cursor?: Prisma.LgParentCompanyWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.LgParentCompanyScalarFieldEnum | Prisma.LgParentCompanyScalarFieldEnum[]
 }
 
 /**

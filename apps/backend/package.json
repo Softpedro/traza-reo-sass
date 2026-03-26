@@ -13,6 +13,8 @@
     "db:generate": "node scripts/check-prisma-node.mjs && prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:resolve": "prisma migrate resolve",
     "db:studio": "prisma studio"
   },
   "dependencies": {

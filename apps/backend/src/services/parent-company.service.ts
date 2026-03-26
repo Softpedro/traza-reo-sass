@@ -47,7 +47,8 @@ function mapRawToParentCompanyRow(r: Record<string, unknown>): ParentCompanyRow 
     idDlkParentCompany: num(r.idDlkParentCompany as number | bigint),
     codParentCompany: String(r.codParentCompany),
     idDlkAdmReo: r.idDlkAdmReo == null || r.idDlkAdmReo === "" ? null : String(r.idDlkAdmReo),
-    typeParentCompany: num(r.typeParentCompany as number | bigint),
+    typeParentCompany:
+      r.typeParentCompany == null ? 1 : num(r.typeParentCompany as number | bigint),
     codGlnParentCompany: String(r.codGlnParentCompany),
     nameParentCompany: String(r.nameParentCompany),
     categoryParentCompany: num(r.categoryParentCompany as number | bigint),
@@ -109,34 +110,50 @@ export function parseTypeParentCompany(value: unknown): number {
 
 export class ParentCompanyService {
   private hasIdDlkAdmReo: boolean | null = null;
+  private hasTypeParentCompany: boolean | null = null;
 
   constructor(private prisma: PrismaClient) {}
+
+  private async hasColumn(tableName: string, columnName: string): Promise<boolean> {
+    const rows = await this.prisma.$queryRaw<{ c: bigint }[]>(Prisma.sql`
+      SELECT COUNT(*) AS c
+      FROM INFORMATION_SCHEMA.COLUMNS
+      WHERE TABLE_SCHEMA = DATABASE()
+        AND TABLE_NAME = ${tableName}
+        AND COLUMN_NAME = ${columnName}
+    `);
+    return Number(rows[0]?.c ?? 0) > 0;
+  }
 
   private async detectIdDlkAdmReo(): Promise<boolean> {
     if (this.hasIdDlkAdmReo != null) return this.hasIdDlkAdmReo;
     try {
-      const rows = await this.prisma.$queryRaw<{ c: bigint }[]>(Prisma.sql`
-        SELECT COUNT(*) AS c
-        FROM INFORMATION_SCHEMA.COLUMNS
-        WHERE TABLE_SCHEMA = DATABASE()
-          AND TABLE_NAME = 'MD_PARENT_COMPANY'
-          AND COLUMN_NAME = 'ID_DLK_ADM_REO'
-      `);
-      this.hasIdDlkAdmReo = Number(rows[0]?.c ?? 0) > 0;
+      this.hasIdDlkAdmReo = await this.hasColumn("MD_PARENT_COMPANY", "ID_DLK_ADM_REO");
     } catch {
       this.hasIdDlkAdmReo = false;
     }
     return this.hasIdDlkAdmReo;
   }
 
+  private async detectTypeParentCompany(): Promise<boolean> {
+    if (this.hasTypeParentCompany != null) return this.hasTypeParentCompany;
+    try {
+      this.hasTypeParentCompany = await this.hasColumn("MD_PARENT_COMPANY", "TYPE_PARENT_COMPANY");
+    } catch {
+      this.hasTypeParentCompany = false;
+    }
+    return this.hasTypeParentCompany;
+  }
+
   async list() {
     const hasAdm = await this.detectIdDlkAdmReo();
+    const hasType = await this.detectTypeParentCompany();
     const rows = await this.prisma.$queryRaw<Record<string, unknown>[]>(Prisma.sql`
       SELECT
         pc.ID_DLK_PARENT_COMPANY AS idDlkParentCompany,
         pc.COD_PARENT_COMPANY AS codParentCompany,
         ${hasAdm ? Prisma.sql`pc.ID_DLK_ADM_REO` : Prisma.sql`NULL`} AS idDlkAdmReo,
-        pc.TYPE_PARENT_COMPANY AS typeParentCompany,
+        ${hasType ? Prisma.sql`pc.TYPE_PARENT_COMPANY` : Prisma.sql`1`} AS typeParentCompany,
         pc.COD_GLN_PARENT_COMPANY AS codGlnParentCompany,
         pc.NAME_PARENT_COMPANY AS nameParentCompany,
         pc.CATEGORY_PARENT_COMPANY AS categoryParentCompany,
@@ -164,12 +181,13 @@ export class ParentCompanyService {
 
   async getById(id: number) {
     const hasAdm = await this.detectIdDlkAdmReo();
+    const hasType = await this.detectTypeParentCompany();
     const rows = await this.prisma.$queryRaw<Record<string, unknown>[]>(Prisma.sql`
       SELECT
         pc.ID_DLK_PARENT_COMPANY AS idDlkParentCompany,
         pc.COD_PARENT_COMPANY AS codParentCompany,
         ${hasAdm ? Prisma.sql`pc.ID_DLK_ADM_REO` : Prisma.sql`NULL`} AS idDlkAdmReo,
-        pc.TYPE_PARENT_COMPANY AS typeParentCompany,
+        ${hasType ? Prisma.sql`pc.TYPE_PARENT_COMPANY` : Prisma.sql`1`} AS typeParentCompany,
         pc.COD_GLN_PARENT_COMPANY AS codGlnParentCompany,
         pc.NAME_PARENT_COMPANY AS nameParentCompany,
         pc.CATEGORY_PARENT_COMPANY AS categoryParentCompany,

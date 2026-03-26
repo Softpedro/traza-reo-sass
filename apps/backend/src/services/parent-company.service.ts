@@ -1,5 +1,5 @@
 import { Buffer } from "node:buffer";
-import type { MdParentCompany, PrismaClient } from "../../generated/prisma/client.js";
+import { Prisma, type MdParentCompany, type PrismaClient } from "../../generated/prisma/client.js";
 
 /** Logo en BD (Bytes) → data URL para `<img src>` en el front. */
 function logoBytesToDataUrl(logo: Uint8Array | Buffer | null | undefined): string | null {
@@ -21,13 +21,62 @@ function logoBytesToDataUrl(logo: Uint8Array | Buffer | null | undefined): strin
   return `data:image/png;base64,${b64}`;
 }
 
+type ParentCompanyLogo = Uint8Array | Buffer | null | undefined;
+type ParentCompanyLike = Omit<MdParentCompany, "logoParentCompany"> & {
+  logoParentCompany: ParentCompanyLogo;
+};
+
 /** Respuesta JSON: logo como data URL (no Buffer) para previsualización en UI. */
-export function mapParentCompanyForApi(row: MdParentCompany) {
+export function mapParentCompanyForApi(row: ParentCompanyLike) {
   const { logoParentCompany, ...rest } = row;
   return {
     ...rest,
     logoParentCompany: logoBytesToDataUrl(logoParentCompany),
   };
+}
+
+type ParentCompanyRow = ParentCompanyLike;
+
+function num(v: number | bigint): number {
+  return typeof v === "bigint" ? Number(v) : v;
+}
+
+function mapRawToParentCompanyRow(r: Record<string, unknown>): ParentCompanyRow {
+  const logo = r.logoParentCompany as Buffer | Uint8Array | null | undefined;
+  return {
+    idDlkParentCompany: num(r.idDlkParentCompany as number | bigint),
+    codParentCompany: String(r.codParentCompany),
+    idDlkAdmReo: r.idDlkAdmReo == null || r.idDlkAdmReo === "" ? null : String(r.idDlkAdmReo),
+    typeParentCompany: num(r.typeParentCompany as number | bigint),
+    codGlnParentCompany: String(r.codGlnParentCompany),
+    nameParentCompany: String(r.nameParentCompany),
+    categoryParentCompany: num(r.categoryParentCompany as number | bigint),
+    numRucParentCompany: String(r.numRucParentCompany),
+    codUbigeoParentCompany: num(r.codUbigeoParentCompany as number | bigint),
+    addressParentCompany: String(r.addressParentCompany),
+    gpsLocationParentCompany:
+      r.gpsLocationParentCompany == null || r.gpsLocationParentCompany === ""
+        ? null
+        : String(r.gpsLocationParentCompany),
+    emailParentCompany: String(r.emailParentCompany),
+    cellularParentCompany: String(r.cellularParentCompany),
+    webParentCompany: r.webParentCompany == null || r.webParentCompany === "" ? null : String(r.webParentCompany),
+    canisterDataParentCompany:
+      r.canisterDataParentCompany == null || r.canisterDataParentCompany === ""
+        ? null
+        : String(r.canisterDataParentCompany),
+    canisterAssetsParentCompany:
+      r.canisterAssetsParentCompany == null || r.canisterAssetsParentCompany === ""
+        ? null
+        : String(r.canisterAssetsParentCompany),
+    logoParentCompany: logo ?? null,
+    stateParentCompany: num(r.stateParentCompany as number | bigint),
+    codUsuarioCargaDl: String(r.codUsuarioCargaDl),
+    fehProcesoCargaDl: r.fehProcesoCargaDl as Date,
+    fehProcesoModifDl: r.fehProcesoModifDl as Date,
+    desAccion: String(r.desAccion),
+    flgStatutActif: num(r.flgStatutActif as number | bigint),
+  } as ParentCompanyRow;
 }
 
 /** Convierte ubigeo del body (string vacío, número, string) a entero válido para Prisma (nunca NaN). */
@@ -59,20 +108,93 @@ export function parseTypeParentCompany(value: unknown): number {
 }
 
 export class ParentCompanyService {
+  private hasIdDlkAdmReo: boolean | null = null;
+
   constructor(private prisma: PrismaClient) {}
 
+  private async detectIdDlkAdmReo(): Promise<boolean> {
+    if (this.hasIdDlkAdmReo != null) return this.hasIdDlkAdmReo;
+    try {
+      const rows = await this.prisma.$queryRaw<{ c: bigint }[]>(Prisma.sql`
+        SELECT COUNT(*) AS c
+        FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_SCHEMA = DATABASE()
+          AND TABLE_NAME = 'MD_PARENT_COMPANY'
+          AND COLUMN_NAME = 'ID_DLK_ADM_REO'
+      `);
+      this.hasIdDlkAdmReo = Number(rows[0]?.c ?? 0) > 0;
+    } catch {
+      this.hasIdDlkAdmReo = false;
+    }
+    return this.hasIdDlkAdmReo;
+  }
+
   async list() {
-    const rows = await this.prisma.mdParentCompany.findMany({
-      orderBy: { idDlkParentCompany: "desc" },
-    });
-    return rows.map(mapParentCompanyForApi);
+    const hasAdm = await this.detectIdDlkAdmReo();
+    const rows = await this.prisma.$queryRaw<Record<string, unknown>[]>(Prisma.sql`
+      SELECT
+        pc.ID_DLK_PARENT_COMPANY AS idDlkParentCompany,
+        pc.COD_PARENT_COMPANY AS codParentCompany,
+        ${hasAdm ? Prisma.sql`pc.ID_DLK_ADM_REO` : Prisma.sql`NULL`} AS idDlkAdmReo,
+        pc.TYPE_PARENT_COMPANY AS typeParentCompany,
+        pc.COD_GLN_PARENT_COMPANY AS codGlnParentCompany,
+        pc.NAME_PARENT_COMPANY AS nameParentCompany,
+        pc.CATEGORY_PARENT_COMPANY AS categoryParentCompany,
+        pc.NUM_RUC_PARENT_COMPANY AS numRucParentCompany,
+        pc.COD_UBIGEO_PARENT_COMPANY AS codUbigeoParentCompany,
+        pc.ADDRESS_PARENT_COMPANY AS addressParentCompany,
+        pc.GPS_LOCATION_PARENT_COMPANY AS gpsLocationParentCompany,
+        pc.EMAIL_PARENT_COMPANY AS emailParentCompany,
+        pc.CELLULAR_PARENT_COMPANY AS cellularParentCompany,
+        pc.WEB_PARENT_COMPANY AS webParentCompany,
+        pc.CANISTER_DATA_PARENT_COMPANY AS canisterDataParentCompany,
+        pc.CANISTER_ASSETS_PARENT_COMPANY AS canisterAssetsParentCompany,
+        pc.LOGO_PARENT_COMPANY AS logoParentCompany,
+        pc.STATE_PARENT_COMPANY AS stateParentCompany,
+        pc.COD_USUARIO_CARGA_DL AS codUsuarioCargaDl,
+        pc.FEH_PROCESO_CARGA_DL AS fehProcesoCargaDl,
+        pc.FEH_PROCESO_MODIF_DL AS fehProcesoModifDl,
+        pc.DES_ACCION AS desAccion,
+        pc.FLG_STATUT_ACTIF AS flgStatutActif
+      FROM MD_PARENT_COMPANY pc
+      ORDER BY pc.ID_DLK_PARENT_COMPANY DESC
+    `);
+    return rows.map((r) => mapParentCompanyForApi(mapRawToParentCompanyRow(r)));
   }
 
   async getById(id: number) {
-    const row = await this.prisma.mdParentCompany.findUnique({
-      where: { idDlkParentCompany: id },
-    });
-    return row ? mapParentCompanyForApi(row) : null;
+    const hasAdm = await this.detectIdDlkAdmReo();
+    const rows = await this.prisma.$queryRaw<Record<string, unknown>[]>(Prisma.sql`
+      SELECT
+        pc.ID_DLK_PARENT_COMPANY AS idDlkParentCompany,
+        pc.COD_PARENT_COMPANY AS codParentCompany,
+        ${hasAdm ? Prisma.sql`pc.ID_DLK_ADM_REO` : Prisma.sql`NULL`} AS idDlkAdmReo,
+        pc.TYPE_PARENT_COMPANY AS typeParentCompany,
+        pc.COD_GLN_PARENT_COMPANY AS codGlnParentCompany,
+        pc.NAME_PARENT_COMPANY AS nameParentCompany,
+        pc.CATEGORY_PARENT_COMPANY AS categoryParentCompany,
+        pc.NUM_RUC_PARENT_COMPANY AS numRucParentCompany,
+        pc.COD_UBIGEO_PARENT_COMPANY AS codUbigeoParentCompany,
+        pc.ADDRESS_PARENT_COMPANY AS addressParentCompany,
+        pc.GPS_LOCATION_PARENT_COMPANY AS gpsLocationParentCompany,
+        pc.EMAIL_PARENT_COMPANY AS emailParentCompany,
+        pc.CELLULAR_PARENT_COMPANY AS cellularParentCompany,
+        pc.WEB_PARENT_COMPANY AS webParentCompany,
+        pc.CANISTER_DATA_PARENT_COMPANY AS canisterDataParentCompany,
+        pc.CANISTER_ASSETS_PARENT_COMPANY AS canisterAssetsParentCompany,
+        pc.LOGO_PARENT_COMPANY AS logoParentCompany,
+        pc.STATE_PARENT_COMPANY AS stateParentCompany,
+        pc.COD_USUARIO_CARGA_DL AS codUsuarioCargaDl,
+        pc.FEH_PROCESO_CARGA_DL AS fehProcesoCargaDl,
+        pc.FEH_PROCESO_MODIF_DL AS fehProcesoModifDl,
+        pc.DES_ACCION AS desAccion,
+        pc.FLG_STATUT_ACTIF AS flgStatutActif
+      FROM MD_PARENT_COMPANY pc
+      WHERE pc.ID_DLK_PARENT_COMPANY = ${id}
+      LIMIT 1
+    `);
+    const r = rows[0];
+    return r ? mapParentCompanyForApi(mapRawToParentCompanyRow(r)) : null;
   }
 
   async create(data: {

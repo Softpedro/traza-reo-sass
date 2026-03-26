@@ -189,17 +189,31 @@ export class SupplierService {
   private async detectLayout(): Promise<SupplierDbLayout> {
     if (this.layoutCache) return this.layoutCache;
     try {
-      const rows = await this.prisma.$queryRaw<{ c: bigint }[]>`
-        SELECT COUNT(*) AS c
+      const cols = await this.prisma.$queryRaw<{ COLUMN_NAME: string }[]>`
+        SELECT COLUMN_NAME
         FROM INFORMATION_SCHEMA.COLUMNS
         WHERE TABLE_SCHEMA = DATABASE()
           AND TABLE_NAME = 'MD_SUPPLIER'
-          AND COLUMN_NAME = 'RUC_SUPPLIER'
       `;
-      const hasNew = Number(rows[0]?.c ?? 0) > 0;
-      this.layoutCache = hasNew ? "current" : "legacy";
+      const names = new Set(cols.map((c) => String(c.COLUMN_NAME).toUpperCase()));
+      const hasRuc = names.has("RUC_SUPPLIER");
+      const hasParent = names.has("ID_DLK_PARENT_COMPANY");
+      /** Esquema nuevo (DDL sin empresa matriz): tiene RUC_SUPPLIER. */
+      if (hasRuc) {
+        this.layoutCache = "current";
+      } else if (hasParent) {
+        /** Esquema viejo: empresa matriz + NUM_RUC / COD_UBIGEO int. */
+        this.layoutCache = "legacy";
+      } else {
+        /**
+         * Tabla creada con DDL nuevo pero sin columnas legacy (p. ej. CREATE IF NOT EXISTS
+         * no recreó una tabla vieja incompleta). No usar INSERT legacy (rompe con 1054).
+         */
+        this.layoutCache = "current";
+      }
     } catch {
-      this.layoutCache = "legacy";
+      /** Sin introspección: preferir esquema nuevo (evita INSERT legacy en tablas sin empresa matriz). */
+      this.layoutCache = "current";
     }
     return this.layoutCache;
   }
@@ -284,7 +298,6 @@ export class SupplierService {
     logoSupplier?: string;
     stateSupplier?: number;
   }) {
-    const layout = await this.detectLayout();
     const ruc = (data.rucSupplier ?? data.numRucSupplier ?? "").trim();
     const ubi = ubigeoToVarchar6(data.ubigeoSupplier ?? data.codUbigeoSupplier ?? 0);
     if (ubi === "000000") {
@@ -309,7 +322,11 @@ export class SupplierService {
     const gpsVal = data.gpsLocationSupplier ?? data.gpsSupplier ?? null;
     const stateSupplier = data.stateSupplier ?? 1;
 
-    const newId = await this.prisma.$transaction(async (tx) => {
+    let newId = 0;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const layout = await this.detectLayout();
+      try {
+        newId = await this.prisma.$transaction(async (tx) => {
       if (layout === "current") {
         await tx.$executeRaw(Prisma.sql`
           INSERT INTO MD_SUPPLIER (
@@ -414,6 +431,21 @@ export class SupplierService {
       `);
       return num(idRows[0]?.id ?? 0);
     });
+        break;
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : String(e);
+        if (
+          attempt === 0 &&
+          isUnknownColumnError(e) &&
+          /ID_DLK_PARENT_COMPANY|NUM_RUC_SUPPLIER|COD_UBIGEO_SUPPLIER|GPS_LOCATION_SUPPLIER/i.test(msg)
+        ) {
+          this.invalidateLayoutCache();
+          this.layoutCache = "current";
+          continue;
+        }
+        throw e;
+      }
+    }
 
     const created = await this.getById(newId);
     if (!created) throw new Error("No se pudo leer el proveedor recién creado");

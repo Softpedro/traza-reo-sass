@@ -83,10 +83,13 @@ const prisma = new PrismaClient({ adapter });
 const app = express();
 const PORT = process.env.PORT ?? 4000;
 
-const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:3000";
+const defaultDevOrigins = ["http://localhost:3000", "http://localhost:3001"];
+const corsAllowed = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(",").map((s) => s.trim()).filter(Boolean)
+  : defaultDevOrigins;
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || origin === corsOrigin) {
+    if (!origin || corsAllowed.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));

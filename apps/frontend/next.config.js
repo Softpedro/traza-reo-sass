@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+// En prod el backend no vive en el mismo contenedor que Next: el proxy debe apuntar a la URL real (Seenode).
+const apiInternalBase = (
+  process.env.API_INTERNAL_URL || "http://127.0.0.1:4000"
+).replace(/\/$/, "");
+
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ["@fullstack-reo/ui"],
@@ -6,7 +11,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://localhost:4000/api/:path*",
+        destination: `${apiInternalBase}/api/:path*`,
       },
     ];
   },

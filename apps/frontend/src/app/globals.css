@@ -24,7 +24,8 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 174 62% 47%;
     --radius: 0.5rem;
-    --sidebar-bg: 0 0% 97%;
+    /* Barra lateral TRAZA (mock: teal ~#5FACA8) */
+    --sidebar-bg: 174 33% 52%;
     --header-bg: 0 0% 100%;
     --traza-teal: 174 62% 47%;
   }

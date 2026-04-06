@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Shirt } from "lucide-react";
 import { cn } from "@fullstack-reo/ui";
 import {
   navItems,
@@ -76,20 +76,27 @@ export function Sidebar() {
 
   function renderLeaf(item: NavLeafItem, indent: number) {
     const active = isLeafActive(item.href);
+    const numbered = item.listIndex != null;
     return (
       <Link
         key={item.href}
         href={item.href}
         className={cn(
-          "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+          "flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors text-neutral-900",
+          numbered && "pl-2",
           active
-            ? "bg-primary/10 text-primary"
-            : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+            ? numbered
+              ? "font-bold underline decoration-2 underline-offset-4 bg-black/10"
+              : "bg-black/15 font-semibold"
+            : "font-medium text-neutral-900/85 hover:bg-black/10 hover:text-neutral-900"
         )}
         style={{ paddingLeft: `${indent * 12 + 12}px` }}
       >
-        {item.icon && <item.icon className="h-4 w-4" />}
-        {item.label}
+        {item.listIndex != null && (
+          <span className="min-w-[1.1rem] shrink-0 tabular-nums">{item.listIndex}.</span>
+        )}
+        {item.icon && <item.icon className="h-4 w-4 shrink-0" />}
+        <span>{item.label}</span>
       </Link>
     );
   }
@@ -98,7 +105,7 @@ export function Sidebar() {
     return (
       <div
         key={`header-${item.label}`}
-        className="px-3 pt-4 pb-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-border/80 first:pt-1"
+        className="border-b border-black/15 px-3 pb-1.5 pt-4 text-xs font-semibold uppercase tracking-wider text-neutral-800/90 first:pt-1"
         style={{ paddingLeft: `${indent * 12 + 12}px` }}
       >
         {item.label}
@@ -119,8 +126,8 @@ export function Sidebar() {
           type="button"
           onClick={() => toggleGroup(item.id)}
           className={cn(
-            "flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider transition-colors hover:bg-accent hover:text-accent-foreground",
-            hasActiveChild && "text-foreground"
+            "flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-neutral-800/80 transition-colors hover:bg-black/10 hover:text-neutral-900",
+            hasActiveChild && "text-neutral-900"
           )}
           style={{ paddingLeft: `${indent * 12 + 12}px` }}
         >
@@ -148,17 +155,17 @@ export function Sidebar() {
           type="button"
           onClick={() => toggleSection(item.basePath)}
           className={cn(
-            "flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+            "flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors text-neutral-900",
             isChildActive
-              ? "bg-primary/10 text-primary"
-              : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+              ? "bg-black/15 font-semibold"
+              : "text-neutral-900/85 hover:bg-black/10"
           )}
         >
-          {item.icon && <item.icon className="h-4 w-4" />}
+          {item.icon && <item.icon className="h-4 w-4 shrink-0" />}
           <span className="flex-1 text-left">{item.label}</span>
           <ChevronDown
             className={cn(
-              "h-4 w-4 transition-transform",
+              "h-4 w-4 shrink-0 transition-transform",
               isOpen && "rotate-180"
             )}
           />
@@ -187,7 +194,27 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="w-52 shrink-0 border-r bg-[hsl(var(--sidebar-bg))] py-6 px-4">
+    <aside className="flex w-56 shrink-0 flex-col border-r border-black/10 bg-[hsl(var(--sidebar-bg))] px-4 py-5">
+      <div className="mb-5 px-1">
+        <div className="mb-2 flex items-center justify-between gap-1">
+          <span className="text-lg font-black tracking-tight text-neutral-900">TRAZA</span>
+          <span className="flex gap-0.5 text-neutral-900">
+            <Shirt className="h-5 w-5" strokeWidth={2.2} aria-hidden />
+            <Shirt className="h-5 w-5 -translate-x-1" strokeWidth={2.2} aria-hidden />
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5" aria-hidden>
+          {[0, 1, 2, 3, 4, 5].map((i) => (
+            <span
+              key={i}
+              className={cn(
+                "h-2 w-2 rounded-full border border-neutral-900",
+                i < 3 ? "bg-neutral-900" : "bg-transparent"
+              )}
+            />
+          ))}
+        </div>
+      </div>
       <nav className="space-y-1">{navItems.map(renderItem)}</nav>
     </aside>
   );

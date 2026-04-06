@@ -1,10 +1,12 @@
-import { Home, Settings, type LucideIcon } from "lucide-react";
+import { Home, Settings, ShoppingCart, type LucideIcon } from "lucide-react";
 
 export type NavLeafItem = {
   type: "leaf";
   label: string;
   href: string;
   icon?: LucideIcon;
+  /** Índice visible (ej. menú Orden de pedido: 1. Registro) */
+  listIndex?: number;
 };
 
 export type NavSectionHeader = {
@@ -77,6 +79,50 @@ export const navItems: NavItem[] = [
           { type: "leaf", label: "Materiales", href: "/configuracion/insumos/materiales" },
           { type: "leaf", label: "Avíos", href: "/configuracion/insumos/avios" },
         ],
+      },
+    ],
+  },
+  {
+    type: "collapsible",
+    label: "Orden de Pedido",
+    icon: ShoppingCart,
+    basePath: "/orden-pedido",
+    children: [
+      {
+        type: "leaf",
+        label: "Registro",
+        href: "/orden-pedido/registro",
+        listIndex: 1,
+      },
+      {
+        type: "leaf",
+        label: "Suministro",
+        href: "/orden-pedido/suministro",
+        listIndex: 2,
+      },
+      {
+        type: "leaf",
+        label: "Etiqueta",
+        href: "/orden-pedido/etiqueta",
+        listIndex: 3,
+      },
+      {
+        type: "leaf",
+        label: "Ruta",
+        href: "/orden-pedido/ruta",
+        listIndex: 4,
+      },
+      {
+        type: "leaf",
+        label: "Trazabilidad",
+        href: "/orden-pedido/trazabilidad",
+        listIndex: 5,
+      },
+      {
+        type: "leaf",
+        label: "Lista negra",
+        href: "/orden-pedido/lista-negra",
+        listIndex: 6,
       },
     ],
   },

@@ -58,6 +58,8 @@ export const ModelName = {
   MdMaterial: 'MdMaterial',
   MdAvios: 'MdAvios',
   MdOrdenPedido: 'MdOrdenPedido',
+  OdOrderHead: 'OdOrderHead',
+  OdOrderDetail: 'OdOrderDetail',
   MdProductionChain: 'MdProductionChain',
   MdProcess: 'MdProcess',
   MdSubprocess: 'MdSubprocess',
@@ -251,6 +253,76 @@ export const MdOrdenPedidoScalarFieldEnum = {
 } as const
 
 export type MdOrdenPedidoScalarFieldEnum = (typeof MdOrdenPedidoScalarFieldEnum)[keyof typeof MdOrdenPedidoScalarFieldEnum]
+
+
+export const OdOrderHeadScalarFieldEnum = {
+  idDlkOrderHead: 'idDlkOrderHead',
+  idDlkBrand: 'idDlkBrand',
+  codOrderHead: 'codOrderHead',
+  quantityOrderHead: 'quantityOrderHead',
+  fecEntry: 'fecEntry',
+  dateProbableDespatch: 'dateProbableDespatch',
+  fileOrderHead: 'fileOrderHead',
+  stageOrderHead: 'stageOrderHead',
+  statusStageOrderHead: 'statusStageOrderHead',
+  stateOrderHead: 'stateOrderHead',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOrderHeadScalarFieldEnum = (typeof OdOrderHeadScalarFieldEnum)[keyof typeof OdOrderHeadScalarFieldEnum]
+
+
+export const OdOrderDetailScalarFieldEnum = {
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  idDlkOrderHead: 'idDlkOrderHead',
+  codOrderDetail: 'codOrderDetail',
+  codEstilo: 'codEstilo',
+  desTela: 'desTela',
+  nomEstilo: 'nomEstilo',
+  colorAway: 'colorAway',
+  fondoTela: 'fondoTela',
+  versionTela: 'versionTela',
+  orderSample: 'orderSample',
+  size00: 'size00',
+  size1_2: 'size1_2',
+  size2: 'size2',
+  size2_3: 'size2_3',
+  size4: 'size4',
+  size4_5: 'size4_5',
+  size5: 'size5',
+  size6: 'size6',
+  size7: 'size7',
+  size8: 'size8',
+  size9: 'size9',
+  size10: 'size10',
+  size11: 'size11',
+  size12: 'size12',
+  size13: 'size13',
+  size14: 'size14',
+  size15: 'size15',
+  size16: 'size16',
+  sizeL: 'sizeL',
+  sizeM: 'sizeM',
+  sizeS: 'sizeS',
+  sizeXl: 'sizeXl',
+  sizeXs: 'sizeXs',
+  sizeXxl: 'sizeXxl',
+  sizeXxs: 'sizeXxs',
+  totalEstilo: 'totalEstilo',
+  supplyFile: 'supplyFile',
+  stateOrderDetail: 'stateOrderDetail',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOrderDetailScalarFieldEnum = (typeof OdOrderDetailScalarFieldEnum)[keyof typeof OdOrderDetailScalarFieldEnum]
 
 
 export const MdProductionChainScalarFieldEnum = {
@@ -873,6 +945,30 @@ export const MdOrdenPedidoOrderByRelevanceFieldEnum = {
 } as const
 
 export type MdOrdenPedidoOrderByRelevanceFieldEnum = (typeof MdOrdenPedidoOrderByRelevanceFieldEnum)[keyof typeof MdOrdenPedidoOrderByRelevanceFieldEnum]
+
+
+export const OdOrderHeadOrderByRelevanceFieldEnum = {
+  codOrderHead: 'codOrderHead',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOrderHeadOrderByRelevanceFieldEnum = (typeof OdOrderHeadOrderByRelevanceFieldEnum)[keyof typeof OdOrderHeadOrderByRelevanceFieldEnum]
+
+
+export const OdOrderDetailOrderByRelevanceFieldEnum = {
+  codOrderDetail: 'codOrderDetail',
+  codEstilo: 'codEstilo',
+  desTela: 'desTela',
+  nomEstilo: 'nomEstilo',
+  colorAway: 'colorAway',
+  fondoTela: 'fondoTela',
+  versionTela: 'versionTela',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOrderDetailOrderByRelevanceFieldEnum = (typeof OdOrderDetailOrderByRelevanceFieldEnum)[keyof typeof OdOrderDetailOrderByRelevanceFieldEnum]
 
 
 export const MdProductionChainOrderByRelevanceFieldEnum = {

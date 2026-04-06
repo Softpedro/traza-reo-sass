@@ -391,6 +391,8 @@ export const ModelName = {
   MdMaterial: 'MdMaterial',
   MdAvios: 'MdAvios',
   MdOrdenPedido: 'MdOrdenPedido',
+  OdOrderHead: 'OdOrderHead',
+  OdOrderDetail: 'OdOrderDetail',
   MdProductionChain: 'MdProductionChain',
   MdProcess: 'MdProcess',
   MdSubprocess: 'MdSubprocess',
@@ -427,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvios" | "mdOrdenPedido" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "lgUserAccess" | "lgParentCompany"
+    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvios" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "lgUserAccess" | "lgParentCompany"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -890,6 +892,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MdOrdenPedidoCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MdOrdenPedidoCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdOrderHead: {
+      payload: Prisma.$OdOrderHeadPayload<ExtArgs>
+      fields: Prisma.OdOrderHeadFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdOrderHeadFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderHeadPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdOrderHeadFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderHeadPayload>
+        }
+        findFirst: {
+          args: Prisma.OdOrderHeadFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderHeadPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdOrderHeadFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderHeadPayload>
+        }
+        findMany: {
+          args: Prisma.OdOrderHeadFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderHeadPayload>[]
+        }
+        create: {
+          args: Prisma.OdOrderHeadCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderHeadPayload>
+        }
+        createMany: {
+          args: Prisma.OdOrderHeadCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdOrderHeadDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderHeadPayload>
+        }
+        update: {
+          args: Prisma.OdOrderHeadUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderHeadPayload>
+        }
+        deleteMany: {
+          args: Prisma.OdOrderHeadDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdOrderHeadUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdOrderHeadUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderHeadPayload>
+        }
+        aggregate: {
+          args: Prisma.OdOrderHeadAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdOrderHead>
+        }
+        groupBy: {
+          args: Prisma.OdOrderHeadGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOrderHeadGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdOrderHeadCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOrderHeadCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdOrderDetail: {
+      payload: Prisma.$OdOrderDetailPayload<ExtArgs>
+      fields: Prisma.OdOrderDetailFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdOrderDetailFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderDetailPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdOrderDetailFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderDetailPayload>
+        }
+        findFirst: {
+          args: Prisma.OdOrderDetailFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderDetailPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdOrderDetailFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderDetailPayload>
+        }
+        findMany: {
+          args: Prisma.OdOrderDetailFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderDetailPayload>[]
+        }
+        create: {
+          args: Prisma.OdOrderDetailCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderDetailPayload>
+        }
+        createMany: {
+          args: Prisma.OdOrderDetailCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdOrderDetailDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderDetailPayload>
+        }
+        update: {
+          args: Prisma.OdOrderDetailUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderDetailPayload>
+        }
+        deleteMany: {
+          args: Prisma.OdOrderDetailDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdOrderDetailUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdOrderDetailUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderDetailPayload>
+        }
+        aggregate: {
+          args: Prisma.OdOrderDetailAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdOrderDetail>
+        }
+        groupBy: {
+          args: Prisma.OdOrderDetailGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOrderDetailGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdOrderDetailCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOrderDetailCountAggregateOutputType> | number
         }
       }
     }
@@ -2474,6 +2608,76 @@ export const MdOrdenPedidoScalarFieldEnum = {
 export type MdOrdenPedidoScalarFieldEnum = (typeof MdOrdenPedidoScalarFieldEnum)[keyof typeof MdOrdenPedidoScalarFieldEnum]
 
 
+export const OdOrderHeadScalarFieldEnum = {
+  idDlkOrderHead: 'idDlkOrderHead',
+  idDlkBrand: 'idDlkBrand',
+  codOrderHead: 'codOrderHead',
+  quantityOrderHead: 'quantityOrderHead',
+  fecEntry: 'fecEntry',
+  dateProbableDespatch: 'dateProbableDespatch',
+  fileOrderHead: 'fileOrderHead',
+  stageOrderHead: 'stageOrderHead',
+  statusStageOrderHead: 'statusStageOrderHead',
+  stateOrderHead: 'stateOrderHead',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOrderHeadScalarFieldEnum = (typeof OdOrderHeadScalarFieldEnum)[keyof typeof OdOrderHeadScalarFieldEnum]
+
+
+export const OdOrderDetailScalarFieldEnum = {
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  idDlkOrderHead: 'idDlkOrderHead',
+  codOrderDetail: 'codOrderDetail',
+  codEstilo: 'codEstilo',
+  desTela: 'desTela',
+  nomEstilo: 'nomEstilo',
+  colorAway: 'colorAway',
+  fondoTela: 'fondoTela',
+  versionTela: 'versionTela',
+  orderSample: 'orderSample',
+  size00: 'size00',
+  size1_2: 'size1_2',
+  size2: 'size2',
+  size2_3: 'size2_3',
+  size4: 'size4',
+  size4_5: 'size4_5',
+  size5: 'size5',
+  size6: 'size6',
+  size7: 'size7',
+  size8: 'size8',
+  size9: 'size9',
+  size10: 'size10',
+  size11: 'size11',
+  size12: 'size12',
+  size13: 'size13',
+  size14: 'size14',
+  size15: 'size15',
+  size16: 'size16',
+  sizeL: 'sizeL',
+  sizeM: 'sizeM',
+  sizeS: 'sizeS',
+  sizeXl: 'sizeXl',
+  sizeXs: 'sizeXs',
+  sizeXxl: 'sizeXxl',
+  sizeXxs: 'sizeXxs',
+  totalEstilo: 'totalEstilo',
+  supplyFile: 'supplyFile',
+  stateOrderDetail: 'stateOrderDetail',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOrderDetailScalarFieldEnum = (typeof OdOrderDetailScalarFieldEnum)[keyof typeof OdOrderDetailScalarFieldEnum]
+
+
 export const MdProductionChainScalarFieldEnum = {
   idDlkProductionChain: 'idDlkProductionChain',
   codProductionChain: 'codProductionChain',
@@ -3096,6 +3300,30 @@ export const MdOrdenPedidoOrderByRelevanceFieldEnum = {
 export type MdOrdenPedidoOrderByRelevanceFieldEnum = (typeof MdOrdenPedidoOrderByRelevanceFieldEnum)[keyof typeof MdOrdenPedidoOrderByRelevanceFieldEnum]
 
 
+export const OdOrderHeadOrderByRelevanceFieldEnum = {
+  codOrderHead: 'codOrderHead',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOrderHeadOrderByRelevanceFieldEnum = (typeof OdOrderHeadOrderByRelevanceFieldEnum)[keyof typeof OdOrderHeadOrderByRelevanceFieldEnum]
+
+
+export const OdOrderDetailOrderByRelevanceFieldEnum = {
+  codOrderDetail: 'codOrderDetail',
+  codEstilo: 'codEstilo',
+  desTela: 'desTela',
+  nomEstilo: 'nomEstilo',
+  colorAway: 'colorAway',
+  fondoTela: 'fondoTela',
+  versionTela: 'versionTela',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOrderDetailOrderByRelevanceFieldEnum = (typeof OdOrderDetailOrderByRelevanceFieldEnum)[keyof typeof OdOrderDetailOrderByRelevanceFieldEnum]
+
+
 export const MdProductionChainOrderByRelevanceFieldEnum = {
   codProductionChain: 'codProductionChain',
   nameProductionChain: 'nameProductionChain',
@@ -3607,6 +3835,8 @@ export type GlobalOmitConfig = {
   mdMaterial?: Prisma.MdMaterialOmit
   mdAvios?: Prisma.MdAviosOmit
   mdOrdenPedido?: Prisma.MdOrdenPedidoOmit
+  odOrderHead?: Prisma.OdOrderHeadOmit
+  odOrderDetail?: Prisma.OdOrderDetailOmit
   mdProductionChain?: Prisma.MdProductionChainOmit
   mdProcess?: Prisma.MdProcessOmit
   mdSubprocess?: Prisma.MdSubprocessOmit

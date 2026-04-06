@@ -370,6 +370,7 @@ export type MdBrandWhereInput = {
   flgStatutActif?: Prisma.IntFilter<"MdBrand"> | number
   parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
   subbrands?: Prisma.MdSubbrandListRelationFilter
+  orderHeads?: Prisma.OdOrderHeadListRelationFilter
 }
 
 export type MdBrandOrderByWithRelationInput = {
@@ -397,6 +398,7 @@ export type MdBrandOrderByWithRelationInput = {
   flgStatutActif?: Prisma.SortOrder
   parentCompany?: Prisma.MdParentCompanyOrderByWithRelationInput
   subbrands?: Prisma.MdSubbrandOrderByRelationAggregateInput
+  orderHeads?: Prisma.OdOrderHeadOrderByRelationAggregateInput
   _relevance?: Prisma.MdBrandOrderByRelevanceInput
 }
 
@@ -428,6 +430,7 @@ export type MdBrandWhereUniqueInput = Prisma.AtLeast<{
   flgStatutActif?: Prisma.IntFilter<"MdBrand"> | number
   parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
   subbrands?: Prisma.MdSubbrandListRelationFilter
+  orderHeads?: Prisma.OdOrderHeadListRelationFilter
 }, "idDlkBrand" | "codBrand">
 
 export type MdBrandOrderByWithAggregationInput = {
@@ -511,6 +514,7 @@ export type MdBrandCreateInput = {
   flgStatutActif?: number
   parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutBrandsInput
   subbrands?: Prisma.MdSubbrandCreateNestedManyWithoutBrandInput
+  orderHeads?: Prisma.OdOrderHeadCreateNestedManyWithoutBrandInput
 }
 
 export type MdBrandUncheckedCreateInput = {
@@ -537,6 +541,7 @@ export type MdBrandUncheckedCreateInput = {
   desAccion: string
   flgStatutActif?: number
   subbrands?: Prisma.MdSubbrandUncheckedCreateNestedManyWithoutBrandInput
+  orderHeads?: Prisma.OdOrderHeadUncheckedCreateNestedManyWithoutBrandInput
 }
 
 export type MdBrandUpdateInput = {
@@ -562,6 +567,7 @@ export type MdBrandUpdateInput = {
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutBrandsNestedInput
   subbrands?: Prisma.MdSubbrandUpdateManyWithoutBrandNestedInput
+  orderHeads?: Prisma.OdOrderHeadUpdateManyWithoutBrandNestedInput
 }
 
 export type MdBrandUncheckedUpdateInput = {
@@ -588,6 +594,7 @@ export type MdBrandUncheckedUpdateInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   subbrands?: Prisma.MdSubbrandUncheckedUpdateManyWithoutBrandNestedInput
+  orderHeads?: Prisma.OdOrderHeadUncheckedUpdateManyWithoutBrandNestedInput
 }
 
 export type MdBrandCreateManyInput = {
@@ -770,6 +777,11 @@ export type MdBrandSumOrderByAggregateInput = {
   flgStatutActif?: Prisma.SortOrder
 }
 
+export type MdBrandNullableScalarRelationFilter = {
+  is?: Prisma.MdBrandWhereInput | null
+  isNot?: Prisma.MdBrandWhereInput | null
+}
+
 export type MdBrandScalarRelationFilter = {
   is?: Prisma.MdBrandWhereInput
   isNot?: Prisma.MdBrandWhereInput
@@ -817,6 +829,22 @@ export type MdBrandUncheckedUpdateManyWithoutParentCompanyNestedInput = {
   deleteMany?: Prisma.MdBrandScalarWhereInput | Prisma.MdBrandScalarWhereInput[]
 }
 
+export type MdBrandCreateNestedOneWithoutOrderHeadsInput = {
+  create?: Prisma.XOR<Prisma.MdBrandCreateWithoutOrderHeadsInput, Prisma.MdBrandUncheckedCreateWithoutOrderHeadsInput>
+  connectOrCreate?: Prisma.MdBrandCreateOrConnectWithoutOrderHeadsInput
+  connect?: Prisma.MdBrandWhereUniqueInput
+}
+
+export type MdBrandUpdateOneWithoutOrderHeadsNestedInput = {
+  create?: Prisma.XOR<Prisma.MdBrandCreateWithoutOrderHeadsInput, Prisma.MdBrandUncheckedCreateWithoutOrderHeadsInput>
+  connectOrCreate?: Prisma.MdBrandCreateOrConnectWithoutOrderHeadsInput
+  upsert?: Prisma.MdBrandUpsertWithoutOrderHeadsInput
+  disconnect?: Prisma.MdBrandWhereInput | boolean
+  delete?: Prisma.MdBrandWhereInput | boolean
+  connect?: Prisma.MdBrandWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MdBrandUpdateToOneWithWhereWithoutOrderHeadsInput, Prisma.MdBrandUpdateWithoutOrderHeadsInput>, Prisma.MdBrandUncheckedUpdateWithoutOrderHeadsInput>
+}
+
 export type MdBrandCreateNestedOneWithoutSubbrandsInput = {
   create?: Prisma.XOR<Prisma.MdBrandCreateWithoutSubbrandsInput, Prisma.MdBrandUncheckedCreateWithoutSubbrandsInput>
   connectOrCreate?: Prisma.MdBrandCreateOrConnectWithoutSubbrandsInput
@@ -853,6 +881,7 @@ export type MdBrandCreateWithoutParentCompanyInput = {
   desAccion: string
   flgStatutActif?: number
   subbrands?: Prisma.MdSubbrandCreateNestedManyWithoutBrandInput
+  orderHeads?: Prisma.OdOrderHeadCreateNestedManyWithoutBrandInput
 }
 
 export type MdBrandUncheckedCreateWithoutParentCompanyInput = {
@@ -878,6 +907,7 @@ export type MdBrandUncheckedCreateWithoutParentCompanyInput = {
   desAccion: string
   flgStatutActif?: number
   subbrands?: Prisma.MdSubbrandUncheckedCreateNestedManyWithoutBrandInput
+  orderHeads?: Prisma.OdOrderHeadUncheckedCreateNestedManyWithoutBrandInput
 }
 
 export type MdBrandCreateOrConnectWithoutParentCompanyInput = {
@@ -934,6 +964,124 @@ export type MdBrandScalarWhereInput = {
   flgStatutActif?: Prisma.IntFilter<"MdBrand"> | number
 }
 
+export type MdBrandCreateWithoutOrderHeadsInput = {
+  codBrand: string
+  codParentCompany: string
+  nameBrand: string
+  desBrand?: string | null
+  codUbigeoBrand: number
+  addressBrand: string
+  locationBrand?: string | null
+  emailBrand: string
+  cellularBrand: string
+  facebookBrand?: string | null
+  instagramBrand?: string | null
+  whatsappBrand?: string | null
+  ecommerceBrand?: string | null
+  logoBrand?: runtime.Bytes | null
+  stateBrand?: number
+  codUsuarioCargaDl: string
+  fehProcesoCargaDl?: Date | string
+  fehProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
+  parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutBrandsInput
+  subbrands?: Prisma.MdSubbrandCreateNestedManyWithoutBrandInput
+}
+
+export type MdBrandUncheckedCreateWithoutOrderHeadsInput = {
+  idDlkBrand?: number
+  codBrand: string
+  idDlkParentCompany: number
+  codParentCompany: string
+  nameBrand: string
+  desBrand?: string | null
+  codUbigeoBrand: number
+  addressBrand: string
+  locationBrand?: string | null
+  emailBrand: string
+  cellularBrand: string
+  facebookBrand?: string | null
+  instagramBrand?: string | null
+  whatsappBrand?: string | null
+  ecommerceBrand?: string | null
+  logoBrand?: runtime.Bytes | null
+  stateBrand?: number
+  codUsuarioCargaDl: string
+  fehProcesoCargaDl?: Date | string
+  fehProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
+  subbrands?: Prisma.MdSubbrandUncheckedCreateNestedManyWithoutBrandInput
+}
+
+export type MdBrandCreateOrConnectWithoutOrderHeadsInput = {
+  where: Prisma.MdBrandWhereUniqueInput
+  create: Prisma.XOR<Prisma.MdBrandCreateWithoutOrderHeadsInput, Prisma.MdBrandUncheckedCreateWithoutOrderHeadsInput>
+}
+
+export type MdBrandUpsertWithoutOrderHeadsInput = {
+  update: Prisma.XOR<Prisma.MdBrandUpdateWithoutOrderHeadsInput, Prisma.MdBrandUncheckedUpdateWithoutOrderHeadsInput>
+  create: Prisma.XOR<Prisma.MdBrandCreateWithoutOrderHeadsInput, Prisma.MdBrandUncheckedCreateWithoutOrderHeadsInput>
+  where?: Prisma.MdBrandWhereInput
+}
+
+export type MdBrandUpdateToOneWithWhereWithoutOrderHeadsInput = {
+  where?: Prisma.MdBrandWhereInput
+  data: Prisma.XOR<Prisma.MdBrandUpdateWithoutOrderHeadsInput, Prisma.MdBrandUncheckedUpdateWithoutOrderHeadsInput>
+}
+
+export type MdBrandUpdateWithoutOrderHeadsInput = {
+  codBrand?: Prisma.StringFieldUpdateOperationsInput | string
+  codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  nameBrand?: Prisma.StringFieldUpdateOperationsInput | string
+  desBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  codUbigeoBrand?: Prisma.IntFieldUpdateOperationsInput | number
+  addressBrand?: Prisma.StringFieldUpdateOperationsInput | string
+  locationBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailBrand?: Prisma.StringFieldUpdateOperationsInput | string
+  cellularBrand?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutBrandsNestedInput
+  subbrands?: Prisma.MdSubbrandUpdateManyWithoutBrandNestedInput
+}
+
+export type MdBrandUncheckedUpdateWithoutOrderHeadsInput = {
+  idDlkBrand?: Prisma.IntFieldUpdateOperationsInput | number
+  codBrand?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
+  codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  nameBrand?: Prisma.StringFieldUpdateOperationsInput | string
+  desBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  codUbigeoBrand?: Prisma.IntFieldUpdateOperationsInput | number
+  addressBrand?: Prisma.StringFieldUpdateOperationsInput | string
+  locationBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailBrand?: Prisma.StringFieldUpdateOperationsInput | string
+  cellularBrand?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  subbrands?: Prisma.MdSubbrandUncheckedUpdateManyWithoutBrandNestedInput
+}
+
 export type MdBrandCreateWithoutSubbrandsInput = {
   codBrand: string
   codParentCompany: string
@@ -956,6 +1104,7 @@ export type MdBrandCreateWithoutSubbrandsInput = {
   desAccion: string
   flgStatutActif?: number
   parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutBrandsInput
+  orderHeads?: Prisma.OdOrderHeadCreateNestedManyWithoutBrandInput
 }
 
 export type MdBrandUncheckedCreateWithoutSubbrandsInput = {
@@ -981,6 +1130,7 @@ export type MdBrandUncheckedCreateWithoutSubbrandsInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  orderHeads?: Prisma.OdOrderHeadUncheckedCreateNestedManyWithoutBrandInput
 }
 
 export type MdBrandCreateOrConnectWithoutSubbrandsInput = {
@@ -1021,6 +1171,7 @@ export type MdBrandUpdateWithoutSubbrandsInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutBrandsNestedInput
+  orderHeads?: Prisma.OdOrderHeadUpdateManyWithoutBrandNestedInput
 }
 
 export type MdBrandUncheckedUpdateWithoutSubbrandsInput = {
@@ -1046,6 +1197,7 @@ export type MdBrandUncheckedUpdateWithoutSubbrandsInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  orderHeads?: Prisma.OdOrderHeadUncheckedUpdateManyWithoutBrandNestedInput
 }
 
 export type MdBrandCreateManyParentCompanyInput = {
@@ -1094,6 +1246,7 @@ export type MdBrandUpdateWithoutParentCompanyInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   subbrands?: Prisma.MdSubbrandUpdateManyWithoutBrandNestedInput
+  orderHeads?: Prisma.OdOrderHeadUpdateManyWithoutBrandNestedInput
 }
 
 export type MdBrandUncheckedUpdateWithoutParentCompanyInput = {
@@ -1119,6 +1272,7 @@ export type MdBrandUncheckedUpdateWithoutParentCompanyInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   subbrands?: Prisma.MdSubbrandUncheckedUpdateManyWithoutBrandNestedInput
+  orderHeads?: Prisma.OdOrderHeadUncheckedUpdateManyWithoutBrandNestedInput
 }
 
 export type MdBrandUncheckedUpdateManyWithoutParentCompanyInput = {
@@ -1152,10 +1306,12 @@ export type MdBrandUncheckedUpdateManyWithoutParentCompanyInput = {
 
 export type MdBrandCountOutputType = {
   subbrands: number
+  orderHeads: number
 }
 
 export type MdBrandCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subbrands?: boolean | MdBrandCountOutputTypeCountSubbrandsArgs
+  orderHeads?: boolean | MdBrandCountOutputTypeCountOrderHeadsArgs
 }
 
 /**
@@ -1173,6 +1329,13 @@ export type MdBrandCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
  */
 export type MdBrandCountOutputTypeCountSubbrandsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.MdSubbrandWhereInput
+}
+
+/**
+ * MdBrandCountOutputType without action
+ */
+export type MdBrandCountOutputTypeCountOrderHeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OdOrderHeadWhereInput
 }
 
 
@@ -1201,6 +1364,7 @@ export type MdBrandSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   flgStatutActif?: boolean
   parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   subbrands?: boolean | Prisma.MdBrand$subbrandsArgs<ExtArgs>
+  orderHeads?: boolean | Prisma.MdBrand$orderHeadsArgs<ExtArgs>
   _count?: boolean | Prisma.MdBrandCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mdBrand"]>
 
@@ -1235,6 +1399,7 @@ export type MdBrandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type MdBrandInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   subbrands?: boolean | Prisma.MdBrand$subbrandsArgs<ExtArgs>
+  orderHeads?: boolean | Prisma.MdBrand$orderHeadsArgs<ExtArgs>
   _count?: boolean | Prisma.MdBrandCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1243,6 +1408,7 @@ export type $MdBrandPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     parentCompany: Prisma.$MdParentCompanyPayload<ExtArgs>
     subbrands: Prisma.$MdSubbrandPayload<ExtArgs>[]
+    orderHeads: Prisma.$OdOrderHeadPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkBrand: number
@@ -1609,6 +1775,7 @@ export interface Prisma__MdBrandClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   parentCompany<T extends Prisma.MdParentCompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__MdParentCompanyClient<runtime.Types.Result.GetResult<Prisma.$MdParentCompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   subbrands<T extends Prisma.MdBrand$subbrandsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdBrand$subbrandsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdSubbrandPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  orderHeads<T extends Prisma.MdBrand$orderHeadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdBrand$orderHeadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdOrderHeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2024,6 +2191,30 @@ export type MdBrand$subbrandsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.MdSubbrandScalarFieldEnum | Prisma.MdSubbrandScalarFieldEnum[]
+}
+
+/**
+ * MdBrand.orderHeads
+ */
+export type MdBrand$orderHeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OdOrderHead
+   */
+  select?: Prisma.OdOrderHeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OdOrderHead
+   */
+  omit?: Prisma.OdOrderHeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OdOrderHeadInclude<ExtArgs> | null
+  where?: Prisma.OdOrderHeadWhereInput
+  orderBy?: Prisma.OdOrderHeadOrderByWithRelationInput | Prisma.OdOrderHeadOrderByWithRelationInput[]
+  cursor?: Prisma.OdOrderHeadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OdOrderHeadScalarFieldEnum | Prisma.OdOrderHeadScalarFieldEnum[]
 }
 
 /**

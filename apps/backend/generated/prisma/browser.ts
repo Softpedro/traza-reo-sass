@@ -53,6 +53,16 @@ export type MdAvios = Prisma.MdAviosModel
  */
 export type MdOrdenPedido = Prisma.MdOrdenPedidoModel
 /**
+ * Model OdOrderHead
+ * * Cabecera de orden (OD_ORDER_HEAD). PK ID_DLK_ORDER_HEAD.
+ */
+export type OdOrderHead = Prisma.OdOrderHeadModel
+/**
+ * Model OdOrderDetail
+ * * Detalle de orden (OD_ORDER_DETAIL).
+ */
+export type OdOrderDetail = Prisma.OdOrderDetailModel
+/**
  * Model MdProductionChain
  * 
  */

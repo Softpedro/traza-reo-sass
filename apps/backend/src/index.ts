@@ -49,6 +49,8 @@ import { InputActivitiesService } from "./services/input-activities.service.js";
 import { inputActivitiesRoutes } from "./routes/input-activities.routes.js";
 import { OutputActivitiesService } from "./services/output-activities.service.js";
 import { outputActivitiesRoutes } from "./routes/output-activities.routes.js";
+import { OrderHeadService } from "./services/order-head.service.js";
+import { orderHeadRoutes } from "./routes/order-head.routes.js";
 import { jsonBigIntMiddleware } from "./middleware/json-bigint.js";
 
 function parseDatabaseUrl(url: string) {
@@ -139,6 +141,7 @@ const activityService = new ActivityService(prisma);
 const procedureActivitiesService = new ProcedureActivitiesService(prisma);
 const inputActivitiesService = new InputActivitiesService(prisma);
 const outputActivitiesService = new OutputActivitiesService(prisma);
+const orderHeadService = new OrderHeadService(prisma);
 
 // ── Rutas ────────────────────────────────────────────────────────────
 app.use("/api/parent-companies", parentCompanyRoutes(parentCompanyService));
@@ -164,6 +167,7 @@ app.use("/api/activities", activityRoutes(activityService));
 app.use("/api/procedure-activities", procedureActivitiesRoutes(procedureActivitiesService));
 app.use("/api/input-activities", inputActivitiesRoutes(inputActivitiesService));
 app.use("/api/output-activities", outputActivitiesRoutes(outputActivitiesService));
+app.use("/api/order-heads", orderHeadRoutes(orderHeadService));
 
 // ── Ubigeo ───────────────────────────────────────────────────────────
 
@@ -205,7 +209,7 @@ app.get("/api/ubigeo", async (req, res) => {
   }
 });
 
-// ── Ordenes de Pedido ──────────────────────────────────────────────
+// ── Ordenes de Pedido (MD_ORDEN_PEDIDO; distinto de OD_ORDER_HEAD → /api/order-heads) ──
 
 app.get("/api/ordenes", async (_req, res) => {
   try {

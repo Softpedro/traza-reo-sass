@@ -778,18 +778,6 @@ export type MdSubprocessUncheckedUpdateManyWithoutProcessNestedInput = {
   deleteMany?: Prisma.MdSubprocessScalarWhereInput | Prisma.MdSubprocessScalarWhereInput[]
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type MdSubprocessCreateNestedOneWithoutActivitiesInput = {
   create?: Prisma.XOR<Prisma.MdSubprocessCreateWithoutActivitiesInput, Prisma.MdSubprocessUncheckedCreateWithoutActivitiesInput>
   connectOrCreate?: Prisma.MdSubprocessCreateOrConnectWithoutActivitiesInput

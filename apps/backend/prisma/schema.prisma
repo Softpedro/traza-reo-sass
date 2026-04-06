@@ -88,6 +88,7 @@ model MdBrand {
   flgStatutActif     Int             @default(1) @map("FLG_STATUT_ACTIF")
   parentCompany      MdParentCompany @relation(fields: [idDlkParentCompany], references: [idDlkParentCompany])
   subbrands          MdSubbrand[]
+  orderHeads         OdOrderHead[]
 
   @@index([idDlkParentCompany], map: "FK_BRAND_PARENT_COMPANY")
   @@index([codUbigeoBrand], map: "FK_BRAND_UBIGEO")
@@ -180,6 +181,79 @@ model MdOrdenPedido {
 
   @@index([idDlkParentCompany])
   @@map("MD_ORDEN_PEDIDO")
+}
+
+/** Cabecera de orden (OD_ORDER_HEAD). PK ID_DLK_ORDER_HEAD. */
+model OdOrderHead {
+  idDlkOrderHead           Int       @id @default(autoincrement()) @map("ID_DLK_ORDER_HEAD")
+  idDlkBrand               Int?      @map("ID_DLK_BRAND")
+  codOrderHead             String?   @map("COD_ORDER_HEAD") @db.VarChar(100)
+  quantityOrderHead        Int?      @map("QUANTITY_ORDER_HEAD")
+  fecEntry                 DateTime? @map("FEC_ENTRY") @db.Date
+  dateProbableDespatch     DateTime? @map("DATE_PROBABLE_DESPATCH") @db.Date
+  fileOrderHead            Bytes?    @map("FILE_ORDER_HEAD") @db.MediumBlob
+  stageOrderHead           Int?      @map("STAGE_ORDER_HEAD") @db.TinyInt
+  statusStageOrderHead     Int?      @map("STATUS_STAGE_ORDER_HEAD") @db.TinyInt
+  stateOrderHead           Int?      @map("STATE_ORDER_HEAD")
+  codUsuarioCargaDl        String?   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl        DateTime? @map("FEC_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl        DateTime? @map("FEC_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                String?   @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif           Int?      @map("FLG_STATUT_ACTIF") @db.TinyInt
+  brand                    MdBrand?  @relation(fields: [idDlkBrand], references: [idDlkBrand], onDelete: NoAction, onUpdate: NoAction, map: "fk_OD_ORDER_HEAD_MD_BRAND")
+  details                  OdOrderDetail[]
+
+  @@map("OD_ORDER_HEAD")
+}
+
+/** Detalle de orden (OD_ORDER_DETAIL). */
+model OdOrderDetail {
+  idDlkOrderDetail  Int          @id @default(autoincrement()) @map("ID_DLK_ORDER_DETAIL")
+  idDlkOrderHead    Int?         @map("ID_DLK_ORDER_HEAD")
+  codOrderDetail    String?      @map("COD_ORDER_DETAIL") @db.VarChar(50)
+  codEstilo         String?      @map("COD_ESTILO") @db.VarChar(100)
+  desTela           String?      @map("DES_TELA") @db.VarChar(200)
+  nomEstilo         String?      @map("NOM_ESTILO") @db.VarChar(100)
+  colorAway         String?      @map("COLOR_AWAY") @db.VarChar(50)
+  fondoTela         String?      @map("FONDO_TELA") @db.VarChar(100)
+  versionTela       String?      @map("VERSION_TELA") @db.VarChar(50)
+  orderSample       Int?         @map("ORDER_SAMPLE") @db.TinyInt
+  size00            Int?         @map("SIZE_00")
+  size1_2           Int?         @map("SIZE_1_2")
+  size2             Int?         @map("SIZE_2")
+  size2_3           Int?         @map("SIZE_2_3")
+  size4             Int?         @map("SIZE_4")
+  size4_5           Int?         @map("SIZE_4_5")
+  size5             Int?         @map("SIZE_5")
+  size6             Int?         @map("SIZE_6")
+  size7             Int?         @map("SIZE_7")
+  size8             Int?         @map("SIZE_8")
+  size9             Int?         @map("SIZE_9")
+  size10            Int?         @map("SIZE_10")
+  size11            Int?         @map("SIZE_11")
+  size12            Int?         @map("SIZE_12")
+  size13            Int?         @map("SIZE_13")
+  size14            Int?         @map("SIZE_14")
+  size15            Int?         @map("SIZE_15")
+  size16            Int?         @map("SIZE_16")
+  sizeL             Int?         @map("SIZE_L")
+  sizeM             Int?         @map("SIZE_M")
+  sizeS             Int?         @map("SIZE_S")
+  sizeXl            Int?         @map("SIZE_XL")
+  sizeXs            Int?         @map("SIZE_XS")
+  sizeXxl           Int?         @map("SIZE_XXL")
+  sizeXxs           Int?         @map("SIZE_XXS")
+  totalEstilo       Int?         @map("TOTAL_ESTILO")
+  supplyFile        Bytes?       @map("SUPPLY_FILE") @db.MediumBlob
+  stateOrderDetail  Int?         @map("STATE_ORDER_DETAIL") @db.TinyInt
+  codUsuarioCargaDl String?      @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl DateTime?    @map("FEC_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl DateTime?    @map("FEC_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion         String?      @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif    Int?         @map("FLG_STATUT_ACTIF") @db.TinyInt
+  orderHead         OdOrderHead? @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: NoAction, onUpdate: NoAction, map: "fk_OD_ORDER_DETAIL_OD_ORDER_HEAD1")
+
+  @@map("OD_ORDER_DETAIL")
 }
 
 model MdProductionChain {

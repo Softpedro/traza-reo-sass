@@ -7,11 +7,7 @@ import type { SubprocessRow } from "./columns";
 import type { ProcedureSubprocessRow } from "./procedure-subprocess-modal";
 import type { InputSubprocessRow } from "./input-subprocess-modal";
 import type { OutputSubprocessRow } from "./output-subprocess-modal";
-
-const BOX_CLASS =
-  "rounded-none border-2 border-[#2a9d9d] bg-[#0f9bb6] text-black p-4 min-w-[220px] max-w-[300px] shadow-md";
-const SUBPROCESS_BOX_CLASS =
-  "rounded-none border-[3px] border-black bg-white text-black p-6 min-w-[220px] max-w-[320px] shadow-md";
+import { SubprocessDiagramFlow } from "./subprocess-diagram-flow";
 
 interface SubprocessDiagramDialogProps {
   open: boolean;
@@ -51,25 +47,13 @@ export function SubprocessDiagramDialog({
     ? `${subprocess.codSubprocess || ""} - ${subprocess.nameSubprocess}`.trim()
     : "";
 
-  const procedureItems = procedures.map((p, i) => (
-    <div key={p.idDlkProcedureSubprocess} className="text-sm">
-      {i + 1}. {p.codProcedureSubprocess} - {p.nameProcedureSubprocess}
-    </div>
-  ));
-  const inputItems = inputs.map((inp, i) => (
-    <div key={inp.idDlkInputSubprocess} className="text-sm">
-      {i + 1}. {inp.codInputSubprocess} - {inp.nameInputSubprocess}
-    </div>
-  ));
-  const outputItems = outputs.map((out, i) => (
-    <div key={out.idDlkOutputSubprocess} className="text-sm">
-      {i + 1}. {out.codOutputSubprocess} - {out.nameOutputSubprocess}
-    </div>
-  ));
+  const flowKey = subprocess
+    ? `${subprocess.idDlkSubprocess}-${procedures.length}-${inputs.length}-${outputs.length}`
+    : "closed";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl max-h-[90vh] overflow-auto">
+      <DialogContent className="w-full max-w-[min(1200px,calc(100vw-2rem))] max-h-[90vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Diagrama - Sub Proceso</DialogTitle>
         </DialogHeader>
@@ -79,56 +63,17 @@ export function SubprocessDiagramDialog({
 
         {loading ? (
           <p className="py-8 text-center text-muted-foreground">Cargando diagrama...</p>
-        ) : (
-          <div className="flex flex-col items-center gap-6 py-4">
-            {/* PROCEDURE (arriba) */}
-            <div className={`${BOX_CLASS} w-full max-w-md`}>
-              <div className="font-semibold mb-2 text-center">PROCEDURE</div>
-              <div className="flex flex-col gap-0.5">
-                {procedureItems.length ? procedureItems : <span className="text-sm opacity-80">Sin procedures</span>}
-              </div>
-            </div>
-
-            {/* Flecha abajo Procedure -> Sub Proceso */}
-            <div className="flex flex-col items-center">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#0f9bb6]">
-                <path d="M12 4v16M12 20l-4-4M12 20l4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-
-            {/* Fila: INPUT - SUB PROCESO - OUTPUT */}
-            <div className="flex flex-row items-center justify-center gap-0 flex-wrap">
-              <div className={BOX_CLASS}>
-                <div className="font-semibold mb-2 text-center">INPUT</div>
-                <div className="flex flex-col gap-0.5">
-                  {inputItems.length ? inputItems : <span className="text-sm opacity-80">Sin inputs</span>}
-                </div>
-              </div>
-
-              <svg width="32" height="24" viewBox="0 0 32 24" fill="none" className="shrink-0 text-[#0f9bb6]">
-                <path d="M0 12h24M24 8L32 12L24 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-
-              <div className={SUBPROCESS_BOX_CLASS}>
-                <div className="text-sm text-[#0f9bb6] font-semibold underline text-center mb-3">
-                  SUB PROCESO
-                </div>
-                <div className="text-base font-semibold text-center">{subprocessLabel || "—"}</div>
-              </div>
-
-              <svg width="32" height="24" viewBox="0 0 32 24" fill="none" className="shrink-0 text-[#0f9bb6]">
-                <path d="M0 12h24M24 8L32 12L24 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-
-              <div className={BOX_CLASS}>
-                <div className="font-semibold mb-2 text-center">OUTPUT</div>
-                <div className="flex flex-col gap-0.5">
-                  {outputItems.length ? outputItems : <span className="text-sm opacity-80">Sin outputs</span>}
-                </div>
-              </div>
-            </div>
+        ) : subprocess ? (
+          <div className="py-4">
+            <SubprocessDiagramFlow
+              key={flowKey}
+              procedures={procedures}
+              inputs={inputs}
+              outputs={outputs}
+              subprocessLabel={subprocessLabel}
+            />
           </div>
-        )}
+        ) : null}
       </DialogContent>
     </Dialog>
   );

@@ -8,17 +8,41 @@ export type Material = {
   codMaterial: string;
   idDlkSupplier: number;
   codSupplier: string;
-  nameMaterial: string;
-  desMaterial?: string | null;
-  obsMaterial?: string | null;
-  stateMaterial: number;
-  flgStatutActif?: number;
+  material: string | null;
+  contentNameMaterial: string | null;
+  contentValueMaterial: number | null;
+  contentSourceMaterials: string | null;
+  materialTradeMarks: string | null;
+  recycled: number | null;
+  percentageRecycledMaterials: number | null;
+  recycledInputSource: string | null;
+  renewableMaterial: number | null;
+  percentageRenewableMaterial: number | null;
+  renewableInputSource: string | null;
+  typeDyes: string | null;
+  dyeClass: string | null;
+  classStandardDyes: string | null;
+  finishes: string | null;
+  patterns: string | null;
+  recoveryMaterials: string | null;
+  certification: string | null;
+  stateMaterials: number | null;
+  flgStatutActif?: number | null;
+  fehProcesoCargaDl?: string | null;
   supplier?: {
     idDlkSupplier: number;
     codSupplier: string;
     nameSupplier: string;
   } | null;
 };
+
+function formatDate(iso: string | null | undefined): string {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "—";
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
 
 export function getColumns(
   onEdit: (row: Material) => void,
@@ -30,10 +54,12 @@ export function getColumns(
       header: "Código",
     },
     {
-      accessorKey: "nameMaterial",
-      header: "Material",
+      id: "nombreComercial",
+      header: "Nombre Comercial",
       cell: ({ row }) => (
-        <span className="text-primary font-medium">{row.getValue("nameMaterial")}</span>
+        <span className="text-primary font-medium">
+          {row.original.materialTradeMarks ?? row.original.material ?? "—"}
+        </span>
       ),
     },
     {
@@ -46,10 +72,15 @@ export function getColumns(
       },
     },
     {
+      id: "fechaCarga",
+      header: "Fecha de carga",
+      cell: ({ row }) => <span>{formatDate(row.original.fehProcesoCargaDl)}</span>,
+    },
+    {
       id: "estado",
       header: "Estado",
       cell: ({ row }) => {
-        const active = (row.original.flgStatutActif ?? row.original.stateMaterial) === 1;
+        const active = (row.original.flgStatutActif ?? row.original.stateMaterials) === 1;
         return (
           <span className={active ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
             {active ? "Activo" : "Inactivo"}

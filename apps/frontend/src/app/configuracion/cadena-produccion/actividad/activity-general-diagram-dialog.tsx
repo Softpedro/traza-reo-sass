@@ -3,16 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
-import { getTrazabilidadLabel } from "../eslabon/obs";
 import type { Eslabon } from "../eslabon/columns";
 import type { ProcessRow } from "../proceso/columns";
 import type { SubprocessRow } from "../subproceso/columns";
 import type { ActivityRow } from "./columns";
-
-const BOX_NO_REO =
-  "rounded-none border-2 border-black bg-gray-600 text-white p-3 min-w-[140px] max-w-[220px] shadow-md text-center";
-const BOX_REO =
-  "rounded-none border-2 border-black bg-[#0f9bb6] text-white p-3 min-w-[140px] max-w-[240px] shadow-md text-center";
+import { ActivityGeneralChainFlow } from "./activity-general-chain-flow";
 
 interface ActivityGeneralDiagramDialogProps {
   open: boolean;
@@ -110,48 +105,15 @@ export function ActivityGeneralDiagramDialog({
     return map;
   }, [activities]);
 
-  const ArrowRight = () => (
-    <svg
-      width="30"
-      height="20"
-      viewBox="0 0 30 20"
-      fill="none"
-      className="shrink-0 text-[#0f9bb6]"
-    >
-      <path
-        d="M0 10h22M22 6L30 10L22 14"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+  const flowKey = useMemo(
+    () =>
+      `${sortedEslabones.map((e) => e.idDlkProductionChain).join("-")}|${processes.length}|${subprocesses.length}|${activities.length}`,
+    [sortedEslabones, processes.length, subprocesses.length, activities.length]
   );
-
-  const ArrowDown = () => (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 22 22"
-      fill="none"
-      className="shrink-0 text-[#0f9bb6]"
-    >
-      <path
-        d="M11 3v16M11 19l-4-4M11 19l4-4"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-
-  const trazabilidadCode = (num: number) =>
-    getTrazabilidadLabel(num).split(" ")[0] ?? "";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[96vw] max-h-[92vh] overflow-auto">
+      <DialogContent className="w-full max-w-[min(1200px,calc(100vw-2rem))] max-h-[90vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Diagrama general de Actividades</DialogTitle>
         </DialogHeader>
@@ -162,155 +124,21 @@ export function ActivityGeneralDiagramDialog({
         {loading ? (
           <p className="py-8 text-center text-muted-foreground">Cargando diagrama...</p>
         ) : (
-          <div className="flex flex-col items-start gap-6 py-4">
-            <div className="flex flex-nowrap items-start gap-0 overflow-x-auto w-full pb-2">
-              {sortedEslabones.map((eslabon, eslabonIndex) => {
-                const chainProcesses =
-                  processesByEslabon.get(eslabon.idDlkProductionChain) ?? [];
-                const hasActivities = chainProcesses.some((process) => {
-                  const processSubs = subprocessesByProcess.get(process.idDlkProcess) ?? [];
-                  return processSubs.some(
-                    (sub) => (activitiesBySubprocess.get(sub.idDlkSubprocess)?.length ?? 0) > 0
-                  );
-                });
-                const eslabonBoxClass = hasActivities ? BOX_REO : BOX_NO_REO;
-                const eslabonNum = eslabon.numPrecedenciaProductiva;
-
-                return (
-                  <div
-                    key={eslabon.idDlkProductionChain}
-                    className="flex flex-col items-start shrink-0 w-[230px]"
-                  >
-                    <div className="flex items-center gap-0">
-                      {eslabonIndex > 0 && <ArrowRight />}
-                      <div className={eslabonBoxClass}>
-                        <div className="text-4xl leading-none font-bold mb-1">{eslabonNum}</div>
-                        <div className="text-base leading-tight">
-                          {trazabilidadCode(eslabon.numPrecedenciaTrazabilidad)} -{" "}
-                          {eslabon.nameProductionChain}
-                        </div>
-                      </div>
-                    </div>
-
-                    {chainProcesses.length > 0 && (
-                      <div className="mt-1 flex flex-col items-start">
-                        {chainProcesses.map((process, processIndex) => {
-                          const processNum = `${eslabonNum}.${processIndex + 1}`;
-                          const processSubs =
-                            subprocessesByProcess.get(process.idDlkProcess) ?? [];
-                          const processHasActivities = processSubs.some(
-                            (sub) =>
-                              (activitiesBySubprocess.get(sub.idDlkSubprocess)?.length ?? 0) > 0
-                          );
-                          const processBoxClass = processHasActivities ? BOX_REO : BOX_NO_REO;
-
-                          return (
-                            <div key={process.idDlkProcess} className="flex flex-col items-start">
-                              <ArrowDown />
-                              <div className="flex items-start gap-0">
-                                <div className={processBoxClass}>
-                                  <div className="text-4xl leading-none font-bold mb-1">
-                                    {processNum}
-                                  </div>
-                                  <div className="text-base leading-tight">
-                                    {process.codProcess} - {process.nameProcess}
-                                  </div>
-                                </div>
-
-                                {processSubs.length > 0 && (
-                                  <div className="flex items-start">
-                                    {processSubs.map((sub, subIndex) => {
-                                      const subNum = `${processNum}.${subIndex + 1}`;
-                                      const subActivities =
-                                        activitiesBySubprocess.get(sub.idDlkSubprocess) ?? [];
-                                      const subHasActivities = subActivities.length > 0;
-                                      const subBoxClass = subHasActivities
-                                        ? BOX_REO
-                                        : BOX_NO_REO;
-
-                                      return (
-                                        <div
-                                          key={sub.idDlkSubprocess}
-                                          className="flex items-start"
-                                        >
-                                          <ArrowRight />
-                                          <div className="flex flex-col items-start">
-                                            <div className={subBoxClass}>
-                                              <div className="text-4xl leading-none font-bold mb-1">
-                                                {subNum}
-                                              </div>
-                                              <div className="text-base leading-tight">
-                                                {sub.codSubprocess} - {sub.nameSubprocess}
-                                              </div>
-                                            </div>
-
-                                            {subActivities.length > 0 && (
-                                              <div className="mt-1 flex flex-col items-start">
-                                                {subActivities.map((act, actIndex) => {
-                                                  const actNum = `${subNum}.${actIndex + 1}`;
-                                                  return (
-                                                    <div
-                                                      key={act.idDlkActivities}
-                                                      className="flex flex-col items-start"
-                                                    >
-                                                      <ArrowDown />
-                                                      <div className={BOX_REO}>
-                                                        <div className="text-4xl leading-none font-bold mb-1">
-                                                          {actNum}
-                                                        </div>
-                                                        <div className="text-base leading-tight">
-                                                          {act.codActivities} - {act.nameActivities}
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  );
-                                                })}
-                                              </div>
-                                            )}
-                                          </div>
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {sortedEslabones.length === 0 && (
+          <div className="flex flex-col gap-6 py-4">
+            {sortedEslabones.length > 0 ? (
+              <ActivityGeneralChainFlow
+                key={flowKey}
+                eslabones={eslabones}
+                processesByEslabon={processesByEslabon}
+                subprocessesByProcess={subprocessesByProcess}
+                activitiesBySubprocess={activitiesBySubprocess}
+              />
+            ) : (
               <p className="text-sm text-muted-foreground py-4">
                 No hay información para mostrar en el diagrama.
               </p>
             )}
 
-            <div className="w-full rounded-xl border-2 border-[#0f9bb6] bg-sky-50/80 p-4 text-sm">
-              <div className="font-semibold text-foreground mb-2">Leyenda</div>
-              <ul className="space-y-2 text-muted-foreground">
-                <li className="flex items-center gap-2">
-                  <span className="inline-flex h-8 w-8 border-2 border-black bg-gray-600 shrink-0" />
-                  <span>
-                    <strong className="text-foreground">
-                      Eslabón, Proceso, Sub Proceso o Actividad en que el REO no interviene.
-                    </strong>
-                  </span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="inline-flex h-8 w-8 border-2 border-black bg-[#0f9bb6] shrink-0" />
-                  <span>
-                    <strong className="text-foreground">
-                      Eslabón, Proceso, Sub Proceso o Actividad en que el REO sí interviene.
-                    </strong>
-                  </span>
-                </li>
-              </ul>
-            </div>
           </div>
         )}
       </DialogContent>

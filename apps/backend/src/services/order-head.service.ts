@@ -64,10 +64,28 @@ const listSelect = {
   fecProcesoModifDl: true,
   desAccion: true,
   flgStatutActif: true,
+  fehFileSuppliesUdp: true,
+  fehFileSuppliesProd: true,
+  fehFileSuppliesFinal: true,
   brand: {
     select: { idDlkBrand: true, nameBrand: true, codBrand: true },
   },
 } as const;
+
+/** Tipos de archivo de suministro que se guardan en OD_ORDER_HEAD. */
+export type SuministroFileKind = "udp" | "prod" | "final";
+
+type SuministroFieldSet = {
+  blob: "fileSuppliesUdp" | "fileSuppliesProd" | "fileSuppliesFinal";
+  date: "fehFileSuppliesUdp" | "fehFileSuppliesProd" | "fehFileSuppliesFinal";
+  label: string;
+};
+
+const SUMINISTRO_FIELDS: Record<SuministroFileKind, SuministroFieldSet> = {
+  udp: { blob: "fileSuppliesUdp", date: "fehFileSuppliesUdp", label: "UDP" },
+  prod: { blob: "fileSuppliesProd", date: "fehFileSuppliesProd", label: "PROD" },
+  final: { blob: "fileSuppliesFinal", date: "fehFileSuppliesFinal", label: "FINAL" },
+};
 
 export type OrderHeadListRow = {
   idDlkOrderHead: number;
@@ -84,6 +102,9 @@ export type OrderHeadListRow = {
   fecProcesoModifDl: Date | null;
   desAccion: string | null;
   flgStatutActif: number | null;
+  fehFileSuppliesUdp: Date | null;
+  fehFileSuppliesProd: Date | null;
+  fehFileSuppliesFinal: Date | null;
   brand: { idDlkBrand: number; nameBrand: string; codBrand: string } | null;
 };
 
@@ -95,7 +116,7 @@ export type OrderHeadCreateResult = OrderHeadListRow & {
 /** Fila OD_ORDER_DETAIL tal como la expone el API (sin blobs grandes en listados). */
 export type OrderDetailListRow = {
   idDlkOrderDetail: number;
-  idDlkOrderHead: number | null;
+  idDlkOrderHead: number;
   codOrderDetail: string | null;
   codEstilo: string | null;
   desTela: string | null;
@@ -104,12 +125,14 @@ export type OrderDetailListRow = {
   fondoTela: string | null;
   versionTela: string | null;
   orderSample: number | null;
-  size00: number | null;
-  size1_2: number | null;
+  size0_3: number | null;
+  size3_6: number | null;
+  size0_6: number | null;
+  size6_12: number | null;
+  size12_18: number | null;
   size2: number | null;
-  size2_3: number | null;
+  size3: number | null;
   size4: number | null;
-  size4_5: number | null;
   size5: number | null;
   size6: number | null;
   size7: number | null;
@@ -118,19 +141,15 @@ export type OrderDetailListRow = {
   size10: number | null;
   size11: number | null;
   size12: number | null;
-  size13: number | null;
   size14: number | null;
-  size15: number | null;
   size16: number | null;
-  sizeL: number | null;
-  sizeM: number | null;
   sizeS: number | null;
+  sizeM: number | null;
+  sizeL: number | null;
   sizeXl: number | null;
-  sizeXs: number | null;
   sizeXxl: number | null;
-  sizeXxs: number | null;
   totalEstilo: number | null;
-  hasSupplyFile: boolean;
+  hasImgEstilo: boolean;
   stateOrderDetail: number | null;
   flgStatutActif: number | null;
 };
@@ -138,8 +157,13 @@ export type OrderDetailListRow = {
 export class OrderHeadService {
   constructor(private prisma: PrismaClient) {}
 
-  async list(): Promise<OrderHeadListRow[]> {
+  async list(filter?: { stage?: number | null }): Promise<OrderHeadListRow[]> {
+    const where: Prisma.OdOrderHeadWhereInput = {};
+    if (filter?.stage != null && Number.isFinite(filter.stage)) {
+      where.stageOrderHead = filter.stage;
+    }
     const rows = await this.prisma.odOrderHead.findMany({
+      where,
       select: listSelect,
       orderBy: { idDlkOrderHead: "desc" },
     });
@@ -152,13 +176,25 @@ export class OrderHeadService {
       select: {
         ...listSelect,
         fileOrderHead: true,
+        fileSuppliesUdp: true,
+        fileSuppliesProd: true,
+        fileSuppliesFinal: true,
       },
     });
     if (!row) return null;
-    const { fileOrderHead: _blob, ...rest } = row;
+    const {
+      fileOrderHead,
+      fileSuppliesUdp,
+      fileSuppliesProd,
+      fileSuppliesFinal,
+      ...rest
+    } = row;
     return {
       ...rest,
-      hasArchivo: row.fileOrderHead != null && row.fileOrderHead.byteLength > 0,
+      hasArchivo: fileOrderHead != null && fileOrderHead.byteLength > 0,
+      hasFileSuppliesUdp: fileSuppliesUdp != null && fileSuppliesUdp.byteLength > 0,
+      hasFileSuppliesProd: fileSuppliesProd != null && fileSuppliesProd.byteLength > 0,
+      hasFileSuppliesFinal: fileSuppliesFinal != null && fileSuppliesFinal.byteLength > 0,
     };
   }
 
@@ -184,12 +220,14 @@ export class OrderHeadService {
         fondoTela: true,
         versionTela: true,
         orderSample: true,
-        size00: true,
-        size1_2: true,
+        size0_3: true,
+        size3_6: true,
+        size0_6: true,
+        size6_12: true,
+        size12_18: true,
         size2: true,
-        size2_3: true,
+        size3: true,
         size4: true,
-        size4_5: true,
         size5: true,
         size6: true,
         size7: true,
@@ -198,44 +236,40 @@ export class OrderHeadService {
         size10: true,
         size11: true,
         size12: true,
-        size13: true,
         size14: true,
-        size15: true,
         size16: true,
-        sizeL: true,
-        sizeM: true,
         sizeS: true,
+        sizeM: true,
+        sizeL: true,
         sizeXl: true,
-        sizeXs: true,
         sizeXxl: true,
-        sizeXxs: true,
         totalEstilo: true,
-        supplyFile: true,
+        imgEstilo: true,
         stateOrderDetail: true,
         flgStatutActif: true,
       },
     });
 
     return rows.map((r) => {
-      const { supplyFile, ...rest } = r;
+      const { imgEstilo, ...rest } = r;
       return {
         ...rest,
-        hasSupplyFile: supplyFile != null && supplyFile.byteLength > 0,
+        hasImgEstilo: imgEstilo != null && imgEstilo.byteLength > 0,
       };
     }) as OrderDetailListRow[];
   }
 
-  /** Imagen incrustada importada en OD_ORDER_DETAIL.SUPPLY_FILE (misma cabecera). */
+  /** Imagen del estilo incrustada en OD_ORDER_DETAIL.IMG_ESTILO. */
   async getDetailImage(
     headId: number,
     detailId: number
   ): Promise<{ buffer: Buffer; contentType: string } | null> {
     const row = await this.prisma.odOrderDetail.findFirst({
       where: { idDlkOrderDetail: detailId, idDlkOrderHead: headId },
-      select: { supplyFile: true },
+      select: { imgEstilo: true },
     });
-    if (!row?.supplyFile || row.supplyFile.byteLength === 0) return null;
-    const buffer = Buffer.from(row.supplyFile);
+    if (!row?.imgEstilo || row.imgEstilo.byteLength === 0) return null;
+    const buffer = Buffer.from(row.imgEstilo);
     return { buffer, contentType: imageContentType(buffer) };
   }
 
@@ -282,16 +316,30 @@ export class OrderHeadService {
       detailDrafts = await parseOrderExcelDetails(fileBuf);
     }
 
+    const quantity =
+      body.quantityOrderHead == null ? null : Number(body.quantityOrderHead);
+    if (quantity == null || !Number.isFinite(quantity)) {
+      throw new Error("La cantidad total de la orden es obligatoria");
+    }
+    const fecEntryDate = parseOptionalDate(body.fecEntry ?? null);
+    if (!fecEntryDate) {
+      throw new Error("La fecha de ingreso es obligatoria");
+    }
+    const dispatchDate = parseOptionalDate(body.dateProbableDespatch ?? null);
+    if (!dispatchDate) {
+      throw new Error("La fecha probable de despacho es obligatoria");
+    }
+
     const headData: Prisma.OdOrderHeadUncheckedCreateInput = {
       idDlkBrand: body.idDlkBrand,
       codOrderHead: body.codOrderHead.trim(),
-      quantityOrderHead: body.quantityOrderHead ?? null,
-      fecEntry: parseOptionalDate(body.fecEntry ?? null),
-      dateProbableDespatch: parseOptionalDate(body.dateProbableDespatch ?? null),
+      quantityOrderHead: quantity,
+      fecEntry: fecEntryDate,
+      dateProbableDespatch: dispatchDate,
       fileOrderHead: toBytes(fileBuf),
       stageOrderHead: body.stageOrderHead ?? 1,
       statusStageOrderHead: body.statusStageOrderHead ?? 1,
-      stateOrderHead: null,
+      stateOrderHead: 1,
       codUsuarioCargaDl: codDl,
       fecProcesoCargaDl: now,
       fecProcesoModifDl: now,
@@ -357,16 +405,20 @@ export class OrderHeadService {
 
     if (body.codOrderHead !== undefined) data.codOrderHead = body.codOrderHead.trim();
     if (body.idDlkBrand !== undefined) data.idDlkBrand = body.idDlkBrand;
-    if (body.quantityOrderHead !== undefined) data.quantityOrderHead = body.quantityOrderHead;
+    if (body.quantityOrderHead != null) data.quantityOrderHead = Number(body.quantityOrderHead);
     if (body.fecEntry !== undefined) {
-      data.fecEntry = parseOptionalDate(body.fecEntry);
+      const d = parseOptionalDate(body.fecEntry);
+      if (!d) throw new Error("La fecha de ingreso es obligatoria");
+      data.fecEntry = d;
     }
     if (body.dateProbableDespatch !== undefined) {
-      data.dateProbableDespatch = parseOptionalDate(body.dateProbableDespatch);
+      const d = parseOptionalDate(body.dateProbableDespatch);
+      if (!d) throw new Error("La fecha probable de despacho es obligatoria");
+      data.dateProbableDespatch = d;
     }
     if (body.stageOrderHead !== undefined) data.stageOrderHead = body.stageOrderHead;
     if (body.statusStageOrderHead !== undefined) data.statusStageOrderHead = body.statusStageOrderHead;
-    if (body.flgStatutActif !== undefined) data.flgStatutActif = body.flgStatutActif;
+    if (body.flgStatutActif != null) data.flgStatutActif = Number(body.flgStatutActif);
     if (body.codUsuarioCargaDl !== undefined) data.codUsuarioCargaDl = body.codUsuarioCargaDl;
 
     if (body.clearArchivo) {
@@ -376,11 +428,271 @@ export class OrderHeadService {
       data.fileOrderHead = toBytes(Buffer.from(raw, "base64"));
     }
 
+    // Regla de transición: al cerrar Registro (stage=1 + status=2 "Concluido"),
+    // la orden pasa a Suministro (stage=2 + status=1 "Sin Iniciar"). Ocurre
+    // automáticamente para mantener la progresión secuencial del flujo.
+    const resolvedStage =
+      data.stageOrderHead !== undefined
+        ? (data.stageOrderHead as number | null | undefined)
+        : undefined;
+    const resolvedStatus =
+      data.statusStageOrderHead !== undefined
+        ? (data.statusStageOrderHead as number | null | undefined)
+        : undefined;
+    if (resolvedStage !== undefined || resolvedStatus !== undefined) {
+      const current = await this.prisma.odOrderHead.findUnique({
+        where: { idDlkOrderHead: id },
+        select: { stageOrderHead: true, statusStageOrderHead: true },
+      });
+      if (current) {
+        const finalStage =
+          resolvedStage !== undefined ? resolvedStage : current.stageOrderHead;
+        const finalStatus =
+          resolvedStatus !== undefined ? resolvedStatus : current.statusStageOrderHead;
+        if (finalStage === 1 && finalStatus === 2) {
+          data.stageOrderHead = 2;
+          data.statusStageOrderHead = 1;
+        }
+      }
+    }
+
     const updated = await this.prisma.odOrderHead.update({
       where: { idDlkOrderHead: id },
       data,
       select: listSelect,
     });
     return updated as unknown as OrderHeadListRow;
+  }
+
+  /**
+   * Edita una fila de OD_ORDER_DETAIL respetando la cabecera (headId).
+   * codOrderDetail y codEstilo son inmutables; se ignoran si llegan en el body.
+   * Devuelve null si la fila no pertenece a la cabecera indicada.
+   */
+  async updateDetail(
+    headId: number,
+    detailId: number,
+    body: {
+      nomEstilo?: string | null;
+      desTela?: string | null;
+      colorAway?: string | null;
+      fondoTela?: string | null;
+      versionTela?: string | null;
+      orderSample?: number | null;
+      size0_3?: number | null;
+      size3_6?: number | null;
+      size0_6?: number | null;
+      size6_12?: number | null;
+      size12_18?: number | null;
+      size2?: number | null;
+      size3?: number | null;
+      size4?: number | null;
+      size5?: number | null;
+      size6?: number | null;
+      size7?: number | null;
+      size8?: number | null;
+      size9?: number | null;
+      size10?: number | null;
+      size11?: number | null;
+      size12?: number | null;
+      size14?: number | null;
+      size16?: number | null;
+      sizeS?: number | null;
+      sizeM?: number | null;
+      sizeL?: number | null;
+      sizeXl?: number | null;
+      sizeXxl?: number | null;
+      totalEstilo?: number | null;
+      stateOrderDetail?: number | null;
+      flgStatutActif?: number | null;
+      imgEstiloBase64?: string | null;
+      clearImgEstilo?: boolean;
+      codUsuarioCargaDl?: string;
+    }
+  ): Promise<OrderDetailListRow | null> {
+    const existing = await this.prisma.odOrderDetail.findFirst({
+      where: { idDlkOrderDetail: detailId, idDlkOrderHead: headId },
+      select: { idDlkOrderDetail: true },
+    });
+    if (!existing) return null;
+
+    const data: Prisma.OdOrderDetailUncheckedUpdateInput = {
+      fecProcesoModifDl: new Date(),
+      desAccion: "U",
+    };
+
+    const setStr = (key: keyof typeof body, target: keyof Prisma.OdOrderDetailUncheckedUpdateInput) => {
+      const v = body[key];
+      if (v === undefined) return;
+      (data as Record<string, unknown>)[target] = v == null || v === "" ? null : String(v);
+    };
+    const setNum = (key: keyof typeof body, target: keyof Prisma.OdOrderDetailUncheckedUpdateInput) => {
+      const v = body[key];
+      if (v === undefined) return;
+      (data as Record<string, unknown>)[target] = v == null || v === "" ? null : Number(v);
+    };
+
+    setStr("nomEstilo", "nomEstilo");
+    setStr("desTela", "desTela");
+    setStr("colorAway", "colorAway");
+    setStr("fondoTela", "fondoTela");
+    setStr("versionTela", "versionTela");
+    setNum("orderSample", "orderSample");
+    setNum("size0_3", "size0_3");
+    setNum("size3_6", "size3_6");
+    setNum("size0_6", "size0_6");
+    setNum("size6_12", "size6_12");
+    setNum("size12_18", "size12_18");
+    setNum("size2", "size2");
+    setNum("size3", "size3");
+    setNum("size4", "size4");
+    setNum("size5", "size5");
+    setNum("size6", "size6");
+    setNum("size7", "size7");
+    setNum("size8", "size8");
+    setNum("size9", "size9");
+    setNum("size10", "size10");
+    setNum("size11", "size11");
+    setNum("size12", "size12");
+    setNum("size14", "size14");
+    setNum("size16", "size16");
+    setNum("sizeS", "sizeS");
+    setNum("sizeM", "sizeM");
+    setNum("sizeL", "sizeL");
+    setNum("sizeXl", "sizeXl");
+    setNum("sizeXxl", "sizeXxl");
+    setNum("totalEstilo", "totalEstilo");
+    setNum("stateOrderDetail", "stateOrderDetail");
+    setNum("flgStatutActif", "flgStatutActif");
+    if (body.codUsuarioCargaDl !== undefined) data.codUsuarioCargaDl = body.codUsuarioCargaDl;
+
+    if (body.clearImgEstilo) {
+      data.imgEstilo = null;
+    } else if (body.imgEstiloBase64?.trim()) {
+      const raw = body.imgEstiloBase64.replace(/^data:[^;]+;base64,/, "");
+      data.imgEstilo = toBytes(Buffer.from(raw, "base64"));
+    }
+
+    await this.prisma.odOrderDetail.update({
+      where: { idDlkOrderDetail: detailId },
+      data,
+    });
+
+    const rows = await this.listDetailsByHeadId(headId);
+    return rows?.find((r) => r.idDlkOrderDetail === detailId) ?? null;
+  }
+
+  /**
+   * Actualiza los 3 archivos de suministro (UDP, PROD, FINAL) con sus fechas,
+   * además del sub-estado de la etapa (STATUS_STAGE_ORDER_HEAD) y el flag activo.
+   * Reglas:
+   *  - Al subir un archivo, si no se envía fecha explícita, se persiste la fecha actual.
+   *  - Cada archivo es independiente: se pueden enviar 1, 2 o los 3 en una sola llamada.
+   *  - `stageOrderHead` se fuerza a 2 (Suministro) porque es la etapa dueña de estos campos.
+   */
+  async updateSuministro(
+    id: number,
+    body: {
+      fileUdpBase64?: string | null;
+      fileUdpDate?: string | null;
+      clearFileUdp?: boolean;
+      fileProdBase64?: string | null;
+      fileProdDate?: string | null;
+      clearFileProd?: boolean;
+      fileFinalBase64?: string | null;
+      fileFinalDate?: string | null;
+      clearFileFinal?: boolean;
+      statusStageOrderHead?: number | null;
+      flgStatutActif?: number | null;
+      codUsuarioCargaDl?: string;
+    }
+  ): Promise<OrderHeadListRow | null> {
+    const existing = await this.prisma.odOrderHead.findUnique({
+      where: { idDlkOrderHead: id },
+      select: { idDlkOrderHead: true },
+    });
+    if (!existing) return null;
+
+    const now = new Date();
+    const data: Prisma.OdOrderHeadUncheckedUpdateInput = {
+      stageOrderHead: 2,
+      fecProcesoModifDl: now,
+      desAccion: "U",
+    };
+
+    const applyFile = (
+      kind: SuministroFileKind,
+      clear: boolean | undefined,
+      base64: string | null | undefined,
+      dateIso: string | null | undefined
+    ) => {
+      const fields = SUMINISTRO_FIELDS[kind];
+      if (clear) {
+        (data as Record<string, unknown>)[fields.blob] = null;
+        (data as Record<string, unknown>)[fields.date] = null;
+        return;
+      }
+      if (base64?.trim()) {
+        const raw = base64.replace(/^data:[^;]+;base64,/, "");
+        (data as Record<string, unknown>)[fields.blob] = toBytes(
+          Buffer.from(raw, "base64")
+        );
+        const parsed = parseOptionalDate(dateIso ?? null);
+        (data as Record<string, unknown>)[fields.date] = parsed ?? now;
+        return;
+      }
+      if (dateIso !== undefined) {
+        const parsed = parseOptionalDate(dateIso);
+        (data as Record<string, unknown>)[fields.date] = parsed;
+      }
+    };
+
+    applyFile("udp", body.clearFileUdp, body.fileUdpBase64, body.fileUdpDate);
+    applyFile("prod", body.clearFileProd, body.fileProdBase64, body.fileProdDate);
+    applyFile("final", body.clearFileFinal, body.fileFinalBase64, body.fileFinalDate);
+
+    if (body.statusStageOrderHead !== undefined) {
+      data.statusStageOrderHead =
+        body.statusStageOrderHead == null ? null : Number(body.statusStageOrderHead);
+    }
+    if (body.flgStatutActif != null) {
+      data.flgStatutActif = Number(body.flgStatutActif);
+    }
+    if (body.codUsuarioCargaDl !== undefined) {
+      data.codUsuarioCargaDl = body.codUsuarioCargaDl;
+    }
+
+    const updated = await this.prisma.odOrderHead.update({
+      where: { idDlkOrderHead: id },
+      data,
+      select: listSelect,
+    });
+    return updated as unknown as OrderHeadListRow;
+  }
+
+  /** Descarga un archivo de suministro (UDP/PROD/FINAL) con un nombre sugerido. */
+  async getSuministroFile(
+    id: number,
+    kind: SuministroFileKind
+  ): Promise<{ buffer: Buffer; filename: string } | null> {
+    const fields = SUMINISTRO_FIELDS[kind];
+    const row = await this.prisma.odOrderHead.findUnique({
+      where: { idDlkOrderHead: id },
+      select: {
+        codOrderHead: true,
+        [fields.blob]: true,
+      } as Prisma.OdOrderHeadSelect,
+    });
+    if (!row) return null;
+    const blob = (row as Record<string, unknown>)[fields.blob] as
+      | Uint8Array
+      | null
+      | undefined;
+    if (!blob || blob.byteLength === 0) return null;
+    const buffer = Buffer.from(blob);
+    const base =
+      row.codOrderHead?.trim().replace(/[^\w.-]+/g, "_") || `orden-${id}`;
+    const filename = `suministro_${base}_${fields.label}.xlsx`;
+    return { buffer, filename };
   }
 }

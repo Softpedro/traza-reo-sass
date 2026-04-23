@@ -118,49 +118,75 @@ model MdSupplier {
   desAccion        String      @map("DES_ACCION") @db.VarChar(20)
   flgStatutActif   Int         @default(1) @map("FLG_STATUT_ACTIF")
   materials        MdMaterial[]
-  avios            MdAvios[]
+  avios            MdAvio[]
 
   @@map("MD_SUPPLIER")
 }
 
-/** Tabla física MD_MATERIALS */
+/** Tabla física MD_MATERIAL. Overhaul 2026-04-19: composición, sostenibilidad, tintes y certificaciones. */
 model MdMaterial {
-  idDlkMaterials   Int        @id @default(autoincrement()) @map("ID_DLK_MATERIALS")
-  idDlkSupplier    Int        @map("ID_DLK_SUPPLIER")
-  codMaterial      String?    @map("COD_MATERIALS") @db.VarChar(100)
-  nameMaterial     String     @map("NAME_MATERIALS") @db.VarChar(100)
-  desMaterial      String?    @map("DES_MATERIALS") @db.VarChar(500)
-  obsMaterial      String?    @map("OBS_MATERIALS") @db.VarChar(500)
-  stateMaterial    Int        @map("STATE_MATERIALS")
-  codUsuarioCargaDl String    @map("COD_USUARIO_CARGA_DL") @db.VarChar(50)
-  fehProcesoCargaDl DateTime  @default(now()) @map("FEH_PROCESO_CARGA_DL")
-  fehProcesoModifDl DateTime  @updatedAt @map("FEH_PROCESO_MODIF_DL")
-  desAccion        String     @map("DES_ACCION") @db.VarChar(20)
-  flgStatutActif   Int        @default(1) @map("FLG_STATUT_ACTIF")
-  supplier         MdSupplier @relation(fields: [idDlkSupplier], references: [idDlkSupplier])
+  idDlkMaterial               Int        @id @default(autoincrement()) @map("ID_DLK_MATERIAL")
+  idDlkSupplier               Int        @map("ID_DLK_SUPPLIER")
+  codMaterial                 String?    @map("COD_MATERIAL") @db.VarChar(100)
+  material                    String?    @map("MATERIAL") @db.VarChar(200)
+  contentNameMaterial         String?    @map("CONTENT_NAME_MATERIAL") @db.VarChar(200)
+  contentValueMaterial        Decimal?   @map("CONTENT_VALUE_MATERIAL") @db.Decimal(5, 2)
+  contentSourceMaterials      String?    @map("CONTENT_SOURCE_MATERIALS") @db.VarChar(100)
+  materialTradeMarks          String?    @map("MATERIAL_TRADE_MARKS") @db.VarChar(100)
+  recycled                    Int?       @default(0) @map("RECYCLED") @db.TinyInt
+  percentageRecycledMaterials Decimal?   @map("PERCENTAGE_RECYCLED_MATERIALS") @db.Decimal(5, 2)
+  recycledInputSource         String?    @map("RECYCLED_INPUT_SOURCE") @db.VarChar(500)
+  renewableMaterial           Int?       @default(0) @map("RENEWABLE_MATERIAL") @db.TinyInt
+  percentageRenewableMaterial Decimal?   @map("PERCENTAGE_RENEWABLE_MATERIAL") @db.Decimal(5, 2)
+  renewableInputSource        String?    @map("RENEWABLE_INPUT_SOURCE") @db.VarChar(100)
+  typeDyes                    String?    @map("TYPE_DYES") @db.VarChar(100)
+  dyeClass                    String?    @map("DYE_CLASS") @db.VarChar(100)
+  classStandardDyes           String?    @map("CLASS_STANDARD_DYES") @db.VarChar(100)
+  finishes                    String?    @map("FINISHES") @db.VarChar(100)
+  patterns                    String?    @map("PATTERNS") @db.VarChar(100)
+  recoveryMaterials           String?    @map("RECOVERY_MATERIALS") @db.VarChar(100)
+  certification               String?    @map("CERTIFICATION") @db.VarChar(1000)
+  stateMaterials              Int?       @default(1) @map("STATE_MATERIALS") @db.TinyInt
+  codUsuarioCargaDl           String?    @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl           DateTime?  @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl           DateTime?  @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                   String?    @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif              Int?       @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  supplier                    MdSupplier @relation(fields: [idDlkSupplier], references: [idDlkSupplier], onDelete: Restrict, onUpdate: Cascade)
 
-  @@index([idDlkSupplier], map: "FK_MATERIAL_SUPPLIER")
-  @@map("MD_MATERIALS")
+  @@index([idDlkSupplier], map: "idx_fk_supplier")
+  @@map("MD_MATERIAL")
 }
 
-/** Tabla física MD_AVIOS (módulo UI pendiente) */
-model MdAvios {
-  idDlkAvios       Int        @id @default(autoincrement()) @map("ID_DLK_AVIOS")
-  idDlkSupplier    Int        @map("ID_DLK_SUPPLIER")
-  codAvios         String?    @map("COD_AVIOS") @db.VarChar(100)
-  nameAvios        String     @map("NAME_AVIOS") @db.VarChar(100)
-  desAvios         String?    @map("DES_AVIOS") @db.VarChar(500)
-  obsAvios         String?    @map("OBS_AVIOS") @db.VarChar(500)
-  stateAvios       Int        @map("STATE_AVIOS")
-  codUsuarioCargaDl String    @map("COD_USUARIO_CARGA_DL") @db.VarChar(50)
-  fehProcesoCargaDl DateTime  @default(now()) @map("FEH_PROCESO_CARGA_DL")
-  fehProcesoModifDl DateTime  @updatedAt @map("FEH_PROCESO_MODIF_DL")
-  desAccion        String     @map("DES_ACCION") @db.VarChar(20)
-  flgStatutActif   Int        @default(1) @map("FLG_STATUT_ACTIF")
-  supplier         MdSupplier @relation(fields: [idDlkSupplier], references: [idDlkSupplier])
+/** Tabla física MD_AVIO. Overhaul 2026-04-19: tipo, color, peso/unidad, sostenibilidad, certificados. */
+model MdAvio {
+  idDlkAvio                   Int        @id @default(autoincrement()) @map("ID_DLK_AVIO")
+  idDlkSupplier               Int        @map("ID_DLK_SUPPLIER")
+  codAvio                     String?    @map("COD_AVIO") @db.VarChar(100)
+  typeAvio                    String?    @map("TYPE_AVIO") @db.VarChar(100)
+  nameAvio                    String?    @map("NAME_AVIO") @db.VarChar(200)
+  materialAvio                String?    @map("MATERIAL_AVIO") @db.VarChar(500)
+  contentValueMaterial        Decimal?   @map("CONTENT_VALUE_MATERIAL") @db.Decimal(5, 2)
+  contentSourceMaterial       String?    @map("CONTENT_SOURCE_MATERIAL") @db.VarChar(100)
+  materialTradeMarks          String?    @map("MATERIAL_TRADE_MARKS") @db.VarChar(100)
+  color                       String?    @map("COLOR") @db.VarChar(200)
+  weight                      Decimal?   @map("WEIGHT") @db.Decimal(10, 3)
+  unitMeasurement             String?    @map("UNIT_MEASUREMENT") @db.VarChar(20)
+  recycled                    Int?       @default(0) @map("RECYCLED") @db.TinyInt
+  percentageRecycledMaterials Decimal?   @map("PERCENTAGE_RECYCLED_MATERIALS") @db.Decimal(5, 2)
+  recycledInputSource         String?    @map("RECYCLED_INPUT_SOURCE") @db.VarChar(500)
+  certificates                String?    @map("CERTIFICATES") @db.VarChar(1000)
+  observation                 String?    @map("OBSERVATION") @db.VarChar(500)
+  stateAvios                  Int?       @default(1) @map("STATE_AVIOS") @db.TinyInt
+  codUsuarioCargaDl           String?    @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl           DateTime?  @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl           DateTime?  @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion                   String?    @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif              Int?       @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  supplier                    MdSupplier @relation(fields: [idDlkSupplier], references: [idDlkSupplier], onDelete: Restrict, onUpdate: Cascade)
 
-  @@index([idDlkSupplier], map: "FK_AVIOS_SUPPLIER")
-  @@map("MD_AVIOS")
+  @@index([idDlkSupplier], map: "idx_avio_supplier")
+  @@map("MD_AVIO")
 }
 
 model MdOrdenPedido {
@@ -185,74 +211,85 @@ model MdOrdenPedido {
 
 /** Cabecera de orden (OD_ORDER_HEAD). PK ID_DLK_ORDER_HEAD. */
 model OdOrderHead {
-  idDlkOrderHead           Int       @id @default(autoincrement()) @map("ID_DLK_ORDER_HEAD")
-  idDlkBrand               Int?      @map("ID_DLK_BRAND")
-  codOrderHead             String?   @map("COD_ORDER_HEAD") @db.VarChar(100)
-  quantityOrderHead        Int?      @map("QUANTITY_ORDER_HEAD")
-  fecEntry                 DateTime? @map("FEC_ENTRY") @db.Date
-  dateProbableDespatch     DateTime? @map("DATE_PROBABLE_DESPATCH") @db.Date
-  fileOrderHead            Bytes?    @map("FILE_ORDER_HEAD") @db.MediumBlob
-  stageOrderHead           Int?      @map("STAGE_ORDER_HEAD") @db.TinyInt
-  statusStageOrderHead     Int?      @map("STATUS_STAGE_ORDER_HEAD") @db.TinyInt
-  stateOrderHead           Int?      @map("STATE_ORDER_HEAD")
-  codUsuarioCargaDl        String?   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
-  fecProcesoCargaDl        DateTime? @map("FEC_PROCESO_CARGA_DL") @db.DateTime(3)
-  fecProcesoModifDl        DateTime? @map("FEC_PROCESO_MODIF_DL") @db.DateTime(3)
-  desAccion                String?   @map("DES_ACCION") @db.VarChar(20)
-  flgStatutActif           Int?      @map("FLG_STATUT_ACTIF") @db.TinyInt
-  brand                    MdBrand?  @relation(fields: [idDlkBrand], references: [idDlkBrand], onDelete: NoAction, onUpdate: NoAction, map: "fk_OD_ORDER_HEAD_MD_BRAND")
+  idDlkOrderHead           Int             @id @default(autoincrement()) @map("ID_DLK_ORDER_HEAD")
+  idDlkBrand               Int             @map("ID_DLK_BRAND")
+  codOrderHead             String          @map("COD_ORDER_HEAD") @db.VarChar(100)
+  quantityOrderHead        Int             @map("QUANTITY_ORDER_HEAD")
+  /** Prisma conserva el nombre `fecEntry` por compatibilidad; columna DB renombrada a DATE_ENTRY. */
+  fecEntry                 DateTime        @map("DATE_ENTRY") @db.Date
+  /** Prisma conserva `dateProbableDespatch`; columna DB corregida a DATE_PROBABLE_DISPATCH. */
+  dateProbableDespatch     DateTime        @map("DATE_PROBABLE_DISPATCH") @db.Date
+  fileOrderHead            Bytes?          @map("FILE_ORDER_HEAD") @db.MediumBlob
+  stageOrderHead           Int?            @map("STAGE_ORDER_HEAD") @db.TinyInt
+  statusStageOrderHead     Int?            @map("STATUS_STAGE_ORDER_HEAD") @db.TinyInt
+  fileSuppliesUdp          Bytes?          @map("FILE_SUPPLIES_UDP") @db.MediumBlob
+  fehFileSuppliesUdp       DateTime?       @map("FEH_FILE_SUPPLIES_UDP") @db.Date
+  fileSuppliesProd         Bytes?          @map("FILE_SUPPLIES_PROD") @db.MediumBlob
+  fehFileSuppliesProd      DateTime?       @map("FEH_FILE_SUPPLIES_PROD") @db.Date
+  fileSuppliesFinal        Bytes?          @map("FILE_SUPPLIES_FINAL") @db.MediumBlob
+  fehFileSuppliesFinal     DateTime?       @map("FEH_FILE_SUPPLIES_FINAL") @db.Date
+  stateOrderHead           Int             @default(1) @map("STATE_ORDER_HEAD") @db.TinyInt
+  codUsuarioCargaDl        String          @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl        DateTime        @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl        DateTime        @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                String          @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif           Int             @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  brand                    MdBrand         @relation(fields: [idDlkBrand], references: [idDlkBrand], onDelete: Restrict, onUpdate: Cascade, map: "fk_order_head_brand")
   details                  OdOrderDetail[]
 
+  @@index([idDlkBrand], map: "idx_order_head_brand")
   @@map("OD_ORDER_HEAD")
 }
 
 /** Detalle de orden (OD_ORDER_DETAIL). */
 model OdOrderDetail {
-  idDlkOrderDetail  Int          @id @default(autoincrement()) @map("ID_DLK_ORDER_DETAIL")
-  idDlkOrderHead    Int?         @map("ID_DLK_ORDER_HEAD")
-  codOrderDetail    String?      @map("COD_ORDER_DETAIL") @db.VarChar(50)
-  codEstilo         String?      @map("COD_ESTILO") @db.VarChar(100)
-  desTela           String?      @map("DES_TELA") @db.VarChar(200)
-  nomEstilo         String?      @map("NOM_ESTILO") @db.VarChar(100)
-  colorAway         String?      @map("COLOR_AWAY") @db.VarChar(50)
-  fondoTela         String?      @map("FONDO_TELA") @db.VarChar(100)
-  versionTela       String?      @map("VERSION_TELA") @db.VarChar(50)
-  orderSample       Int?         @map("ORDER_SAMPLE") @db.TinyInt
-  size00            Int?         @map("SIZE_00")
-  size1_2           Int?         @map("SIZE_1_2")
-  size2             Int?         @map("SIZE_2")
-  size2_3           Int?         @map("SIZE_2_3")
-  size4             Int?         @map("SIZE_4")
-  size4_5           Int?         @map("SIZE_4_5")
-  size5             Int?         @map("SIZE_5")
-  size6             Int?         @map("SIZE_6")
-  size7             Int?         @map("SIZE_7")
-  size8             Int?         @map("SIZE_8")
-  size9             Int?         @map("SIZE_9")
-  size10            Int?         @map("SIZE_10")
-  size11            Int?         @map("SIZE_11")
-  size12            Int?         @map("SIZE_12")
-  size13            Int?         @map("SIZE_13")
-  size14            Int?         @map("SIZE_14")
-  size15            Int?         @map("SIZE_15")
-  size16            Int?         @map("SIZE_16")
-  sizeL             Int?         @map("SIZE_L")
-  sizeM             Int?         @map("SIZE_M")
-  sizeS             Int?         @map("SIZE_S")
-  sizeXl            Int?         @map("SIZE_XL")
-  sizeXs            Int?         @map("SIZE_XS")
-  sizeXxl           Int?         @map("SIZE_XXL")
-  sizeXxs           Int?         @map("SIZE_XXS")
-  totalEstilo       Int?         @map("TOTAL_ESTILO")
-  supplyFile        Bytes?       @map("SUPPLY_FILE") @db.MediumBlob
-  stateOrderDetail  Int?         @map("STATE_ORDER_DETAIL") @db.TinyInt
-  codUsuarioCargaDl String?      @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
-  fecProcesoCargaDl DateTime?    @map("FEC_PROCESO_CARGA_DL") @db.DateTime(3)
-  fecProcesoModifDl DateTime?    @map("FEC_PROCESO_MODIF_DL") @db.DateTime(3)
-  desAccion         String?      @map("DES_ACCION") @db.VarChar(20)
-  flgStatutActif    Int?         @map("FLG_STATUT_ACTIF") @db.TinyInt
-  orderHead         OdOrderHead? @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: NoAction, onUpdate: NoAction, map: "fk_OD_ORDER_DETAIL_OD_ORDER_HEAD1")
+  idDlkOrderDetail  Int         @id @default(autoincrement()) @map("ID_DLK_ORDER_DETAIL")
+  idDlkOrderHead    Int         @map("ID_DLK_ORDER_HEAD")
+  codOrderDetail    String?     @map("COD_ORDER_DETAIL") @db.VarChar(50)
+  codEstilo         String?     @map("COD_ESTILO") @db.VarChar(50)
+  /** Prisma conserva `nomEstilo`; columna DB renombrada a NAME_ESTILO. */
+  nomEstilo         String?     @map("NAME_ESTILO") @db.VarChar(200)
+  imgEstilo         Bytes?      @map("IMG_ESTILO") @db.MediumBlob
+  desTela           String?     @map("DES_TELA") @db.VarChar(200)
+  colorAway         String?     @map("COLOR_AWAY") @db.VarChar(50)
+  fondoTela         String?     @map("FONDO_TELA") @db.VarChar(50)
+  versionTela       String?     @map("VERSION_TELA") @db.VarChar(50)
+  orderSample       Int?        @default(0) @map("ORDER_SAMPLE") @db.TinyInt
+  size0_3           Int?        @default(0) @map("SIZE_0_3")
+  size3_6           Int?        @default(0) @map("SIZE_3_6")
+  size0_6           Int?        @default(0) @map("SIZE_0_6")
+  size6_12          Int?        @default(0) @map("SIZE_6_12")
+  size12_18         Int?        @default(0) @map("SIZE_12_18")
+  size2             Int?        @default(0) @map("SIZE_2")
+  size3             Int?        @default(0) @map("SIZE_3")
+  size4             Int?        @default(0) @map("SIZE_4")
+  size5             Int?        @default(0) @map("SIZE_5")
+  size6             Int?        @default(0) @map("SIZE_6")
+  size7             Int?        @default(0) @map("SIZE_7")
+  size8             Int?        @default(0) @map("SIZE_8")
+  size9             Int?        @default(0) @map("SIZE_9")
+  size10            Int?        @default(0) @map("SIZE_10")
+  size11            Int?        @default(0) @map("SIZE_11")
+  size12            Int?        @default(0) @map("SIZE_12")
+  size14            Int?        @default(0) @map("SIZE_14")
+  size16            Int?        @default(0) @map("SIZE_16")
+  sizeS             Int?        @default(0) @map("SIZE_S")
+  sizeM             Int?        @default(0) @map("SIZE_M")
+  sizeL             Int?        @default(0) @map("SIZE_L")
+  sizeXl            Int?        @default(0) @map("SIZE_XL")
+  sizeXxl           Int?        @default(0) @map("SIZE_XXL")
+  /** Prisma conserva `totalEstilo`; columna DB renombrada a TOTAL_ORDER_PRODUCTION. */
+  totalEstilo       Int?        @map("TOTAL_ORDER_PRODUCTION")
+  supplyFile        Bytes?      @map("SUPPLY_FILE") @db.MediumBlob
+  stateOrderDetail  Int?        @default(1) @map("STATE_ORDER_DETAIL") @db.TinyInt
+  codUsuarioCargaDl String?     @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl DateTime?   @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl DateTime?   @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion         String?     @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif    Int?        @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  orderHead         OdOrderHead @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: Cascade, onUpdate: Cascade, map: "fk_detail_order_head")
 
+  @@index([idDlkOrderHead], map: "idx_order_detail_head")
   @@map("OD_ORDER_DETAIL")
 }
 

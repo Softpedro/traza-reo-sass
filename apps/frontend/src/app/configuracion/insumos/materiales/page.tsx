@@ -5,6 +5,7 @@ import { DataTable } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
 import { getColumns, type Material } from "./columns";
 import { MaterialModal } from "./material-modal";
+import { BulkUploadModal } from "@/components/bulk-upload-modal";
 
 type ModalState = {
   open: boolean;
@@ -21,6 +22,7 @@ export default function MaterialesPage() {
     mode: "create",
     material: null,
   });
+  const [bulkOpen, setBulkOpen] = useState(false);
 
   const fetchList = useCallback(() => {
     setLoading(true);
@@ -28,14 +30,6 @@ export default function MaterialesPage() {
     fetch(apiUrl("/api/materials"))
       .then(async (res) => {
         const data: unknown = await res.json();
-        if (res.status === 503 && data && typeof data === "object" && "type" in data) {
-          const body = data as { type?: string; error?: string };
-          if (body.type === "MISSING_TABLE" && body.error) {
-            setListError(body.error);
-            setRows([]);
-            return;
-          }
-        }
         if (!res.ok) {
           setListError(
             typeof data === "object" && data && "error" in data && typeof (data as { error: unknown }).error === "string"
@@ -77,13 +71,22 @@ export default function MaterialesPage() {
         <div>
           <p className="text-sm text-muted-foreground">Configuración &gt; Insumos &gt; Materiales</p>
         </div>
-        <button
-          type="button"
-          onClick={openCreate}
-          className="text-sm font-medium text-primary hover:underline underline-offset-4"
-        >
-          Crear +
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => setBulkOpen(true)}
+            className="text-sm font-medium text-primary hover:underline underline-offset-4"
+          >
+            Cargar +
+          </button>
+          <button
+            type="button"
+            onClick={openCreate}
+            className="text-sm font-medium text-primary hover:underline underline-offset-4"
+          >
+            Crear +
+          </button>
+        </div>
       </div>
 
       {listError && (
@@ -109,6 +112,17 @@ export default function MaterialesPage() {
         }
         mode={modal.mode}
         material={modal.material}
+        onSuccess={fetchList}
+      />
+
+      <BulkUploadModal
+        open={bulkOpen}
+        onOpenChange={setBulkOpen}
+        title="Carga masiva de materiales"
+        description="Sube un Excel (.xlsx) siguiendo la plantilla. El proveedor se identifica por su código (p.ej. PRV-1)."
+        templateUrl="/api/materials/template/download"
+        templateFilename="plantilla_materiales.xlsx"
+        uploadUrl="/api/materials/bulk-upload"
         onSuccess={fetchList}
       />
     </div>

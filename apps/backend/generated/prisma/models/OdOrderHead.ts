@@ -56,6 +56,12 @@ export type OdOrderHeadMinAggregateOutputType = {
   fileOrderHead: runtime.Bytes | null
   stageOrderHead: number | null
   statusStageOrderHead: number | null
+  fileSuppliesUdp: runtime.Bytes | null
+  fehFileSuppliesUdp: Date | null
+  fileSuppliesProd: runtime.Bytes | null
+  fehFileSuppliesProd: Date | null
+  fileSuppliesFinal: runtime.Bytes | null
+  fehFileSuppliesFinal: Date | null
   stateOrderHead: number | null
   codUsuarioCargaDl: string | null
   fecProcesoCargaDl: Date | null
@@ -74,6 +80,12 @@ export type OdOrderHeadMaxAggregateOutputType = {
   fileOrderHead: runtime.Bytes | null
   stageOrderHead: number | null
   statusStageOrderHead: number | null
+  fileSuppliesUdp: runtime.Bytes | null
+  fehFileSuppliesUdp: Date | null
+  fileSuppliesProd: runtime.Bytes | null
+  fehFileSuppliesProd: Date | null
+  fileSuppliesFinal: runtime.Bytes | null
+  fehFileSuppliesFinal: Date | null
   stateOrderHead: number | null
   codUsuarioCargaDl: string | null
   fecProcesoCargaDl: Date | null
@@ -92,6 +104,12 @@ export type OdOrderHeadCountAggregateOutputType = {
   fileOrderHead: number
   stageOrderHead: number
   statusStageOrderHead: number
+  fileSuppliesUdp: number
+  fehFileSuppliesUdp: number
+  fileSuppliesProd: number
+  fehFileSuppliesProd: number
+  fileSuppliesFinal: number
+  fehFileSuppliesFinal: number
   stateOrderHead: number
   codUsuarioCargaDl: number
   fecProcesoCargaDl: number
@@ -132,6 +150,12 @@ export type OdOrderHeadMinAggregateInputType = {
   fileOrderHead?: true
   stageOrderHead?: true
   statusStageOrderHead?: true
+  fileSuppliesUdp?: true
+  fehFileSuppliesUdp?: true
+  fileSuppliesProd?: true
+  fehFileSuppliesProd?: true
+  fileSuppliesFinal?: true
+  fehFileSuppliesFinal?: true
   stateOrderHead?: true
   codUsuarioCargaDl?: true
   fecProcesoCargaDl?: true
@@ -150,6 +174,12 @@ export type OdOrderHeadMaxAggregateInputType = {
   fileOrderHead?: true
   stageOrderHead?: true
   statusStageOrderHead?: true
+  fileSuppliesUdp?: true
+  fehFileSuppliesUdp?: true
+  fileSuppliesProd?: true
+  fehFileSuppliesProd?: true
+  fileSuppliesFinal?: true
+  fehFileSuppliesFinal?: true
   stateOrderHead?: true
   codUsuarioCargaDl?: true
   fecProcesoCargaDl?: true
@@ -168,6 +198,12 @@ export type OdOrderHeadCountAggregateInputType = {
   fileOrderHead?: true
   stageOrderHead?: true
   statusStageOrderHead?: true
+  fileSuppliesUdp?: true
+  fehFileSuppliesUdp?: true
+  fileSuppliesProd?: true
+  fehFileSuppliesProd?: true
+  fileSuppliesFinal?: true
+  fehFileSuppliesFinal?: true
   stateOrderHead?: true
   codUsuarioCargaDl?: true
   fecProcesoCargaDl?: true
@@ -265,20 +301,26 @@ export type OdOrderHeadGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type OdOrderHeadGroupByOutputType = {
   idDlkOrderHead: number
-  idDlkBrand: number | null
-  codOrderHead: string | null
-  quantityOrderHead: number | null
-  fecEntry: Date | null
-  dateProbableDespatch: Date | null
+  idDlkBrand: number
+  codOrderHead: string
+  quantityOrderHead: number
+  fecEntry: Date
+  dateProbableDespatch: Date
   fileOrderHead: runtime.Bytes | null
   stageOrderHead: number | null
   statusStageOrderHead: number | null
-  stateOrderHead: number | null
-  codUsuarioCargaDl: string | null
-  fecProcesoCargaDl: Date | null
-  fecProcesoModifDl: Date | null
-  desAccion: string | null
-  flgStatutActif: number | null
+  fileSuppliesUdp: runtime.Bytes | null
+  fehFileSuppliesUdp: Date | null
+  fileSuppliesProd: runtime.Bytes | null
+  fehFileSuppliesProd: Date | null
+  fileSuppliesFinal: runtime.Bytes | null
+  fehFileSuppliesFinal: Date | null
+  stateOrderHead: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl: Date
+  fecProcesoModifDl: Date
+  desAccion: string
+  flgStatutActif: number
   _count: OdOrderHeadCountAggregateOutputType | null
   _avg: OdOrderHeadAvgAggregateOutputType | null
   _sum: OdOrderHeadSumAggregateOutputType | null
@@ -306,40 +348,52 @@ export type OdOrderHeadWhereInput = {
   OR?: Prisma.OdOrderHeadWhereInput[]
   NOT?: Prisma.OdOrderHeadWhereInput | Prisma.OdOrderHeadWhereInput[]
   idDlkOrderHead?: Prisma.IntFilter<"OdOrderHead"> | number
-  idDlkBrand?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  codOrderHead?: Prisma.StringNullableFilter<"OdOrderHead"> | string | null
-  quantityOrderHead?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  fecEntry?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
-  dateProbableDespatch?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
+  idDlkBrand?: Prisma.IntFilter<"OdOrderHead"> | number
+  codOrderHead?: Prisma.StringFilter<"OdOrderHead"> | string
+  quantityOrderHead?: Prisma.IntFilter<"OdOrderHead"> | number
+  fecEntry?: Prisma.DateTimeFilter<"OdOrderHead"> | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFilter<"OdOrderHead"> | Date | string
   fileOrderHead?: Prisma.BytesNullableFilter<"OdOrderHead"> | runtime.Bytes | null
   stageOrderHead?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
   statusStageOrderHead?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  stateOrderHead?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  codUsuarioCargaDl?: Prisma.StringNullableFilter<"OdOrderHead"> | string | null
-  fecProcesoCargaDl?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
-  fecProcesoModifDl?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
-  desAccion?: Prisma.StringNullableFilter<"OdOrderHead"> | string | null
-  flgStatutActif?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  brand?: Prisma.XOR<Prisma.MdBrandNullableScalarRelationFilter, Prisma.MdBrandWhereInput> | null
+  fileSuppliesUdp?: Prisma.BytesNullableFilter<"OdOrderHead"> | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
+  fileSuppliesProd?: Prisma.BytesNullableFilter<"OdOrderHead"> | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
+  fileSuppliesFinal?: Prisma.BytesNullableFilter<"OdOrderHead"> | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
+  stateOrderHead?: Prisma.IntFilter<"OdOrderHead"> | number
+  codUsuarioCargaDl?: Prisma.StringFilter<"OdOrderHead"> | string
+  fecProcesoCargaDl?: Prisma.DateTimeFilter<"OdOrderHead"> | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFilter<"OdOrderHead"> | Date | string
+  desAccion?: Prisma.StringFilter<"OdOrderHead"> | string
+  flgStatutActif?: Prisma.IntFilter<"OdOrderHead"> | number
+  brand?: Prisma.XOR<Prisma.MdBrandScalarRelationFilter, Prisma.MdBrandWhereInput>
   details?: Prisma.OdOrderDetailListRelationFilter
 }
 
 export type OdOrderHeadOrderByWithRelationInput = {
   idDlkOrderHead?: Prisma.SortOrder
-  idDlkBrand?: Prisma.SortOrderInput | Prisma.SortOrder
-  codOrderHead?: Prisma.SortOrderInput | Prisma.SortOrder
-  quantityOrderHead?: Prisma.SortOrderInput | Prisma.SortOrder
-  fecEntry?: Prisma.SortOrderInput | Prisma.SortOrder
-  dateProbableDespatch?: Prisma.SortOrderInput | Prisma.SortOrder
+  idDlkBrand?: Prisma.SortOrder
+  codOrderHead?: Prisma.SortOrder
+  quantityOrderHead?: Prisma.SortOrder
+  fecEntry?: Prisma.SortOrder
+  dateProbableDespatch?: Prisma.SortOrder
   fileOrderHead?: Prisma.SortOrderInput | Prisma.SortOrder
   stageOrderHead?: Prisma.SortOrderInput | Prisma.SortOrder
   statusStageOrderHead?: Prisma.SortOrderInput | Prisma.SortOrder
-  stateOrderHead?: Prisma.SortOrderInput | Prisma.SortOrder
-  codUsuarioCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
-  fecProcesoCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
-  fecProcesoModifDl?: Prisma.SortOrderInput | Prisma.SortOrder
-  desAccion?: Prisma.SortOrderInput | Prisma.SortOrder
-  flgStatutActif?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileSuppliesUdp?: Prisma.SortOrderInput | Prisma.SortOrder
+  fehFileSuppliesUdp?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileSuppliesProd?: Prisma.SortOrderInput | Prisma.SortOrder
+  fehFileSuppliesProd?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileSuppliesFinal?: Prisma.SortOrderInput | Prisma.SortOrder
+  fehFileSuppliesFinal?: Prisma.SortOrderInput | Prisma.SortOrder
+  stateOrderHead?: Prisma.SortOrder
+  codUsuarioCargaDl?: Prisma.SortOrder
+  fecProcesoCargaDl?: Prisma.SortOrder
+  fecProcesoModifDl?: Prisma.SortOrder
+  desAccion?: Prisma.SortOrder
+  flgStatutActif?: Prisma.SortOrder
   brand?: Prisma.MdBrandOrderByWithRelationInput
   details?: Prisma.OdOrderDetailOrderByRelationAggregateInput
   _relevance?: Prisma.OdOrderHeadOrderByRelevanceInput
@@ -350,40 +404,52 @@ export type OdOrderHeadWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.OdOrderHeadWhereInput | Prisma.OdOrderHeadWhereInput[]
   OR?: Prisma.OdOrderHeadWhereInput[]
   NOT?: Prisma.OdOrderHeadWhereInput | Prisma.OdOrderHeadWhereInput[]
-  idDlkBrand?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  codOrderHead?: Prisma.StringNullableFilter<"OdOrderHead"> | string | null
-  quantityOrderHead?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  fecEntry?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
-  dateProbableDespatch?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
+  idDlkBrand?: Prisma.IntFilter<"OdOrderHead"> | number
+  codOrderHead?: Prisma.StringFilter<"OdOrderHead"> | string
+  quantityOrderHead?: Prisma.IntFilter<"OdOrderHead"> | number
+  fecEntry?: Prisma.DateTimeFilter<"OdOrderHead"> | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFilter<"OdOrderHead"> | Date | string
   fileOrderHead?: Prisma.BytesNullableFilter<"OdOrderHead"> | runtime.Bytes | null
   stageOrderHead?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
   statusStageOrderHead?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  stateOrderHead?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  codUsuarioCargaDl?: Prisma.StringNullableFilter<"OdOrderHead"> | string | null
-  fecProcesoCargaDl?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
-  fecProcesoModifDl?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
-  desAccion?: Prisma.StringNullableFilter<"OdOrderHead"> | string | null
-  flgStatutActif?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  brand?: Prisma.XOR<Prisma.MdBrandNullableScalarRelationFilter, Prisma.MdBrandWhereInput> | null
+  fileSuppliesUdp?: Prisma.BytesNullableFilter<"OdOrderHead"> | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
+  fileSuppliesProd?: Prisma.BytesNullableFilter<"OdOrderHead"> | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
+  fileSuppliesFinal?: Prisma.BytesNullableFilter<"OdOrderHead"> | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
+  stateOrderHead?: Prisma.IntFilter<"OdOrderHead"> | number
+  codUsuarioCargaDl?: Prisma.StringFilter<"OdOrderHead"> | string
+  fecProcesoCargaDl?: Prisma.DateTimeFilter<"OdOrderHead"> | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFilter<"OdOrderHead"> | Date | string
+  desAccion?: Prisma.StringFilter<"OdOrderHead"> | string
+  flgStatutActif?: Prisma.IntFilter<"OdOrderHead"> | number
+  brand?: Prisma.XOR<Prisma.MdBrandScalarRelationFilter, Prisma.MdBrandWhereInput>
   details?: Prisma.OdOrderDetailListRelationFilter
 }, "idDlkOrderHead">
 
 export type OdOrderHeadOrderByWithAggregationInput = {
   idDlkOrderHead?: Prisma.SortOrder
-  idDlkBrand?: Prisma.SortOrderInput | Prisma.SortOrder
-  codOrderHead?: Prisma.SortOrderInput | Prisma.SortOrder
-  quantityOrderHead?: Prisma.SortOrderInput | Prisma.SortOrder
-  fecEntry?: Prisma.SortOrderInput | Prisma.SortOrder
-  dateProbableDespatch?: Prisma.SortOrderInput | Prisma.SortOrder
+  idDlkBrand?: Prisma.SortOrder
+  codOrderHead?: Prisma.SortOrder
+  quantityOrderHead?: Prisma.SortOrder
+  fecEntry?: Prisma.SortOrder
+  dateProbableDespatch?: Prisma.SortOrder
   fileOrderHead?: Prisma.SortOrderInput | Prisma.SortOrder
   stageOrderHead?: Prisma.SortOrderInput | Prisma.SortOrder
   statusStageOrderHead?: Prisma.SortOrderInput | Prisma.SortOrder
-  stateOrderHead?: Prisma.SortOrderInput | Prisma.SortOrder
-  codUsuarioCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
-  fecProcesoCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
-  fecProcesoModifDl?: Prisma.SortOrderInput | Prisma.SortOrder
-  desAccion?: Prisma.SortOrderInput | Prisma.SortOrder
-  flgStatutActif?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileSuppliesUdp?: Prisma.SortOrderInput | Prisma.SortOrder
+  fehFileSuppliesUdp?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileSuppliesProd?: Prisma.SortOrderInput | Prisma.SortOrder
+  fehFileSuppliesProd?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileSuppliesFinal?: Prisma.SortOrderInput | Prisma.SortOrder
+  fehFileSuppliesFinal?: Prisma.SortOrderInput | Prisma.SortOrder
+  stateOrderHead?: Prisma.SortOrder
+  codUsuarioCargaDl?: Prisma.SortOrder
+  fecProcesoCargaDl?: Prisma.SortOrder
+  fecProcesoModifDl?: Prisma.SortOrder
+  desAccion?: Prisma.SortOrder
+  flgStatutActif?: Prisma.SortOrder
   _count?: Prisma.OdOrderHeadCountOrderByAggregateInput
   _avg?: Prisma.OdOrderHeadAvgOrderByAggregateInput
   _max?: Prisma.OdOrderHeadMaxOrderByAggregateInput
@@ -396,146 +462,194 @@ export type OdOrderHeadScalarWhereWithAggregatesInput = {
   OR?: Prisma.OdOrderHeadScalarWhereWithAggregatesInput[]
   NOT?: Prisma.OdOrderHeadScalarWhereWithAggregatesInput | Prisma.OdOrderHeadScalarWhereWithAggregatesInput[]
   idDlkOrderHead?: Prisma.IntWithAggregatesFilter<"OdOrderHead"> | number
-  idDlkBrand?: Prisma.IntNullableWithAggregatesFilter<"OdOrderHead"> | number | null
-  codOrderHead?: Prisma.StringNullableWithAggregatesFilter<"OdOrderHead"> | string | null
-  quantityOrderHead?: Prisma.IntNullableWithAggregatesFilter<"OdOrderHead"> | number | null
-  fecEntry?: Prisma.DateTimeNullableWithAggregatesFilter<"OdOrderHead"> | Date | string | null
-  dateProbableDespatch?: Prisma.DateTimeNullableWithAggregatesFilter<"OdOrderHead"> | Date | string | null
+  idDlkBrand?: Prisma.IntWithAggregatesFilter<"OdOrderHead"> | number
+  codOrderHead?: Prisma.StringWithAggregatesFilter<"OdOrderHead"> | string
+  quantityOrderHead?: Prisma.IntWithAggregatesFilter<"OdOrderHead"> | number
+  fecEntry?: Prisma.DateTimeWithAggregatesFilter<"OdOrderHead"> | Date | string
+  dateProbableDespatch?: Prisma.DateTimeWithAggregatesFilter<"OdOrderHead"> | Date | string
   fileOrderHead?: Prisma.BytesNullableWithAggregatesFilter<"OdOrderHead"> | runtime.Bytes | null
   stageOrderHead?: Prisma.IntNullableWithAggregatesFilter<"OdOrderHead"> | number | null
   statusStageOrderHead?: Prisma.IntNullableWithAggregatesFilter<"OdOrderHead"> | number | null
-  stateOrderHead?: Prisma.IntNullableWithAggregatesFilter<"OdOrderHead"> | number | null
-  codUsuarioCargaDl?: Prisma.StringNullableWithAggregatesFilter<"OdOrderHead"> | string | null
-  fecProcesoCargaDl?: Prisma.DateTimeNullableWithAggregatesFilter<"OdOrderHead"> | Date | string | null
-  fecProcesoModifDl?: Prisma.DateTimeNullableWithAggregatesFilter<"OdOrderHead"> | Date | string | null
-  desAccion?: Prisma.StringNullableWithAggregatesFilter<"OdOrderHead"> | string | null
-  flgStatutActif?: Prisma.IntNullableWithAggregatesFilter<"OdOrderHead"> | number | null
+  fileSuppliesUdp?: Prisma.BytesNullableWithAggregatesFilter<"OdOrderHead"> | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.DateTimeNullableWithAggregatesFilter<"OdOrderHead"> | Date | string | null
+  fileSuppliesProd?: Prisma.BytesNullableWithAggregatesFilter<"OdOrderHead"> | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.DateTimeNullableWithAggregatesFilter<"OdOrderHead"> | Date | string | null
+  fileSuppliesFinal?: Prisma.BytesNullableWithAggregatesFilter<"OdOrderHead"> | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.DateTimeNullableWithAggregatesFilter<"OdOrderHead"> | Date | string | null
+  stateOrderHead?: Prisma.IntWithAggregatesFilter<"OdOrderHead"> | number
+  codUsuarioCargaDl?: Prisma.StringWithAggregatesFilter<"OdOrderHead"> | string
+  fecProcesoCargaDl?: Prisma.DateTimeWithAggregatesFilter<"OdOrderHead"> | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeWithAggregatesFilter<"OdOrderHead"> | Date | string
+  desAccion?: Prisma.StringWithAggregatesFilter<"OdOrderHead"> | string
+  flgStatutActif?: Prisma.IntWithAggregatesFilter<"OdOrderHead"> | number
 }
 
 export type OdOrderHeadCreateInput = {
-  codOrderHead?: string | null
-  quantityOrderHead?: number | null
-  fecEntry?: Date | string | null
-  dateProbableDespatch?: Date | string | null
+  codOrderHead: string
+  quantityOrderHead: number
+  fecEntry: Date | string
+  dateProbableDespatch: Date | string
   fileOrderHead?: runtime.Bytes | null
   stageOrderHead?: number | null
   statusStageOrderHead?: number | null
-  stateOrderHead?: number | null
-  codUsuarioCargaDl?: string | null
-  fecProcesoCargaDl?: Date | string | null
-  fecProcesoModifDl?: Date | string | null
-  desAccion?: string | null
-  flgStatutActif?: number | null
-  brand?: Prisma.MdBrandCreateNestedOneWithoutOrderHeadsInput
+  fileSuppliesUdp?: runtime.Bytes | null
+  fehFileSuppliesUdp?: Date | string | null
+  fileSuppliesProd?: runtime.Bytes | null
+  fehFileSuppliesProd?: Date | string | null
+  fileSuppliesFinal?: runtime.Bytes | null
+  fehFileSuppliesFinal?: Date | string | null
+  stateOrderHead?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
+  brand: Prisma.MdBrandCreateNestedOneWithoutOrderHeadsInput
   details?: Prisma.OdOrderDetailCreateNestedManyWithoutOrderHeadInput
 }
 
 export type OdOrderHeadUncheckedCreateInput = {
   idDlkOrderHead?: number
-  idDlkBrand?: number | null
-  codOrderHead?: string | null
-  quantityOrderHead?: number | null
-  fecEntry?: Date | string | null
-  dateProbableDespatch?: Date | string | null
+  idDlkBrand: number
+  codOrderHead: string
+  quantityOrderHead: number
+  fecEntry: Date | string
+  dateProbableDespatch: Date | string
   fileOrderHead?: runtime.Bytes | null
   stageOrderHead?: number | null
   statusStageOrderHead?: number | null
-  stateOrderHead?: number | null
-  codUsuarioCargaDl?: string | null
-  fecProcesoCargaDl?: Date | string | null
-  fecProcesoModifDl?: Date | string | null
-  desAccion?: string | null
-  flgStatutActif?: number | null
+  fileSuppliesUdp?: runtime.Bytes | null
+  fehFileSuppliesUdp?: Date | string | null
+  fileSuppliesProd?: runtime.Bytes | null
+  fehFileSuppliesProd?: Date | string | null
+  fileSuppliesFinal?: runtime.Bytes | null
+  fehFileSuppliesFinal?: Date | string | null
+  stateOrderHead?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
   details?: Prisma.OdOrderDetailUncheckedCreateNestedManyWithoutOrderHeadInput
 }
 
 export type OdOrderHeadUpdateInput = {
-  codOrderHead?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  fecEntry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  dateProbableDespatch?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  codOrderHead?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  fecEntry?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fileOrderHead?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   statusStageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stateOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  brand?: Prisma.MdBrandUpdateOneWithoutOrderHeadsNestedInput
+  fileSuppliesUdp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesProd?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesFinal?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  brand?: Prisma.MdBrandUpdateOneRequiredWithoutOrderHeadsNestedInput
   details?: Prisma.OdOrderDetailUpdateManyWithoutOrderHeadNestedInput
 }
 
 export type OdOrderHeadUncheckedUpdateInput = {
   idDlkOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
-  idDlkBrand?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  codOrderHead?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  fecEntry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  dateProbableDespatch?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idDlkBrand?: Prisma.IntFieldUpdateOperationsInput | number
+  codOrderHead?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  fecEntry?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fileOrderHead?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   statusStageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stateOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fileSuppliesUdp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesProd?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesFinal?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   details?: Prisma.OdOrderDetailUncheckedUpdateManyWithoutOrderHeadNestedInput
 }
 
 export type OdOrderHeadCreateManyInput = {
   idDlkOrderHead?: number
-  idDlkBrand?: number | null
-  codOrderHead?: string | null
-  quantityOrderHead?: number | null
-  fecEntry?: Date | string | null
-  dateProbableDespatch?: Date | string | null
+  idDlkBrand: number
+  codOrderHead: string
+  quantityOrderHead: number
+  fecEntry: Date | string
+  dateProbableDespatch: Date | string
   fileOrderHead?: runtime.Bytes | null
   stageOrderHead?: number | null
   statusStageOrderHead?: number | null
-  stateOrderHead?: number | null
-  codUsuarioCargaDl?: string | null
-  fecProcesoCargaDl?: Date | string | null
-  fecProcesoModifDl?: Date | string | null
-  desAccion?: string | null
-  flgStatutActif?: number | null
+  fileSuppliesUdp?: runtime.Bytes | null
+  fehFileSuppliesUdp?: Date | string | null
+  fileSuppliesProd?: runtime.Bytes | null
+  fehFileSuppliesProd?: Date | string | null
+  fileSuppliesFinal?: runtime.Bytes | null
+  fehFileSuppliesFinal?: Date | string | null
+  stateOrderHead?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
 }
 
 export type OdOrderHeadUpdateManyMutationInput = {
-  codOrderHead?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  fecEntry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  dateProbableDespatch?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  codOrderHead?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  fecEntry?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fileOrderHead?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   statusStageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stateOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fileSuppliesUdp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesProd?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesFinal?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type OdOrderHeadUncheckedUpdateManyInput = {
   idDlkOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
-  idDlkBrand?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  codOrderHead?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  fecEntry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  dateProbableDespatch?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idDlkBrand?: Prisma.IntFieldUpdateOperationsInput | number
+  codOrderHead?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  fecEntry?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fileOrderHead?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   statusStageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stateOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fileSuppliesUdp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesProd?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesFinal?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type OdOrderHeadListRelationFilter = {
@@ -564,6 +678,12 @@ export type OdOrderHeadCountOrderByAggregateInput = {
   fileOrderHead?: Prisma.SortOrder
   stageOrderHead?: Prisma.SortOrder
   statusStageOrderHead?: Prisma.SortOrder
+  fileSuppliesUdp?: Prisma.SortOrder
+  fehFileSuppliesUdp?: Prisma.SortOrder
+  fileSuppliesProd?: Prisma.SortOrder
+  fehFileSuppliesProd?: Prisma.SortOrder
+  fileSuppliesFinal?: Prisma.SortOrder
+  fehFileSuppliesFinal?: Prisma.SortOrder
   stateOrderHead?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fecProcesoCargaDl?: Prisma.SortOrder
@@ -592,6 +712,12 @@ export type OdOrderHeadMaxOrderByAggregateInput = {
   fileOrderHead?: Prisma.SortOrder
   stageOrderHead?: Prisma.SortOrder
   statusStageOrderHead?: Prisma.SortOrder
+  fileSuppliesUdp?: Prisma.SortOrder
+  fehFileSuppliesUdp?: Prisma.SortOrder
+  fileSuppliesProd?: Prisma.SortOrder
+  fehFileSuppliesProd?: Prisma.SortOrder
+  fileSuppliesFinal?: Prisma.SortOrder
+  fehFileSuppliesFinal?: Prisma.SortOrder
   stateOrderHead?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fecProcesoCargaDl?: Prisma.SortOrder
@@ -610,6 +736,12 @@ export type OdOrderHeadMinOrderByAggregateInput = {
   fileOrderHead?: Prisma.SortOrder
   stageOrderHead?: Prisma.SortOrder
   statusStageOrderHead?: Prisma.SortOrder
+  fileSuppliesUdp?: Prisma.SortOrder
+  fehFileSuppliesUdp?: Prisma.SortOrder
+  fileSuppliesProd?: Prisma.SortOrder
+  fehFileSuppliesProd?: Prisma.SortOrder
+  fileSuppliesFinal?: Prisma.SortOrder
+  fehFileSuppliesFinal?: Prisma.SortOrder
   stateOrderHead?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fecProcesoCargaDl?: Prisma.SortOrder
@@ -628,9 +760,9 @@ export type OdOrderHeadSumOrderByAggregateInput = {
   flgStatutActif?: Prisma.SortOrder
 }
 
-export type OdOrderHeadNullableScalarRelationFilter = {
-  is?: Prisma.OdOrderHeadWhereInput | null
-  isNot?: Prisma.OdOrderHeadWhereInput | null
+export type OdOrderHeadScalarRelationFilter = {
+  is?: Prisma.OdOrderHeadWhereInput
+  isNot?: Prisma.OdOrderHeadWhereInput
 }
 
 export type OdOrderHeadCreateNestedManyWithoutBrandInput = {
@@ -675,66 +807,64 @@ export type OdOrderHeadUncheckedUpdateManyWithoutBrandNestedInput = {
   deleteMany?: Prisma.OdOrderHeadScalarWhereInput | Prisma.OdOrderHeadScalarWhereInput[]
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type OdOrderHeadCreateNestedOneWithoutDetailsInput = {
   create?: Prisma.XOR<Prisma.OdOrderHeadCreateWithoutDetailsInput, Prisma.OdOrderHeadUncheckedCreateWithoutDetailsInput>
   connectOrCreate?: Prisma.OdOrderHeadCreateOrConnectWithoutDetailsInput
   connect?: Prisma.OdOrderHeadWhereUniqueInput
 }
 
-export type OdOrderHeadUpdateOneWithoutDetailsNestedInput = {
+export type OdOrderHeadUpdateOneRequiredWithoutDetailsNestedInput = {
   create?: Prisma.XOR<Prisma.OdOrderHeadCreateWithoutDetailsInput, Prisma.OdOrderHeadUncheckedCreateWithoutDetailsInput>
   connectOrCreate?: Prisma.OdOrderHeadCreateOrConnectWithoutDetailsInput
   upsert?: Prisma.OdOrderHeadUpsertWithoutDetailsInput
-  disconnect?: Prisma.OdOrderHeadWhereInput | boolean
-  delete?: Prisma.OdOrderHeadWhereInput | boolean
   connect?: Prisma.OdOrderHeadWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.OdOrderHeadUpdateToOneWithWhereWithoutDetailsInput, Prisma.OdOrderHeadUpdateWithoutDetailsInput>, Prisma.OdOrderHeadUncheckedUpdateWithoutDetailsInput>
 }
 
 export type OdOrderHeadCreateWithoutBrandInput = {
-  codOrderHead?: string | null
-  quantityOrderHead?: number | null
-  fecEntry?: Date | string | null
-  dateProbableDespatch?: Date | string | null
+  codOrderHead: string
+  quantityOrderHead: number
+  fecEntry: Date | string
+  dateProbableDespatch: Date | string
   fileOrderHead?: runtime.Bytes | null
   stageOrderHead?: number | null
   statusStageOrderHead?: number | null
-  stateOrderHead?: number | null
-  codUsuarioCargaDl?: string | null
-  fecProcesoCargaDl?: Date | string | null
-  fecProcesoModifDl?: Date | string | null
-  desAccion?: string | null
-  flgStatutActif?: number | null
+  fileSuppliesUdp?: runtime.Bytes | null
+  fehFileSuppliesUdp?: Date | string | null
+  fileSuppliesProd?: runtime.Bytes | null
+  fehFileSuppliesProd?: Date | string | null
+  fileSuppliesFinal?: runtime.Bytes | null
+  fehFileSuppliesFinal?: Date | string | null
+  stateOrderHead?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
   details?: Prisma.OdOrderDetailCreateNestedManyWithoutOrderHeadInput
 }
 
 export type OdOrderHeadUncheckedCreateWithoutBrandInput = {
   idDlkOrderHead?: number
-  codOrderHead?: string | null
-  quantityOrderHead?: number | null
-  fecEntry?: Date | string | null
-  dateProbableDespatch?: Date | string | null
+  codOrderHead: string
+  quantityOrderHead: number
+  fecEntry: Date | string
+  dateProbableDespatch: Date | string
   fileOrderHead?: runtime.Bytes | null
   stageOrderHead?: number | null
   statusStageOrderHead?: number | null
-  stateOrderHead?: number | null
-  codUsuarioCargaDl?: string | null
-  fecProcesoCargaDl?: Date | string | null
-  fecProcesoModifDl?: Date | string | null
-  desAccion?: string | null
-  flgStatutActif?: number | null
+  fileSuppliesUdp?: runtime.Bytes | null
+  fehFileSuppliesUdp?: Date | string | null
+  fileSuppliesProd?: runtime.Bytes | null
+  fehFileSuppliesProd?: Date | string | null
+  fileSuppliesFinal?: runtime.Bytes | null
+  fehFileSuppliesFinal?: Date | string | null
+  stateOrderHead?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
   details?: Prisma.OdOrderDetailUncheckedCreateNestedManyWithoutOrderHeadInput
 }
 
@@ -769,55 +899,73 @@ export type OdOrderHeadScalarWhereInput = {
   OR?: Prisma.OdOrderHeadScalarWhereInput[]
   NOT?: Prisma.OdOrderHeadScalarWhereInput | Prisma.OdOrderHeadScalarWhereInput[]
   idDlkOrderHead?: Prisma.IntFilter<"OdOrderHead"> | number
-  idDlkBrand?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  codOrderHead?: Prisma.StringNullableFilter<"OdOrderHead"> | string | null
-  quantityOrderHead?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  fecEntry?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
-  dateProbableDespatch?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
+  idDlkBrand?: Prisma.IntFilter<"OdOrderHead"> | number
+  codOrderHead?: Prisma.StringFilter<"OdOrderHead"> | string
+  quantityOrderHead?: Prisma.IntFilter<"OdOrderHead"> | number
+  fecEntry?: Prisma.DateTimeFilter<"OdOrderHead"> | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFilter<"OdOrderHead"> | Date | string
   fileOrderHead?: Prisma.BytesNullableFilter<"OdOrderHead"> | runtime.Bytes | null
   stageOrderHead?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
   statusStageOrderHead?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  stateOrderHead?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
-  codUsuarioCargaDl?: Prisma.StringNullableFilter<"OdOrderHead"> | string | null
-  fecProcesoCargaDl?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
-  fecProcesoModifDl?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
-  desAccion?: Prisma.StringNullableFilter<"OdOrderHead"> | string | null
-  flgStatutActif?: Prisma.IntNullableFilter<"OdOrderHead"> | number | null
+  fileSuppliesUdp?: Prisma.BytesNullableFilter<"OdOrderHead"> | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
+  fileSuppliesProd?: Prisma.BytesNullableFilter<"OdOrderHead"> | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
+  fileSuppliesFinal?: Prisma.BytesNullableFilter<"OdOrderHead"> | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.DateTimeNullableFilter<"OdOrderHead"> | Date | string | null
+  stateOrderHead?: Prisma.IntFilter<"OdOrderHead"> | number
+  codUsuarioCargaDl?: Prisma.StringFilter<"OdOrderHead"> | string
+  fecProcesoCargaDl?: Prisma.DateTimeFilter<"OdOrderHead"> | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFilter<"OdOrderHead"> | Date | string
+  desAccion?: Prisma.StringFilter<"OdOrderHead"> | string
+  flgStatutActif?: Prisma.IntFilter<"OdOrderHead"> | number
 }
 
 export type OdOrderHeadCreateWithoutDetailsInput = {
-  codOrderHead?: string | null
-  quantityOrderHead?: number | null
-  fecEntry?: Date | string | null
-  dateProbableDespatch?: Date | string | null
+  codOrderHead: string
+  quantityOrderHead: number
+  fecEntry: Date | string
+  dateProbableDespatch: Date | string
   fileOrderHead?: runtime.Bytes | null
   stageOrderHead?: number | null
   statusStageOrderHead?: number | null
-  stateOrderHead?: number | null
-  codUsuarioCargaDl?: string | null
-  fecProcesoCargaDl?: Date | string | null
-  fecProcesoModifDl?: Date | string | null
-  desAccion?: string | null
-  flgStatutActif?: number | null
-  brand?: Prisma.MdBrandCreateNestedOneWithoutOrderHeadsInput
+  fileSuppliesUdp?: runtime.Bytes | null
+  fehFileSuppliesUdp?: Date | string | null
+  fileSuppliesProd?: runtime.Bytes | null
+  fehFileSuppliesProd?: Date | string | null
+  fileSuppliesFinal?: runtime.Bytes | null
+  fehFileSuppliesFinal?: Date | string | null
+  stateOrderHead?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
+  brand: Prisma.MdBrandCreateNestedOneWithoutOrderHeadsInput
 }
 
 export type OdOrderHeadUncheckedCreateWithoutDetailsInput = {
   idDlkOrderHead?: number
-  idDlkBrand?: number | null
-  codOrderHead?: string | null
-  quantityOrderHead?: number | null
-  fecEntry?: Date | string | null
-  dateProbableDespatch?: Date | string | null
+  idDlkBrand: number
+  codOrderHead: string
+  quantityOrderHead: number
+  fecEntry: Date | string
+  dateProbableDespatch: Date | string
   fileOrderHead?: runtime.Bytes | null
   stageOrderHead?: number | null
   statusStageOrderHead?: number | null
-  stateOrderHead?: number | null
-  codUsuarioCargaDl?: string | null
-  fecProcesoCargaDl?: Date | string | null
-  fecProcesoModifDl?: Date | string | null
-  desAccion?: string | null
-  flgStatutActif?: number | null
+  fileSuppliesUdp?: runtime.Bytes | null
+  fehFileSuppliesUdp?: Date | string | null
+  fileSuppliesProd?: runtime.Bytes | null
+  fehFileSuppliesProd?: Date | string | null
+  fileSuppliesFinal?: runtime.Bytes | null
+  fehFileSuppliesFinal?: Date | string | null
+  stateOrderHead?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
 }
 
 export type OdOrderHeadCreateOrConnectWithoutDetailsInput = {
@@ -837,107 +985,143 @@ export type OdOrderHeadUpdateToOneWithWhereWithoutDetailsInput = {
 }
 
 export type OdOrderHeadUpdateWithoutDetailsInput = {
-  codOrderHead?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  fecEntry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  dateProbableDespatch?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  codOrderHead?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  fecEntry?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fileOrderHead?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   statusStageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stateOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  brand?: Prisma.MdBrandUpdateOneWithoutOrderHeadsNestedInput
+  fileSuppliesUdp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesProd?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesFinal?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  brand?: Prisma.MdBrandUpdateOneRequiredWithoutOrderHeadsNestedInput
 }
 
 export type OdOrderHeadUncheckedUpdateWithoutDetailsInput = {
   idDlkOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
-  idDlkBrand?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  codOrderHead?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  fecEntry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  dateProbableDespatch?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idDlkBrand?: Prisma.IntFieldUpdateOperationsInput | number
+  codOrderHead?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  fecEntry?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fileOrderHead?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   statusStageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stateOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fileSuppliesUdp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesProd?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesFinal?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type OdOrderHeadCreateManyBrandInput = {
   idDlkOrderHead?: number
-  codOrderHead?: string | null
-  quantityOrderHead?: number | null
-  fecEntry?: Date | string | null
-  dateProbableDespatch?: Date | string | null
+  codOrderHead: string
+  quantityOrderHead: number
+  fecEntry: Date | string
+  dateProbableDespatch: Date | string
   fileOrderHead?: runtime.Bytes | null
   stageOrderHead?: number | null
   statusStageOrderHead?: number | null
-  stateOrderHead?: number | null
-  codUsuarioCargaDl?: string | null
-  fecProcesoCargaDl?: Date | string | null
-  fecProcesoModifDl?: Date | string | null
-  desAccion?: string | null
-  flgStatutActif?: number | null
+  fileSuppliesUdp?: runtime.Bytes | null
+  fehFileSuppliesUdp?: Date | string | null
+  fileSuppliesProd?: runtime.Bytes | null
+  fehFileSuppliesProd?: Date | string | null
+  fileSuppliesFinal?: runtime.Bytes | null
+  fehFileSuppliesFinal?: Date | string | null
+  stateOrderHead?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
 }
 
 export type OdOrderHeadUpdateWithoutBrandInput = {
-  codOrderHead?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  fecEntry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  dateProbableDespatch?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  codOrderHead?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  fecEntry?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fileOrderHead?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   statusStageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stateOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fileSuppliesUdp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesProd?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesFinal?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   details?: Prisma.OdOrderDetailUpdateManyWithoutOrderHeadNestedInput
 }
 
 export type OdOrderHeadUncheckedUpdateWithoutBrandInput = {
   idDlkOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
-  codOrderHead?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  fecEntry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  dateProbableDespatch?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  codOrderHead?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  fecEntry?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fileOrderHead?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   statusStageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stateOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fileSuppliesUdp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesProd?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesFinal?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   details?: Prisma.OdOrderDetailUncheckedUpdateManyWithoutOrderHeadNestedInput
 }
 
 export type OdOrderHeadUncheckedUpdateManyWithoutBrandInput = {
   idDlkOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
-  codOrderHead?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  fecEntry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  dateProbableDespatch?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  codOrderHead?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  fecEntry?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fileOrderHead?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   statusStageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stateOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fileSuppliesUdp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesProd?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesFinal?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -981,13 +1165,19 @@ export type OdOrderHeadSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   fileOrderHead?: boolean
   stageOrderHead?: boolean
   statusStageOrderHead?: boolean
+  fileSuppliesUdp?: boolean
+  fehFileSuppliesUdp?: boolean
+  fileSuppliesProd?: boolean
+  fehFileSuppliesProd?: boolean
+  fileSuppliesFinal?: boolean
+  fehFileSuppliesFinal?: boolean
   stateOrderHead?: boolean
   codUsuarioCargaDl?: boolean
   fecProcesoCargaDl?: boolean
   fecProcesoModifDl?: boolean
   desAccion?: boolean
   flgStatutActif?: boolean
-  brand?: boolean | Prisma.OdOrderHead$brandArgs<ExtArgs>
+  brand?: boolean | Prisma.MdBrandDefaultArgs<ExtArgs>
   details?: boolean | Prisma.OdOrderHead$detailsArgs<ExtArgs>
   _count?: boolean | Prisma.OdOrderHeadCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["odOrderHead"]>
@@ -1004,6 +1194,12 @@ export type OdOrderHeadSelectScalar = {
   fileOrderHead?: boolean
   stageOrderHead?: boolean
   statusStageOrderHead?: boolean
+  fileSuppliesUdp?: boolean
+  fehFileSuppliesUdp?: boolean
+  fileSuppliesProd?: boolean
+  fehFileSuppliesProd?: boolean
+  fileSuppliesFinal?: boolean
+  fehFileSuppliesFinal?: boolean
   stateOrderHead?: boolean
   codUsuarioCargaDl?: boolean
   fecProcesoCargaDl?: boolean
@@ -1012,9 +1208,9 @@ export type OdOrderHeadSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type OdOrderHeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkOrderHead" | "idDlkBrand" | "codOrderHead" | "quantityOrderHead" | "fecEntry" | "dateProbableDespatch" | "fileOrderHead" | "stageOrderHead" | "statusStageOrderHead" | "stateOrderHead" | "codUsuarioCargaDl" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["odOrderHead"]>
+export type OdOrderHeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkOrderHead" | "idDlkBrand" | "codOrderHead" | "quantityOrderHead" | "fecEntry" | "dateProbableDespatch" | "fileOrderHead" | "stageOrderHead" | "statusStageOrderHead" | "fileSuppliesUdp" | "fehFileSuppliesUdp" | "fileSuppliesProd" | "fehFileSuppliesProd" | "fileSuppliesFinal" | "fehFileSuppliesFinal" | "stateOrderHead" | "codUsuarioCargaDl" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["odOrderHead"]>
 export type OdOrderHeadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  brand?: boolean | Prisma.OdOrderHead$brandArgs<ExtArgs>
+  brand?: boolean | Prisma.MdBrandDefaultArgs<ExtArgs>
   details?: boolean | Prisma.OdOrderHead$detailsArgs<ExtArgs>
   _count?: boolean | Prisma.OdOrderHeadCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1022,25 +1218,37 @@ export type OdOrderHeadInclude<ExtArgs extends runtime.Types.Extensions.Internal
 export type $OdOrderHeadPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "OdOrderHead"
   objects: {
-    brand: Prisma.$MdBrandPayload<ExtArgs> | null
+    brand: Prisma.$MdBrandPayload<ExtArgs>
     details: Prisma.$OdOrderDetailPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkOrderHead: number
-    idDlkBrand: number | null
-    codOrderHead: string | null
-    quantityOrderHead: number | null
-    fecEntry: Date | null
-    dateProbableDespatch: Date | null
+    idDlkBrand: number
+    codOrderHead: string
+    quantityOrderHead: number
+    /**
+     * * Prisma conserva el nombre `fecEntry` por compatibilidad; columna DB renombrada a DATE_ENTRY.
+     */
+    fecEntry: Date
+    /**
+     * * Prisma conserva `dateProbableDespatch`; columna DB corregida a DATE_PROBABLE_DISPATCH.
+     */
+    dateProbableDespatch: Date
     fileOrderHead: runtime.Bytes | null
     stageOrderHead: number | null
     statusStageOrderHead: number | null
-    stateOrderHead: number | null
-    codUsuarioCargaDl: string | null
-    fecProcesoCargaDl: Date | null
-    fecProcesoModifDl: Date | null
-    desAccion: string | null
-    flgStatutActif: number | null
+    fileSuppliesUdp: runtime.Bytes | null
+    fehFileSuppliesUdp: Date | null
+    fileSuppliesProd: runtime.Bytes | null
+    fehFileSuppliesProd: Date | null
+    fileSuppliesFinal: runtime.Bytes | null
+    fehFileSuppliesFinal: Date | null
+    stateOrderHead: number
+    codUsuarioCargaDl: string
+    fecProcesoCargaDl: Date
+    fecProcesoModifDl: Date
+    desAccion: string
+    flgStatutActif: number
   }, ExtArgs["result"]["odOrderHead"]>
   composites: {}
 }
@@ -1381,7 +1589,7 @@ readonly fields: OdOrderHeadFieldRefs;
  */
 export interface Prisma__OdOrderHeadClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  brand<T extends Prisma.OdOrderHead$brandArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderHead$brandArgs<ExtArgs>>): Prisma.Prisma__MdBrandClient<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  brand<T extends Prisma.MdBrandDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdBrandDefaultArgs<ExtArgs>>): Prisma.Prisma__MdBrandClient<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   details<T extends Prisma.OdOrderHead$detailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderHead$detailsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdOrderDetailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1421,6 +1629,12 @@ export interface OdOrderHeadFieldRefs {
   readonly fileOrderHead: Prisma.FieldRef<"OdOrderHead", 'Bytes'>
   readonly stageOrderHead: Prisma.FieldRef<"OdOrderHead", 'Int'>
   readonly statusStageOrderHead: Prisma.FieldRef<"OdOrderHead", 'Int'>
+  readonly fileSuppliesUdp: Prisma.FieldRef<"OdOrderHead", 'Bytes'>
+  readonly fehFileSuppliesUdp: Prisma.FieldRef<"OdOrderHead", 'DateTime'>
+  readonly fileSuppliesProd: Prisma.FieldRef<"OdOrderHead", 'Bytes'>
+  readonly fehFileSuppliesProd: Prisma.FieldRef<"OdOrderHead", 'DateTime'>
+  readonly fileSuppliesFinal: Prisma.FieldRef<"OdOrderHead", 'Bytes'>
+  readonly fehFileSuppliesFinal: Prisma.FieldRef<"OdOrderHead", 'DateTime'>
   readonly stateOrderHead: Prisma.FieldRef<"OdOrderHead", 'Int'>
   readonly codUsuarioCargaDl: Prisma.FieldRef<"OdOrderHead", 'String'>
   readonly fecProcesoCargaDl: Prisma.FieldRef<"OdOrderHead", 'DateTime'>
@@ -1645,7 +1859,7 @@ export type OdOrderHeadCreateArgs<ExtArgs extends runtime.Types.Extensions.Inter
   /**
    * The data needed to create a OdOrderHead.
    */
-  data?: Prisma.XOR<Prisma.OdOrderHeadCreateInput, Prisma.OdOrderHeadUncheckedCreateInput>
+  data: Prisma.XOR<Prisma.OdOrderHeadCreateInput, Prisma.OdOrderHeadUncheckedCreateInput>
 }
 
 /**
@@ -1767,25 +1981,6 @@ export type OdOrderHeadDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many OdOrderHeads to delete.
    */
   limit?: number
-}
-
-/**
- * OdOrderHead.brand
- */
-export type OdOrderHead$brandArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the MdBrand
-   */
-  select?: Prisma.MdBrandSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the MdBrand
-   */
-  omit?: Prisma.MdBrandOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.MdBrandInclude<ExtArgs> | null
-  where?: Prisma.MdBrandWhereInput
 }
 
 /**

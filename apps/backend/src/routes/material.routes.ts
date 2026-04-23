@@ -1,11 +1,5 @@
 import { Router } from "express";
-import { isMissingMdMaterialsTable, type MaterialService } from "../services/material.service.js";
-
-const MISSING_MD_MATERIALS = {
-  error:
-    "La tabla MD_MATERIALS no existe en esta base de datos. Ejecuta en MariaDB/MySQL el archivo apps/backend/prisma/manual/20250328_md_material.sql (la tabla MD_SUPPLIER debe existir antes por la clave foránea).",
-  type: "MISSING_TABLE" as const,
-};
+import type { MaterialService } from "../services/material.service.js";
 
 function errorResponse(e: unknown) {
   const message = e instanceof Error ? e.message : "Error desconocido";
@@ -28,9 +22,6 @@ export function materialRoutes(service: MaterialService): Router {
       res.json(list);
     } catch (e) {
       console.error("[materials:list]", e);
-      if (isMissingMdMaterialsTable(e)) {
-        return res.status(503).json(MISSING_MD_MATERIALS);
-      }
       const err = errorResponse(e);
       res.status(err.status).json(err.body);
     }
@@ -45,9 +36,6 @@ export function materialRoutes(service: MaterialService): Router {
       res.json(row);
     } catch (e) {
       console.error("[materials:getById]", e);
-      if (isMissingMdMaterialsTable(e)) {
-        return res.status(503).json(MISSING_MD_MATERIALS);
-      }
       const err = errorResponse(e);
       res.status(err.status).json(err.body);
     }
@@ -55,9 +43,6 @@ export function materialRoutes(service: MaterialService): Router {
 
   router.post("/", async (req, res) => {
     try {
-      if (!req.body.nameMaterial?.trim()) {
-        return res.status(400).json({ error: "El nombre del material es obligatorio", type: "VALIDATION" });
-      }
       if (!req.body.idDlkSupplier || Number(req.body.idDlkSupplier) <= 0) {
         return res.status(400).json({ error: "Debes seleccionar el proveedor", type: "VALIDATION" });
       }
@@ -65,9 +50,6 @@ export function materialRoutes(service: MaterialService): Router {
       res.status(201).json(row);
     } catch (e) {
       console.error("[materials:create]", e);
-      if (isMissingMdMaterialsTable(e)) {
-        return res.status(503).json(MISSING_MD_MATERIALS);
-      }
       const err = errorResponse(e);
       res.status(err.status).json(err.body);
     }
@@ -79,9 +61,6 @@ export function materialRoutes(service: MaterialService): Router {
       res.json(row);
     } catch (e) {
       console.error("[materials:update]", e);
-      if (isMissingMdMaterialsTable(e)) {
-        return res.status(503).json(MISSING_MD_MATERIALS);
-      }
       const err = errorResponse(e);
       res.status(err.status).json(err.body);
     }
@@ -93,9 +72,37 @@ export function materialRoutes(service: MaterialService): Router {
       res.json({ message: "Material eliminado" });
     } catch (e) {
       console.error("[materials:delete]", e);
-      if (isMissingMdMaterialsTable(e)) {
-        return res.status(503).json(MISSING_MD_MATERIALS);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  router.get("/template/download", (_req, res) => {
+    try {
+      const buf = service.buildTemplate();
+      res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      );
+      res.setHeader("Content-Disposition", 'attachment; filename="plantilla_materiales.xlsx"');
+      res.send(buf);
+    } catch (e) {
+      console.error("[materials:template]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  router.post("/bulk-upload", async (req, res) => {
+    try {
+      const fileBase64 = req.body?.fileBase64;
+      if (!fileBase64 || typeof fileBase64 !== "string") {
+        return res.status(400).json({ error: "Falta fileBase64", type: "VALIDATION" });
       }
+      const result = await service.bulkCreate(fileBase64);
+      res.json(result);
+    } catch (e) {
+      console.error("[materials:bulk-upload]", e);
       const err = errorResponse(e);
       res.status(err.status).json(err.body);
     }

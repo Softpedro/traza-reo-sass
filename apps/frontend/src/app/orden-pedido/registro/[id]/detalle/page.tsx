@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { OrderRegistroDetalleClient } from "./order-registro-detalle-client";
 
 type PageProps = {
@@ -16,5 +17,9 @@ export default function OrdenPedidoRegistroDetallePage({ params }: PageProps) {
       </div>
     );
   }
-  return <OrderRegistroDetalleClient headId={id} />;
+  return (
+    <Suspense fallback={<p className="p-4 text-sm text-muted-foreground">Cargando…</p>}>
+      <OrderRegistroDetalleClient headId={id} />
+    </Suspense>
+  );
 }

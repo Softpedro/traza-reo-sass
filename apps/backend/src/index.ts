@@ -107,9 +107,29 @@ app.use(express.json({ limit: jsonBodyLimit }));
 app.use(express.urlencoded({ extended: true, limit: jsonBodyLimit }));
 app.use(jsonBigIntMiddleware);
 
+/** Sin consulta a DB: útil para comprobar que el proceso HTTP respondió (evita confundir “backend caído” con “MariaDB colgada”). */
+app.get("/health/live", (_req, res) => {
+  res.json({ status: "ok", service: "backend", db: "not_checked" });
+});
+
+const dbHealthTimeoutMs = Number(process.env.DB_HEALTH_TIMEOUT_MS ?? 8000);
+
 app.get("/health", async (_req, res) => {
   try {
-    await prisma.$queryRawUnsafe("SELECT 1");
+    await Promise.race([
+      prisma.$queryRawUnsafe("SELECT 1"),
+      new Promise<never>((_, reject) => {
+        setTimeout(
+          () =>
+            reject(
+              new Error(
+                `Timeout esperando a la base (${dbHealthTimeoutMs} ms). ¿MariaDB/MySQL accesible desde DATABASE_URL?`
+              )
+            ),
+          dbHealthTimeoutMs
+        );
+      }),
+    ]);
     res.json({ status: "ok", service: "backend", db: "connected" });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "unknown";

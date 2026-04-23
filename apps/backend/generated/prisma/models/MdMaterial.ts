@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model MdMaterial
- * * Tabla física MD_MATERIALS
+ * * Tabla física MD_MATERIAL. Overhaul 2026-04-19: composición, sostenibilidad, tintes y certificaciones.
  */
 export type MdMaterialModel = runtime.Types.Result.DefaultSelection<Prisma.$MdMaterialPayload>
 
@@ -27,27 +27,52 @@ export type AggregateMdMaterial = {
 }
 
 export type MdMaterialAvgAggregateOutputType = {
-  idDlkMaterials: number | null
+  idDlkMaterial: number | null
   idDlkSupplier: number | null
-  stateMaterial: number | null
+  contentValueMaterial: runtime.Decimal | null
+  recycled: number | null
+  percentageRecycledMaterials: runtime.Decimal | null
+  renewableMaterial: number | null
+  percentageRenewableMaterial: runtime.Decimal | null
+  stateMaterials: number | null
   flgStatutActif: number | null
 }
 
 export type MdMaterialSumAggregateOutputType = {
-  idDlkMaterials: number | null
+  idDlkMaterial: number | null
   idDlkSupplier: number | null
-  stateMaterial: number | null
+  contentValueMaterial: runtime.Decimal | null
+  recycled: number | null
+  percentageRecycledMaterials: runtime.Decimal | null
+  renewableMaterial: number | null
+  percentageRenewableMaterial: runtime.Decimal | null
+  stateMaterials: number | null
   flgStatutActif: number | null
 }
 
 export type MdMaterialMinAggregateOutputType = {
-  idDlkMaterials: number | null
+  idDlkMaterial: number | null
   idDlkSupplier: number | null
   codMaterial: string | null
-  nameMaterial: string | null
-  desMaterial: string | null
-  obsMaterial: string | null
-  stateMaterial: number | null
+  material: string | null
+  contentNameMaterial: string | null
+  contentValueMaterial: runtime.Decimal | null
+  contentSourceMaterials: string | null
+  materialTradeMarks: string | null
+  recycled: number | null
+  percentageRecycledMaterials: runtime.Decimal | null
+  recycledInputSource: string | null
+  renewableMaterial: number | null
+  percentageRenewableMaterial: runtime.Decimal | null
+  renewableInputSource: string | null
+  typeDyes: string | null
+  dyeClass: string | null
+  classStandardDyes: string | null
+  finishes: string | null
+  patterns: string | null
+  recoveryMaterials: string | null
+  certification: string | null
+  stateMaterials: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
   fehProcesoModifDl: Date | null
@@ -56,13 +81,28 @@ export type MdMaterialMinAggregateOutputType = {
 }
 
 export type MdMaterialMaxAggregateOutputType = {
-  idDlkMaterials: number | null
+  idDlkMaterial: number | null
   idDlkSupplier: number | null
   codMaterial: string | null
-  nameMaterial: string | null
-  desMaterial: string | null
-  obsMaterial: string | null
-  stateMaterial: number | null
+  material: string | null
+  contentNameMaterial: string | null
+  contentValueMaterial: runtime.Decimal | null
+  contentSourceMaterials: string | null
+  materialTradeMarks: string | null
+  recycled: number | null
+  percentageRecycledMaterials: runtime.Decimal | null
+  recycledInputSource: string | null
+  renewableMaterial: number | null
+  percentageRenewableMaterial: runtime.Decimal | null
+  renewableInputSource: string | null
+  typeDyes: string | null
+  dyeClass: string | null
+  classStandardDyes: string | null
+  finishes: string | null
+  patterns: string | null
+  recoveryMaterials: string | null
+  certification: string | null
+  stateMaterials: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
   fehProcesoModifDl: Date | null
@@ -71,13 +111,28 @@ export type MdMaterialMaxAggregateOutputType = {
 }
 
 export type MdMaterialCountAggregateOutputType = {
-  idDlkMaterials: number
+  idDlkMaterial: number
   idDlkSupplier: number
   codMaterial: number
-  nameMaterial: number
-  desMaterial: number
-  obsMaterial: number
-  stateMaterial: number
+  material: number
+  contentNameMaterial: number
+  contentValueMaterial: number
+  contentSourceMaterials: number
+  materialTradeMarks: number
+  recycled: number
+  percentageRecycledMaterials: number
+  recycledInputSource: number
+  renewableMaterial: number
+  percentageRenewableMaterial: number
+  renewableInputSource: number
+  typeDyes: number
+  dyeClass: number
+  classStandardDyes: number
+  finishes: number
+  patterns: number
+  recoveryMaterials: number
+  certification: number
+  stateMaterials: number
   codUsuarioCargaDl: number
   fehProcesoCargaDl: number
   fehProcesoModifDl: number
@@ -88,27 +143,52 @@ export type MdMaterialCountAggregateOutputType = {
 
 
 export type MdMaterialAvgAggregateInputType = {
-  idDlkMaterials?: true
+  idDlkMaterial?: true
   idDlkSupplier?: true
-  stateMaterial?: true
+  contentValueMaterial?: true
+  recycled?: true
+  percentageRecycledMaterials?: true
+  renewableMaterial?: true
+  percentageRenewableMaterial?: true
+  stateMaterials?: true
   flgStatutActif?: true
 }
 
 export type MdMaterialSumAggregateInputType = {
-  idDlkMaterials?: true
+  idDlkMaterial?: true
   idDlkSupplier?: true
-  stateMaterial?: true
+  contentValueMaterial?: true
+  recycled?: true
+  percentageRecycledMaterials?: true
+  renewableMaterial?: true
+  percentageRenewableMaterial?: true
+  stateMaterials?: true
   flgStatutActif?: true
 }
 
 export type MdMaterialMinAggregateInputType = {
-  idDlkMaterials?: true
+  idDlkMaterial?: true
   idDlkSupplier?: true
   codMaterial?: true
-  nameMaterial?: true
-  desMaterial?: true
-  obsMaterial?: true
-  stateMaterial?: true
+  material?: true
+  contentNameMaterial?: true
+  contentValueMaterial?: true
+  contentSourceMaterials?: true
+  materialTradeMarks?: true
+  recycled?: true
+  percentageRecycledMaterials?: true
+  recycledInputSource?: true
+  renewableMaterial?: true
+  percentageRenewableMaterial?: true
+  renewableInputSource?: true
+  typeDyes?: true
+  dyeClass?: true
+  classStandardDyes?: true
+  finishes?: true
+  patterns?: true
+  recoveryMaterials?: true
+  certification?: true
+  stateMaterials?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
   fehProcesoModifDl?: true
@@ -117,13 +197,28 @@ export type MdMaterialMinAggregateInputType = {
 }
 
 export type MdMaterialMaxAggregateInputType = {
-  idDlkMaterials?: true
+  idDlkMaterial?: true
   idDlkSupplier?: true
   codMaterial?: true
-  nameMaterial?: true
-  desMaterial?: true
-  obsMaterial?: true
-  stateMaterial?: true
+  material?: true
+  contentNameMaterial?: true
+  contentValueMaterial?: true
+  contentSourceMaterials?: true
+  materialTradeMarks?: true
+  recycled?: true
+  percentageRecycledMaterials?: true
+  recycledInputSource?: true
+  renewableMaterial?: true
+  percentageRenewableMaterial?: true
+  renewableInputSource?: true
+  typeDyes?: true
+  dyeClass?: true
+  classStandardDyes?: true
+  finishes?: true
+  patterns?: true
+  recoveryMaterials?: true
+  certification?: true
+  stateMaterials?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
   fehProcesoModifDl?: true
@@ -132,13 +227,28 @@ export type MdMaterialMaxAggregateInputType = {
 }
 
 export type MdMaterialCountAggregateInputType = {
-  idDlkMaterials?: true
+  idDlkMaterial?: true
   idDlkSupplier?: true
   codMaterial?: true
-  nameMaterial?: true
-  desMaterial?: true
-  obsMaterial?: true
-  stateMaterial?: true
+  material?: true
+  contentNameMaterial?: true
+  contentValueMaterial?: true
+  contentSourceMaterials?: true
+  materialTradeMarks?: true
+  recycled?: true
+  percentageRecycledMaterials?: true
+  recycledInputSource?: true
+  renewableMaterial?: true
+  percentageRenewableMaterial?: true
+  renewableInputSource?: true
+  typeDyes?: true
+  dyeClass?: true
+  classStandardDyes?: true
+  finishes?: true
+  patterns?: true
+  recoveryMaterials?: true
+  certification?: true
+  stateMaterials?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
   fehProcesoModifDl?: true
@@ -234,18 +344,33 @@ export type MdMaterialGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 export type MdMaterialGroupByOutputType = {
-  idDlkMaterials: number
+  idDlkMaterial: number
   idDlkSupplier: number
   codMaterial: string | null
-  nameMaterial: string
-  desMaterial: string | null
-  obsMaterial: string | null
-  stateMaterial: number
-  codUsuarioCargaDl: string
-  fehProcesoCargaDl: Date
-  fehProcesoModifDl: Date
-  desAccion: string
-  flgStatutActif: number
+  material: string | null
+  contentNameMaterial: string | null
+  contentValueMaterial: runtime.Decimal | null
+  contentSourceMaterials: string | null
+  materialTradeMarks: string | null
+  recycled: number | null
+  percentageRecycledMaterials: runtime.Decimal | null
+  recycledInputSource: string | null
+  renewableMaterial: number | null
+  percentageRenewableMaterial: runtime.Decimal | null
+  renewableInputSource: string | null
+  typeDyes: string | null
+  dyeClass: string | null
+  classStandardDyes: string | null
+  finishes: string | null
+  patterns: string | null
+  recoveryMaterials: string | null
+  certification: string | null
+  stateMaterials: number | null
+  codUsuarioCargaDl: string | null
+  fehProcesoCargaDl: Date | null
+  fehProcesoModifDl: Date | null
+  desAccion: string | null
+  flgStatutActif: number | null
   _count: MdMaterialCountAggregateOutputType | null
   _avg: MdMaterialAvgAggregateOutputType | null
   _sum: MdMaterialSumAggregateOutputType | null
@@ -272,70 +397,130 @@ export type MdMaterialWhereInput = {
   AND?: Prisma.MdMaterialWhereInput | Prisma.MdMaterialWhereInput[]
   OR?: Prisma.MdMaterialWhereInput[]
   NOT?: Prisma.MdMaterialWhereInput | Prisma.MdMaterialWhereInput[]
-  idDlkMaterials?: Prisma.IntFilter<"MdMaterial"> | number
+  idDlkMaterial?: Prisma.IntFilter<"MdMaterial"> | number
   idDlkSupplier?: Prisma.IntFilter<"MdMaterial"> | number
   codMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
-  nameMaterial?: Prisma.StringFilter<"MdMaterial"> | string
-  desMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
-  obsMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
-  stateMaterial?: Prisma.IntFilter<"MdMaterial"> | number
-  codUsuarioCargaDl?: Prisma.StringFilter<"MdMaterial"> | string
-  fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdMaterial"> | Date | string
-  fehProcesoModifDl?: Prisma.DateTimeFilter<"MdMaterial"> | Date | string
-  desAccion?: Prisma.StringFilter<"MdMaterial"> | string
-  flgStatutActif?: Prisma.IntFilter<"MdMaterial"> | number
+  material?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  contentNameMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  contentValueMaterial?: Prisma.DecimalNullableFilter<"MdMaterial"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  materialTradeMarks?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  recycled?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
+  percentageRecycledMaterials?: Prisma.DecimalNullableFilter<"MdMaterial"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  renewableMaterial?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
+  percentageRenewableMaterial?: Prisma.DecimalNullableFilter<"MdMaterial"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  typeDyes?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  dyeClass?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  classStandardDyes?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  finishes?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  patterns?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  recoveryMaterials?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  certification?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  stateMaterials?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
+  codUsuarioCargaDl?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  fehProcesoCargaDl?: Prisma.DateTimeNullableFilter<"MdMaterial"> | Date | string | null
+  fehProcesoModifDl?: Prisma.DateTimeNullableFilter<"MdMaterial"> | Date | string | null
+  desAccion?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  flgStatutActif?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
   supplier?: Prisma.XOR<Prisma.MdSupplierScalarRelationFilter, Prisma.MdSupplierWhereInput>
 }
 
 export type MdMaterialOrderByWithRelationInput = {
-  idDlkMaterials?: Prisma.SortOrder
+  idDlkMaterial?: Prisma.SortOrder
   idDlkSupplier?: Prisma.SortOrder
   codMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
-  nameMaterial?: Prisma.SortOrder
-  desMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
-  obsMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
-  stateMaterial?: Prisma.SortOrder
-  codUsuarioCargaDl?: Prisma.SortOrder
-  fehProcesoCargaDl?: Prisma.SortOrder
-  fehProcesoModifDl?: Prisma.SortOrder
-  desAccion?: Prisma.SortOrder
-  flgStatutActif?: Prisma.SortOrder
+  material?: Prisma.SortOrderInput | Prisma.SortOrder
+  contentNameMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  contentValueMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  contentSourceMaterials?: Prisma.SortOrderInput | Prisma.SortOrder
+  materialTradeMarks?: Prisma.SortOrderInput | Prisma.SortOrder
+  recycled?: Prisma.SortOrderInput | Prisma.SortOrder
+  percentageRecycledMaterials?: Prisma.SortOrderInput | Prisma.SortOrder
+  recycledInputSource?: Prisma.SortOrderInput | Prisma.SortOrder
+  renewableMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  percentageRenewableMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  renewableInputSource?: Prisma.SortOrderInput | Prisma.SortOrder
+  typeDyes?: Prisma.SortOrderInput | Prisma.SortOrder
+  dyeClass?: Prisma.SortOrderInput | Prisma.SortOrder
+  classStandardDyes?: Prisma.SortOrderInput | Prisma.SortOrder
+  finishes?: Prisma.SortOrderInput | Prisma.SortOrder
+  patterns?: Prisma.SortOrderInput | Prisma.SortOrder
+  recoveryMaterials?: Prisma.SortOrderInput | Prisma.SortOrder
+  certification?: Prisma.SortOrderInput | Prisma.SortOrder
+  stateMaterials?: Prisma.SortOrderInput | Prisma.SortOrder
+  codUsuarioCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fehProcesoCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fehProcesoModifDl?: Prisma.SortOrderInput | Prisma.SortOrder
+  desAccion?: Prisma.SortOrderInput | Prisma.SortOrder
+  flgStatutActif?: Prisma.SortOrderInput | Prisma.SortOrder
   supplier?: Prisma.MdSupplierOrderByWithRelationInput
   _relevance?: Prisma.MdMaterialOrderByRelevanceInput
 }
 
 export type MdMaterialWhereUniqueInput = Prisma.AtLeast<{
-  idDlkMaterials?: number
+  idDlkMaterial?: number
   AND?: Prisma.MdMaterialWhereInput | Prisma.MdMaterialWhereInput[]
   OR?: Prisma.MdMaterialWhereInput[]
   NOT?: Prisma.MdMaterialWhereInput | Prisma.MdMaterialWhereInput[]
   idDlkSupplier?: Prisma.IntFilter<"MdMaterial"> | number
   codMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
-  nameMaterial?: Prisma.StringFilter<"MdMaterial"> | string
-  desMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
-  obsMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
-  stateMaterial?: Prisma.IntFilter<"MdMaterial"> | number
-  codUsuarioCargaDl?: Prisma.StringFilter<"MdMaterial"> | string
-  fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdMaterial"> | Date | string
-  fehProcesoModifDl?: Prisma.DateTimeFilter<"MdMaterial"> | Date | string
-  desAccion?: Prisma.StringFilter<"MdMaterial"> | string
-  flgStatutActif?: Prisma.IntFilter<"MdMaterial"> | number
+  material?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  contentNameMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  contentValueMaterial?: Prisma.DecimalNullableFilter<"MdMaterial"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  materialTradeMarks?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  recycled?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
+  percentageRecycledMaterials?: Prisma.DecimalNullableFilter<"MdMaterial"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  renewableMaterial?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
+  percentageRenewableMaterial?: Prisma.DecimalNullableFilter<"MdMaterial"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  typeDyes?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  dyeClass?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  classStandardDyes?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  finishes?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  patterns?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  recoveryMaterials?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  certification?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  stateMaterials?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
+  codUsuarioCargaDl?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  fehProcesoCargaDl?: Prisma.DateTimeNullableFilter<"MdMaterial"> | Date | string | null
+  fehProcesoModifDl?: Prisma.DateTimeNullableFilter<"MdMaterial"> | Date | string | null
+  desAccion?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  flgStatutActif?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
   supplier?: Prisma.XOR<Prisma.MdSupplierScalarRelationFilter, Prisma.MdSupplierWhereInput>
-}, "idDlkMaterials">
+}, "idDlkMaterial">
 
 export type MdMaterialOrderByWithAggregationInput = {
-  idDlkMaterials?: Prisma.SortOrder
+  idDlkMaterial?: Prisma.SortOrder
   idDlkSupplier?: Prisma.SortOrder
   codMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
-  nameMaterial?: Prisma.SortOrder
-  desMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
-  obsMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
-  stateMaterial?: Prisma.SortOrder
-  codUsuarioCargaDl?: Prisma.SortOrder
-  fehProcesoCargaDl?: Prisma.SortOrder
-  fehProcesoModifDl?: Prisma.SortOrder
-  desAccion?: Prisma.SortOrder
-  flgStatutActif?: Prisma.SortOrder
+  material?: Prisma.SortOrderInput | Prisma.SortOrder
+  contentNameMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  contentValueMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  contentSourceMaterials?: Prisma.SortOrderInput | Prisma.SortOrder
+  materialTradeMarks?: Prisma.SortOrderInput | Prisma.SortOrder
+  recycled?: Prisma.SortOrderInput | Prisma.SortOrder
+  percentageRecycledMaterials?: Prisma.SortOrderInput | Prisma.SortOrder
+  recycledInputSource?: Prisma.SortOrderInput | Prisma.SortOrder
+  renewableMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  percentageRenewableMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  renewableInputSource?: Prisma.SortOrderInput | Prisma.SortOrder
+  typeDyes?: Prisma.SortOrderInput | Prisma.SortOrder
+  dyeClass?: Prisma.SortOrderInput | Prisma.SortOrder
+  classStandardDyes?: Prisma.SortOrderInput | Prisma.SortOrder
+  finishes?: Prisma.SortOrderInput | Prisma.SortOrder
+  patterns?: Prisma.SortOrderInput | Prisma.SortOrder
+  recoveryMaterials?: Prisma.SortOrderInput | Prisma.SortOrder
+  certification?: Prisma.SortOrderInput | Prisma.SortOrder
+  stateMaterials?: Prisma.SortOrderInput | Prisma.SortOrder
+  codUsuarioCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fehProcesoCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fehProcesoModifDl?: Prisma.SortOrderInput | Prisma.SortOrder
+  desAccion?: Prisma.SortOrderInput | Prisma.SortOrder
+  flgStatutActif?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MdMaterialCountOrderByAggregateInput
   _avg?: Prisma.MdMaterialAvgOrderByAggregateInput
   _max?: Prisma.MdMaterialMaxOrderByAggregateInput
@@ -347,119 +532,239 @@ export type MdMaterialScalarWhereWithAggregatesInput = {
   AND?: Prisma.MdMaterialScalarWhereWithAggregatesInput | Prisma.MdMaterialScalarWhereWithAggregatesInput[]
   OR?: Prisma.MdMaterialScalarWhereWithAggregatesInput[]
   NOT?: Prisma.MdMaterialScalarWhereWithAggregatesInput | Prisma.MdMaterialScalarWhereWithAggregatesInput[]
-  idDlkMaterials?: Prisma.IntWithAggregatesFilter<"MdMaterial"> | number
+  idDlkMaterial?: Prisma.IntWithAggregatesFilter<"MdMaterial"> | number
   idDlkSupplier?: Prisma.IntWithAggregatesFilter<"MdMaterial"> | number
   codMaterial?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
-  nameMaterial?: Prisma.StringWithAggregatesFilter<"MdMaterial"> | string
-  desMaterial?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
-  obsMaterial?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
-  stateMaterial?: Prisma.IntWithAggregatesFilter<"MdMaterial"> | number
-  codUsuarioCargaDl?: Prisma.StringWithAggregatesFilter<"MdMaterial"> | string
-  fehProcesoCargaDl?: Prisma.DateTimeWithAggregatesFilter<"MdMaterial"> | Date | string
-  fehProcesoModifDl?: Prisma.DateTimeWithAggregatesFilter<"MdMaterial"> | Date | string
-  desAccion?: Prisma.StringWithAggregatesFilter<"MdMaterial"> | string
-  flgStatutActif?: Prisma.IntWithAggregatesFilter<"MdMaterial"> | number
+  material?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  contentNameMaterial?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  contentValueMaterial?: Prisma.DecimalNullableWithAggregatesFilter<"MdMaterial"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  materialTradeMarks?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  recycled?: Prisma.IntNullableWithAggregatesFilter<"MdMaterial"> | number | null
+  percentageRecycledMaterials?: Prisma.DecimalNullableWithAggregatesFilter<"MdMaterial"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  renewableMaterial?: Prisma.IntNullableWithAggregatesFilter<"MdMaterial"> | number | null
+  percentageRenewableMaterial?: Prisma.DecimalNullableWithAggregatesFilter<"MdMaterial"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  typeDyes?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  dyeClass?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  classStandardDyes?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  finishes?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  patterns?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  recoveryMaterials?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  certification?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  stateMaterials?: Prisma.IntNullableWithAggregatesFilter<"MdMaterial"> | number | null
+  codUsuarioCargaDl?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  fehProcesoCargaDl?: Prisma.DateTimeNullableWithAggregatesFilter<"MdMaterial"> | Date | string | null
+  fehProcesoModifDl?: Prisma.DateTimeNullableWithAggregatesFilter<"MdMaterial"> | Date | string | null
+  desAccion?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  flgStatutActif?: Prisma.IntNullableWithAggregatesFilter<"MdMaterial"> | number | null
 }
 
 export type MdMaterialCreateInput = {
   codMaterial?: string | null
-  nameMaterial: string
-  desMaterial?: string | null
-  obsMaterial?: string | null
-  stateMaterial: number
-  codUsuarioCargaDl: string
-  fehProcesoCargaDl?: Date | string
-  fehProcesoModifDl?: Date | string
-  desAccion: string
-  flgStatutActif?: number
+  material?: string | null
+  contentNameMaterial?: string | null
+  contentValueMaterial?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: string | null
+  materialTradeMarks?: string | null
+  recycled?: number | null
+  percentageRecycledMaterials?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: string | null
+  renewableMaterial?: number | null
+  percentageRenewableMaterial?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: string | null
+  typeDyes?: string | null
+  dyeClass?: string | null
+  classStandardDyes?: string | null
+  finishes?: string | null
+  patterns?: string | null
+  recoveryMaterials?: string | null
+  certification?: string | null
+  stateMaterials?: number | null
+  codUsuarioCargaDl?: string | null
+  fehProcesoCargaDl?: Date | string | null
+  fehProcesoModifDl?: Date | string | null
+  desAccion?: string | null
+  flgStatutActif?: number | null
   supplier: Prisma.MdSupplierCreateNestedOneWithoutMaterialsInput
 }
 
 export type MdMaterialUncheckedCreateInput = {
-  idDlkMaterials?: number
+  idDlkMaterial?: number
   idDlkSupplier: number
   codMaterial?: string | null
-  nameMaterial: string
-  desMaterial?: string | null
-  obsMaterial?: string | null
-  stateMaterial: number
-  codUsuarioCargaDl: string
-  fehProcesoCargaDl?: Date | string
-  fehProcesoModifDl?: Date | string
-  desAccion: string
-  flgStatutActif?: number
+  material?: string | null
+  contentNameMaterial?: string | null
+  contentValueMaterial?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: string | null
+  materialTradeMarks?: string | null
+  recycled?: number | null
+  percentageRecycledMaterials?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: string | null
+  renewableMaterial?: number | null
+  percentageRenewableMaterial?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: string | null
+  typeDyes?: string | null
+  dyeClass?: string | null
+  classStandardDyes?: string | null
+  finishes?: string | null
+  patterns?: string | null
+  recoveryMaterials?: string | null
+  certification?: string | null
+  stateMaterials?: number | null
+  codUsuarioCargaDl?: string | null
+  fehProcesoCargaDl?: Date | string | null
+  fehProcesoModifDl?: Date | string | null
+  desAccion?: string | null
+  flgStatutActif?: number | null
 }
 
 export type MdMaterialUpdateInput = {
   codMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nameMaterial?: Prisma.StringFieldUpdateOperationsInput | string
-  desMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  obsMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateMaterial?: Prisma.IntFieldUpdateOperationsInput | number
-  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
-  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
-  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentNameMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentValueMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialTradeMarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recycled?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRecycledMaterials?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  renewableMaterial?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRenewableMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dyeClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classStandardDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finishes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fehProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   supplier?: Prisma.MdSupplierUpdateOneRequiredWithoutMaterialsNestedInput
 }
 
 export type MdMaterialUncheckedUpdateInput = {
-  idDlkMaterials?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkMaterial?: Prisma.IntFieldUpdateOperationsInput | number
   idDlkSupplier?: Prisma.IntFieldUpdateOperationsInput | number
   codMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nameMaterial?: Prisma.StringFieldUpdateOperationsInput | string
-  desMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  obsMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateMaterial?: Prisma.IntFieldUpdateOperationsInput | number
-  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
-  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
-  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentNameMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentValueMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialTradeMarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recycled?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRecycledMaterials?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  renewableMaterial?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRenewableMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dyeClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classStandardDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finishes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fehProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MdMaterialCreateManyInput = {
-  idDlkMaterials?: number
+  idDlkMaterial?: number
   idDlkSupplier: number
   codMaterial?: string | null
-  nameMaterial: string
-  desMaterial?: string | null
-  obsMaterial?: string | null
-  stateMaterial: number
-  codUsuarioCargaDl: string
-  fehProcesoCargaDl?: Date | string
-  fehProcesoModifDl?: Date | string
-  desAccion: string
-  flgStatutActif?: number
+  material?: string | null
+  contentNameMaterial?: string | null
+  contentValueMaterial?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: string | null
+  materialTradeMarks?: string | null
+  recycled?: number | null
+  percentageRecycledMaterials?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: string | null
+  renewableMaterial?: number | null
+  percentageRenewableMaterial?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: string | null
+  typeDyes?: string | null
+  dyeClass?: string | null
+  classStandardDyes?: string | null
+  finishes?: string | null
+  patterns?: string | null
+  recoveryMaterials?: string | null
+  certification?: string | null
+  stateMaterials?: number | null
+  codUsuarioCargaDl?: string | null
+  fehProcesoCargaDl?: Date | string | null
+  fehProcesoModifDl?: Date | string | null
+  desAccion?: string | null
+  flgStatutActif?: number | null
 }
 
 export type MdMaterialUpdateManyMutationInput = {
   codMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nameMaterial?: Prisma.StringFieldUpdateOperationsInput | string
-  desMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  obsMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateMaterial?: Prisma.IntFieldUpdateOperationsInput | number
-  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
-  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
-  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentNameMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentValueMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialTradeMarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recycled?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRecycledMaterials?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  renewableMaterial?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRenewableMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dyeClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classStandardDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finishes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fehProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MdMaterialUncheckedUpdateManyInput = {
-  idDlkMaterials?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkMaterial?: Prisma.IntFieldUpdateOperationsInput | number
   idDlkSupplier?: Prisma.IntFieldUpdateOperationsInput | number
   codMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nameMaterial?: Prisma.StringFieldUpdateOperationsInput | string
-  desMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  obsMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateMaterial?: Prisma.IntFieldUpdateOperationsInput | number
-  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
-  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
-  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentNameMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentValueMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialTradeMarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recycled?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRecycledMaterials?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  renewableMaterial?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRenewableMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dyeClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classStandardDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finishes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fehProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MdMaterialListRelationFilter = {
@@ -479,13 +784,28 @@ export type MdMaterialOrderByRelevanceInput = {
 }
 
 export type MdMaterialCountOrderByAggregateInput = {
-  idDlkMaterials?: Prisma.SortOrder
+  idDlkMaterial?: Prisma.SortOrder
   idDlkSupplier?: Prisma.SortOrder
   codMaterial?: Prisma.SortOrder
-  nameMaterial?: Prisma.SortOrder
-  desMaterial?: Prisma.SortOrder
-  obsMaterial?: Prisma.SortOrder
-  stateMaterial?: Prisma.SortOrder
+  material?: Prisma.SortOrder
+  contentNameMaterial?: Prisma.SortOrder
+  contentValueMaterial?: Prisma.SortOrder
+  contentSourceMaterials?: Prisma.SortOrder
+  materialTradeMarks?: Prisma.SortOrder
+  recycled?: Prisma.SortOrder
+  percentageRecycledMaterials?: Prisma.SortOrder
+  recycledInputSource?: Prisma.SortOrder
+  renewableMaterial?: Prisma.SortOrder
+  percentageRenewableMaterial?: Prisma.SortOrder
+  renewableInputSource?: Prisma.SortOrder
+  typeDyes?: Prisma.SortOrder
+  dyeClass?: Prisma.SortOrder
+  classStandardDyes?: Prisma.SortOrder
+  finishes?: Prisma.SortOrder
+  patterns?: Prisma.SortOrder
+  recoveryMaterials?: Prisma.SortOrder
+  certification?: Prisma.SortOrder
+  stateMaterials?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
   fehProcesoModifDl?: Prisma.SortOrder
@@ -494,20 +814,40 @@ export type MdMaterialCountOrderByAggregateInput = {
 }
 
 export type MdMaterialAvgOrderByAggregateInput = {
-  idDlkMaterials?: Prisma.SortOrder
+  idDlkMaterial?: Prisma.SortOrder
   idDlkSupplier?: Prisma.SortOrder
-  stateMaterial?: Prisma.SortOrder
+  contentValueMaterial?: Prisma.SortOrder
+  recycled?: Prisma.SortOrder
+  percentageRecycledMaterials?: Prisma.SortOrder
+  renewableMaterial?: Prisma.SortOrder
+  percentageRenewableMaterial?: Prisma.SortOrder
+  stateMaterials?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
 }
 
 export type MdMaterialMaxOrderByAggregateInput = {
-  idDlkMaterials?: Prisma.SortOrder
+  idDlkMaterial?: Prisma.SortOrder
   idDlkSupplier?: Prisma.SortOrder
   codMaterial?: Prisma.SortOrder
-  nameMaterial?: Prisma.SortOrder
-  desMaterial?: Prisma.SortOrder
-  obsMaterial?: Prisma.SortOrder
-  stateMaterial?: Prisma.SortOrder
+  material?: Prisma.SortOrder
+  contentNameMaterial?: Prisma.SortOrder
+  contentValueMaterial?: Prisma.SortOrder
+  contentSourceMaterials?: Prisma.SortOrder
+  materialTradeMarks?: Prisma.SortOrder
+  recycled?: Prisma.SortOrder
+  percentageRecycledMaterials?: Prisma.SortOrder
+  recycledInputSource?: Prisma.SortOrder
+  renewableMaterial?: Prisma.SortOrder
+  percentageRenewableMaterial?: Prisma.SortOrder
+  renewableInputSource?: Prisma.SortOrder
+  typeDyes?: Prisma.SortOrder
+  dyeClass?: Prisma.SortOrder
+  classStandardDyes?: Prisma.SortOrder
+  finishes?: Prisma.SortOrder
+  patterns?: Prisma.SortOrder
+  recoveryMaterials?: Prisma.SortOrder
+  certification?: Prisma.SortOrder
+  stateMaterials?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
   fehProcesoModifDl?: Prisma.SortOrder
@@ -516,13 +856,28 @@ export type MdMaterialMaxOrderByAggregateInput = {
 }
 
 export type MdMaterialMinOrderByAggregateInput = {
-  idDlkMaterials?: Prisma.SortOrder
+  idDlkMaterial?: Prisma.SortOrder
   idDlkSupplier?: Prisma.SortOrder
   codMaterial?: Prisma.SortOrder
-  nameMaterial?: Prisma.SortOrder
-  desMaterial?: Prisma.SortOrder
-  obsMaterial?: Prisma.SortOrder
-  stateMaterial?: Prisma.SortOrder
+  material?: Prisma.SortOrder
+  contentNameMaterial?: Prisma.SortOrder
+  contentValueMaterial?: Prisma.SortOrder
+  contentSourceMaterials?: Prisma.SortOrder
+  materialTradeMarks?: Prisma.SortOrder
+  recycled?: Prisma.SortOrder
+  percentageRecycledMaterials?: Prisma.SortOrder
+  recycledInputSource?: Prisma.SortOrder
+  renewableMaterial?: Prisma.SortOrder
+  percentageRenewableMaterial?: Prisma.SortOrder
+  renewableInputSource?: Prisma.SortOrder
+  typeDyes?: Prisma.SortOrder
+  dyeClass?: Prisma.SortOrder
+  classStandardDyes?: Prisma.SortOrder
+  finishes?: Prisma.SortOrder
+  patterns?: Prisma.SortOrder
+  recoveryMaterials?: Prisma.SortOrder
+  certification?: Prisma.SortOrder
+  stateMaterials?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
   fehProcesoModifDl?: Prisma.SortOrder
@@ -531,9 +886,14 @@ export type MdMaterialMinOrderByAggregateInput = {
 }
 
 export type MdMaterialSumOrderByAggregateInput = {
-  idDlkMaterials?: Prisma.SortOrder
+  idDlkMaterial?: Prisma.SortOrder
   idDlkSupplier?: Prisma.SortOrder
-  stateMaterial?: Prisma.SortOrder
+  contentValueMaterial?: Prisma.SortOrder
+  recycled?: Prisma.SortOrder
+  percentageRecycledMaterials?: Prisma.SortOrder
+  renewableMaterial?: Prisma.SortOrder
+  percentageRenewableMaterial?: Prisma.SortOrder
+  stateMaterials?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
 }
 
@@ -579,31 +939,81 @@ export type MdMaterialUncheckedUpdateManyWithoutSupplierNestedInput = {
   deleteMany?: Prisma.MdMaterialScalarWhereInput | Prisma.MdMaterialScalarWhereInput[]
 }
 
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type MdMaterialCreateWithoutSupplierInput = {
   codMaterial?: string | null
-  nameMaterial: string
-  desMaterial?: string | null
-  obsMaterial?: string | null
-  stateMaterial: number
-  codUsuarioCargaDl: string
-  fehProcesoCargaDl?: Date | string
-  fehProcesoModifDl?: Date | string
-  desAccion: string
-  flgStatutActif?: number
+  material?: string | null
+  contentNameMaterial?: string | null
+  contentValueMaterial?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: string | null
+  materialTradeMarks?: string | null
+  recycled?: number | null
+  percentageRecycledMaterials?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: string | null
+  renewableMaterial?: number | null
+  percentageRenewableMaterial?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: string | null
+  typeDyes?: string | null
+  dyeClass?: string | null
+  classStandardDyes?: string | null
+  finishes?: string | null
+  patterns?: string | null
+  recoveryMaterials?: string | null
+  certification?: string | null
+  stateMaterials?: number | null
+  codUsuarioCargaDl?: string | null
+  fehProcesoCargaDl?: Date | string | null
+  fehProcesoModifDl?: Date | string | null
+  desAccion?: string | null
+  flgStatutActif?: number | null
 }
 
 export type MdMaterialUncheckedCreateWithoutSupplierInput = {
-  idDlkMaterials?: number
+  idDlkMaterial?: number
   codMaterial?: string | null
-  nameMaterial: string
-  desMaterial?: string | null
-  obsMaterial?: string | null
-  stateMaterial: number
-  codUsuarioCargaDl: string
-  fehProcesoCargaDl?: Date | string
-  fehProcesoModifDl?: Date | string
-  desAccion: string
-  flgStatutActif?: number
+  material?: string | null
+  contentNameMaterial?: string | null
+  contentValueMaterial?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: string | null
+  materialTradeMarks?: string | null
+  recycled?: number | null
+  percentageRecycledMaterials?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: string | null
+  renewableMaterial?: number | null
+  percentageRenewableMaterial?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: string | null
+  typeDyes?: string | null
+  dyeClass?: string | null
+  classStandardDyes?: string | null
+  finishes?: string | null
+  patterns?: string | null
+  recoveryMaterials?: string | null
+  certification?: string | null
+  stateMaterials?: number | null
+  codUsuarioCargaDl?: string | null
+  fehProcesoCargaDl?: Date | string | null
+  fehProcesoModifDl?: Date | string | null
+  desAccion?: string | null
+  flgStatutActif?: number | null
 }
 
 export type MdMaterialCreateOrConnectWithoutSupplierInput = {
@@ -636,85 +1046,175 @@ export type MdMaterialScalarWhereInput = {
   AND?: Prisma.MdMaterialScalarWhereInput | Prisma.MdMaterialScalarWhereInput[]
   OR?: Prisma.MdMaterialScalarWhereInput[]
   NOT?: Prisma.MdMaterialScalarWhereInput | Prisma.MdMaterialScalarWhereInput[]
-  idDlkMaterials?: Prisma.IntFilter<"MdMaterial"> | number
+  idDlkMaterial?: Prisma.IntFilter<"MdMaterial"> | number
   idDlkSupplier?: Prisma.IntFilter<"MdMaterial"> | number
   codMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
-  nameMaterial?: Prisma.StringFilter<"MdMaterial"> | string
-  desMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
-  obsMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
-  stateMaterial?: Prisma.IntFilter<"MdMaterial"> | number
-  codUsuarioCargaDl?: Prisma.StringFilter<"MdMaterial"> | string
-  fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdMaterial"> | Date | string
-  fehProcesoModifDl?: Prisma.DateTimeFilter<"MdMaterial"> | Date | string
-  desAccion?: Prisma.StringFilter<"MdMaterial"> | string
-  flgStatutActif?: Prisma.IntFilter<"MdMaterial"> | number
+  material?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  contentNameMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  contentValueMaterial?: Prisma.DecimalNullableFilter<"MdMaterial"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  materialTradeMarks?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  recycled?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
+  percentageRecycledMaterials?: Prisma.DecimalNullableFilter<"MdMaterial"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  renewableMaterial?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
+  percentageRenewableMaterial?: Prisma.DecimalNullableFilter<"MdMaterial"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  typeDyes?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  dyeClass?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  classStandardDyes?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  finishes?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  patterns?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  recoveryMaterials?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  certification?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  stateMaterials?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
+  codUsuarioCargaDl?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  fehProcesoCargaDl?: Prisma.DateTimeNullableFilter<"MdMaterial"> | Date | string | null
+  fehProcesoModifDl?: Prisma.DateTimeNullableFilter<"MdMaterial"> | Date | string | null
+  desAccion?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  flgStatutActif?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
 }
 
 export type MdMaterialCreateManySupplierInput = {
-  idDlkMaterials?: number
+  idDlkMaterial?: number
   codMaterial?: string | null
-  nameMaterial: string
-  desMaterial?: string | null
-  obsMaterial?: string | null
-  stateMaterial: number
-  codUsuarioCargaDl: string
-  fehProcesoCargaDl?: Date | string
-  fehProcesoModifDl?: Date | string
-  desAccion: string
-  flgStatutActif?: number
+  material?: string | null
+  contentNameMaterial?: string | null
+  contentValueMaterial?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: string | null
+  materialTradeMarks?: string | null
+  recycled?: number | null
+  percentageRecycledMaterials?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: string | null
+  renewableMaterial?: number | null
+  percentageRenewableMaterial?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: string | null
+  typeDyes?: string | null
+  dyeClass?: string | null
+  classStandardDyes?: string | null
+  finishes?: string | null
+  patterns?: string | null
+  recoveryMaterials?: string | null
+  certification?: string | null
+  stateMaterials?: number | null
+  codUsuarioCargaDl?: string | null
+  fehProcesoCargaDl?: Date | string | null
+  fehProcesoModifDl?: Date | string | null
+  desAccion?: string | null
+  flgStatutActif?: number | null
 }
 
 export type MdMaterialUpdateWithoutSupplierInput = {
   codMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nameMaterial?: Prisma.StringFieldUpdateOperationsInput | string
-  desMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  obsMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateMaterial?: Prisma.IntFieldUpdateOperationsInput | number
-  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
-  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
-  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentNameMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentValueMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialTradeMarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recycled?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRecycledMaterials?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  renewableMaterial?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRenewableMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dyeClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classStandardDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finishes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fehProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MdMaterialUncheckedUpdateWithoutSupplierInput = {
-  idDlkMaterials?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkMaterial?: Prisma.IntFieldUpdateOperationsInput | number
   codMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nameMaterial?: Prisma.StringFieldUpdateOperationsInput | string
-  desMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  obsMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateMaterial?: Prisma.IntFieldUpdateOperationsInput | number
-  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
-  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
-  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentNameMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentValueMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialTradeMarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recycled?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRecycledMaterials?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  renewableMaterial?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRenewableMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dyeClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classStandardDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finishes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fehProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MdMaterialUncheckedUpdateManyWithoutSupplierInput = {
-  idDlkMaterials?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkMaterial?: Prisma.IntFieldUpdateOperationsInput | number
   codMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nameMaterial?: Prisma.StringFieldUpdateOperationsInput | string
-  desMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  obsMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateMaterial?: Prisma.IntFieldUpdateOperationsInput | number
-  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
-  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
-  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentNameMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contentValueMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contentSourceMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialTradeMarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recycled?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRecycledMaterials?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  renewableMaterial?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  percentageRenewableMaterial?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  renewableInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  typeDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dyeClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classStandardDyes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finishes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fehProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
 
 export type MdMaterialSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  idDlkMaterials?: boolean
+  idDlkMaterial?: boolean
   idDlkSupplier?: boolean
   codMaterial?: boolean
-  nameMaterial?: boolean
-  desMaterial?: boolean
-  obsMaterial?: boolean
-  stateMaterial?: boolean
+  material?: boolean
+  contentNameMaterial?: boolean
+  contentValueMaterial?: boolean
+  contentSourceMaterials?: boolean
+  materialTradeMarks?: boolean
+  recycled?: boolean
+  percentageRecycledMaterials?: boolean
+  recycledInputSource?: boolean
+  renewableMaterial?: boolean
+  percentageRenewableMaterial?: boolean
+  renewableInputSource?: boolean
+  typeDyes?: boolean
+  dyeClass?: boolean
+  classStandardDyes?: boolean
+  finishes?: boolean
+  patterns?: boolean
+  recoveryMaterials?: boolean
+  certification?: boolean
+  stateMaterials?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
   fehProcesoModifDl?: boolean
@@ -726,13 +1226,28 @@ export type MdMaterialSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 
 export type MdMaterialSelectScalar = {
-  idDlkMaterials?: boolean
+  idDlkMaterial?: boolean
   idDlkSupplier?: boolean
   codMaterial?: boolean
-  nameMaterial?: boolean
-  desMaterial?: boolean
-  obsMaterial?: boolean
-  stateMaterial?: boolean
+  material?: boolean
+  contentNameMaterial?: boolean
+  contentValueMaterial?: boolean
+  contentSourceMaterials?: boolean
+  materialTradeMarks?: boolean
+  recycled?: boolean
+  percentageRecycledMaterials?: boolean
+  recycledInputSource?: boolean
+  renewableMaterial?: boolean
+  percentageRenewableMaterial?: boolean
+  renewableInputSource?: boolean
+  typeDyes?: boolean
+  dyeClass?: boolean
+  classStandardDyes?: boolean
+  finishes?: boolean
+  patterns?: boolean
+  recoveryMaterials?: boolean
+  certification?: boolean
+  stateMaterials?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
   fehProcesoModifDl?: boolean
@@ -740,7 +1255,7 @@ export type MdMaterialSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type MdMaterialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkMaterials" | "idDlkSupplier" | "codMaterial" | "nameMaterial" | "desMaterial" | "obsMaterial" | "stateMaterial" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdMaterial"]>
+export type MdMaterialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkMaterial" | "idDlkSupplier" | "codMaterial" | "material" | "contentNameMaterial" | "contentValueMaterial" | "contentSourceMaterials" | "materialTradeMarks" | "recycled" | "percentageRecycledMaterials" | "recycledInputSource" | "renewableMaterial" | "percentageRenewableMaterial" | "renewableInputSource" | "typeDyes" | "dyeClass" | "classStandardDyes" | "finishes" | "patterns" | "recoveryMaterials" | "certification" | "stateMaterials" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdMaterial"]>
 export type MdMaterialInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   supplier?: boolean | Prisma.MdSupplierDefaultArgs<ExtArgs>
 }
@@ -751,18 +1266,33 @@ export type $MdMaterialPayload<ExtArgs extends runtime.Types.Extensions.Internal
     supplier: Prisma.$MdSupplierPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    idDlkMaterials: number
+    idDlkMaterial: number
     idDlkSupplier: number
     codMaterial: string | null
-    nameMaterial: string
-    desMaterial: string | null
-    obsMaterial: string | null
-    stateMaterial: number
-    codUsuarioCargaDl: string
-    fehProcesoCargaDl: Date
-    fehProcesoModifDl: Date
-    desAccion: string
-    flgStatutActif: number
+    material: string | null
+    contentNameMaterial: string | null
+    contentValueMaterial: runtime.Decimal | null
+    contentSourceMaterials: string | null
+    materialTradeMarks: string | null
+    recycled: number | null
+    percentageRecycledMaterials: runtime.Decimal | null
+    recycledInputSource: string | null
+    renewableMaterial: number | null
+    percentageRenewableMaterial: runtime.Decimal | null
+    renewableInputSource: string | null
+    typeDyes: string | null
+    dyeClass: string | null
+    classStandardDyes: string | null
+    finishes: string | null
+    patterns: string | null
+    recoveryMaterials: string | null
+    certification: string | null
+    stateMaterials: number | null
+    codUsuarioCargaDl: string | null
+    fehProcesoCargaDl: Date | null
+    fehProcesoModifDl: Date | null
+    desAccion: string | null
+    flgStatutActif: number | null
   }, ExtArgs["result"]["mdMaterial"]>
   composites: {}
 }
@@ -846,8 +1376,8 @@ export interface MdMaterialDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * // Get first 10 MdMaterials
    * const mdMaterials = await prisma.mdMaterial.findMany({ take: 10 })
    * 
-   * // Only select the `idDlkMaterials`
-   * const mdMaterialWithIdDlkMaterialsOnly = await prisma.mdMaterial.findMany({ select: { idDlkMaterials: true } })
+   * // Only select the `idDlkMaterial`
+   * const mdMaterialWithIdDlkMaterialOnly = await prisma.mdMaterial.findMany({ select: { idDlkMaterial: true } })
    * 
    */
   findMany<T extends MdMaterialFindManyArgs>(args?: Prisma.SelectSubset<T, MdMaterialFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdMaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -1133,13 +1663,28 @@ export interface Prisma__MdMaterialClient<T, Null = never, ExtArgs extends runti
  * Fields of the MdMaterial model
  */
 export interface MdMaterialFieldRefs {
-  readonly idDlkMaterials: Prisma.FieldRef<"MdMaterial", 'Int'>
+  readonly idDlkMaterial: Prisma.FieldRef<"MdMaterial", 'Int'>
   readonly idDlkSupplier: Prisma.FieldRef<"MdMaterial", 'Int'>
   readonly codMaterial: Prisma.FieldRef<"MdMaterial", 'String'>
-  readonly nameMaterial: Prisma.FieldRef<"MdMaterial", 'String'>
-  readonly desMaterial: Prisma.FieldRef<"MdMaterial", 'String'>
-  readonly obsMaterial: Prisma.FieldRef<"MdMaterial", 'String'>
-  readonly stateMaterial: Prisma.FieldRef<"MdMaterial", 'Int'>
+  readonly material: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly contentNameMaterial: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly contentValueMaterial: Prisma.FieldRef<"MdMaterial", 'Decimal'>
+  readonly contentSourceMaterials: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly materialTradeMarks: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly recycled: Prisma.FieldRef<"MdMaterial", 'Int'>
+  readonly percentageRecycledMaterials: Prisma.FieldRef<"MdMaterial", 'Decimal'>
+  readonly recycledInputSource: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly renewableMaterial: Prisma.FieldRef<"MdMaterial", 'Int'>
+  readonly percentageRenewableMaterial: Prisma.FieldRef<"MdMaterial", 'Decimal'>
+  readonly renewableInputSource: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly typeDyes: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly dyeClass: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly classStandardDyes: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly finishes: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly patterns: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly recoveryMaterials: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly certification: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly stateMaterials: Prisma.FieldRef<"MdMaterial", 'Int'>
   readonly codUsuarioCargaDl: Prisma.FieldRef<"MdMaterial", 'String'>
   readonly fehProcesoCargaDl: Prisma.FieldRef<"MdMaterial", 'DateTime'>
   readonly fehProcesoModifDl: Prisma.FieldRef<"MdMaterial", 'DateTime'>

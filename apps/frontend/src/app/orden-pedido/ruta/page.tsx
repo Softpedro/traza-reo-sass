@@ -1,10 +1,15 @@
+import { OrdenPedidoRutaFlow } from "./orden-pedido-ruta-flow";
+
 export default function OrdenPedidoRutaPage() {
   return (
-    <div className="space-y-2">
-      <h1 className="text-xl font-semibold">Ruta</h1>
-      <p className="text-sm text-muted-foreground">
-        Módulo en construcción. Aquí irá la ruta / trazado de la orden de pedido.
-      </p>
+    <div className="space-y-4">
+      <div className="space-y-1">
+        <h1 className="text-xl font-semibold">Ruta</h1>
+        <p className="text-sm text-muted-foreground">
+          Diagrama de ruta / trazado (React Flow). Arrastra nodos, conecta handles y usa zoom desde los controles.
+        </p>
+      </div>
+      <OrdenPedidoRutaFlow />
     </div>
   );
 }

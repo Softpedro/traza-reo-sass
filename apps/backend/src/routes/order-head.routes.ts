@@ -1,5 +1,10 @@
 import { Router } from "express";
-import type { OrderHeadService } from "../services/order-head.service.js";
+import type {
+  OrderHeadService,
+  SuministroFileKind,
+} from "../services/order-head.service.js";
+
+const SUMINISTRO_KINDS = new Set<SuministroFileKind>(["udp", "prod", "final"]);
 
 function errorResponse(e: unknown) {
   const message = e instanceof Error ? e.message : "Error desconocido";
@@ -31,9 +36,14 @@ function pickDateProbableDespatch(body: Record<string, unknown>): string | null 
 export function orderHeadRoutes(service: OrderHeadService): Router {
   const router = Router();
 
-  router.get("/", async (_req, res) => {
+  router.get("/", async (req, res) => {
     try {
-      const list = await service.list();
+      const rawStage = req.query.stage;
+      const stage =
+        rawStage === undefined || rawStage === "" ? undefined : Number(rawStage);
+      const list = await service.list(
+        stage !== undefined && Number.isFinite(stage) ? { stage } : undefined
+      );
       res.json(list);
     } catch (e) {
       console.error("[order-heads:list]", e);
@@ -156,6 +166,101 @@ export function orderHeadRoutes(service: OrderHeadService): Router {
       res.status(201).json(created);
     } catch (e) {
       console.error("[order-heads:create]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  router.put("/:id/details/:detailId", async (req, res) => {
+    try {
+      const headId = Number(req.params.id);
+      const detailId = Number(req.params.detailId);
+      if (!Number.isFinite(headId) || !Number.isFinite(detailId)) {
+        return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+      }
+      const body = req.body as Record<string, unknown>;
+      const updated = await service.updateDetail(headId, detailId, body);
+      if (!updated) {
+        return res.status(404).json({ error: "Línea no encontrada para esta orden", type: "NOT_FOUND" });
+      }
+      res.json(updated);
+    } catch (e) {
+      console.error("[order-heads:updateDetail]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  router.get("/:id/suministro/file/:kind", async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      if (!Number.isFinite(id)) {
+        return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+      }
+      const kind = String(req.params.kind).toLowerCase() as SuministroFileKind;
+      if (!SUMINISTRO_KINDS.has(kind)) {
+        return res
+          .status(400)
+          .json({ error: "Tipo de archivo inválido (udp|prod|final)", type: "VALIDATION" });
+      }
+      const file = await service.getSuministroFile(id, kind);
+      if (!file) {
+        return res.status(404).json({ error: "Archivo no encontrado", type: "NOT_FOUND" });
+      }
+      res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      );
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="${encodeURIComponent(file.filename)}"`
+      );
+      res.send(file.buffer);
+    } catch (e) {
+      console.error("[order-heads:suministro-file]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  router.put("/:id/suministro", async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      if (!Number.isFinite(id)) {
+        return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+      }
+      const body = req.body as Record<string, unknown>;
+      const updated = await service.updateSuministro(id, {
+        fileUdpBase64: body.fileUdpBase64 as string | null | undefined,
+        fileUdpDate: body.fileUdpDate as string | null | undefined,
+        clearFileUdp: body.clearFileUdp === true,
+        fileProdBase64: body.fileProdBase64 as string | null | undefined,
+        fileProdDate: body.fileProdDate as string | null | undefined,
+        clearFileProd: body.clearFileProd === true,
+        fileFinalBase64: body.fileFinalBase64 as string | null | undefined,
+        fileFinalDate: body.fileFinalDate as string | null | undefined,
+        clearFileFinal: body.clearFileFinal === true,
+        statusStageOrderHead:
+          body.statusStageOrderHead === undefined || body.statusStageOrderHead === ""
+            ? undefined
+            : body.statusStageOrderHead === null
+              ? null
+              : Number(body.statusStageOrderHead),
+        flgStatutActif:
+          body.flgStatutActif === undefined || body.flgStatutActif === ""
+            ? undefined
+            : body.flgStatutActif === null
+              ? null
+              : Number(body.flgStatutActif),
+        codUsuarioCargaDl:
+          body.codUsuarioCargaDl != null ? String(body.codUsuarioCargaDl) : undefined,
+      });
+      if (!updated) {
+        return res.status(404).json({ error: "Orden no encontrada", type: "NOT_FOUND" });
+      }
+      res.json(updated);
+    } catch (e) {
+      console.error("[order-heads:updateSuministro]", e);
       const err = errorResponse(e);
       res.status(err.status).json(err.body);
     }

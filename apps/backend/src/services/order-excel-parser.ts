@@ -4,7 +4,7 @@ import { extractFirstSheetImagesByRow } from "./order-excel-images.js";
 
 type PrismaBytes = Uint8Array<ArrayBuffer>;
 
-function toSupplyFileBytes(buf: Buffer): PrismaBytes {
+function toBlobBytes(buf: Buffer): PrismaBytes {
   return Uint8Array.from(buf) as unknown as PrismaBytes;
 }
 
@@ -37,23 +37,25 @@ function normalizeHeader(raw: unknown): string {
 
 function mapSizeHeaderToField(h: string): keyof Prisma.OdOrderDetailCreateManyInput | null {
   const s = h.replace(/\s+/g, "").replace(/\./g, "");
-  if (s === "OS" || s === "O/S" || s.includes("ONESIZE")) return "size00";
-  if (s === "00") return "size00";
-  if (s === "1-2" || s === "1/2") return "size1_2";
-  if (s === "2-3") return "size2_3";
-  if (s === "4-5" || s === "45") return "size4_5";
-  if (s === "XS" || s === "XXS") return s === "XXS" ? "sizeXxs" : "sizeXs";
+  // Curva bebé (meses): 0-3, 3-6, 0-6, 6-12, 12-18
+  if (s === "0-3" || s === "0/3") return "size0_3";
+  if (s === "3-6" || s === "3/6") return "size3_6";
+  if (s === "0-6" || s === "0/6") return "size0_6";
+  if (s === "6-12" || s === "6/12") return "size6_12";
+  if (s === "12-18" || s === "12/18") return "size12_18";
+  // Tallas letra
   if (s === "S") return "sizeS";
   if (s === "M") return "sizeM";
   if (s === "L") return "sizeL";
   if (s === "XL") return "sizeXl";
   if (s === "XXL") return "sizeXxl";
+  // Tallas numéricas (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16)
   if (/^\d+$/.test(s)) {
-    // "23" suele ser columna de total en OP, no talla 2-3 (evitar confusión con "2-3")
+    // "23" suele ser columna de total en OP (evitar confusión)
     if (s === "23") return null;
-    const n = s;
     const map: Record<string, keyof Prisma.OdOrderDetailCreateManyInput> = {
       "2": "size2",
+      "3": "size3",
       "4": "size4",
       "5": "size5",
       "6": "size6",
@@ -63,12 +65,10 @@ function mapSizeHeaderToField(h: string): keyof Prisma.OdOrderDetailCreateManyIn
       "10": "size10",
       "11": "size11",
       "12": "size12",
-      "13": "size13",
       "14": "size14",
-      "15": "size15",
       "16": "size16",
     };
-    return map[n] ?? null;
+    return map[s] ?? null;
   }
   return null;
 }
@@ -257,7 +257,7 @@ export async function parseOrderExcelDetails(buf: Buffer): Promise<OrderDetailDr
       totalEstilo,
       desAccion: "I",
       flgStatutActif: 1,
-      ...(emb ? { supplyFile: toSupplyFileBytes(emb.buffer) } : {}),
+      ...(emb ? { imgEstilo: toBlobBytes(emb.buffer) } : {}),
     };
     out.push({ ...base, ...sizeValues } as OrderDetailDraft);
   }

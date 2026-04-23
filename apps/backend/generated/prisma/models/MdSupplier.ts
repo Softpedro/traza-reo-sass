@@ -333,7 +333,7 @@ export type MdSupplierWhereInput = {
   desAccion?: Prisma.StringFilter<"MdSupplier"> | string
   flgStatutActif?: Prisma.IntFilter<"MdSupplier"> | number
   materials?: Prisma.MdMaterialListRelationFilter
-  avios?: Prisma.MdAviosListRelationFilter
+  avios?: Prisma.MdAvioListRelationFilter
 }
 
 export type MdSupplierOrderByWithRelationInput = {
@@ -356,7 +356,7 @@ export type MdSupplierOrderByWithRelationInput = {
   desAccion?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
   materials?: Prisma.MdMaterialOrderByRelationAggregateInput
-  avios?: Prisma.MdAviosOrderByRelationAggregateInput
+  avios?: Prisma.MdAvioOrderByRelationAggregateInput
   _relevance?: Prisma.MdSupplierOrderByRelevanceInput
 }
 
@@ -383,7 +383,7 @@ export type MdSupplierWhereUniqueInput = Prisma.AtLeast<{
   desAccion?: Prisma.StringFilter<"MdSupplier"> | string
   flgStatutActif?: Prisma.IntFilter<"MdSupplier"> | number
   materials?: Prisma.MdMaterialListRelationFilter
-  avios?: Prisma.MdAviosListRelationFilter
+  avios?: Prisma.MdAvioListRelationFilter
 }, "idDlkSupplier">
 
 export type MdSupplierOrderByWithAggregationInput = {
@@ -455,7 +455,7 @@ export type MdSupplierCreateInput = {
   desAccion: string
   flgStatutActif?: number
   materials?: Prisma.MdMaterialCreateNestedManyWithoutSupplierInput
-  avios?: Prisma.MdAviosCreateNestedManyWithoutSupplierInput
+  avios?: Prisma.MdAvioCreateNestedManyWithoutSupplierInput
 }
 
 export type MdSupplierUncheckedCreateInput = {
@@ -478,7 +478,7 @@ export type MdSupplierUncheckedCreateInput = {
   desAccion: string
   flgStatutActif?: number
   materials?: Prisma.MdMaterialUncheckedCreateNestedManyWithoutSupplierInput
-  avios?: Prisma.MdAviosUncheckedCreateNestedManyWithoutSupplierInput
+  avios?: Prisma.MdAvioUncheckedCreateNestedManyWithoutSupplierInput
 }
 
 export type MdSupplierUpdateInput = {
@@ -500,7 +500,7 @@ export type MdSupplierUpdateInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   materials?: Prisma.MdMaterialUpdateManyWithoutSupplierNestedInput
-  avios?: Prisma.MdAviosUpdateManyWithoutSupplierNestedInput
+  avios?: Prisma.MdAvioUpdateManyWithoutSupplierNestedInput
 }
 
 export type MdSupplierUncheckedUpdateInput = {
@@ -523,7 +523,7 @@ export type MdSupplierUncheckedUpdateInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   materials?: Prisma.MdMaterialUncheckedUpdateManyWithoutSupplierNestedInput
-  avios?: Prisma.MdAviosUncheckedUpdateManyWithoutSupplierNestedInput
+  avios?: Prisma.MdAvioUncheckedUpdateManyWithoutSupplierNestedInput
 }
 
 export type MdSupplierCreateManyInput = {
@@ -722,7 +722,7 @@ export type MdSupplierCreateWithoutMaterialsInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
-  avios?: Prisma.MdAviosCreateNestedManyWithoutSupplierInput
+  avios?: Prisma.MdAvioCreateNestedManyWithoutSupplierInput
 }
 
 export type MdSupplierUncheckedCreateWithoutMaterialsInput = {
@@ -744,7 +744,7 @@ export type MdSupplierUncheckedCreateWithoutMaterialsInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
-  avios?: Prisma.MdAviosUncheckedCreateNestedManyWithoutSupplierInput
+  avios?: Prisma.MdAvioUncheckedCreateNestedManyWithoutSupplierInput
 }
 
 export type MdSupplierCreateOrConnectWithoutMaterialsInput = {
@@ -781,7 +781,7 @@ export type MdSupplierUpdateWithoutMaterialsInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  avios?: Prisma.MdAviosUpdateManyWithoutSupplierNestedInput
+  avios?: Prisma.MdAvioUpdateManyWithoutSupplierNestedInput
 }
 
 export type MdSupplierUncheckedUpdateWithoutMaterialsInput = {
@@ -803,7 +803,7 @@ export type MdSupplierUncheckedUpdateWithoutMaterialsInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
-  avios?: Prisma.MdAviosUncheckedUpdateManyWithoutSupplierNestedInput
+  avios?: Prisma.MdAvioUncheckedUpdateManyWithoutSupplierNestedInput
 }
 
 export type MdSupplierCreateWithoutAviosInput = {
@@ -944,7 +944,7 @@ export type MdSupplierCountOutputTypeCountMaterialsArgs<ExtArgs extends runtime.
  * MdSupplierCountOutputType without action
  */
 export type MdSupplierCountOutputTypeCountAviosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.MdAviosWhereInput
+  where?: Prisma.MdAvioWhereInput
 }
 
 
@@ -1006,7 +1006,7 @@ export type $MdSupplierPayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "MdSupplier"
   objects: {
     materials: Prisma.$MdMaterialPayload<ExtArgs>[]
-    avios: Prisma.$MdAviosPayload<ExtArgs>[]
+    avios: Prisma.$MdAvioPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkSupplier: number
@@ -1374,7 +1374,7 @@ readonly fields: MdSupplierFieldRefs;
 export interface Prisma__MdSupplierClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   materials<T extends Prisma.MdSupplier$materialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdSupplier$materialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdMaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  avios<T extends Prisma.MdSupplier$aviosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdSupplier$aviosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdAviosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  avios<T extends Prisma.MdSupplier$aviosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdSupplier$aviosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdAvioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1793,23 +1793,23 @@ export type MdSupplier$materialsArgs<ExtArgs extends runtime.Types.Extensions.In
  */
 export type MdSupplier$aviosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the MdAvios
+   * Select specific fields to fetch from the MdAvio
    */
-  select?: Prisma.MdAviosSelect<ExtArgs> | null
+  select?: Prisma.MdAvioSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the MdAvios
+   * Omit specific fields from the MdAvio
    */
-  omit?: Prisma.MdAviosOmit<ExtArgs> | null
+  omit?: Prisma.MdAvioOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.MdAviosInclude<ExtArgs> | null
-  where?: Prisma.MdAviosWhereInput
-  orderBy?: Prisma.MdAviosOrderByWithRelationInput | Prisma.MdAviosOrderByWithRelationInput[]
-  cursor?: Prisma.MdAviosWhereUniqueInput
+  include?: Prisma.MdAvioInclude<ExtArgs> | null
+  where?: Prisma.MdAvioWhereInput
+  orderBy?: Prisma.MdAvioOrderByWithRelationInput | Prisma.MdAvioOrderByWithRelationInput[]
+  cursor?: Prisma.MdAvioWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.MdAviosScalarFieldEnum | Prisma.MdAviosScalarFieldEnum[]
+  distinct?: Prisma.MdAvioScalarFieldEnum | Prisma.MdAvioScalarFieldEnum[]
 }
 
 /**

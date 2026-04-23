@@ -777,11 +777,6 @@ export type MdBrandSumOrderByAggregateInput = {
   flgStatutActif?: Prisma.SortOrder
 }
 
-export type MdBrandNullableScalarRelationFilter = {
-  is?: Prisma.MdBrandWhereInput | null
-  isNot?: Prisma.MdBrandWhereInput | null
-}
-
 export type MdBrandScalarRelationFilter = {
   is?: Prisma.MdBrandWhereInput
   isNot?: Prisma.MdBrandWhereInput
@@ -835,12 +830,10 @@ export type MdBrandCreateNestedOneWithoutOrderHeadsInput = {
   connect?: Prisma.MdBrandWhereUniqueInput
 }
 
-export type MdBrandUpdateOneWithoutOrderHeadsNestedInput = {
+export type MdBrandUpdateOneRequiredWithoutOrderHeadsNestedInput = {
   create?: Prisma.XOR<Prisma.MdBrandCreateWithoutOrderHeadsInput, Prisma.MdBrandUncheckedCreateWithoutOrderHeadsInput>
   connectOrCreate?: Prisma.MdBrandCreateOrConnectWithoutOrderHeadsInput
   upsert?: Prisma.MdBrandUpsertWithoutOrderHeadsInput
-  disconnect?: Prisma.MdBrandWhereInput | boolean
-  delete?: Prisma.MdBrandWhereInput | boolean
   connect?: Prisma.MdBrandWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.MdBrandUpdateToOneWithWhereWithoutOrderHeadsInput, Prisma.MdBrandUpdateWithoutOrderHeadsInput>, Prisma.MdBrandUncheckedUpdateWithoutOrderHeadsInput>
 }

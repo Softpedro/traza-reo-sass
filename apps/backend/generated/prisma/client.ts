@@ -63,14 +63,14 @@ export type MdBrand = Prisma.MdBrandModel
 export type MdSupplier = Prisma.MdSupplierModel
 /**
  * Model MdMaterial
- * * Tabla física MD_MATERIALS
+ * * Tabla física MD_MATERIAL. Overhaul 2026-04-19: composición, sostenibilidad, tintes y certificaciones.
  */
 export type MdMaterial = Prisma.MdMaterialModel
 /**
- * Model MdAvios
- * * Tabla física MD_AVIOS (módulo UI pendiente)
+ * Model MdAvio
+ * * Tabla física MD_AVIO. Overhaul 2026-04-19: tipo, color, peso/unidad, sostenibilidad, certificados.
  */
-export type MdAvios = Prisma.MdAviosModel
+export type MdAvio = Prisma.MdAvioModel
 /**
  * Model MdOrdenPedido
  * 

@@ -3,16 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
-import { getTrazabilidadLabel } from "../eslabon/obs";
 import type { Eslabon } from "../eslabon/columns";
 import type { ProcessRow } from "./columns";
-
-const BOX_ESLABON_NO_REO =
-  "rounded-lg border-2 border-gray-700 bg-gray-600 text-white p-4 min-w-[160px] max-w-[220px] shadow-md flex flex-col items-center justify-center gap-1";
-const BOX_ESLABON_REO =
-  "rounded-lg border-2 border-[#2a9d9d] bg-[#40B2B2] text-white p-4 min-w-[160px] max-w-[220px] shadow-md flex flex-col items-center justify-center gap-1";
-const BOX_PROCESO_REO =
-  "rounded-lg border-2 border-[#2a9d9d] bg-[#40B2B2] text-white p-3 min-w-[180px] max-w-[280px] shadow-md text-sm text-center";
+import { ProcessGeneralChainFlow } from "./process-general-chain-flow";
 
 interface ProcessGeneralDiagramDialogProps {
   open: boolean;
@@ -64,48 +57,15 @@ export function ProcessGeneralDiagramDialog({
     return map;
   }, [processes]);
 
-  const trazabilidadCode = (num: number) =>
-    getTrazabilidadLabel(num).split(" ")[0] ?? "";
-
-  const ArrowRight = () => (
-    <svg
-      width="32"
-      height="24"
-      viewBox="0 0 32 24"
-      fill="none"
-      className="shrink-0 text-blue-600"
-    >
-      <path
-        d="M0 12h24M24 8L32 12L24 16"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-
-  const ArrowDown = () => (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      className="shrink-0 text-blue-600"
-    >
-      <path
-        d="M12 4v16M12 20l-4-4M12 20l4-4"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+  const flowKey = useMemo(
+    () =>
+      `${sortedEslabones.map((e) => e.idDlkProductionChain).join("-")}|${processes.length}`,
+    [sortedEslabones, processes.length]
   );
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-auto">
+      <DialogContent className="w-full max-w-[min(1200px,calc(100vw-2rem))] max-h-[90vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Diagrama general de la cadena de Producción</DialogTitle>
         </DialogHeader>
@@ -118,88 +78,19 @@ export function ProcessGeneralDiagramDialog({
             Cargando diagrama...
           </p>
         ) : (
-          <div className="flex flex-col items-center gap-6 py-4">
-            {/* Fila horizontal de eslabones */}
-            <div className="flex flex-nowrap items-start justify-center gap-0 overflow-x-auto">
-              {sortedEslabones.map((e, eslabonIndex) => {
-                const chainProcesses = processesByEslabon.get(e.idDlkProductionChain) ?? [];
-                const reoInterviene = chainProcesses.length > 0;
-                const boxClass = reoInterviene ? BOX_ESLABON_REO : BOX_ESLABON_NO_REO;
-                const mostrarFlujoVertical = reoInterviene;
-                const numEslabon = e.numPrecedenciaProductiva;
-
-                return (
-                  <div
-                    key={e.idDlkProductionChain}
-                    className="flex flex-col items-center"
-                  >
-                    <div className="flex items-center gap-0">
-                      {eslabonIndex > 0 && <ArrowRight />}
-                      <div className="flex flex-col items-center">
-                        <div className={boxClass}>
-                          <span className="text-lg font-bold">
-                            {String(numEslabon).padStart(2, "0")}
-                          </span>
-                          <span className="text-center text-sm font-medium">
-                            {trazabilidadCode(e.numPrecedenciaTrazabilidad)} - {e.nameProductionChain}
-                          </span>
-                        </div>
-                        {mostrarFlujoVertical && (
-                          <>
-                            <ArrowDown />
-                            <div className="flex flex-col gap-3 mt-1">
-                              {chainProcesses.map((proc, processIndex) => {
-                                const numProc = `${numEslabon}.${processIndex + 1}`;
-                                return (
-                                  <div key={proc.idDlkProcess} className={BOX_PROCESO_REO}>
-                                    <span className="font-semibold block text-xs opacity-90">{numProc}</span>
-                                    {proc.codProcess && (
-                                      <span className="font-semibold block">
-                                        {proc.codProcess} -{" "}
-                                      </span>
-                                    )}
-                                    <span className="text-sm">{proc.nameProcess}</span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {sortedEslabones.length === 0 && (
+          <div className="flex flex-col gap-6 py-4">
+            {sortedEslabones.length > 0 ? (
+              <ProcessGeneralChainFlow
+                key={flowKey}
+                eslabones={eslabones}
+                processesByEslabon={processesByEslabon}
+              />
+            ) : (
               <p className="text-sm text-muted-foreground py-4">
                 No hay eslabones para mostrar en el diagrama.
               </p>
             )}
 
-            {/* Leyenda */}
-            <div className="w-full rounded-xl border-2 border-[#2a9d9d] bg-sky-50/80 p-4 text-sm">
-              <div className="font-semibold text-foreground mb-2">Leyenda</div>
-              <ul className="space-y-2 text-muted-foreground">
-                <li className="flex items-center gap-2">
-                  <span className="inline-flex h-8 w-8 rounded border-2 border-gray-700 bg-gray-600 shrink-0" />
-                  <span>
-                    <strong className="text-foreground">
-                      Eslabón de la Cadena de Producción, Proceso en que el REO no interviene.
-                    </strong>
-                  </span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="inline-flex h-8 w-8 rounded border-2 border-[#2a9d9d] bg-[#40B2B2] shrink-0" />
-                  <span>
-                    <strong className="text-foreground">
-                      Eslabón de la Cadena de Producción, Proceso en que el REO sí interviene.
-                    </strong>
-                  </span>
-                </li>
-              </ul>
-            </div>
           </div>
         )}
       </DialogContent>

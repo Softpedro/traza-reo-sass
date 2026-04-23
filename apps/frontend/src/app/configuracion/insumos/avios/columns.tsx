@@ -5,15 +5,27 @@ import Link from "next/link";
 import { Button } from "@fullstack-reo/ui";
 
 export type Avios = {
-  idDlkAvios: number;
-  codAvios: string;
+  idDlkAvio: number;
+  codAvio: string;
   idDlkSupplier: number;
   codSupplier: string;
-  nameAvios: string;
-  desAvios?: string | null;
-  obsAvios?: string | null;
-  stateAvios: number;
-  flgStatutActif?: number;
+  typeAvio: string | null;
+  nameAvio: string | null;
+  materialAvio: string | null;
+  contentValueMaterial: number | null;
+  contentSourceMaterial: string | null;
+  materialTradeMarks: string | null;
+  color: string | null;
+  weight: number | null;
+  unitMeasurement: string | null;
+  recycled: number | null;
+  percentageRecycledMaterials: number | null;
+  recycledInputSource: string | null;
+  certificates: string | null;
+  observation: string | null;
+  stateAvios: number | null;
+  flgStatutActif?: number | null;
+  fehProcesoCargaDl?: string | null;
   supplier?: {
     idDlkSupplier: number;
     codSupplier: string;
@@ -21,18 +33,33 @@ export type Avios = {
   } | null;
 };
 
+function formatDate(iso: string | null | undefined): string {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "—";
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
 export function getColumns(
   onEdit: (row: Avios) => void,
   onView: (row: Avios) => void
 ): ColumnDef<Avios>[] {
   return [
-    { accessorKey: "codAvios", header: "Código" },
+    { accessorKey: "codAvio", header: "Código" },
     {
-      accessorKey: "nameAvios",
-      header: "Avío",
+      id: "nameAvio",
+      header: "Nombre",
       cell: ({ row }) => (
-        <span className="text-primary font-medium">{row.getValue("nameAvios")}</span>
+        <span className="text-primary font-medium">
+          {row.original.nameAvio ?? row.original.materialTradeMarks ?? "—"}
+        </span>
       ),
+    },
+    {
+      id: "typeAvio",
+      header: "Tipo",
+      cell: ({ row }) => <span>{row.original.typeAvio ?? "—"}</span>,
     },
     {
       id: "proveedor",
@@ -49,6 +76,11 @@ export function getColumns(
           </Link>
         );
       },
+    },
+    {
+      id: "fechaCarga",
+      header: "Fecha de carga",
+      cell: ({ row }) => <span>{formatDate(row.original.fehProcesoCargaDl)}</span>,
     },
     {
       id: "estado",

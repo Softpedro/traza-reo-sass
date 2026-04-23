@@ -56,7 +56,7 @@ export const ModelName = {
   MdBrand: 'MdBrand',
   MdSupplier: 'MdSupplier',
   MdMaterial: 'MdMaterial',
-  MdAvios: 'MdAvios',
+  MdAvio: 'MdAvio',
   MdOrdenPedido: 'MdOrdenPedido',
   OdOrderHead: 'OdOrderHead',
   OdOrderDetail: 'OdOrderDetail',
@@ -201,13 +201,28 @@ export type MdSupplierScalarFieldEnum = (typeof MdSupplierScalarFieldEnum)[keyof
 
 
 export const MdMaterialScalarFieldEnum = {
-  idDlkMaterials: 'idDlkMaterials',
+  idDlkMaterial: 'idDlkMaterial',
   idDlkSupplier: 'idDlkSupplier',
   codMaterial: 'codMaterial',
-  nameMaterial: 'nameMaterial',
-  desMaterial: 'desMaterial',
-  obsMaterial: 'obsMaterial',
-  stateMaterial: 'stateMaterial',
+  material: 'material',
+  contentNameMaterial: 'contentNameMaterial',
+  contentValueMaterial: 'contentValueMaterial',
+  contentSourceMaterials: 'contentSourceMaterials',
+  materialTradeMarks: 'materialTradeMarks',
+  recycled: 'recycled',
+  percentageRecycledMaterials: 'percentageRecycledMaterials',
+  recycledInputSource: 'recycledInputSource',
+  renewableMaterial: 'renewableMaterial',
+  percentageRenewableMaterial: 'percentageRenewableMaterial',
+  renewableInputSource: 'renewableInputSource',
+  typeDyes: 'typeDyes',
+  dyeClass: 'dyeClass',
+  classStandardDyes: 'classStandardDyes',
+  finishes: 'finishes',
+  patterns: 'patterns',
+  recoveryMaterials: 'recoveryMaterials',
+  certification: 'certification',
+  stateMaterials: 'stateMaterials',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fehProcesoCargaDl: 'fehProcesoCargaDl',
   fehProcesoModifDl: 'fehProcesoModifDl',
@@ -218,13 +233,24 @@ export const MdMaterialScalarFieldEnum = {
 export type MdMaterialScalarFieldEnum = (typeof MdMaterialScalarFieldEnum)[keyof typeof MdMaterialScalarFieldEnum]
 
 
-export const MdAviosScalarFieldEnum = {
-  idDlkAvios: 'idDlkAvios',
+export const MdAvioScalarFieldEnum = {
+  idDlkAvio: 'idDlkAvio',
   idDlkSupplier: 'idDlkSupplier',
-  codAvios: 'codAvios',
-  nameAvios: 'nameAvios',
-  desAvios: 'desAvios',
-  obsAvios: 'obsAvios',
+  codAvio: 'codAvio',
+  typeAvio: 'typeAvio',
+  nameAvio: 'nameAvio',
+  materialAvio: 'materialAvio',
+  contentValueMaterial: 'contentValueMaterial',
+  contentSourceMaterial: 'contentSourceMaterial',
+  materialTradeMarks: 'materialTradeMarks',
+  color: 'color',
+  weight: 'weight',
+  unitMeasurement: 'unitMeasurement',
+  recycled: 'recycled',
+  percentageRecycledMaterials: 'percentageRecycledMaterials',
+  recycledInputSource: 'recycledInputSource',
+  certificates: 'certificates',
+  observation: 'observation',
   stateAvios: 'stateAvios',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fehProcesoCargaDl: 'fehProcesoCargaDl',
@@ -233,7 +259,7 @@ export const MdAviosScalarFieldEnum = {
   flgStatutActif: 'flgStatutActif'
 } as const
 
-export type MdAviosScalarFieldEnum = (typeof MdAviosScalarFieldEnum)[keyof typeof MdAviosScalarFieldEnum]
+export type MdAvioScalarFieldEnum = (typeof MdAvioScalarFieldEnum)[keyof typeof MdAvioScalarFieldEnum]
 
 
 export const MdOrdenPedidoScalarFieldEnum = {
@@ -265,6 +291,12 @@ export const OdOrderHeadScalarFieldEnum = {
   fileOrderHead: 'fileOrderHead',
   stageOrderHead: 'stageOrderHead',
   statusStageOrderHead: 'statusStageOrderHead',
+  fileSuppliesUdp: 'fileSuppliesUdp',
+  fehFileSuppliesUdp: 'fehFileSuppliesUdp',
+  fileSuppliesProd: 'fileSuppliesProd',
+  fehFileSuppliesProd: 'fehFileSuppliesProd',
+  fileSuppliesFinal: 'fileSuppliesFinal',
+  fehFileSuppliesFinal: 'fehFileSuppliesFinal',
   stateOrderHead: 'stateOrderHead',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fecProcesoCargaDl: 'fecProcesoCargaDl',
@@ -281,18 +313,21 @@ export const OdOrderDetailScalarFieldEnum = {
   idDlkOrderHead: 'idDlkOrderHead',
   codOrderDetail: 'codOrderDetail',
   codEstilo: 'codEstilo',
-  desTela: 'desTela',
   nomEstilo: 'nomEstilo',
+  imgEstilo: 'imgEstilo',
+  desTela: 'desTela',
   colorAway: 'colorAway',
   fondoTela: 'fondoTela',
   versionTela: 'versionTela',
   orderSample: 'orderSample',
-  size00: 'size00',
-  size1_2: 'size1_2',
+  size0_3: 'size0_3',
+  size3_6: 'size3_6',
+  size0_6: 'size0_6',
+  size6_12: 'size6_12',
+  size12_18: 'size12_18',
   size2: 'size2',
-  size2_3: 'size2_3',
+  size3: 'size3',
   size4: 'size4',
-  size4_5: 'size4_5',
   size5: 'size5',
   size6: 'size6',
   size7: 'size7',
@@ -301,17 +336,13 @@ export const OdOrderDetailScalarFieldEnum = {
   size10: 'size10',
   size11: 'size11',
   size12: 'size12',
-  size13: 'size13',
   size14: 'size14',
-  size15: 'size15',
   size16: 'size16',
-  sizeL: 'sizeL',
-  sizeM: 'sizeM',
   sizeS: 'sizeS',
+  sizeM: 'sizeM',
+  sizeL: 'sizeL',
   sizeXl: 'sizeXl',
-  sizeXs: 'sizeXs',
   sizeXxl: 'sizeXxl',
-  sizeXxs: 'sizeXxs',
   totalEstilo: 'totalEstilo',
   supplyFile: 'supplyFile',
   stateOrderDetail: 'stateOrderDetail',
@@ -916,9 +947,19 @@ export type MdSupplierOrderByRelevanceFieldEnum = (typeof MdSupplierOrderByRelev
 
 export const MdMaterialOrderByRelevanceFieldEnum = {
   codMaterial: 'codMaterial',
-  nameMaterial: 'nameMaterial',
-  desMaterial: 'desMaterial',
-  obsMaterial: 'obsMaterial',
+  material: 'material',
+  contentNameMaterial: 'contentNameMaterial',
+  contentSourceMaterials: 'contentSourceMaterials',
+  materialTradeMarks: 'materialTradeMarks',
+  recycledInputSource: 'recycledInputSource',
+  renewableInputSource: 'renewableInputSource',
+  typeDyes: 'typeDyes',
+  dyeClass: 'dyeClass',
+  classStandardDyes: 'classStandardDyes',
+  finishes: 'finishes',
+  patterns: 'patterns',
+  recoveryMaterials: 'recoveryMaterials',
+  certification: 'certification',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   desAccion: 'desAccion'
 } as const
@@ -926,16 +967,23 @@ export const MdMaterialOrderByRelevanceFieldEnum = {
 export type MdMaterialOrderByRelevanceFieldEnum = (typeof MdMaterialOrderByRelevanceFieldEnum)[keyof typeof MdMaterialOrderByRelevanceFieldEnum]
 
 
-export const MdAviosOrderByRelevanceFieldEnum = {
-  codAvios: 'codAvios',
-  nameAvios: 'nameAvios',
-  desAvios: 'desAvios',
-  obsAvios: 'obsAvios',
+export const MdAvioOrderByRelevanceFieldEnum = {
+  codAvio: 'codAvio',
+  typeAvio: 'typeAvio',
+  nameAvio: 'nameAvio',
+  materialAvio: 'materialAvio',
+  contentSourceMaterial: 'contentSourceMaterial',
+  materialTradeMarks: 'materialTradeMarks',
+  color: 'color',
+  unitMeasurement: 'unitMeasurement',
+  recycledInputSource: 'recycledInputSource',
+  certificates: 'certificates',
+  observation: 'observation',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   desAccion: 'desAccion'
 } as const
 
-export type MdAviosOrderByRelevanceFieldEnum = (typeof MdAviosOrderByRelevanceFieldEnum)[keyof typeof MdAviosOrderByRelevanceFieldEnum]
+export type MdAvioOrderByRelevanceFieldEnum = (typeof MdAvioOrderByRelevanceFieldEnum)[keyof typeof MdAvioOrderByRelevanceFieldEnum]
 
 
 export const MdOrdenPedidoOrderByRelevanceFieldEnum = {
@@ -959,8 +1007,8 @@ export type OdOrderHeadOrderByRelevanceFieldEnum = (typeof OdOrderHeadOrderByRel
 export const OdOrderDetailOrderByRelevanceFieldEnum = {
   codOrderDetail: 'codOrderDetail',
   codEstilo: 'codEstilo',
-  desTela: 'desTela',
   nomEstilo: 'nomEstilo',
+  desTela: 'desTela',
   colorAway: 'colorAway',
   fondoTela: 'fondoTela',
   versionTela: 'versionTela',

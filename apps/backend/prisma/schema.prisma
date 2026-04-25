@@ -234,8 +234,9 @@ model OdOrderHead {
   fecProcesoModifDl        DateTime        @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
   desAccion                String          @map("DES_ACCION") @db.VarChar(20)
   flgStatutActif           Int             @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
-  brand                    MdBrand         @relation(fields: [idDlkBrand], references: [idDlkBrand], onDelete: Restrict, onUpdate: Cascade, map: "fk_order_head_brand")
+  brand                    MdBrand            @relation(fields: [idDlkBrand], references: [idDlkBrand], onDelete: Restrict, onUpdate: Cascade, map: "fk_order_head_brand")
   details                  OdOrderDetail[]
+  labels                   OdOrderLabelHead[]
 
   @@index([idDlkBrand], map: "idx_order_head_brand")
   @@map("OD_ORDER_HEAD")
@@ -835,4 +836,90 @@ model LgParentCompany {
   @@index([idDlkParentCompany], map: "IDX_AUDIT_PARENT_COMPANY_ID")
   @@index([fechaCambio], map: "IDX_AUDIT_FECHA")
   @@map("LG_PARENT_COMPANY")
+}
+
+/** Maestro de identificadores digitales (QR/NFC/RFID) usados en etiquetas. */
+model MdDigitalIdentifier {
+  idDlkDigitalIdentifier        Int                @id @default(autoincrement()) @map("ID_DLK_DIGITAL_IDENTIFIER")
+  codDigitalIdentifier          String             @unique(map: "idx_cod_digital_unique") @map("COD_DIGITAL_IDENTIFIER") @db.VarChar(255)
+  typeDigitalIdentifier         String?            @map("TYPE_DIGITAL_IDENTIFIER") @db.VarChar(100)
+  materialDigitalIdentifier     String?            @map("MATERIAL_DIGITAL_IDENTIFIER") @db.VarChar(150)
+  locationDigitalIdentifier     String?            @map("LOCATION_DIGITAL_IDENTIFIER") @db.VarChar(255)
+  standardIsoDigitalIdentifier  String?            @map("STANDARD_ISO_DIGITAL_IDENTIFIER") @db.VarChar(100)
+  supplierDigitalIdentifier     String?            @map("SUPPLIER_DIGITAL_IDENTIFIER") @db.VarChar(150)
+  modelDigitalIdentifier        String?            @map("MODEL_DIGITAL_IDENTIFIER") @db.VarChar(150)
+  specificationDigitalIdentifier Bytes?            @map("SPECIFICATION_DIGITAL_IDENTIFIER") @db.MediumBlob
+  observationDigitalIdentifier  String?            @map("OBSERVATION_DIGITAL_IDENTIFIER") @db.Text
+  stateDigitalIdentifier        Int?               @default(1) @map("STATE_DIGITAL_IDENTIFIER") @db.TinyInt
+  codUsuarioCargaDl             String?            @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl             DateTime?          @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(0)
+  fecProcesoModifDl             DateTime?          @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(0)
+  desAccion                     String?            @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif                Int?               @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  labelHeads                    OdOrderLabelHead[]
+
+  @@map("MD_DIGITAL_IDENTIFIER")
+}
+
+/** Cabecera de orden de etiquetas (DPP) — etapa 3 del flujo de orden de pedido. */
+model OdOrderLabelHead {
+  idDlkOrderLabelHead       Int                  @id @default(autoincrement()) @map("ID_DLK_ORDER_LABEL_HEAD")
+  idDlkOrderHead            Int                  @map("ID_DLK_ORDER_HEAD")
+  idDlkDigitalIdentifier    Int                  @map("ID_DLK_DIGITAL_IDENTIFIER")
+  codOrderLabel             String?              @map("COD_ORDER_LABEL") @db.VarChar(20)
+  codEstilo                 String?              @map("COD_ESTILO") @db.VarChar(50)
+  nameEstilo                String?              @map("NAME_ESTILO") @db.VarChar(200)
+  descriptionEstilo         String?              @map("DESCRIPTION_ESTILO") @db.Text
+  genderEstilo              String?              @map("GENDER_ESTILO") @db.VarChar(45)
+  seasonEstilo              String?              @map("SEASON_ESTILO") @db.VarChar(45)
+  codGtin                   String?              @map("COD_GTIN") @db.VarChar(14)
+  identifierType            String?              @map("IDENTIFIER_TYPE") @db.VarChar(45)
+  identifierMaterial        String?              @map("IDENTIFIER_MATERIAL") @db.VarChar(500)
+  identifierLocation        String?              @map("IDENTIFIER_LOCATION") @db.VarChar(200)
+  inicioSerializacion       Int?                 @map("INICIO_SERIALIZACION")
+  finSerializacion          Int?                 @map("FIN_SERIALIZACION")
+  totalLabel                Int?                 @map("TOTAL_LABEL")
+  signOpenResponsible       String?              @map("SIGN_OPEN_RESPONSIBLE") @db.Text
+  fehSignOpen               DateTime?            @map("FEH_SIGN_OPEN") @db.DateTime(3)
+  signCloseResponsible      String?              @map("SIGN_CLOSE_RESPONSIBLE") @db.Text
+  fehSignClose              DateTime?            @map("FEH_SIGN_CLOSE") @db.DateTime(3)
+  digitalCertificateId      String?              @map("DIGITAL_CERTIFICATE_ID") @db.VarChar(100)
+  stateOrderLabelHead       Int?                 @default(1) @map("STATE_ORDER_LABEL_HEAD") @db.TinyInt
+  codUsuarioCargaDl         String?              @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl         DateTime?            @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl         DateTime?            @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                 String?              @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif            Int?                 @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  orderHead                 OdOrderHead          @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_order")
+  digitalIdentifier         MdDigitalIdentifier  @relation(fields: [idDlkDigitalIdentifier], references: [idDlkDigitalIdentifier], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_digital_master")
+  details                   OdOrderLabelDetail[]
+
+  @@index([idDlkOrderHead], map: "idx_label_head_order")
+  @@index([idDlkDigitalIdentifier], map: "idx_label_head_digital_id")
+  @@map("OD_ORDER_LABEL_HEAD")
+}
+
+/** Detalle (unidad serializada) de una orden de etiquetas. */
+model OdOrderLabelDetail {
+  idDlkOrderLabelDetail   Int              @id @default(autoincrement()) @map("ID_DLK_ORDER_LABEL_DETAIL")
+  idDlkOrderLabelHead     Int              @map("ID_DLK_ORDER_LABEL_HEAD")
+  itemGlobal              Int              @map("ITEM_GLOBAL")
+  itemBySize              Int              @map("ITEM_BY_SIZE")
+  serialNumber            String           @map("SERIAL_NUMBER") @db.VarChar(20)
+  sgtinFull               String           @unique(map: "idx_sgtin_unique") @map("SGTIN_FULL") @db.VarChar(150)
+  urlDppFull              String           @map("URL_DPP_FULL") @db.VarChar(1000)
+  color                   String?          @map("COLOR") @db.VarChar(100)
+  print                   String?          @map("PRINT") @db.VarChar(100)
+  size                    String?          @map("SIZE") @db.VarChar(50)
+  isBlacklisted           Int?             @default(0) @map("IS_BLACKLISTED") @db.TinyInt
+  reasonBlacklist         String?          @map("REASON_BLACKLIST") @db.VarChar(100)
+  stateOrderLabelDetail   Int?             @default(1) @map("STATE_ORDER_LABEL_DETAIL") @db.TinyInt
+  fecProcesoCargaDl       DateTime?        @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl       DateTime?        @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  codUsuarioAuditor       String?          @map("COD_USUARIO_AUDITOR") @db.VarChar(20)
+  labelHead               OdOrderLabelHead @relation(fields: [idDlkOrderLabelHead], references: [idDlkOrderLabelHead], onDelete: Cascade, onUpdate: Cascade, map: "fk_label_detail_to_head")
+
+  @@index([idDlkOrderLabelHead], map: "idx_label_detail_head")
+  @@index([isBlacklisted], map: "idx_quality_control")
+  @@map("OD_ORDER_LABEL_DETAIL")
 }

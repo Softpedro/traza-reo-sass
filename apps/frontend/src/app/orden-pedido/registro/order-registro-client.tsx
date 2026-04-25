@@ -39,7 +39,13 @@ export function OrderRegistroClient({
         }
         return res.json();
       })
-      .then((data: OrderHeadRow[]) => setRows(Array.isArray(data) ? data : []))
+      .then((data: OrderHeadRow[]) =>
+        setRows(
+          Array.isArray(data)
+            ? data.filter((r) => (r.stageOrderHead ?? 1) === 1)
+            : []
+        )
+      )
       .catch((err) => {
         console.error(err);
         setLoadError(err instanceof Error ? err.message : "No se pudieron cargar las órdenes");

@@ -662,6 +662,13 @@ export class OrderHeadService {
       data.codUsuarioCargaDl = body.codUsuarioCargaDl;
     }
 
+    // Regla de transición: al cerrar Suministro (status=2 "Concluido"),
+    // la orden pasa a Etiqueta (stage=3 + status=1 "Iniciado").
+    if (data.statusStageOrderHead === 2) {
+      data.stageOrderHead = 3;
+      data.statusStageOrderHead = 1;
+    }
+
     const updated = await this.prisma.odOrderHead.update({
       where: { idDlkOrderHead: id },
       data,

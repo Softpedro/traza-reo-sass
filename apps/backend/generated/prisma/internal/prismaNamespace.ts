@@ -413,7 +413,10 @@ export const ModelName = {
   MdSubbrand: 'MdSubbrand',
   MdUserReo: 'MdUserReo',
   LgUserAccess: 'LgUserAccess',
-  LgParentCompany: 'LgParentCompany'
+  LgParentCompany: 'LgParentCompany',
+  MdDigitalIdentifier: 'MdDigitalIdentifier',
+  OdOrderLabelHead: 'OdOrderLabelHead',
+  OdOrderLabelDetail: 'OdOrderLabelDetail'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -429,7 +432,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "lgUserAccess" | "lgParentCompany"
+    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2413,6 +2416,204 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MdDigitalIdentifier: {
+      payload: Prisma.$MdDigitalIdentifierPayload<ExtArgs>
+      fields: Prisma.MdDigitalIdentifierFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MdDigitalIdentifierFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdDigitalIdentifierPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MdDigitalIdentifierFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdDigitalIdentifierPayload>
+        }
+        findFirst: {
+          args: Prisma.MdDigitalIdentifierFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdDigitalIdentifierPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MdDigitalIdentifierFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdDigitalIdentifierPayload>
+        }
+        findMany: {
+          args: Prisma.MdDigitalIdentifierFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdDigitalIdentifierPayload>[]
+        }
+        create: {
+          args: Prisma.MdDigitalIdentifierCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdDigitalIdentifierPayload>
+        }
+        createMany: {
+          args: Prisma.MdDigitalIdentifierCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MdDigitalIdentifierDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdDigitalIdentifierPayload>
+        }
+        update: {
+          args: Prisma.MdDigitalIdentifierUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdDigitalIdentifierPayload>
+        }
+        deleteMany: {
+          args: Prisma.MdDigitalIdentifierDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MdDigitalIdentifierUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MdDigitalIdentifierUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdDigitalIdentifierPayload>
+        }
+        aggregate: {
+          args: Prisma.MdDigitalIdentifierAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMdDigitalIdentifier>
+        }
+        groupBy: {
+          args: Prisma.MdDigitalIdentifierGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdDigitalIdentifierGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MdDigitalIdentifierCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdDigitalIdentifierCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdOrderLabelHead: {
+      payload: Prisma.$OdOrderLabelHeadPayload<ExtArgs>
+      fields: Prisma.OdOrderLabelHeadFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdOrderLabelHeadFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelHeadPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdOrderLabelHeadFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelHeadPayload>
+        }
+        findFirst: {
+          args: Prisma.OdOrderLabelHeadFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelHeadPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdOrderLabelHeadFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelHeadPayload>
+        }
+        findMany: {
+          args: Prisma.OdOrderLabelHeadFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelHeadPayload>[]
+        }
+        create: {
+          args: Prisma.OdOrderLabelHeadCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelHeadPayload>
+        }
+        createMany: {
+          args: Prisma.OdOrderLabelHeadCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdOrderLabelHeadDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelHeadPayload>
+        }
+        update: {
+          args: Prisma.OdOrderLabelHeadUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelHeadPayload>
+        }
+        deleteMany: {
+          args: Prisma.OdOrderLabelHeadDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdOrderLabelHeadUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdOrderLabelHeadUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelHeadPayload>
+        }
+        aggregate: {
+          args: Prisma.OdOrderLabelHeadAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdOrderLabelHead>
+        }
+        groupBy: {
+          args: Prisma.OdOrderLabelHeadGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOrderLabelHeadGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdOrderLabelHeadCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOrderLabelHeadCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdOrderLabelDetail: {
+      payload: Prisma.$OdOrderLabelDetailPayload<ExtArgs>
+      fields: Prisma.OdOrderLabelDetailFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdOrderLabelDetailFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelDetailPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdOrderLabelDetailFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelDetailPayload>
+        }
+        findFirst: {
+          args: Prisma.OdOrderLabelDetailFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelDetailPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdOrderLabelDetailFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelDetailPayload>
+        }
+        findMany: {
+          args: Prisma.OdOrderLabelDetailFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelDetailPayload>[]
+        }
+        create: {
+          args: Prisma.OdOrderLabelDetailCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelDetailPayload>
+        }
+        createMany: {
+          args: Prisma.OdOrderLabelDetailCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdOrderLabelDetailDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelDetailPayload>
+        }
+        update: {
+          args: Prisma.OdOrderLabelDetailUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelDetailPayload>
+        }
+        deleteMany: {
+          args: Prisma.OdOrderLabelDetailDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdOrderLabelDetailUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdOrderLabelDetailUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelDetailPayload>
+        }
+        aggregate: {
+          args: Prisma.OdOrderLabelDetailAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdOrderLabelDetail>
+        }
+        groupBy: {
+          args: Prisma.OdOrderLabelDetailGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOrderLabelDetailGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdOrderLabelDetailCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOrderLabelDetailCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3212,6 +3413,83 @@ export const LgParentCompanyScalarFieldEnum = {
 export type LgParentCompanyScalarFieldEnum = (typeof LgParentCompanyScalarFieldEnum)[keyof typeof LgParentCompanyScalarFieldEnum]
 
 
+export const MdDigitalIdentifierScalarFieldEnum = {
+  idDlkDigitalIdentifier: 'idDlkDigitalIdentifier',
+  codDigitalIdentifier: 'codDigitalIdentifier',
+  typeDigitalIdentifier: 'typeDigitalIdentifier',
+  materialDigitalIdentifier: 'materialDigitalIdentifier',
+  locationDigitalIdentifier: 'locationDigitalIdentifier',
+  standardIsoDigitalIdentifier: 'standardIsoDigitalIdentifier',
+  supplierDigitalIdentifier: 'supplierDigitalIdentifier',
+  modelDigitalIdentifier: 'modelDigitalIdentifier',
+  specificationDigitalIdentifier: 'specificationDigitalIdentifier',
+  observationDigitalIdentifier: 'observationDigitalIdentifier',
+  stateDigitalIdentifier: 'stateDigitalIdentifier',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdDigitalIdentifierScalarFieldEnum = (typeof MdDigitalIdentifierScalarFieldEnum)[keyof typeof MdDigitalIdentifierScalarFieldEnum]
+
+
+export const OdOrderLabelHeadScalarFieldEnum = {
+  idDlkOrderLabelHead: 'idDlkOrderLabelHead',
+  idDlkOrderHead: 'idDlkOrderHead',
+  idDlkDigitalIdentifier: 'idDlkDigitalIdentifier',
+  codOrderLabel: 'codOrderLabel',
+  codEstilo: 'codEstilo',
+  nameEstilo: 'nameEstilo',
+  descriptionEstilo: 'descriptionEstilo',
+  genderEstilo: 'genderEstilo',
+  seasonEstilo: 'seasonEstilo',
+  codGtin: 'codGtin',
+  identifierType: 'identifierType',
+  identifierMaterial: 'identifierMaterial',
+  identifierLocation: 'identifierLocation',
+  inicioSerializacion: 'inicioSerializacion',
+  finSerializacion: 'finSerializacion',
+  totalLabel: 'totalLabel',
+  signOpenResponsible: 'signOpenResponsible',
+  fehSignOpen: 'fehSignOpen',
+  signCloseResponsible: 'signCloseResponsible',
+  fehSignClose: 'fehSignClose',
+  digitalCertificateId: 'digitalCertificateId',
+  stateOrderLabelHead: 'stateOrderLabelHead',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOrderLabelHeadScalarFieldEnum = (typeof OdOrderLabelHeadScalarFieldEnum)[keyof typeof OdOrderLabelHeadScalarFieldEnum]
+
+
+export const OdOrderLabelDetailScalarFieldEnum = {
+  idDlkOrderLabelDetail: 'idDlkOrderLabelDetail',
+  idDlkOrderLabelHead: 'idDlkOrderLabelHead',
+  itemGlobal: 'itemGlobal',
+  itemBySize: 'itemBySize',
+  serialNumber: 'serialNumber',
+  sgtinFull: 'sgtinFull',
+  urlDppFull: 'urlDppFull',
+  color: 'color',
+  print: 'print',
+  size: 'size',
+  isBlacklisted: 'isBlacklisted',
+  reasonBlacklist: 'reasonBlacklist',
+  stateOrderLabelDetail: 'stateOrderLabelDetail',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  codUsuarioAuditor: 'codUsuarioAuditor'
+} as const
+
+export type OdOrderLabelDetailScalarFieldEnum = (typeof OdOrderLabelDetailScalarFieldEnum)[keyof typeof OdOrderLabelDetailScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3727,6 +4005,57 @@ export const LgParentCompanyOrderByRelevanceFieldEnum = {
 export type LgParentCompanyOrderByRelevanceFieldEnum = (typeof LgParentCompanyOrderByRelevanceFieldEnum)[keyof typeof LgParentCompanyOrderByRelevanceFieldEnum]
 
 
+export const MdDigitalIdentifierOrderByRelevanceFieldEnum = {
+  codDigitalIdentifier: 'codDigitalIdentifier',
+  typeDigitalIdentifier: 'typeDigitalIdentifier',
+  materialDigitalIdentifier: 'materialDigitalIdentifier',
+  locationDigitalIdentifier: 'locationDigitalIdentifier',
+  standardIsoDigitalIdentifier: 'standardIsoDigitalIdentifier',
+  supplierDigitalIdentifier: 'supplierDigitalIdentifier',
+  modelDigitalIdentifier: 'modelDigitalIdentifier',
+  observationDigitalIdentifier: 'observationDigitalIdentifier',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdDigitalIdentifierOrderByRelevanceFieldEnum = (typeof MdDigitalIdentifierOrderByRelevanceFieldEnum)[keyof typeof MdDigitalIdentifierOrderByRelevanceFieldEnum]
+
+
+export const OdOrderLabelHeadOrderByRelevanceFieldEnum = {
+  codOrderLabel: 'codOrderLabel',
+  codEstilo: 'codEstilo',
+  nameEstilo: 'nameEstilo',
+  descriptionEstilo: 'descriptionEstilo',
+  genderEstilo: 'genderEstilo',
+  seasonEstilo: 'seasonEstilo',
+  codGtin: 'codGtin',
+  identifierType: 'identifierType',
+  identifierMaterial: 'identifierMaterial',
+  identifierLocation: 'identifierLocation',
+  signOpenResponsible: 'signOpenResponsible',
+  signCloseResponsible: 'signCloseResponsible',
+  digitalCertificateId: 'digitalCertificateId',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOrderLabelHeadOrderByRelevanceFieldEnum = (typeof OdOrderLabelHeadOrderByRelevanceFieldEnum)[keyof typeof OdOrderLabelHeadOrderByRelevanceFieldEnum]
+
+
+export const OdOrderLabelDetailOrderByRelevanceFieldEnum = {
+  serialNumber: 'serialNumber',
+  sgtinFull: 'sgtinFull',
+  urlDppFull: 'urlDppFull',
+  color: 'color',
+  print: 'print',
+  size: 'size',
+  reasonBlacklist: 'reasonBlacklist',
+  codUsuarioAuditor: 'codUsuarioAuditor'
+} as const
+
+export type OdOrderLabelDetailOrderByRelevanceFieldEnum = (typeof OdOrderLabelDetailOrderByRelevanceFieldEnum)[keyof typeof OdOrderLabelDetailOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -3906,6 +4235,9 @@ export type GlobalOmitConfig = {
   mdUserReo?: Prisma.MdUserReoOmit
   lgUserAccess?: Prisma.LgUserAccessOmit
   lgParentCompany?: Prisma.LgParentCompanyOmit
+  mdDigitalIdentifier?: Prisma.MdDigitalIdentifierOmit
+  odOrderLabelHead?: Prisma.OdOrderLabelHeadOmit
+  odOrderLabelDetail?: Prisma.OdOrderLabelDetailOmit
 }
 
 /* Types for Logging */

@@ -36,10 +36,10 @@ export function OrderSuministroClient({
         return res.json();
       })
       .then((data: SuministroRow[]) => {
-        // Sólo se muestran órdenes que ya cruzaron Registro (stage>=2).
-        // Registro usa el mismo endpoint y muestra todas las filas.
+        // Sólo se muestran órdenes actualmente en Suministro (stage===2).
+        // Las concluidas pasan a Etiqueta y dejan de aparecer aquí.
         const visible = Array.isArray(data)
-          ? data.filter((r) => (r.stageOrderHead ?? 1) >= 2)
+          ? data.filter((r) => (r.stageOrderHead ?? 1) === 2)
           : [];
         setRows(visible);
       })

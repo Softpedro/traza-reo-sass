@@ -80,7 +80,10 @@ export const ModelName = {
   MdSubbrand: 'MdSubbrand',
   MdUserReo: 'MdUserReo',
   LgUserAccess: 'LgUserAccess',
-  LgParentCompany: 'LgParentCompany'
+  LgParentCompany: 'LgParentCompany',
+  MdDigitalIdentifier: 'MdDigitalIdentifier',
+  OdOrderLabelHead: 'OdOrderLabelHead',
+  OdOrderLabelDetail: 'OdOrderLabelDetail'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -859,6 +862,83 @@ export const LgParentCompanyScalarFieldEnum = {
 export type LgParentCompanyScalarFieldEnum = (typeof LgParentCompanyScalarFieldEnum)[keyof typeof LgParentCompanyScalarFieldEnum]
 
 
+export const MdDigitalIdentifierScalarFieldEnum = {
+  idDlkDigitalIdentifier: 'idDlkDigitalIdentifier',
+  codDigitalIdentifier: 'codDigitalIdentifier',
+  typeDigitalIdentifier: 'typeDigitalIdentifier',
+  materialDigitalIdentifier: 'materialDigitalIdentifier',
+  locationDigitalIdentifier: 'locationDigitalIdentifier',
+  standardIsoDigitalIdentifier: 'standardIsoDigitalIdentifier',
+  supplierDigitalIdentifier: 'supplierDigitalIdentifier',
+  modelDigitalIdentifier: 'modelDigitalIdentifier',
+  specificationDigitalIdentifier: 'specificationDigitalIdentifier',
+  observationDigitalIdentifier: 'observationDigitalIdentifier',
+  stateDigitalIdentifier: 'stateDigitalIdentifier',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdDigitalIdentifierScalarFieldEnum = (typeof MdDigitalIdentifierScalarFieldEnum)[keyof typeof MdDigitalIdentifierScalarFieldEnum]
+
+
+export const OdOrderLabelHeadScalarFieldEnum = {
+  idDlkOrderLabelHead: 'idDlkOrderLabelHead',
+  idDlkOrderHead: 'idDlkOrderHead',
+  idDlkDigitalIdentifier: 'idDlkDigitalIdentifier',
+  codOrderLabel: 'codOrderLabel',
+  codEstilo: 'codEstilo',
+  nameEstilo: 'nameEstilo',
+  descriptionEstilo: 'descriptionEstilo',
+  genderEstilo: 'genderEstilo',
+  seasonEstilo: 'seasonEstilo',
+  codGtin: 'codGtin',
+  identifierType: 'identifierType',
+  identifierMaterial: 'identifierMaterial',
+  identifierLocation: 'identifierLocation',
+  inicioSerializacion: 'inicioSerializacion',
+  finSerializacion: 'finSerializacion',
+  totalLabel: 'totalLabel',
+  signOpenResponsible: 'signOpenResponsible',
+  fehSignOpen: 'fehSignOpen',
+  signCloseResponsible: 'signCloseResponsible',
+  fehSignClose: 'fehSignClose',
+  digitalCertificateId: 'digitalCertificateId',
+  stateOrderLabelHead: 'stateOrderLabelHead',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOrderLabelHeadScalarFieldEnum = (typeof OdOrderLabelHeadScalarFieldEnum)[keyof typeof OdOrderLabelHeadScalarFieldEnum]
+
+
+export const OdOrderLabelDetailScalarFieldEnum = {
+  idDlkOrderLabelDetail: 'idDlkOrderLabelDetail',
+  idDlkOrderLabelHead: 'idDlkOrderLabelHead',
+  itemGlobal: 'itemGlobal',
+  itemBySize: 'itemBySize',
+  serialNumber: 'serialNumber',
+  sgtinFull: 'sgtinFull',
+  urlDppFull: 'urlDppFull',
+  color: 'color',
+  print: 'print',
+  size: 'size',
+  isBlacklisted: 'isBlacklisted',
+  reasonBlacklist: 'reasonBlacklist',
+  stateOrderLabelDetail: 'stateOrderLabelDetail',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  codUsuarioAuditor: 'codUsuarioAuditor'
+} as const
+
+export type OdOrderLabelDetailScalarFieldEnum = (typeof OdOrderLabelDetailScalarFieldEnum)[keyof typeof OdOrderLabelDetailScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1372,4 +1452,55 @@ export const LgParentCompanyOrderByRelevanceFieldEnum = {
 } as const
 
 export type LgParentCompanyOrderByRelevanceFieldEnum = (typeof LgParentCompanyOrderByRelevanceFieldEnum)[keyof typeof LgParentCompanyOrderByRelevanceFieldEnum]
+
+
+export const MdDigitalIdentifierOrderByRelevanceFieldEnum = {
+  codDigitalIdentifier: 'codDigitalIdentifier',
+  typeDigitalIdentifier: 'typeDigitalIdentifier',
+  materialDigitalIdentifier: 'materialDigitalIdentifier',
+  locationDigitalIdentifier: 'locationDigitalIdentifier',
+  standardIsoDigitalIdentifier: 'standardIsoDigitalIdentifier',
+  supplierDigitalIdentifier: 'supplierDigitalIdentifier',
+  modelDigitalIdentifier: 'modelDigitalIdentifier',
+  observationDigitalIdentifier: 'observationDigitalIdentifier',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdDigitalIdentifierOrderByRelevanceFieldEnum = (typeof MdDigitalIdentifierOrderByRelevanceFieldEnum)[keyof typeof MdDigitalIdentifierOrderByRelevanceFieldEnum]
+
+
+export const OdOrderLabelHeadOrderByRelevanceFieldEnum = {
+  codOrderLabel: 'codOrderLabel',
+  codEstilo: 'codEstilo',
+  nameEstilo: 'nameEstilo',
+  descriptionEstilo: 'descriptionEstilo',
+  genderEstilo: 'genderEstilo',
+  seasonEstilo: 'seasonEstilo',
+  codGtin: 'codGtin',
+  identifierType: 'identifierType',
+  identifierMaterial: 'identifierMaterial',
+  identifierLocation: 'identifierLocation',
+  signOpenResponsible: 'signOpenResponsible',
+  signCloseResponsible: 'signCloseResponsible',
+  digitalCertificateId: 'digitalCertificateId',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOrderLabelHeadOrderByRelevanceFieldEnum = (typeof OdOrderLabelHeadOrderByRelevanceFieldEnum)[keyof typeof OdOrderLabelHeadOrderByRelevanceFieldEnum]
+
+
+export const OdOrderLabelDetailOrderByRelevanceFieldEnum = {
+  serialNumber: 'serialNumber',
+  sgtinFull: 'sgtinFull',
+  urlDppFull: 'urlDppFull',
+  color: 'color',
+  print: 'print',
+  size: 'size',
+  reasonBlacklist: 'reasonBlacklist',
+  codUsuarioAuditor: 'codUsuarioAuditor'
+} as const
+
+export type OdOrderLabelDetailOrderByRelevanceFieldEnum = (typeof OdOrderLabelDetailOrderByRelevanceFieldEnum)[keyof typeof OdOrderLabelDetailOrderByRelevanceFieldEnum]
 

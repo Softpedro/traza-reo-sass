@@ -370,6 +370,7 @@ export type OdOrderHeadWhereInput = {
   flgStatutActif?: Prisma.IntFilter<"OdOrderHead"> | number
   brand?: Prisma.XOR<Prisma.MdBrandScalarRelationFilter, Prisma.MdBrandWhereInput>
   details?: Prisma.OdOrderDetailListRelationFilter
+  labels?: Prisma.OdOrderLabelHeadListRelationFilter
 }
 
 export type OdOrderHeadOrderByWithRelationInput = {
@@ -396,6 +397,7 @@ export type OdOrderHeadOrderByWithRelationInput = {
   flgStatutActif?: Prisma.SortOrder
   brand?: Prisma.MdBrandOrderByWithRelationInput
   details?: Prisma.OdOrderDetailOrderByRelationAggregateInput
+  labels?: Prisma.OdOrderLabelHeadOrderByRelationAggregateInput
   _relevance?: Prisma.OdOrderHeadOrderByRelevanceInput
 }
 
@@ -426,6 +428,7 @@ export type OdOrderHeadWhereUniqueInput = Prisma.AtLeast<{
   flgStatutActif?: Prisma.IntFilter<"OdOrderHead"> | number
   brand?: Prisma.XOR<Prisma.MdBrandScalarRelationFilter, Prisma.MdBrandWhereInput>
   details?: Prisma.OdOrderDetailListRelationFilter
+  labels?: Prisma.OdOrderLabelHeadListRelationFilter
 }, "idDlkOrderHead">
 
 export type OdOrderHeadOrderByWithAggregationInput = {
@@ -506,6 +509,7 @@ export type OdOrderHeadCreateInput = {
   flgStatutActif?: number
   brand: Prisma.MdBrandCreateNestedOneWithoutOrderHeadsInput
   details?: Prisma.OdOrderDetailCreateNestedManyWithoutOrderHeadInput
+  labels?: Prisma.OdOrderLabelHeadCreateNestedManyWithoutOrderHeadInput
 }
 
 export type OdOrderHeadUncheckedCreateInput = {
@@ -531,6 +535,7 @@ export type OdOrderHeadUncheckedCreateInput = {
   desAccion: string
   flgStatutActif?: number
   details?: Prisma.OdOrderDetailUncheckedCreateNestedManyWithoutOrderHeadInput
+  labels?: Prisma.OdOrderLabelHeadUncheckedCreateNestedManyWithoutOrderHeadInput
 }
 
 export type OdOrderHeadUpdateInput = {
@@ -555,6 +560,7 @@ export type OdOrderHeadUpdateInput = {
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   brand?: Prisma.MdBrandUpdateOneRequiredWithoutOrderHeadsNestedInput
   details?: Prisma.OdOrderDetailUpdateManyWithoutOrderHeadNestedInput
+  labels?: Prisma.OdOrderLabelHeadUpdateManyWithoutOrderHeadNestedInput
 }
 
 export type OdOrderHeadUncheckedUpdateInput = {
@@ -580,6 +586,7 @@ export type OdOrderHeadUncheckedUpdateInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   details?: Prisma.OdOrderDetailUncheckedUpdateManyWithoutOrderHeadNestedInput
+  labels?: Prisma.OdOrderLabelHeadUncheckedUpdateManyWithoutOrderHeadNestedInput
 }
 
 export type OdOrderHeadCreateManyInput = {
@@ -821,6 +828,20 @@ export type OdOrderHeadUpdateOneRequiredWithoutDetailsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OdOrderHeadUpdateToOneWithWhereWithoutDetailsInput, Prisma.OdOrderHeadUpdateWithoutDetailsInput>, Prisma.OdOrderHeadUncheckedUpdateWithoutDetailsInput>
 }
 
+export type OdOrderHeadCreateNestedOneWithoutLabelsInput = {
+  create?: Prisma.XOR<Prisma.OdOrderHeadCreateWithoutLabelsInput, Prisma.OdOrderHeadUncheckedCreateWithoutLabelsInput>
+  connectOrCreate?: Prisma.OdOrderHeadCreateOrConnectWithoutLabelsInput
+  connect?: Prisma.OdOrderHeadWhereUniqueInput
+}
+
+export type OdOrderHeadUpdateOneRequiredWithoutLabelsNestedInput = {
+  create?: Prisma.XOR<Prisma.OdOrderHeadCreateWithoutLabelsInput, Prisma.OdOrderHeadUncheckedCreateWithoutLabelsInput>
+  connectOrCreate?: Prisma.OdOrderHeadCreateOrConnectWithoutLabelsInput
+  upsert?: Prisma.OdOrderHeadUpsertWithoutLabelsInput
+  connect?: Prisma.OdOrderHeadWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OdOrderHeadUpdateToOneWithWhereWithoutLabelsInput, Prisma.OdOrderHeadUpdateWithoutLabelsInput>, Prisma.OdOrderHeadUncheckedUpdateWithoutLabelsInput>
+}
+
 export type OdOrderHeadCreateWithoutBrandInput = {
   codOrderHead: string
   quantityOrderHead: number
@@ -842,6 +863,7 @@ export type OdOrderHeadCreateWithoutBrandInput = {
   desAccion: string
   flgStatutActif?: number
   details?: Prisma.OdOrderDetailCreateNestedManyWithoutOrderHeadInput
+  labels?: Prisma.OdOrderLabelHeadCreateNestedManyWithoutOrderHeadInput
 }
 
 export type OdOrderHeadUncheckedCreateWithoutBrandInput = {
@@ -866,6 +888,7 @@ export type OdOrderHeadUncheckedCreateWithoutBrandInput = {
   desAccion: string
   flgStatutActif?: number
   details?: Prisma.OdOrderDetailUncheckedCreateNestedManyWithoutOrderHeadInput
+  labels?: Prisma.OdOrderLabelHeadUncheckedCreateNestedManyWithoutOrderHeadInput
 }
 
 export type OdOrderHeadCreateOrConnectWithoutBrandInput = {
@@ -942,6 +965,7 @@ export type OdOrderHeadCreateWithoutDetailsInput = {
   desAccion: string
   flgStatutActif?: number
   brand: Prisma.MdBrandCreateNestedOneWithoutOrderHeadsInput
+  labels?: Prisma.OdOrderLabelHeadCreateNestedManyWithoutOrderHeadInput
 }
 
 export type OdOrderHeadUncheckedCreateWithoutDetailsInput = {
@@ -966,6 +990,7 @@ export type OdOrderHeadUncheckedCreateWithoutDetailsInput = {
   fecProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  labels?: Prisma.OdOrderLabelHeadUncheckedCreateNestedManyWithoutOrderHeadInput
 }
 
 export type OdOrderHeadCreateOrConnectWithoutDetailsInput = {
@@ -1005,6 +1030,7 @@ export type OdOrderHeadUpdateWithoutDetailsInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   brand?: Prisma.MdBrandUpdateOneRequiredWithoutOrderHeadsNestedInput
+  labels?: Prisma.OdOrderLabelHeadUpdateManyWithoutOrderHeadNestedInput
 }
 
 export type OdOrderHeadUncheckedUpdateWithoutDetailsInput = {
@@ -1029,6 +1055,121 @@ export type OdOrderHeadUncheckedUpdateWithoutDetailsInput = {
   fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  labels?: Prisma.OdOrderLabelHeadUncheckedUpdateManyWithoutOrderHeadNestedInput
+}
+
+export type OdOrderHeadCreateWithoutLabelsInput = {
+  codOrderHead: string
+  quantityOrderHead: number
+  fecEntry: Date | string
+  dateProbableDespatch: Date | string
+  fileOrderHead?: runtime.Bytes | null
+  stageOrderHead?: number | null
+  statusStageOrderHead?: number | null
+  fileSuppliesUdp?: runtime.Bytes | null
+  fehFileSuppliesUdp?: Date | string | null
+  fileSuppliesProd?: runtime.Bytes | null
+  fehFileSuppliesProd?: Date | string | null
+  fileSuppliesFinal?: runtime.Bytes | null
+  fehFileSuppliesFinal?: Date | string | null
+  stateOrderHead?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
+  brand: Prisma.MdBrandCreateNestedOneWithoutOrderHeadsInput
+  details?: Prisma.OdOrderDetailCreateNestedManyWithoutOrderHeadInput
+}
+
+export type OdOrderHeadUncheckedCreateWithoutLabelsInput = {
+  idDlkOrderHead?: number
+  idDlkBrand: number
+  codOrderHead: string
+  quantityOrderHead: number
+  fecEntry: Date | string
+  dateProbableDespatch: Date | string
+  fileOrderHead?: runtime.Bytes | null
+  stageOrderHead?: number | null
+  statusStageOrderHead?: number | null
+  fileSuppliesUdp?: runtime.Bytes | null
+  fehFileSuppliesUdp?: Date | string | null
+  fileSuppliesProd?: runtime.Bytes | null
+  fehFileSuppliesProd?: Date | string | null
+  fileSuppliesFinal?: runtime.Bytes | null
+  fehFileSuppliesFinal?: Date | string | null
+  stateOrderHead?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
+  details?: Prisma.OdOrderDetailUncheckedCreateNestedManyWithoutOrderHeadInput
+}
+
+export type OdOrderHeadCreateOrConnectWithoutLabelsInput = {
+  where: Prisma.OdOrderHeadWhereUniqueInput
+  create: Prisma.XOR<Prisma.OdOrderHeadCreateWithoutLabelsInput, Prisma.OdOrderHeadUncheckedCreateWithoutLabelsInput>
+}
+
+export type OdOrderHeadUpsertWithoutLabelsInput = {
+  update: Prisma.XOR<Prisma.OdOrderHeadUpdateWithoutLabelsInput, Prisma.OdOrderHeadUncheckedUpdateWithoutLabelsInput>
+  create: Prisma.XOR<Prisma.OdOrderHeadCreateWithoutLabelsInput, Prisma.OdOrderHeadUncheckedCreateWithoutLabelsInput>
+  where?: Prisma.OdOrderHeadWhereInput
+}
+
+export type OdOrderHeadUpdateToOneWithWhereWithoutLabelsInput = {
+  where?: Prisma.OdOrderHeadWhereInput
+  data: Prisma.XOR<Prisma.OdOrderHeadUpdateWithoutLabelsInput, Prisma.OdOrderHeadUncheckedUpdateWithoutLabelsInput>
+}
+
+export type OdOrderHeadUpdateWithoutLabelsInput = {
+  codOrderHead?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  fecEntry?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileOrderHead?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  stageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  statusStageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fileSuppliesUdp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesProd?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesFinal?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  brand?: Prisma.MdBrandUpdateOneRequiredWithoutOrderHeadsNestedInput
+  details?: Prisma.OdOrderDetailUpdateManyWithoutOrderHeadNestedInput
+}
+
+export type OdOrderHeadUncheckedUpdateWithoutLabelsInput = {
+  idDlkOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkBrand?: Prisma.IntFieldUpdateOperationsInput | number
+  codOrderHead?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  fecEntry?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateProbableDespatch?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileOrderHead?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  stageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  statusStageOrderHead?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fileSuppliesUdp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesUdp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesProd?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesProd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fileSuppliesFinal?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  fehFileSuppliesFinal?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  details?: Prisma.OdOrderDetailUncheckedUpdateManyWithoutOrderHeadNestedInput
 }
 
 export type OdOrderHeadCreateManyBrandInput = {
@@ -1075,6 +1216,7 @@ export type OdOrderHeadUpdateWithoutBrandInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   details?: Prisma.OdOrderDetailUpdateManyWithoutOrderHeadNestedInput
+  labels?: Prisma.OdOrderLabelHeadUpdateManyWithoutOrderHeadNestedInput
 }
 
 export type OdOrderHeadUncheckedUpdateWithoutBrandInput = {
@@ -1099,6 +1241,7 @@ export type OdOrderHeadUncheckedUpdateWithoutBrandInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   details?: Prisma.OdOrderDetailUncheckedUpdateManyWithoutOrderHeadNestedInput
+  labels?: Prisma.OdOrderLabelHeadUncheckedUpdateManyWithoutOrderHeadNestedInput
 }
 
 export type OdOrderHeadUncheckedUpdateManyWithoutBrandInput = {
@@ -1131,10 +1274,12 @@ export type OdOrderHeadUncheckedUpdateManyWithoutBrandInput = {
 
 export type OdOrderHeadCountOutputType = {
   details: number
+  labels: number
 }
 
 export type OdOrderHeadCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   details?: boolean | OdOrderHeadCountOutputTypeCountDetailsArgs
+  labels?: boolean | OdOrderHeadCountOutputTypeCountLabelsArgs
 }
 
 /**
@@ -1152,6 +1297,13 @@ export type OdOrderHeadCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.
  */
 export type OdOrderHeadCountOutputTypeCountDetailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OdOrderDetailWhereInput
+}
+
+/**
+ * OdOrderHeadCountOutputType without action
+ */
+export type OdOrderHeadCountOutputTypeCountLabelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OdOrderLabelHeadWhereInput
 }
 
 
@@ -1179,6 +1331,7 @@ export type OdOrderHeadSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   flgStatutActif?: boolean
   brand?: boolean | Prisma.MdBrandDefaultArgs<ExtArgs>
   details?: boolean | Prisma.OdOrderHead$detailsArgs<ExtArgs>
+  labels?: boolean | Prisma.OdOrderHead$labelsArgs<ExtArgs>
   _count?: boolean | Prisma.OdOrderHeadCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["odOrderHead"]>
 
@@ -1212,6 +1365,7 @@ export type OdOrderHeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type OdOrderHeadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   brand?: boolean | Prisma.MdBrandDefaultArgs<ExtArgs>
   details?: boolean | Prisma.OdOrderHead$detailsArgs<ExtArgs>
+  labels?: boolean | Prisma.OdOrderHead$labelsArgs<ExtArgs>
   _count?: boolean | Prisma.OdOrderHeadCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1220,6 +1374,7 @@ export type $OdOrderHeadPayload<ExtArgs extends runtime.Types.Extensions.Interna
   objects: {
     brand: Prisma.$MdBrandPayload<ExtArgs>
     details: Prisma.$OdOrderDetailPayload<ExtArgs>[]
+    labels: Prisma.$OdOrderLabelHeadPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkOrderHead: number
@@ -1591,6 +1746,7 @@ export interface Prisma__OdOrderHeadClient<T, Null = never, ExtArgs extends runt
   readonly [Symbol.toStringTag]: "PrismaPromise"
   brand<T extends Prisma.MdBrandDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdBrandDefaultArgs<ExtArgs>>): Prisma.Prisma__MdBrandClient<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   details<T extends Prisma.OdOrderHead$detailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderHead$detailsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdOrderDetailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  labels<T extends Prisma.OdOrderHead$labelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderHead$labelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdOrderLabelHeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2005,6 +2161,30 @@ export type OdOrderHead$detailsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.OdOrderDetailScalarFieldEnum | Prisma.OdOrderDetailScalarFieldEnum[]
+}
+
+/**
+ * OdOrderHead.labels
+ */
+export type OdOrderHead$labelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OdOrderLabelHead
+   */
+  select?: Prisma.OdOrderLabelHeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OdOrderLabelHead
+   */
+  omit?: Prisma.OdOrderLabelHeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OdOrderLabelHeadInclude<ExtArgs> | null
+  where?: Prisma.OdOrderLabelHeadWhereInput
+  orderBy?: Prisma.OdOrderLabelHeadOrderByWithRelationInput | Prisma.OdOrderLabelHeadOrderByWithRelationInput[]
+  cursor?: Prisma.OdOrderLabelHeadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OdOrderLabelHeadScalarFieldEnum | Prisma.OdOrderLabelHeadScalarFieldEnum[]
 }
 
 /**

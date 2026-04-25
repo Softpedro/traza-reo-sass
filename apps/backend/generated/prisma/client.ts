@@ -191,3 +191,18 @@ export type LgUserAccess = Prisma.LgUserAccessModel
  * 
  */
 export type LgParentCompany = Prisma.LgParentCompanyModel
+/**
+ * Model MdDigitalIdentifier
+ * * Maestro de identificadores digitales (QR/NFC/RFID) usados en etiquetas.
+ */
+export type MdDigitalIdentifier = Prisma.MdDigitalIdentifierModel
+/**
+ * Model OdOrderLabelHead
+ * * Cabecera de orden de etiquetas (DPP) — etapa 3 del flujo de orden de pedido.
+ */
+export type OdOrderLabelHead = Prisma.OdOrderLabelHeadModel
+/**
+ * Model OdOrderLabelDetail
+ * * Detalle (unidad serializada) de una orden de etiquetas.
+ */
+export type OdOrderLabelDetail = Prisma.OdOrderLabelDetailModel

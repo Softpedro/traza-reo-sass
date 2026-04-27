@@ -4,25 +4,26 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DataTable } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
-import { getSuministroColumns, type SuministroRow } from "./columns";
-import { SuministroModal } from "./suministro-modal";
+import { getEtiquetaColumns, type EtiquetaRow } from "./columns";
+import { EtiquetaModal } from "./etiqueta-modal";
+import { STAGE_ETIQUETA } from "./constants";
 
-export type OrderSuministroClientProps = {
+export type OrderEtiquetaClientProps = {
   kicker?: string;
   title?: string;
 };
 
-export function OrderSuministroClient({
+export function OrderEtiquetaClient({
   kicker = "Orden de Pedido",
-  title = "Suministro",
-}: OrderSuministroClientProps) {
+  title = "Etiqueta",
+}: OrderEtiquetaClientProps) {
   const router = useRouter();
-  const [rows, setRows] = useState<SuministroRow[]>([]);
+  const [rows, setRows] = useState<EtiquetaRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [createOpen, setCreateOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-  const [selected, setSelected] = useState<SuministroRow | null>(null);
+  const [selected, setSelected] = useState<EtiquetaRow | null>(null);
 
   const fetchRows = useCallback(() => {
     setLoading(true);
@@ -35,11 +36,11 @@ export function OrderSuministroClient({
         }
         return res.json();
       })
-      .then((data: SuministroRow[]) => {
-        // Sólo se muestran órdenes actualmente en Suministro (stage===2).
-        // Las concluidas pasan a Etiqueta y dejan de aparecer aquí.
+      .then((data: EtiquetaRow[]) => {
+        // Solo se muestran órdenes actualmente en Etiqueta (stage===3).
+        // Las concluidas pasan a Ruta y dejan de aparecer aquí.
         const visible = Array.isArray(data)
-          ? data.filter((r) => (r.stageOrderHead ?? 1) === 2)
+          ? data.filter((r) => (r.stageOrderHead ?? 1) === STAGE_ETIQUETA)
           : [];
         setRows(visible);
       })
@@ -48,7 +49,7 @@ export function OrderSuministroClient({
         setLoadError(
           err instanceof Error
             ? err.message
-            : "No se pudieron cargar las órdenes de suministro"
+            : "No se pudieron cargar las órdenes de etiqueta"
         );
         setRows([]);
       })
@@ -61,7 +62,7 @@ export function OrderSuministroClient({
 
   const columns = useMemo(
     () =>
-      getSuministroColumns({
+      getEtiquetaColumns({
         onCrear: (row) => {
           setSelected(row);
           setCreateOpen(true);
@@ -71,7 +72,7 @@ export function OrderSuministroClient({
           setEditOpen(true);
         },
         onDetalle: (row) => {
-          router.push(`/orden-pedido/registro/${row.idDlkOrderHead}/detalle?step=2`);
+          router.push(`/orden-pedido/registro/${row.idDlkOrderHead}/detalle?step=3`);
         },
       }),
     [router]
@@ -96,8 +97,8 @@ export function OrderSuministroClient({
         <p className="text-sm text-muted-foreground">Cargando órdenes…</p>
       ) : rows.length === 0 ? (
         <p className="text-sm text-muted-foreground">
-          No hay órdenes en Suministro. Una orden aparece aquí cuando se marca como
-          Concluida en Registro.
+          No hay órdenes en Etiqueta. Una orden aparece aquí cuando se marca como
+          Concluida en Suministro.
         </p>
       ) : (
         <div className="[&_thead_tr]:bg-orange-100 [&_thead_th]:font-semibold [&_thead_th]:text-neutral-900">
@@ -105,14 +106,20 @@ export function OrderSuministroClient({
         </div>
       )}
 
-      <SuministroModal
+      <p className="text-xs text-muted-foreground leading-relaxed">
+        <span className="font-medium">OBS:</span> Cada cabecera de etiqueta genera N unidades
+        serializadas en <code>OD_ORDER_LABEL_DETAIL</code> con su sGTIN y URL DPP. Marcar la
+        etapa como <em>Concluido</em> promueve la orden a <em>Ruta</em>.
+      </p>
+
+      <EtiquetaModal
         open={createOpen}
         onOpenChange={setCreateOpen}
         mode="create"
         order={selected}
         onSuccess={fetchRows}
       />
-      <SuministroModal
+      <EtiquetaModal
         open={editOpen}
         onOpenChange={setEditOpen}
         mode="edit"

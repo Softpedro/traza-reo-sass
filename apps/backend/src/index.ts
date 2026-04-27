@@ -51,6 +51,8 @@ import { OutputActivitiesService } from "./services/output-activities.service.js
 import { outputActivitiesRoutes } from "./routes/output-activities.routes.js";
 import { OrderHeadService } from "./services/order-head.service.js";
 import { orderHeadRoutes } from "./routes/order-head.routes.js";
+import { OrderLabelService } from "./services/order-label.service.js";
+import { orderLabelRoutes } from "./routes/order-label.routes.js";
 import { jsonBigIntMiddleware } from "./middleware/json-bigint.js";
 
 function parseDatabaseUrl(url: string) {
@@ -162,6 +164,7 @@ const procedureActivitiesService = new ProcedureActivitiesService(prisma);
 const inputActivitiesService = new InputActivitiesService(prisma);
 const outputActivitiesService = new OutputActivitiesService(prisma);
 const orderHeadService = new OrderHeadService(prisma);
+const orderLabelService = new OrderLabelService(prisma);
 
 // ── Rutas ────────────────────────────────────────────────────────────
 app.use("/api/parent-companies", parentCompanyRoutes(parentCompanyService));
@@ -188,6 +191,8 @@ app.use("/api/procedure-activities", procedureActivitiesRoutes(procedureActiviti
 app.use("/api/input-activities", inputActivitiesRoutes(inputActivitiesService));
 app.use("/api/output-activities", outputActivitiesRoutes(outputActivitiesService));
 app.use("/api/order-heads", orderHeadRoutes(orderHeadService));
+// Etiquetas (Etapa 3) anidadas bajo la orden de pedido para reflejar la dependencia 1:N.
+app.use("/api/order-heads/:id/labels", orderLabelRoutes(orderLabelService));
 
 // ── Ubigeo ───────────────────────────────────────────────────────────
 
@@ -224,6 +229,31 @@ app.get("/api/ubigeo", async (req, res) => {
     res.json(list);
   } catch (e) {
     console.error("[ubigeo:list]", e);
+    const err = errorResponse(e);
+    res.status(err.status).json(err.body);
+  }
+});
+
+// ── Identificadores digitales (MD_DIGITAL_IDENTIFIER) ────────────────
+app.get("/api/digital-identifiers", async (_req, res) => {
+  try {
+    const list = await prisma.mdDigitalIdentifier.findMany({
+      where: { flgStatutActif: 1 },
+      orderBy: { idDlkDigitalIdentifier: "asc" },
+      select: {
+        idDlkDigitalIdentifier: true,
+        codDigitalIdentifier: true,
+        typeDigitalIdentifier: true,
+        materialDigitalIdentifier: true,
+        locationDigitalIdentifier: true,
+        supplierDigitalIdentifier: true,
+        modelDigitalIdentifier: true,
+        stateDigitalIdentifier: true,
+      },
+    });
+    res.json(list);
+  } catch (e) {
+    console.error("[digital-identifiers:list]", e);
     const err = errorResponse(e);
     res.status(err.status).json(err.body);
   }

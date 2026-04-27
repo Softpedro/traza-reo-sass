@@ -315,7 +315,6 @@ export function OutputSubprocessModal({
             </div>
           )}
         </div>
-        <p className="text-xs text-muted-foreground mt-2">OBS: Tipo: 1=Materiales, 2=Documentos y 3=Informes</p>
       </DialogContent>
     </Dialog>
   );

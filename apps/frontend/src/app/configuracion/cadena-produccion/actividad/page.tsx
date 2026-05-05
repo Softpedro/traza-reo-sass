@@ -12,6 +12,7 @@ import { InputActivityModal, type InputActivityRow } from "./input-activity-moda
 import { InputActivityListDialog } from "./input-activity-list-dialog";
 import { OutputActivityModal, type OutputActivityRow } from "./output-activity-modal";
 import { OutputActivityListDialog } from "./output-activity-list-dialog";
+import { BulkUploadModal } from "@/components/bulk-upload-modal";
 
 type ModalState = {
   open: boolean;
@@ -31,6 +32,7 @@ export default function ActividadPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [generalDiagramOpen, setGeneralDiagramOpen] = useState(false);
+  const [bulkOpen, setBulkOpen] = useState(false);
   const [modal, setModal] = useState<ModalState>({ open: false, mode: "create", activity: null });
   const [procedureListOpen, setProcedureListOpen] = useState<ProcedureListState>({ open: false, activity: null, mode: "edit" });
   const [procedureModal, setProcedureModal] = useState<ProcedureModalState>({ open: false, mode: "create", activity: null, procedure: null });
@@ -200,6 +202,13 @@ export default function ActividadPage() {
             </button>
             <button
               type="button"
+              onClick={() => setBulkOpen(true)}
+              className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+            >
+              Cargar Excel
+            </button>
+            <button
+              type="button"
               onClick={openCreate}
               className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
             >
@@ -277,6 +286,17 @@ export default function ActividadPage() {
       <ActivityGeneralDiagramDialog
         open={generalDiagramOpen}
         onOpenChange={setGeneralDiagramOpen}
+      />
+
+      <BulkUploadModal
+        open={bulkOpen}
+        onOpenChange={setBulkOpen}
+        title="Carga masiva de actividades"
+        description="Sube un Excel (.xlsx) siguiendo la plantilla. El subproceso padre se identifica por su código (columna SUBPROCESO)."
+        templateUrl="/api/activities/template/download"
+        templateFilename="plantilla_actividades.xlsx"
+        uploadUrl="/api/activities/bulk-upload"
+        onSuccess={fetchItems}
       />
     </div>
   );

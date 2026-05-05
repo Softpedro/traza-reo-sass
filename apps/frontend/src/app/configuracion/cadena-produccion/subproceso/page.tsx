@@ -13,6 +13,7 @@ import { OutputSubprocessModal, type OutputSubprocessRow } from "./output-subpro
 import { OutputSubprocessListDialog } from "./output-subprocess-list-dialog";
 import { SubprocessDiagramDialog } from "./subprocess-diagram-dialog";
 import { SubprocessGeneralDiagramDialog } from "./subprocess-general-diagram-dialog";
+import { BulkUploadModal } from "@/components/bulk-upload-modal";
 
 type ModalState = {
   open: boolean;
@@ -32,6 +33,7 @@ export default function SubprocesoPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [generalDiagramOpen, setGeneralDiagramOpen] = useState(false);
+  const [bulkOpen, setBulkOpen] = useState(false);
   const [diagramSubprocess, setDiagramSubprocess] = useState<SubprocessRow | null>(null);
   const [modal, setModal] = useState<ModalState>({ open: false, mode: "create", subprocess: null });
   const [procedureListOpen, setProcedureListOpen] = useState<ProcedureListState>({ open: false, subprocess: null, mode: "edit" });
@@ -199,6 +201,13 @@ export default function SubprocesoPage() {
             </button>
             <button
               type="button"
+              onClick={() => setBulkOpen(true)}
+              className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+            >
+              Cargar Excel
+            </button>
+            <button
+              type="button"
               onClick={openCreate}
               className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
             >
@@ -282,6 +291,17 @@ export default function SubprocesoPage() {
       <SubprocessGeneralDiagramDialog
         open={generalDiagramOpen}
         onOpenChange={setGeneralDiagramOpen}
+      />
+
+      <BulkUploadModal
+        open={bulkOpen}
+        onOpenChange={setBulkOpen}
+        title="Carga masiva de subprocesos"
+        description="Sube un Excel (.xlsx) siguiendo la plantilla. El proceso padre se identifica por su código (columna PROCESO)."
+        templateUrl="/api/subprocesses/template/download"
+        templateFilename="plantilla_subprocesos.xlsx"
+        uploadUrl="/api/subprocesses/bulk-upload"
+        onSuccess={fetchItems}
       />
     </div>
   );

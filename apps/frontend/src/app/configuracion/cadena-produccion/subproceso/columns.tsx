@@ -130,23 +130,11 @@ export function getColumns(
     },
     {
       id: "iso9001",
-      header: "ISO 9001",
+      header: "Estándar de Trazbilidad",
       cell: ({ row }) => (
         <div className="flex flex-col gap-0.5 text-xs">
           <span className="flex flex-wrap items-center gap-x-1 gap-y-0.5">
-            (1) Procedure
-            {onProcedureCreate && (
-              <Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => onProcedureCreate(row.original)}>Crear</Button>
-            )}
-            {onProcedureEdit && (
-              <Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => onProcedureEdit(row.original)}>Editar</Button>
-            )}
-            {onProcedureView && (
-              <Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => onProcedureView(row.original)}>Ver</Button>
-            )}
-          </span>
-          <span className="flex flex-wrap items-center gap-x-1 gap-y-0.5">
-            (2) Input
+            (1) Input
             {onInputCreate && (
               <Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => onInputCreate(row.original)}>Crear</Button>
             )}
@@ -155,6 +143,18 @@ export function getColumns(
             )}
             {onInputView && (
               <Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => onInputView(row.original)}>Ver</Button>
+            )}
+          </span>
+          <span className="flex flex-wrap items-center gap-x-1 gap-y-0.5">
+            (2) Procedure
+            {onProcedureCreate && (
+              <Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => onProcedureCreate(row.original)}>Crear</Button>
+            )}
+            {onProcedureEdit && (
+              <Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => onProcedureEdit(row.original)}>Editar</Button>
+            )}
+            {onProcedureView && (
+              <Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => onProcedureView(row.original)}>Ver</Button>
             )}
           </span>
           <span className="flex flex-wrap items-center gap-x-1 gap-y-0.5">

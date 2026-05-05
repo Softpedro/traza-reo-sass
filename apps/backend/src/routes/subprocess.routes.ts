@@ -75,5 +75,36 @@ export function subprocessRoutes(service: SubprocessService): Router {
     }
   });
 
+  router.get("/template/download", (_req, res) => {
+    try {
+      const buf = service.buildTemplate();
+      res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      );
+      res.setHeader("Content-Disposition", 'attachment; filename="plantilla_subprocesos.xlsx"');
+      res.send(buf);
+    } catch (e) {
+      console.error("[subprocess:template]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  router.post("/bulk-upload", async (req, res) => {
+    try {
+      const fileBase64 = req.body?.fileBase64;
+      if (!fileBase64 || typeof fileBase64 !== "string") {
+        return res.status(400).json({ error: "Falta fileBase64", type: "VALIDATION" });
+      }
+      const result = await service.bulkCreate(fileBase64);
+      res.json(result);
+    } catch (e) {
+      console.error("[subprocess:bulk-upload]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
   return router;
 }

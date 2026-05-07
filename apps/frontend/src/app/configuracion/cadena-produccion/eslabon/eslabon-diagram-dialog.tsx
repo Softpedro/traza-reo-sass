@@ -31,10 +31,10 @@ export function EslabonDiagramDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-7xl max-h-[90vh] overflow-auto">
         <DialogHeader>
-          <DialogTitle>Diagrama de la cadena de Producci?n</DialogTitle>
+          <DialogTitle>Diagrama de la cadena de Producción</DialogTitle>
         </DialogHeader>
         <p className="text-sm text-muted-foreground">
-          Configuraci?n &gt; Cadena de Producci?n &gt; Eslab?n &gt; Diagrama general
+          Configuración &gt; Cadena de Producción &gt; Eslabón &gt; Diagrama general
         </p>
 
         <div className="flex flex-col gap-6 py-4">

@@ -6,6 +6,7 @@ import { apiUrl } from "@/lib/api";
 import { getColumns, type ActivityRow } from "./columns";
 import { ActividadModal } from "./actividad-modal";
 import { ActivityGeneralDiagramDialog } from "./activity-general-diagram-dialog";
+import { ActivityDiagramDialog } from "./activity-diagram-dialog";
 import { ProcedureActivityModal, type ProcedureActivityRow } from "./procedure-activity-modal";
 import { ProcedureActivityListDialog } from "./procedure-activity-list-dialog";
 import { InputActivityModal, type InputActivityRow } from "./input-activity-modal";
@@ -32,6 +33,7 @@ export default function ActividadPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [generalDiagramOpen, setGeneralDiagramOpen] = useState(false);
+  const [diagramActivity, setDiagramActivity] = useState<ActivityRow | null>(null);
   const [bulkOpen, setBulkOpen] = useState(false);
   const [modal, setModal] = useState<ModalState>({ open: false, mode: "create", activity: null });
   const [procedureListOpen, setProcedureListOpen] = useState<ProcedureListState>({ open: false, activity: null, mode: "edit" });
@@ -70,9 +72,7 @@ export default function ActividadPage() {
 
   const openCreate = () => setModal({ open: true, mode: "create", activity: null });
   const openEdit = useCallback((row: ActivityRow) => setModal({ open: true, mode: "edit", activity: row }), []);
-  const openVerDiagrama = useCallback((_row: ActivityRow) => {
-    setGeneralDiagramOpen(true);
-  }, []);
+  const openVerDiagrama = useCallback((row: ActivityRow) => setDiagramActivity(row), []);
 
   const openProcedureCreate = useCallback((row: ActivityRow) => {
     setProcedureListOpen((prev) => ({ ...prev, open: false }));
@@ -281,6 +281,12 @@ export default function ActividadPage() {
         activity={outputModal.activity}
         output={outputModal.output}
         onSuccess={fetchItems}
+      />
+
+      <ActivityDiagramDialog
+        open={!!diagramActivity}
+        onOpenChange={(open) => !open && setDiagramActivity(null)}
+        activity={diagramActivity}
       />
 
       <ActivityGeneralDiagramDialog

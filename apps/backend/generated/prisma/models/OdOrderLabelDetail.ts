@@ -289,7 +289,7 @@ export type OdOrderLabelDetailGroupByOutputType = {
   _max: OdOrderLabelDetailMaxAggregateOutputType | null
 }
 
-type GetOdOrderLabelDetailGroupByPayload<T extends OdOrderLabelDetailGroupByArgs> = Prisma.PrismaPromise<
+export type GetOdOrderLabelDetailGroupByPayload<T extends OdOrderLabelDetailGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<OdOrderLabelDetailGroupByOutputType, T['by']> &
       {
@@ -1485,6 +1485,11 @@ export type OdOrderLabelDetailFindManyArgs<ExtArgs extends runtime.Types.Extensi
    * Skip the first `n` OdOrderLabelDetails.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of OdOrderLabelDetails.
+   */
   distinct?: Prisma.OdOrderLabelDetailScalarFieldEnum | Prisma.OdOrderLabelDetailScalarFieldEnum[]
 }
 

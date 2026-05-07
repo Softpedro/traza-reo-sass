@@ -346,7 +346,7 @@ export type MdAvioGroupByOutputType = {
   _max: MdAvioMaxAggregateOutputType | null
 }
 
-type GetMdAvioGroupByPayload<T extends MdAvioGroupByArgs> = Prisma.PrismaPromise<
+export type GetMdAvioGroupByPayload<T extends MdAvioGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MdAvioGroupByOutputType, T['by']> &
       {
@@ -1728,6 +1728,11 @@ export type MdAvioFindManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Skip the first `n` MdAvios.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MdAvios.
+   */
   distinct?: Prisma.MdAvioScalarFieldEnum | Prisma.MdAvioScalarFieldEnum[]
 }
 

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getColumns, type Material } from "./columns";
 import { MaterialModal } from "./material-modal";
 import { BulkUploadModal } from "@/components/bulk-upload-modal";
@@ -20,14 +20,13 @@ export default function MaterialesPage() {
   const [modal, setModal] = useState<ModalState>({
     open: false,
     mode: "create",
-    material: null,
-  });
+    material: null});
   const [bulkOpen, setBulkOpen] = useState(false);
 
   const fetchList = useCallback(() => {
     setLoading(true);
     setListError(null);
-    fetch(apiUrl("/api/materials"))
+    apiFetch("/api/materials")
       .then(async (res) => {
         const data: unknown = await res.json();
         if (!res.ok) {
@@ -107,8 +106,7 @@ export default function MaterialesPage() {
           setModal((prev) => ({
             ...prev,
             open,
-            material: open ? prev.material : null,
-          }))
+            material: open ? prev.material : null}))
         }
         mode={modal.mode}
         material={modal.material}

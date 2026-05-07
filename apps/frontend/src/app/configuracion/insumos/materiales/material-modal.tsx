@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { Material } from "./columns";
 
 type ModalMode = "create" | "edit" | "view";
@@ -240,7 +241,7 @@ export function MaterialModal({ open, onOpenChange, mode, material, onSuccess }:
 
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/suppliers"))
+    apiFetch("/api/suppliers")
       .then(async (res) => {
         const data: unknown = await res.json();
         if (!res.ok || !Array.isArray(data)) {
@@ -282,7 +283,7 @@ export function MaterialModal({ open, onOpenChange, mode, material, onSuccess }:
     let cancelled = false;
     void (async () => {
       try {
-        const res = await fetch(apiUrl(`/api/materials/${material.idDlkMaterial}`));
+        const res = await apiFetch(`/api/materials/${material.idDlkMaterial}`);
         if (!res.ok) return;
         const detail = (await res.json()) as Material;
         if (cancelled) return;
@@ -342,7 +343,7 @@ export function MaterialModal({ open, onOpenChange, mode, material, onSuccess }:
         payload.stateMaterials = Number(form.stateMaterials);
       }
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

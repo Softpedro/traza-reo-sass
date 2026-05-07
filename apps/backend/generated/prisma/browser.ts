@@ -158,6 +158,11 @@ export type MdSubbrand = Prisma.MdSubbrandModel
  */
 export type MdUserReo = Prisma.MdUserReoModel
 /**
+ * Model MdUserBackupCode
+ * 
+ */
+export type MdUserBackupCode = Prisma.MdUserBackupCodeModel
+/**
  * Model LgUserAccess
  * 
  */

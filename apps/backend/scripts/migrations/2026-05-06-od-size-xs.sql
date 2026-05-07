@@ -1,0 +1,13 @@
+-- Talla XS para OD_ORDER_DETAIL.
+-- Aplicar a local y prod. Idempotente: solo agrega si no existe.
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'OD_ORDER_DETAIL'
+    AND COLUMN_NAME = 'SIZE_XS'
+);
+SET @sql := IF(@col_exists = 0,
+  'ALTER TABLE OD_ORDER_DETAIL ADD COLUMN SIZE_XS INT NOT NULL DEFAULT 0 AFTER SIZE_16',
+  'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;

@@ -18,6 +18,7 @@ import {
 } from "@fullstack-reo/ui";
 import { UbigeoSelector } from "@/components/ubigeo-selector";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { Subbrand } from "./columns";
 
 function logoSrcFromApi(logo: string | null | undefined): string | null {
@@ -93,17 +94,17 @@ export function SubmarcaModal({
 
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/parent-companies"))
+    apiFetch("/api/parent-companies")
       .then((res) => res.json())
       .then((data: ParentCompanyOption[]) => setEmpresas(data))
       .catch((err) => console.error("Error al cargar empresas:", err));
 
-    fetch(apiUrl("/api/brands"))
+    apiFetch("/api/brands")
       .then((res) => res.json())
       .then((data: BrandOption[]) => setBrands(data))
       .catch((err) => console.error("Error al cargar marcas:", err));
 
-    fetch(apiUrl("/api/ubigeo"))
+    apiFetch("/api/ubigeo")
       .then((res) => res.json())
       .then((data: UbigeoOption[]) => setUbigeos(data))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
@@ -153,7 +154,7 @@ export function SubmarcaModal({
     let cancelled = false;
     void (async () => {
       try {
-        const res = await fetch(apiUrl(`/api/subbrands/${item.idDlkSubbrand}`));
+        const res = await apiFetch(`/api/subbrands/${item.idDlkSubbrand}`);
         if (!res.ok) return;
         const detail = (await res.json()) as Subbrand;
         if (cancelled) return;
@@ -248,7 +249,7 @@ export function SubmarcaModal({
         delete (payload as Record<string, unknown>).logoSubbrand;
       }
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

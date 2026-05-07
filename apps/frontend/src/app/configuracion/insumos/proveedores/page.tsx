@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getColumns, type Supplier } from "./columns";
 import { ProveedorModal } from "./proveedor-modal";
 
@@ -18,12 +18,11 @@ export default function ProveedoresPage() {
   const [modal, setModal] = useState<ModalState>({
     open: false,
     mode: "create",
-    proveedor: null,
-  });
+    proveedor: null});
 
   const fetchList = useCallback(() => {
     setLoading(true);
-    fetch(apiUrl("/api/suppliers"))
+    apiFetch("/api/suppliers")
       .then((res) => res.json())
       .then((data) => setRows(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error al cargar proveedores:", err))
@@ -73,8 +72,7 @@ export default function ProveedoresPage() {
           setModal((prev) => ({
             ...prev,
             open,
-            proveedor: open ? prev.proveedor : null,
-          }))
+            proveedor: open ? prev.proveedor : null}))
         }
         mode={modal.mode}
         proveedor={modal.proveedor}

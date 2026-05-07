@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getEtiquetaColumns, type EtiquetaRow } from "./columns";
 import { EtiquetaModal } from "./etiqueta-modal";
 import { STAGE_ETIQUETA } from "./constants";
@@ -15,8 +15,7 @@ export type OrderEtiquetaClientProps = {
 
 export function OrderEtiquetaClient({
   kicker = "Orden de Pedido",
-  title = "Etiqueta",
-}: OrderEtiquetaClientProps) {
+  title = "Etiqueta"}: OrderEtiquetaClientProps) {
   const router = useRouter();
   const [rows, setRows] = useState<EtiquetaRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +27,7 @@ export function OrderEtiquetaClient({
   const fetchRows = useCallback(() => {
     setLoading(true);
     setLoadError(null);
-    fetch(apiUrl(`/api/order-heads`))
+    apiFetch(`/api/order-heads`)
       .then(async (res) => {
         if (!res.ok) {
           const j = await res.json().catch(() => ({}));
@@ -73,8 +72,7 @@ export function OrderEtiquetaClient({
         },
         onDetalle: (row) => {
           router.push(`/orden-pedido/registro/${row.idDlkOrderHead}/detalle?step=3`);
-        },
-      }),
+        }}),
     [router]
   );
 

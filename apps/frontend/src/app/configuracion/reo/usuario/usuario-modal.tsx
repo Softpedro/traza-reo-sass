@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { UserReo } from "./columns";
 import { POSITION_USER_LABELS, ROL_USER_LABELS } from "./columns";
 
@@ -89,7 +90,7 @@ export function UsuarioModal({
 
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/parent-companies"))
+    apiFetch("/api/parent-companies")
       .then((res) => res.json())
       .then((data: ParentCompanyOption[]) => setEmpresas(data))
       .catch((err) => console.error("Error al cargar empresas:", err));
@@ -141,7 +142,7 @@ export function UsuarioModal({
     let cancelled = false;
     void (async () => {
       try {
-        const res = await fetch(apiUrl(`/api/users/${usuario.idDlkUserReo}`));
+        const res = await apiFetch(`/api/users/${usuario.idDlkUserReo}`);
         if (!res.ok) return;
         const detail = (await res.json()) as UserReo;
         if (cancelled) return;
@@ -229,7 +230,7 @@ export function UsuarioModal({
         delete payload.password;
       }
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

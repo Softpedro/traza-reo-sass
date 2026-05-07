@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { OrderDetailRow } from "./order-detail-columns";
 
 type Props = {
@@ -53,6 +54,7 @@ const NUMERIC_SIZES = [
 ] as const;
 
 const LETTER_SIZES = [
+  { key: "sizeXs", label: "XS" },
   { key: "sizeS", label: "S" },
   { key: "sizeM", label: "M" },
   { key: "sizeL", label: "L" },
@@ -218,8 +220,8 @@ export function OrderDetailEditModal({ open, onOpenChange, headId, row, onSucces
         payload.clearImgEstilo = true;
       }
 
-      const res = await fetch(
-        apiUrl(`/api/order-heads/${headId}/details/${row.idDlkOrderDetail}`),
+      const res = await apiFetch(
+        `/api/order-heads/${headId}/details/${row.idDlkOrderDetail}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

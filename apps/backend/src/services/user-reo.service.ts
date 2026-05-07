@@ -1,5 +1,14 @@
 import { Buffer } from "node:buffer";
+import bcrypt from "bcrypt";
 import type { MdUserReo, PrismaClient } from "../../generated/prisma/client.js";
+
+const BCRYPT_ROUNDS = 12;
+
+/** Hashea solo si el valor no parece ser ya un hash bcrypt ($2a$/$2b$/$2y$). */
+async function ensureHashed(plainOrHash: string): Promise<string> {
+  if (/^\$2[aby]\$/.test(plainOrHash)) return plainOrHash;
+  return bcrypt.hash(plainOrHash, BCRYPT_ROUNDS);
+}
 
 function photoBytesToDataUrl(photo: Uint8Array | Buffer | null | undefined): string | null {
   if (photo == null || photo.byteLength === 0) return null;
@@ -99,6 +108,8 @@ export class UserReoService {
       codUserReo = `US-${lastNum + 1}`;
     }
 
+    const hashedPassword = await ensureHashed(data.password);
+
     const created = await this.prisma.mdUserReo.create({
       data: {
         codUserReo,
@@ -115,8 +126,7 @@ export class UserReoService {
         emailUser: data.emailUser,
         cellularUser: data.cellularUser,
         userLogin: data.userLogin,
-        // TODO: aplicar hash de contraseña en producción
-        password: data.password,
+        password: hashedPassword,
         ...(data.photograph
           ? { photograph: Buffer.from(data.photograph, "base64") }
           : {}),
@@ -180,7 +190,7 @@ export class UserReoService {
     }
 
     if (data.password) {
-      updateData.password = data.password;
+      updateData.password = await ensureHashed(data.password);
     }
 
     if (data.photograph) {

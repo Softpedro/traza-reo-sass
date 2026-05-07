@@ -79,6 +79,7 @@ export const ModelName = {
   MdParentCompanyMaquila: 'MdParentCompanyMaquila',
   MdSubbrand: 'MdSubbrand',
   MdUserReo: 'MdUserReo',
+  MdUserBackupCode: 'MdUserBackupCode',
   LgUserAccess: 'LgUserAccess',
   LgParentCompany: 'LgParentCompany',
   MdDigitalIdentifier: 'MdDigitalIdentifier',
@@ -341,6 +342,7 @@ export const OdOrderDetailScalarFieldEnum = {
   size12: 'size12',
   size14: 'size14',
   size16: 'size16',
+  sizeXs: 'sizeXs',
   sizeS: 'sizeS',
   sizeM: 'sizeM',
   sizeL: 'sizeL',
@@ -804,6 +806,7 @@ export const MdUserReoScalarFieldEnum = {
   lastLoginIp: 'lastLoginIp',
   passwordExpiresAt: 'passwordExpiresAt',
   twoFactorSecret: 'twoFactorSecret',
+  twoFactorEnabled: 'twoFactorEnabled',
   stateUser: 'stateUser',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fehProcesoCargaDl: 'fehProcesoCargaDl',
@@ -813,6 +816,17 @@ export const MdUserReoScalarFieldEnum = {
 } as const
 
 export type MdUserReoScalarFieldEnum = (typeof MdUserReoScalarFieldEnum)[keyof typeof MdUserReoScalarFieldEnum]
+
+
+export const MdUserBackupCodeScalarFieldEnum = {
+  idBackupCode: 'idBackupCode',
+  idDlkUserReo: 'idDlkUserReo',
+  codeHash: 'codeHash',
+  usedAt: 'usedAt',
+  fehProcesoCargaDl: 'fehProcesoCargaDl'
+} as const
+
+export type MdUserBackupCodeScalarFieldEnum = (typeof MdUserBackupCodeScalarFieldEnum)[keyof typeof MdUserBackupCodeScalarFieldEnum]
 
 
 export const LgUserAccessScalarFieldEnum = {
@@ -1418,15 +1432,20 @@ export const MdUserReoOrderByRelevanceFieldEnum = {
 export type MdUserReoOrderByRelevanceFieldEnum = (typeof MdUserReoOrderByRelevanceFieldEnum)[keyof typeof MdUserReoOrderByRelevanceFieldEnum]
 
 
+export const MdUserBackupCodeOrderByRelevanceFieldEnum = {
+  codeHash: 'codeHash'
+} as const
+
+export type MdUserBackupCodeOrderByRelevanceFieldEnum = (typeof MdUserBackupCodeOrderByRelevanceFieldEnum)[keyof typeof MdUserBackupCodeOrderByRelevanceFieldEnum]
+
+
 export const LgUserAccessOrderByRelevanceFieldEnum = {
   ipAddress: 'ipAddress',
   browser: 'browser',
   browserVersion: 'browserVersion',
   operatingSystem: 'operatingSystem',
-  deviceType: 'deviceType',
   city: 'city',
   country: 'country',
-  accessStatus: 'accessStatus',
   userAgentRaw: 'userAgentRaw'
 } as const
 

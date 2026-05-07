@@ -295,7 +295,7 @@ export type MdSupplierGroupByOutputType = {
   _max: MdSupplierMaxAggregateOutputType | null
 }
 
-type GetMdSupplierGroupByPayload<T extends MdSupplierGroupByArgs> = Prisma.PrismaPromise<
+export type GetMdSupplierGroupByPayload<T extends MdSupplierGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MdSupplierGroupByOutputType, T['by']> &
       {
@@ -1618,6 +1618,11 @@ export type MdSupplierFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Skip the first `n` MdSuppliers.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MdSuppliers.
+   */
   distinct?: Prisma.MdSupplierScalarFieldEnum | Prisma.MdSupplierScalarFieldEnum[]
 }
 

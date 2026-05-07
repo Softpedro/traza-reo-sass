@@ -32,6 +32,7 @@ export type OrderDetailRow = {
   size12: number | null;
   size14: number | null;
   size16: number | null;
+  sizeXs: number | null;
   sizeS: number | null;
   sizeM: number | null;
   sizeL: number | null;
@@ -51,6 +52,7 @@ function q(n: number | null | undefined) {
 type ColumnOpts = {
   onEdit?: (row: OrderDetailRow) => void;
   onView?: (row: OrderDetailRow) => void;
+  onImageClick?: (row: OrderDetailRow, src: string) => void;
   /** Fuerza recargar la imagen tras editar. Se incluye en el query string del src. */
   imageVersion?: number;
 };
@@ -59,7 +61,7 @@ export function getOrderDetailColumns(
   headId: number,
   opts: ColumnOpts = {}
 ): ColumnDef<OrderDetailRow>[] {
-  const { onEdit, onView, imageVersion = 0 } = opts;
+  const { onEdit, onView, onImageClick, imageVersion = 0 } = opts;
   return [
     {
       accessorKey: "codOrderDetail",
@@ -97,14 +99,26 @@ export function getOrderDetailColumns(
         if (!r.hasImgEstilo) return "—";
         const base = apiUrl(`/api/order-heads/${headId}/details/${r.idDlkOrderDetail}/image`);
         const src = imageVersion > 0 ? `${base}?v=${imageVersion}` : base;
-        return (
-          // eslint-disable-next-line @next/next/no-img-element -- binario servido por API propia
+        const altText = r.nomEstilo?.trim() ? r.nomEstilo : "Estilo";
+        // eslint-disable-next-line @next/next/no-img-element -- binario servido por API propia
+        const thumb = (
           <img
             src={src}
-            alt={r.nomEstilo?.trim() ? r.nomEstilo : "Estilo"}
-            className="h-11 w-11 rounded border border-border object-cover bg-muted"
+            alt={altText}
+            className="h-11 w-11 rounded border border-border bg-muted"
             loading="lazy"
           />
+        );
+        if (!onImageClick) return thumb;
+        return (
+          <button
+            type="button"
+            onClick={() => onImageClick(r, src)}
+            className="cursor-zoom-in rounded transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            title="Ver imagen"
+          >
+            {thumb}
+          </button>
         );
       },
     },
@@ -129,9 +143,12 @@ export function getOrderDetailColumns(
     { accessorKey: "size8", header: "8", cell: ({ row }) => q(row.original.size8) },
     { accessorKey: "size10", header: "10", cell: ({ row }) => q(row.original.size10) },
     { accessorKey: "size12", header: "12", cell: ({ row }) => q(row.original.size12) },
+    { accessorKey: "sizeXs", header: "XS", cell: ({ row }) => q(row.original.sizeXs) },
     { accessorKey: "sizeS", header: "S", cell: ({ row }) => q(row.original.sizeS) },
     { accessorKey: "sizeM", header: "M", cell: ({ row }) => q(row.original.sizeM) },
     { accessorKey: "sizeL", header: "L", cell: ({ row }) => q(row.original.sizeL) },
+    { accessorKey: "sizeXl", header: "XL", cell: ({ row }) => q(row.original.sizeXl) },
+    { accessorKey: "sizeXxl", header: "XXL", cell: ({ row }) => q(row.original.sizeXxl) },
     {
       id: "acciones",
       header: "Acciones",

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getColumns, type Eslabon } from "./columns";
 import { EslabonModal } from "./eslabon-modal";
 import { EslabonDiagramDialog } from "./eslabon-diagram-dialog";
@@ -20,13 +20,12 @@ export default function EslabonPage() {
   const [modal, setModal] = useState<ModalState>({
     open: false,
     mode: "create",
-    eslabon: null,
-  });
+    eslabon: null});
   const [diagramOpen, setDiagramOpen] = useState(false);
 
   const fetchItems = useCallback(() => {
     setLoading(true);
-    fetch(apiUrl("/api/production-chains"))
+    apiFetch("/api/production-chains")
       .then((res) => res.json())
       .then((data: Eslabon[]) => setItems(data))
       .catch((err) => console.error("Error al cargar eslabones:", err))

@@ -34,6 +34,7 @@ const NUMERIC_SIZES: { key: keyof OrderDetailRow; label: string }[] = [
 ];
 
 const LETTER_SIZES: { key: keyof OrderDetailRow; label: string }[] = [
+  { key: "sizeXs", label: "XS" },
   { key: "sizeS", label: "S" },
   { key: "sizeM", label: "M" },
   { key: "sizeL", label: "L" },

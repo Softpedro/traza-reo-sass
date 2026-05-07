@@ -327,7 +327,7 @@ export type MdBrandGroupByOutputType = {
   _max: MdBrandMaxAggregateOutputType | null
 }
 
-type GetMdBrandGroupByPayload<T extends MdBrandGroupByArgs> = Prisma.PrismaPromise<
+export type GetMdBrandGroupByPayload<T extends MdBrandGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MdBrandGroupByOutputType, T['by']> &
       {
@@ -2016,6 +2016,11 @@ export type MdBrandFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Skip the first `n` MdBrands.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MdBrands.
+   */
   distinct?: Prisma.MdBrandScalarFieldEnum | Prisma.MdBrandScalarFieldEnum[]
 }
 

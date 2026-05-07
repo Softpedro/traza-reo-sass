@@ -6,9 +6,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  Button,
-} from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+  Button} from "@fullstack-reo/ui";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ProcessRow } from "./columns";
 import type { ProcedureProcessRow } from "./procedure-process-modal";
 
@@ -27,15 +26,14 @@ export function ProcedureListDialog({
   process,
   mode,
   onCrear,
-  onSelectProcedure,
-}: ProcedureListDialogProps) {
+  onSelectProcedure}: ProcedureListDialogProps) {
   const [procedures, setProcedures] = useState<ProcedureProcessRow[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!open || !process) return;
     setLoading(true);
-    fetch(apiUrl(`/api/procedure-processes?processId=${process.idDlkProcess}`))
+    apiFetch(`/api/procedure-processes?processId=${process.idDlkProcess}`)
       .then((res) => res.json())
       .then((data: ProcedureProcessRow[]) => setProcedures(data))
       .catch((err) => console.error("Error al cargar procedures:", err))

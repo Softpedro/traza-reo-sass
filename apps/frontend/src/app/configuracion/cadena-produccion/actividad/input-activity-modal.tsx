@@ -16,6 +16,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ActivityRow } from "./columns";
 
 export type InputActivityRow = {
@@ -142,7 +143,7 @@ export function InputActivityModal({
               stateInputActivities: Number(form.stateInputActivities),
             };
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

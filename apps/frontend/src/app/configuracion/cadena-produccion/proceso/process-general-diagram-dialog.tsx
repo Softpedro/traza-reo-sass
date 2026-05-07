@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { Eslabon } from "../eslabon/columns";
 import type { ProcessRow } from "./columns";
 import { ProcessGeneralChainFlow } from "./process-general-chain-flow";
@@ -14,8 +14,7 @@ interface ProcessGeneralDiagramDialogProps {
 
 export function ProcessGeneralDiagramDialog({
   open,
-  onOpenChange,
-}: ProcessGeneralDiagramDialogProps) {
+  onOpenChange}: ProcessGeneralDiagramDialogProps) {
   const [eslabones, setEslabones] = useState<Eslabon[]>([]);
   const [processes, setProcesses] = useState<ProcessRow[]>([]);
   const [loading, setLoading] = useState(false);
@@ -24,8 +23,8 @@ export function ProcessGeneralDiagramDialog({
     if (!open) return;
     setLoading(true);
     Promise.all([
-      fetch(apiUrl("/api/production-chains")).then((r) => r.json()),
-      fetch(apiUrl("/api/processes")).then((r) => r.json()),
+      apiFetch("/api/production-chains").then((r) => r.json()),
+      apiFetch("/api/processes").then((r) => r.json()),
     ])
       .then(([chains, procs]) => {
         setEslabones(Array.isArray(chains) ? chains : []);

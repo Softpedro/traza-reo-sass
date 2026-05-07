@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getOrderHeadColumns, type OrderHeadRow } from "./columns";
 import { OrderHeadModal } from "./order-head-modal";
 import { OrderHeadVerModal } from "./order-head-ver-modal";
@@ -17,8 +17,7 @@ export type OrderRegistroClientProps = {
 
 export function OrderRegistroClient({
   kicker = "Orden de Pedido",
-  title = "Registro",
-}: OrderRegistroClientProps) {
+  title = "Registro"}: OrderRegistroClientProps) {
   const router = useRouter();
   const [rows, setRows] = useState<OrderHeadRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +30,7 @@ export function OrderRegistroClient({
   const fetchRows = useCallback(() => {
     setLoading(true);
     setLoadError(null);
-    fetch(apiUrl("/api/order-heads"))
+    apiFetch("/api/order-heads")
       .then(async (res) => {
         if (!res.ok) {
           const j = await res.json().catch(() => ({}));
@@ -71,8 +70,7 @@ export function OrderRegistroClient({
         },
         onDetalle: (row) => {
           router.push(`/orden-pedido/registro/${row.idDlkOrderHead}/detalle`);
-        },
-      }),
+        }}),
     [router]
   );
 

@@ -23,6 +23,8 @@ import { AviosService } from "./services/avios.service.js";
 import { aviosRoutes } from "./routes/avios.routes.js";
 import { UserReoService } from "./services/user-reo.service.js";
 import { userReoRoutes } from "./routes/user-reo.routes.js";
+import { AuthService } from "./services/auth.service.js";
+import { authRoutes } from "./routes/auth.routes.js";
 import { ProductionChainService } from "./services/production-chain.service.js";
 import { productionChainRoutes } from "./routes/production-chain.routes.js";
 import { ProcessService } from "./services/process.service.js";
@@ -54,6 +56,7 @@ import { orderHeadRoutes } from "./routes/order-head.routes.js";
 import { OrderLabelService } from "./services/order-label.service.js";
 import { orderLabelRoutes } from "./routes/order-label.routes.js";
 import { jsonBigIntMiddleware } from "./middleware/json-bigint.js";
+import { authMiddleware } from "./middleware/auth.middleware.js";
 
 function parseDatabaseUrl(url: string) {
   const u = new URL(url);
@@ -86,6 +89,8 @@ const prisma = new PrismaClient({ adapter });
 
 const app = express();
 const PORT = process.env.PORT ?? 4000;
+// Detrás de Seenode/Cloudflare. Hace que req.ip lea X-Forwarded-For.
+app.set("trust proxy", true);
 
 const defaultDevOrigins = ["http://localhost:3000", "http://localhost:3001"];
 const corsAllowed = process.env.CORS_ORIGIN
@@ -150,6 +155,7 @@ const supplierService = new SupplierService(prisma);
 const materialService = new MaterialService(prisma);
 const aviosService = new AviosService(prisma);
 const userReoService = new UserReoService(prisma);
+const authService = new AuthService(prisma);
 const productionChainService = new ProductionChainService(prisma);
 const processService = new ProcessService(prisma);
 const inputProcessService = new InputProcessService(prisma);
@@ -166,7 +172,21 @@ const outputActivitiesService = new OutputActivitiesService(prisma);
 const orderHeadService = new OrderHeadService(prisma);
 const orderLabelService = new OrderLabelService(prisma);
 
-// ── Rutas ────────────────────────────────────────────────────────────
+// ── Rutas públicas (sin token) ──────────────────────────────────────
+// /api/auth incluye POST /login (público) y GET /me (protegido a nivel de ruta).
+app.use("/api/auth", authRoutes(authService));
+
+// ── Guard global: requiere JWT para todo /api/* salvo lo público listado ─
+// Se exceptúa la ruta de imagen de detalles porque se consume desde <img src>
+// (el browser no envía Authorization en pedidos de imagen).
+app.use(
+  "/api",
+  authMiddleware(authService, {
+    publicPaths: [/^\/api\/order-heads\/\d+\/details\/\d+\/image$/],
+  })
+);
+
+// ── Rutas protegidas ────────────────────────────────────────────────
 app.use("/api/parent-companies", parentCompanyRoutes(parentCompanyService));
 app.use("/api/facilities", facilityRoutes(facilityService));
 app.use("/api/maquilas", maquilaRoutes(maquilaService));

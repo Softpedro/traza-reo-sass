@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ProcessRow } from "./columns";
 import type { InputProcessRow } from "./input-process-modal";
 import type { OutputProcessRow } from "./output-process-modal";
@@ -18,8 +18,7 @@ interface ProcessDiagramDialogProps {
 export function ProcessDiagramDialog({
   open,
   onOpenChange,
-  process,
-}: ProcessDiagramDialogProps) {
+  process}: ProcessDiagramDialogProps) {
   const [procedures, setProcedures] = useState<ProcedureProcessRow[]>([]);
   const [inputs, setInputs] = useState<InputProcessRow[]>([]);
   const [outputs, setOutputs] = useState<OutputProcessRow[]>([]);
@@ -30,9 +29,9 @@ export function ProcessDiagramDialog({
     const id = process.idDlkProcess;
     setLoading(true);
     Promise.all([
-      fetch(apiUrl(`/api/procedure-processes?processId=${id}`)).then((r) => r.json()),
-      fetch(apiUrl(`/api/input-processes?processId=${id}`)).then((r) => r.json()),
-      fetch(apiUrl(`/api/output-processes?processId=${id}`)).then((r) => r.json()),
+      apiFetch(`/api/procedure-processes?processId=${id}`).then((r) => r.json()),
+      apiFetch(`/api/input-processes?processId=${id}`).then((r) => r.json()),
+      apiFetch(`/api/output-processes?processId=${id}`).then((r) => r.json()),
     ])
       .then(([procs, ins, outs]) => {
         setProcedures(Array.isArray(procs) ? procs : []);

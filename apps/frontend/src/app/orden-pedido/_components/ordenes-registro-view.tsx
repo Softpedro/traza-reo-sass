@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DataTable, Card, CardContent } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { columns, type OrdenPedido } from "@/app/ordenes/columns";
 
 type Props = {
@@ -14,7 +14,7 @@ export function OrdenesRegistroView({ title = "Estado de Orden de Pedido" }: Pro
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(apiUrl("/api/ordenes"))
+    apiFetch("/api/ordenes")
       .then((res) => res.json())
       .then((data) => setOrdenes(data))
       .catch((err) => console.error("Error al cargar órdenes:", err))

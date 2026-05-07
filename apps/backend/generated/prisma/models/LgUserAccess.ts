@@ -47,12 +47,12 @@ export type LgUserAccessMinAggregateOutputType = {
   browser: string | null
   browserVersion: string | null
   operatingSystem: string | null
-  deviceType: string | null
+  deviceType: $Enums.DeviceType | null
   latitude: runtime.Decimal | null
   longitude: runtime.Decimal | null
   city: string | null
   country: string | null
-  accessStatus: string | null
+  accessStatus: $Enums.AccessStatus | null
   fehAccess: Date | null
   userAgentRaw: string | null
 }
@@ -64,12 +64,12 @@ export type LgUserAccessMaxAggregateOutputType = {
   browser: string | null
   browserVersion: string | null
   operatingSystem: string | null
-  deviceType: string | null
+  deviceType: $Enums.DeviceType | null
   latitude: runtime.Decimal | null
   longitude: runtime.Decimal | null
   city: string | null
   country: string | null
-  accessStatus: string | null
+  accessStatus: $Enums.AccessStatus | null
   fehAccess: Date | null
   userAgentRaw: string | null
 }
@@ -252,13 +252,13 @@ export type LgUserAccessGroupByOutputType = {
   browser: string | null
   browserVersion: string | null
   operatingSystem: string | null
-  deviceType: string | null
+  deviceType: $Enums.DeviceType
   latitude: runtime.Decimal | null
   longitude: runtime.Decimal | null
   city: string | null
   country: string | null
-  accessStatus: string
-  fehAccess: Date | null
+  accessStatus: $Enums.AccessStatus
+  fehAccess: Date
   userAgentRaw: string | null
   _count: LgUserAccessCountAggregateOutputType | null
   _avg: LgUserAccessAvgAggregateOutputType | null
@@ -267,7 +267,7 @@ export type LgUserAccessGroupByOutputType = {
   _max: LgUserAccessMaxAggregateOutputType | null
 }
 
-type GetLgUserAccessGroupByPayload<T extends LgUserAccessGroupByArgs> = Prisma.PrismaPromise<
+export type GetLgUserAccessGroupByPayload<T extends LgUserAccessGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<LgUserAccessGroupByOutputType, T['by']> &
       {
@@ -292,13 +292,13 @@ export type LgUserAccessWhereInput = {
   browser?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
   browserVersion?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
   operatingSystem?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
-  deviceType?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
+  deviceType?: Prisma.EnumDeviceTypeFilter<"LgUserAccess"> | $Enums.DeviceType
   latitude?: Prisma.DecimalNullableFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: Prisma.DecimalNullableFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
   country?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
-  accessStatus?: Prisma.StringFilter<"LgUserAccess"> | string
-  fehAccess?: Prisma.DateTimeNullableFilter<"LgUserAccess"> | Date | string | null
+  accessStatus?: Prisma.EnumAccessStatusFilter<"LgUserAccess"> | $Enums.AccessStatus
+  fehAccess?: Prisma.DateTimeFilter<"LgUserAccess"> | Date | string
   userAgentRaw?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
   user?: Prisma.XOR<Prisma.MdUserReoScalarRelationFilter, Prisma.MdUserReoWhereInput>
 }
@@ -310,13 +310,13 @@ export type LgUserAccessOrderByWithRelationInput = {
   browser?: Prisma.SortOrderInput | Prisma.SortOrder
   browserVersion?: Prisma.SortOrderInput | Prisma.SortOrder
   operatingSystem?: Prisma.SortOrderInput | Prisma.SortOrder
-  deviceType?: Prisma.SortOrderInput | Prisma.SortOrder
+  deviceType?: Prisma.SortOrder
   latitude?: Prisma.SortOrderInput | Prisma.SortOrder
   longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   accessStatus?: Prisma.SortOrder
-  fehAccess?: Prisma.SortOrderInput | Prisma.SortOrder
+  fehAccess?: Prisma.SortOrder
   userAgentRaw?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.MdUserReoOrderByWithRelationInput
   _relevance?: Prisma.LgUserAccessOrderByRelevanceInput
@@ -332,13 +332,13 @@ export type LgUserAccessWhereUniqueInput = Prisma.AtLeast<{
   browser?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
   browserVersion?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
   operatingSystem?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
-  deviceType?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
+  deviceType?: Prisma.EnumDeviceTypeFilter<"LgUserAccess"> | $Enums.DeviceType
   latitude?: Prisma.DecimalNullableFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: Prisma.DecimalNullableFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
   country?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
-  accessStatus?: Prisma.StringFilter<"LgUserAccess"> | string
-  fehAccess?: Prisma.DateTimeNullableFilter<"LgUserAccess"> | Date | string | null
+  accessStatus?: Prisma.EnumAccessStatusFilter<"LgUserAccess"> | $Enums.AccessStatus
+  fehAccess?: Prisma.DateTimeFilter<"LgUserAccess"> | Date | string
   userAgentRaw?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
   user?: Prisma.XOR<Prisma.MdUserReoScalarRelationFilter, Prisma.MdUserReoWhereInput>
 }, "idLogAccess">
@@ -350,13 +350,13 @@ export type LgUserAccessOrderByWithAggregationInput = {
   browser?: Prisma.SortOrderInput | Prisma.SortOrder
   browserVersion?: Prisma.SortOrderInput | Prisma.SortOrder
   operatingSystem?: Prisma.SortOrderInput | Prisma.SortOrder
-  deviceType?: Prisma.SortOrderInput | Prisma.SortOrder
+  deviceType?: Prisma.SortOrder
   latitude?: Prisma.SortOrderInput | Prisma.SortOrder
   longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   accessStatus?: Prisma.SortOrder
-  fehAccess?: Prisma.SortOrderInput | Prisma.SortOrder
+  fehAccess?: Prisma.SortOrder
   userAgentRaw?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.LgUserAccessCountOrderByAggregateInput
   _avg?: Prisma.LgUserAccessAvgOrderByAggregateInput
@@ -375,13 +375,13 @@ export type LgUserAccessScalarWhereWithAggregatesInput = {
   browser?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null
   browserVersion?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null
   operatingSystem?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null
-  deviceType?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null
+  deviceType?: Prisma.EnumDeviceTypeWithAggregatesFilter<"LgUserAccess"> | $Enums.DeviceType
   latitude?: Prisma.DecimalNullableWithAggregatesFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: Prisma.DecimalNullableWithAggregatesFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null
   country?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null
-  accessStatus?: Prisma.StringWithAggregatesFilter<"LgUserAccess"> | string
-  fehAccess?: Prisma.DateTimeNullableWithAggregatesFilter<"LgUserAccess"> | Date | string | null
+  accessStatus?: Prisma.EnumAccessStatusWithAggregatesFilter<"LgUserAccess"> | $Enums.AccessStatus
+  fehAccess?: Prisma.DateTimeWithAggregatesFilter<"LgUserAccess"> | Date | string
   userAgentRaw?: Prisma.StringNullableWithAggregatesFilter<"LgUserAccess"> | string | null
 }
 
@@ -391,13 +391,13 @@ export type LgUserAccessCreateInput = {
   browser?: string | null
   browserVersion?: string | null
   operatingSystem?: string | null
-  deviceType?: string | null
+  deviceType?: $Enums.DeviceType
   latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: string | null
   country?: string | null
-  accessStatus: string
-  fehAccess?: Date | string | null
+  accessStatus: $Enums.AccessStatus
+  fehAccess?: Date | string
   userAgentRaw?: string | null
   user: Prisma.MdUserReoCreateNestedOneWithoutAccessLogsInput
 }
@@ -409,13 +409,13 @@ export type LgUserAccessUncheckedCreateInput = {
   browser?: string | null
   browserVersion?: string | null
   operatingSystem?: string | null
-  deviceType?: string | null
+  deviceType?: $Enums.DeviceType
   latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: string | null
   country?: string | null
-  accessStatus: string
-  fehAccess?: Date | string | null
+  accessStatus: $Enums.AccessStatus
+  fehAccess?: Date | string
   userAgentRaw?: string | null
 }
 
@@ -425,13 +425,13 @@ export type LgUserAccessUpdateInput = {
   browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deviceType?: Prisma.EnumDeviceTypeFieldUpdateOperationsInput | $Enums.DeviceType
   latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accessStatus?: Prisma.StringFieldUpdateOperationsInput | string
-  fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
+  fehAccess?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.MdUserReoUpdateOneRequiredWithoutAccessLogsNestedInput
 }
@@ -443,13 +443,13 @@ export type LgUserAccessUncheckedUpdateInput = {
   browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deviceType?: Prisma.EnumDeviceTypeFieldUpdateOperationsInput | $Enums.DeviceType
   latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accessStatus?: Prisma.StringFieldUpdateOperationsInput | string
-  fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
+  fehAccess?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -460,13 +460,13 @@ export type LgUserAccessCreateManyInput = {
   browser?: string | null
   browserVersion?: string | null
   operatingSystem?: string | null
-  deviceType?: string | null
+  deviceType?: $Enums.DeviceType
   latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: string | null
   country?: string | null
-  accessStatus: string
-  fehAccess?: Date | string | null
+  accessStatus: $Enums.AccessStatus
+  fehAccess?: Date | string
   userAgentRaw?: string | null
 }
 
@@ -476,13 +476,13 @@ export type LgUserAccessUpdateManyMutationInput = {
   browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deviceType?: Prisma.EnumDeviceTypeFieldUpdateOperationsInput | $Enums.DeviceType
   latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accessStatus?: Prisma.StringFieldUpdateOperationsInput | string
-  fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
+  fehAccess?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -493,13 +493,13 @@ export type LgUserAccessUncheckedUpdateManyInput = {
   browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deviceType?: Prisma.EnumDeviceTypeFieldUpdateOperationsInput | $Enums.DeviceType
   latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accessStatus?: Prisma.StringFieldUpdateOperationsInput | string
-  fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
+  fehAccess?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -626,12 +626,12 @@ export type LgUserAccessUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.LgUserAccessScalarWhereInput | Prisma.LgUserAccessScalarWhereInput[]
 }
 
-export type BigIntFieldUpdateOperationsInput = {
-  set?: bigint | number
-  increment?: bigint | number
-  decrement?: bigint | number
-  multiply?: bigint | number
-  divide?: bigint | number
+export type EnumDeviceTypeFieldUpdateOperationsInput = {
+  set?: $Enums.DeviceType
+}
+
+export type EnumAccessStatusFieldUpdateOperationsInput = {
+  set?: $Enums.AccessStatus
 }
 
 export type LgUserAccessCreateWithoutUserInput = {
@@ -640,13 +640,13 @@ export type LgUserAccessCreateWithoutUserInput = {
   browser?: string | null
   browserVersion?: string | null
   operatingSystem?: string | null
-  deviceType?: string | null
+  deviceType?: $Enums.DeviceType
   latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: string | null
   country?: string | null
-  accessStatus: string
-  fehAccess?: Date | string | null
+  accessStatus: $Enums.AccessStatus
+  fehAccess?: Date | string
   userAgentRaw?: string | null
 }
 
@@ -656,13 +656,13 @@ export type LgUserAccessUncheckedCreateWithoutUserInput = {
   browser?: string | null
   browserVersion?: string | null
   operatingSystem?: string | null
-  deviceType?: string | null
+  deviceType?: $Enums.DeviceType
   latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: string | null
   country?: string | null
-  accessStatus: string
-  fehAccess?: Date | string | null
+  accessStatus: $Enums.AccessStatus
+  fehAccess?: Date | string
   userAgentRaw?: string | null
 }
 
@@ -702,13 +702,13 @@ export type LgUserAccessScalarWhereInput = {
   browser?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
   browserVersion?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
   operatingSystem?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
-  deviceType?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
+  deviceType?: Prisma.EnumDeviceTypeFilter<"LgUserAccess"> | $Enums.DeviceType
   latitude?: Prisma.DecimalNullableFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: Prisma.DecimalNullableFilter<"LgUserAccess"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
   country?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
-  accessStatus?: Prisma.StringFilter<"LgUserAccess"> | string
-  fehAccess?: Prisma.DateTimeNullableFilter<"LgUserAccess"> | Date | string | null
+  accessStatus?: Prisma.EnumAccessStatusFilter<"LgUserAccess"> | $Enums.AccessStatus
+  fehAccess?: Prisma.DateTimeFilter<"LgUserAccess"> | Date | string
   userAgentRaw?: Prisma.StringNullableFilter<"LgUserAccess"> | string | null
 }
 
@@ -718,13 +718,13 @@ export type LgUserAccessCreateManyUserInput = {
   browser?: string | null
   browserVersion?: string | null
   operatingSystem?: string | null
-  deviceType?: string | null
+  deviceType?: $Enums.DeviceType
   latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: string | null
   country?: string | null
-  accessStatus: string
-  fehAccess?: Date | string | null
+  accessStatus: $Enums.AccessStatus
+  fehAccess?: Date | string
   userAgentRaw?: string | null
 }
 
@@ -734,13 +734,13 @@ export type LgUserAccessUpdateWithoutUserInput = {
   browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deviceType?: Prisma.EnumDeviceTypeFieldUpdateOperationsInput | $Enums.DeviceType
   latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accessStatus?: Prisma.StringFieldUpdateOperationsInput | string
-  fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
+  fehAccess?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -750,13 +750,13 @@ export type LgUserAccessUncheckedUpdateWithoutUserInput = {
   browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deviceType?: Prisma.EnumDeviceTypeFieldUpdateOperationsInput | $Enums.DeviceType
   latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accessStatus?: Prisma.StringFieldUpdateOperationsInput | string
-  fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
+  fehAccess?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -766,13 +766,13 @@ export type LgUserAccessUncheckedUpdateManyWithoutUserInput = {
   browser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   browserVersion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   operatingSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deviceType?: Prisma.EnumDeviceTypeFieldUpdateOperationsInput | $Enums.DeviceType
   latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accessStatus?: Prisma.StringFieldUpdateOperationsInput | string
-  fehAccess?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
+  fehAccess?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAgentRaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -832,13 +832,13 @@ export type $LgUserAccessPayload<ExtArgs extends runtime.Types.Extensions.Intern
     browser: string | null
     browserVersion: string | null
     operatingSystem: string | null
-    deviceType: string | null
+    deviceType: $Enums.DeviceType
     latitude: runtime.Decimal | null
     longitude: runtime.Decimal | null
     city: string | null
     country: string | null
-    accessStatus: string
-    fehAccess: Date | null
+    accessStatus: $Enums.AccessStatus
+    fehAccess: Date
     userAgentRaw: string | null
   }, ExtArgs["result"]["lgUserAccess"]>
   composites: {}
@@ -1216,12 +1216,12 @@ export interface LgUserAccessFieldRefs {
   readonly browser: Prisma.FieldRef<"LgUserAccess", 'String'>
   readonly browserVersion: Prisma.FieldRef<"LgUserAccess", 'String'>
   readonly operatingSystem: Prisma.FieldRef<"LgUserAccess", 'String'>
-  readonly deviceType: Prisma.FieldRef<"LgUserAccess", 'String'>
+  readonly deviceType: Prisma.FieldRef<"LgUserAccess", 'DeviceType'>
   readonly latitude: Prisma.FieldRef<"LgUserAccess", 'Decimal'>
   readonly longitude: Prisma.FieldRef<"LgUserAccess", 'Decimal'>
   readonly city: Prisma.FieldRef<"LgUserAccess", 'String'>
   readonly country: Prisma.FieldRef<"LgUserAccess", 'String'>
-  readonly accessStatus: Prisma.FieldRef<"LgUserAccess", 'String'>
+  readonly accessStatus: Prisma.FieldRef<"LgUserAccess", 'AccessStatus'>
   readonly fehAccess: Prisma.FieldRef<"LgUserAccess", 'DateTime'>
   readonly userAgentRaw: Prisma.FieldRef<"LgUserAccess", 'String'>
 }
@@ -1420,6 +1420,11 @@ export type LgUserAccessFindManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Skip the first `n` LgUserAccesses.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of LgUserAccesses.
+   */
   distinct?: Prisma.LgUserAccessScalarFieldEnum | Prisma.LgUserAccessScalarFieldEnum[]
 }
 

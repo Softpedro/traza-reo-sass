@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getColumns, type FacilityMaquila } from "./columns";
 import { FabricaMaquilaModal } from "./fabrica-maquila-modal";
 
@@ -18,12 +18,11 @@ export default function FabricaMaquilaPage() {
   const [modal, setModal] = useState<ModalState>({
     open: false,
     mode: "create",
-    item: null,
-  });
+    item: null});
 
   const fetchItems = useCallback(() => {
     setLoading(true);
-    fetch(apiUrl("/api/facilities-maquila"))
+    apiFetch("/api/facilities-maquila")
       .then((res) => res.json())
       .then((data) => setItems(data))
       .catch((err) => console.error("Error al cargar fábricas de maquila:", err))
@@ -85,8 +84,7 @@ export default function FabricaMaquilaPage() {
             ...prev,
             open,
             // Al cerrar, limpiar item para que al reabrir el efecto del modal vuelva a hidratar bien
-            item: open ? prev.item : null,
-          }))
+            item: open ? prev.item : null}))
         }
         mode={modal.mode}
         item={modal.item}

@@ -277,7 +277,7 @@ export type MdDigitalIdentifierGroupByOutputType = {
   _max: MdDigitalIdentifierMaxAggregateOutputType | null
 }
 
-type GetMdDigitalIdentifierGroupByPayload<T extends MdDigitalIdentifierGroupByArgs> = Prisma.PrismaPromise<
+export type GetMdDigitalIdentifierGroupByPayload<T extends MdDigitalIdentifierGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MdDigitalIdentifierGroupByOutputType, T['by']> &
       {
@@ -1406,6 +1406,11 @@ export type MdDigitalIdentifierFindManyArgs<ExtArgs extends runtime.Types.Extens
    * Skip the first `n` MdDigitalIdentifiers.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MdDigitalIdentifiers.
+   */
   distinct?: Prisma.MdDigitalIdentifierScalarFieldEnum | Prisma.MdDigitalIdentifierScalarFieldEnum[]
 }
 

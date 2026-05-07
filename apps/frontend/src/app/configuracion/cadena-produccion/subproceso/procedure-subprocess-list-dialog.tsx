@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Button } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { SubprocessRow } from "./columns";
 import type { ProcedureSubprocessRow } from "./procedure-subprocess-modal";
 
@@ -21,15 +21,14 @@ export function ProcedureSubprocessListDialog({
   subprocess,
   mode,
   onCrear,
-  onSelectProcedure,
-}: ProcedureSubprocessListDialogProps) {
+  onSelectProcedure}: ProcedureSubprocessListDialogProps) {
   const [procedures, setProcedures] = useState<ProcedureSubprocessRow[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!open || !subprocess) return;
     setLoading(true);
-    fetch(apiUrl(`/api/procedure-subprocesses?subprocessId=${subprocess.idDlkSubprocess}`))
+    apiFetch(`/api/procedure-subprocesses?subprocessId=${subprocess.idDlkSubprocess}`)
       .then((res) => res.json())
       .then((data: ProcedureSubprocessRow[]) => setProcedures(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error al cargar procedures:", err))

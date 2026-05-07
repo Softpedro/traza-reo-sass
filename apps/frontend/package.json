@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fullstack-reo/ui": "*",
+    "@fullstack-reo/ui": "workspace:*",
     "@xyflow/react": "^12.10.2",
     "lucide-react": "^0.460.0",
     "next": "^14.2.0",

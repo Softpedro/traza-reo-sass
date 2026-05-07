@@ -9,6 +9,7 @@ import {
   Button,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { OrderHeadRow } from "./columns";
 import {
   ORDER_HEAD_STAGES,
@@ -49,7 +50,7 @@ export function OrderHeadDetalleModal({
       return;
     }
     let cancelled = false;
-    fetch(apiUrl(`/api/order-heads/${orderId}`))
+    apiFetch(`/api/order-heads/${orderId}`)
       .then((res) => res.json())
       .then((data: Detail) => {
         if (!cancelled) setRow(data);

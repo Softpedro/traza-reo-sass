@@ -18,6 +18,7 @@ import {
 } from "@fullstack-reo/ui";
 import { UbigeoSelector } from "@/components/ubigeo-selector";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { Supplier } from "./columns";
 import { PROVEEDOR_TIPOS } from "./proveedor-tipo";
 
@@ -75,7 +76,7 @@ export function ProveedorModal({
   useEffect(() => {
     if (!open) return;
 
-    fetch(apiUrl("/api/ubigeo"))
+    apiFetch("/api/ubigeo")
       .then(async (res) => {
         const data: unknown = await res.json();
         if (!res.ok || !Array.isArray(data)) {
@@ -132,7 +133,7 @@ export function ProveedorModal({
     let cancelled = false;
     void (async () => {
       try {
-        const res = await fetch(apiUrl(`/api/suppliers/${proveedor.idDlkSupplier}`));
+        const res = await apiFetch(`/api/suppliers/${proveedor.idDlkSupplier}`);
         if (!res.ok) return;
         const detail = (await res.json()) as Supplier;
         if (cancelled) return;
@@ -207,7 +208,7 @@ export function ProveedorModal({
         payload.logoSupplier = form.logoSupplier;
       }
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

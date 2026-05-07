@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getColumns, type Facility } from "./columns";
 import { FabricaModal } from "./fabrica-modal";
 
@@ -18,12 +18,11 @@ export default function FabricaPage() {
   const [modal, setModal] = useState<ModalState>({
     open: false,
     mode: "create",
-    facility: null,
-  });
+    facility: null});
 
   const fetchFacilities = useCallback(() => {
     setLoading(true);
-    fetch(apiUrl("/api/facilities"))
+    apiFetch("/api/facilities")
       .then((res) => res.json())
       .then((data) => setFacilities(data))
       .catch((err) => console.error("Error al cargar fábricas:", err))

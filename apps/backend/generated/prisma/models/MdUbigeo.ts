@@ -271,7 +271,7 @@ export type MdUbigeoGroupByOutputType = {
   _max: MdUbigeoMaxAggregateOutputType | null
 }
 
-type GetMdUbigeoGroupByPayload<T extends MdUbigeoGroupByArgs> = Prisma.PrismaPromise<
+export type GetMdUbigeoGroupByPayload<T extends MdUbigeoGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MdUbigeoGroupByOutputType, T['by']> &
       {
@@ -1192,6 +1192,11 @@ export type MdUbigeoFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Skip the first `n` MdUbigeos.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MdUbigeos.
+   */
   distinct?: Prisma.MdUbigeoScalarFieldEnum | Prisma.MdUbigeoScalarFieldEnum[]
 }
 

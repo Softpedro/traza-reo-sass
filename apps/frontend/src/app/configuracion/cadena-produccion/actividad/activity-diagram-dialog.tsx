@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ActivityRow } from "./columns";
 import type { ProcedureActivityRow } from "./procedure-activity-modal";
 import type { InputActivityRow } from "./input-activity-modal";
@@ -18,8 +18,7 @@ interface ActivityDiagramDialogProps {
 export function ActivityDiagramDialog({
   open,
   onOpenChange,
-  activity,
-}: ActivityDiagramDialogProps) {
+  activity}: ActivityDiagramDialogProps) {
   const [procedures, setProcedures] = useState<ProcedureActivityRow[]>([]);
   const [inputs, setInputs] = useState<InputActivityRow[]>([]);
   const [outputs, setOutputs] = useState<OutputActivityRow[]>([]);
@@ -30,9 +29,9 @@ export function ActivityDiagramDialog({
     const id = activity.idDlkActivities;
     setLoading(true);
     Promise.all([
-      fetch(apiUrl(`/api/procedure-activities?activityId=${id}`)).then((r) => r.json()),
-      fetch(apiUrl(`/api/input-activities?activityId=${id}`)).then((r) => r.json()),
-      fetch(apiUrl(`/api/output-activities?activityId=${id}`)).then((r) => r.json()),
+      apiFetch(`/api/procedure-activities?activityId=${id}`).then((r) => r.json()),
+      apiFetch(`/api/input-activities?activityId=${id}`).then((r) => r.json()),
+      apiFetch(`/api/output-activities?activityId=${id}`).then((r) => r.json()),
     ])
       .then(([procs, ins, outs]) => {
         setProcedures(Array.isArray(procs) ? procs : []);

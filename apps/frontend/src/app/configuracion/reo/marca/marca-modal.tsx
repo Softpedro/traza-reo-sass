@@ -18,6 +18,7 @@ import {
 } from "@fullstack-reo/ui";
 import { UbigeoSelector } from "@/components/ubigeo-selector";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { Brand } from "./columns";
 
 function logoSrcFromApi(logo: string | null | undefined): string | null {
@@ -85,12 +86,12 @@ export function MarcaModal({
 
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/parent-companies"))
+    apiFetch("/api/parent-companies")
       .then((res) => res.json())
       .then((data: ParentCompanyOption[]) => setEmpresas(data))
       .catch((err) => console.error("Error al cargar empresas:", err));
 
-    fetch(apiUrl("/api/ubigeo"))
+    apiFetch("/api/ubigeo")
       .then((res) => res.json())
       .then((data: UbigeoOption[]) => setUbigeos(data))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
@@ -139,7 +140,7 @@ export function MarcaModal({
     let cancelled = false;
     void (async () => {
       try {
-        const res = await fetch(apiUrl(`/api/brands/${marca.idDlkBrand}`));
+        const res = await apiFetch(`/api/brands/${marca.idDlkBrand}`);
         if (!res.ok) return;
         const detail = (await res.json()) as Brand;
         if (cancelled) return;
@@ -214,7 +215,7 @@ export function MarcaModal({
         delete (payload as Record<string, unknown>).logoBrand;
       }
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

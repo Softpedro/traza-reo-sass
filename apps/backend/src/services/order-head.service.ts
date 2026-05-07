@@ -143,6 +143,7 @@ export type OrderDetailListRow = {
   size12: number | null;
   size14: number | null;
   size16: number | null;
+  sizeXs: number | null;
   sizeS: number | null;
   sizeM: number | null;
   sizeL: number | null;
@@ -238,6 +239,7 @@ export class OrderHeadService {
         size12: true,
         size14: true,
         size16: true,
+        sizeXs: true,
         sizeS: true,
         sizeM: true,
         sizeL: true,
@@ -497,6 +499,7 @@ export class OrderHeadService {
       size12?: number | null;
       size14?: number | null;
       size16?: number | null;
+      sizeXs?: number | null;
       sizeS?: number | null;
       sizeM?: number | null;
       sizeL?: number | null;
@@ -556,6 +559,7 @@ export class OrderHeadService {
     setNum("size12", "size12");
     setNum("size14", "size14");
     setNum("size16", "size16");
+    setNum("sizeXs", "sizeXs");
     setNum("sizeS", "sizeS");
     setNum("sizeM", "sizeM");
     setNum("sizeL", "sizeL");

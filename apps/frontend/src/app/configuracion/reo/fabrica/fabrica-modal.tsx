@@ -18,6 +18,7 @@ import {
 } from "@fullstack-reo/ui";
 import { UbigeoSelector } from "@/components/ubigeo-selector";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { Facility } from "./columns";
 
 type ModalMode = "create" | "edit" | "view";
@@ -74,12 +75,12 @@ export function FabricaModal({
   useEffect(() => {
     if (!open) return;
     // cargar empresas
-    fetch(apiUrl("/api/parent-companies"))
+    apiFetch("/api/parent-companies")
       .then((res) => res.json())
       .then((data: ParentCompanyOption[]) => setEmpresas(data))
       .catch((err) => console.error("Error al cargar empresas:", err));
     // maestro completo de ubigeo (API sin limit devuelve todas las filas)
-    fetch(apiUrl("/api/ubigeo"))
+    apiFetch("/api/ubigeo")
       .then((res) => res.json())
       .then((data: UbigeoOption[]) => setUbigeos(data))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
@@ -138,7 +139,7 @@ export function FabricaModal({
         stateFacility: Number(form.stateFacility),
       };
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

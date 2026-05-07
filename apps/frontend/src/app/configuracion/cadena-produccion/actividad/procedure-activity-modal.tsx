@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label, Button, Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ActivityRow } from "./columns";
 
 export type ProcedureActivityRow = {
@@ -150,7 +151,7 @@ export function ProcedureActivityModal({
               stateProcedureActivities: Number(form.stateProcedureActivities),
             };
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

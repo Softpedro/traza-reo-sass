@@ -10,7 +10,7 @@ import {
   Button,
   Label,
 } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 
 interface BulkUploadModalProps {
   open: boolean;
@@ -74,7 +74,7 @@ export function BulkUploadModal({
 
   async function handleDownloadTemplate() {
     try {
-      const res = await fetch(apiUrl(templateUrl));
+      const res = await apiFetch(templateUrl);
       if (!res.ok) throw new Error(`Error ${res.status} al descargar plantilla`);
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
@@ -100,7 +100,7 @@ export function BulkUploadModal({
     setResult(null);
     try {
       const dataUrl = await fileToBase64(file);
-      const res = await fetch(apiUrl(uploadUrl), {
+      const res = await apiFetch(uploadUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fileBase64: dataUrl }),

@@ -281,7 +281,7 @@ export type MdOutputActivitiesGroupByOutputType = {
   _max: MdOutputActivitiesMaxAggregateOutputType | null
 }
 
-type GetMdOutputActivitiesGroupByPayload<T extends MdOutputActivitiesGroupByArgs> = Prisma.PrismaPromise<
+export type GetMdOutputActivitiesGroupByPayload<T extends MdOutputActivitiesGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MdOutputActivitiesGroupByOutputType, T['by']> &
       {
@@ -1473,6 +1473,11 @@ export type MdOutputActivitiesFindManyArgs<ExtArgs extends runtime.Types.Extensi
    * Skip the first `n` MdOutputActivities.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MdOutputActivities.
+   */
   distinct?: Prisma.MdOutputActivitiesScalarFieldEnum | Prisma.MdOutputActivitiesScalarFieldEnum[]
 }
 

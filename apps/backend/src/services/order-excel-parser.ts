@@ -44,6 +44,7 @@ function mapSizeHeaderToField(h: string): keyof Prisma.OdOrderDetailCreateManyIn
   if (s === "6-12" || s === "6/12") return "size6_12";
   if (s === "12-18" || s === "12/18") return "size12_18";
   // Tallas letra
+  if (s === "XS") return "sizeXs";
   if (s === "S") return "sizeS";
   if (s === "M") return "sizeM";
   if (s === "L") return "sizeL";

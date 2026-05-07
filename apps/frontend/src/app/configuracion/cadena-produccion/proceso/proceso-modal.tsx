@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ProcessRow } from "./columns";
 import { getTrazabilidadLabel } from "../eslabon/obs";
 
@@ -85,11 +86,11 @@ export function ProcesoModal({
 
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/parent-companies"))
+    apiFetch("/api/parent-companies")
       .then((res) => res.json())
       .then((data: ParentCompanyOption[]) => setEmpresas(data))
       .catch((err) => console.error("Error al cargar empresas:", err));
-    fetch(apiUrl("/api/production-chains"))
+    apiFetch("/api/production-chains")
       .then((res) => res.json())
       .then((data: ProductionChainOption[]) => setCadenas(data))
       .catch((err) => console.error("Error al cargar cadenas:", err));
@@ -161,7 +162,7 @@ export function ProcesoModal({
               ...basePayload,
             };
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

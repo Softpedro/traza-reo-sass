@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { Eslabon } from "../eslabon/columns";
 import type { ProcessRow } from "../proceso/columns";
 import type { SubprocessRow } from "../subproceso/columns";
@@ -16,8 +16,7 @@ interface ActivityGeneralDiagramDialogProps {
 
 export function ActivityGeneralDiagramDialog({
   open,
-  onOpenChange,
-}: ActivityGeneralDiagramDialogProps) {
+  onOpenChange}: ActivityGeneralDiagramDialogProps) {
   const [eslabones, setEslabones] = useState<Eslabon[]>([]);
   const [processes, setProcesses] = useState<ProcessRow[]>([]);
   const [subprocesses, setSubprocesses] = useState<SubprocessRow[]>([]);
@@ -28,10 +27,10 @@ export function ActivityGeneralDiagramDialog({
     if (!open) return;
     setLoading(true);
     Promise.all([
-      fetch(apiUrl("/api/production-chains")).then((r) => r.json()),
-      fetch(apiUrl("/api/processes")).then((r) => r.json()),
-      fetch(apiUrl("/api/subprocesses")).then((r) => r.json()),
-      fetch(apiUrl("/api/activities")).then((r) => r.json()),
+      apiFetch("/api/production-chains").then((r) => r.json()),
+      apiFetch("/api/processes").then((r) => r.json()),
+      apiFetch("/api/subprocesses").then((r) => r.json()),
+      apiFetch("/api/activities").then((r) => r.json()),
     ])
       .then(([chains, procs, subs, acts]) => {
         setEslabones(Array.isArray(chains) ? chains : []);

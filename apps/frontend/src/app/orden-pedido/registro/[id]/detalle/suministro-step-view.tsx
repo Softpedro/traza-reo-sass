@@ -13,13 +13,11 @@ import {
   SelectTrigger,
   SelectValue,
   SelectContent,
-  SelectItem,
-} from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+  SelectItem} from "@fullstack-reo/ui";
+import { apiFetch } from "@/lib/api-fetch";
 import {
   getSuministroStepColumns,
-  type SuministroDetailRow,
-} from "./suministro-step-columns";
+  type SuministroDetailRow} from "./suministro-step-columns";
 import { SUMINISTRO_STATUS_OPTIONS } from "../../../suministro/constants";
 
 type Props = {
@@ -42,7 +40,7 @@ export function SuministroStepView({ headId, codOrderHead }: Props) {
   const load = useCallback(() => {
     setLoading(true);
     setError(null);
-    fetch(apiUrl(`/api/order-heads/${headId}/details`))
+    apiFetch(`/api/order-heads/${headId}/details`)
       .then(async (res) => {
         if (!res.ok) {
           const j = await res.json().catch(() => ({}));
@@ -77,8 +75,7 @@ export function SuministroStepView({ headId, codOrderHead }: Props) {
         codOrderHead,
         onCrear: (row) => openDialog("crear", row),
         onEditar: (row) => openDialog("editar", row),
-        onVer: (row) => openDialog("ver", row),
-      }),
+        onVer: (row) => openDialog("ver", row)}),
     [headId, codOrderHead]
   );
 
@@ -96,13 +93,11 @@ export function SuministroStepView({ headId, codOrderHead }: Props) {
     if (!dlgRow) return;
     setDlgSaving(true);
     try {
-      const res = await fetch(
-        apiUrl(`/api/order-heads/${headId}/details/${dlgRow.idDlkOrderDetail}`),
+      const res = await apiFetch(`/api/order-heads/${headId}/details/${dlgRow.idDlkOrderDetail}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ stateOrderDetail: dlgStatus }),
-        }
+          body: JSON.stringify({ stateOrderDetail: dlgStatus })}
       );
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));

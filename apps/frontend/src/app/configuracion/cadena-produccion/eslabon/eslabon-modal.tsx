@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { Eslabon } from "./columns";
 import {
   OBS_CATEGORIA,
@@ -100,7 +101,7 @@ export function EslabonModal({
         stateProductionChain: Number(form.stateProductionChain),
       };
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

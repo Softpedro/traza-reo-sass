@@ -316,7 +316,7 @@ export type LgParentCompanyGroupByOutputType = {
   _max: LgParentCompanyMaxAggregateOutputType | null
 }
 
-type GetLgParentCompanyGroupByPayload<T extends LgParentCompanyGroupByArgs> = Prisma.PrismaPromise<
+export type GetLgParentCompanyGroupByPayload<T extends LgParentCompanyGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<LgParentCompanyGroupByOutputType, T['by']> &
       {
@@ -1643,6 +1643,11 @@ export type LgParentCompanyFindManyArgs<ExtArgs extends runtime.Types.Extensions
    * Skip the first `n` LgParentCompanies.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of LgParentCompanies.
+   */
   distinct?: Prisma.LgParentCompanyScalarFieldEnum | Prisma.LgParentCompanyScalarFieldEnum[]
 }
 

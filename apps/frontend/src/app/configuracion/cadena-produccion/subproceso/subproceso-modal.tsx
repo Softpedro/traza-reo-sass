@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { SubprocessRow } from "./columns";
 import { getTrazabilidadLabel } from "../eslabon/obs";
 
@@ -81,7 +82,7 @@ export function SubprocesoModal({
 
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/processes"))
+    apiFetch("/api/processes")
       .then((res) => res.json())
       .then((data: ProcessOption[]) => setProcesses(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error al cargar procesos:", err));
@@ -157,7 +158,7 @@ export function SubprocesoModal({
         stateSubprocess: mode === "edit" ? Number(form.stateSubprocess) : undefined,
       };
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

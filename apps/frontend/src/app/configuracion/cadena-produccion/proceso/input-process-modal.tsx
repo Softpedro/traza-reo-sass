@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ProcessRow } from "./columns";
 
 // OBS Input: Tipo y Unidad
@@ -165,7 +166,7 @@ export function InputProcessModal({
               stateInputProcess: Number(form.stateInputProcess),
             };
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

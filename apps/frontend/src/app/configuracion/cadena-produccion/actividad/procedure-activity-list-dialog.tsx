@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Button } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ActivityRow } from "./columns";
 import type { ProcedureActivityRow } from "./procedure-activity-modal";
 
@@ -21,15 +21,14 @@ export function ProcedureActivityListDialog({
   activity,
   mode,
   onCrear,
-  onSelectProcedure,
-}: ProcedureActivityListDialogProps) {
+  onSelectProcedure}: ProcedureActivityListDialogProps) {
   const [procedures, setProcedures] = useState<ProcedureActivityRow[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!open || !activity) return;
     setLoading(true);
-    fetch(apiUrl(`/api/procedure-activities?activityId=${activity.idDlkActivities}`))
+    apiFetch(`/api/procedure-activities?activityId=${activity.idDlkActivities}`)
       .then((res) => res.json())
       .then((data: ProcedureActivityRow[]) => setProcedures(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error al cargar procedures de actividad:", err))

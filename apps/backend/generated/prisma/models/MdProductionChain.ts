@@ -268,7 +268,7 @@ export type MdProductionChainGroupByOutputType = {
   _max: MdProductionChainMaxAggregateOutputType | null
 }
 
-type GetMdProductionChainGroupByPayload<T extends MdProductionChainGroupByArgs> = Prisma.PrismaPromise<
+export type GetMdProductionChainGroupByPayload<T extends MdProductionChainGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MdProductionChainGroupByOutputType, T['by']> &
       {
@@ -1334,6 +1334,11 @@ export type MdProductionChainFindManyArgs<ExtArgs extends runtime.Types.Extensio
    * Skip the first `n` MdProductionChains.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MdProductionChains.
+   */
   distinct?: Prisma.MdProductionChainScalarFieldEnum | Prisma.MdProductionChainScalarFieldEnum[]
 }
 

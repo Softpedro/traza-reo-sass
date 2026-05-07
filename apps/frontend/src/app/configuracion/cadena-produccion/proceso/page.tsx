@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getColumns, type ProcessRow } from "./columns";
 import { ProcesoModal } from "./proceso-modal";
 import { InputProcessModal, type InputProcessRow } from "./input-process-modal";
@@ -66,47 +66,40 @@ export default function ProcesoPage() {
   const [modal, setModal] = useState<ModalState>({
     open: false,
     mode: "create",
-    process: null,
-  });
+    process: null});
   const [inputModal, setInputModal] = useState<InputModalState>({
     open: false,
     mode: "create",
     process: null,
-    input: null,
-  });
+    input: null});
   const [inputListOpen, setInputListOpen] = useState<InputListState>({
     open: false,
     process: null,
-    mode: "edit",
-  });
+    mode: "edit"});
   const [outputModal, setOutputModal] = useState<OutputModalState>({
     open: false,
     mode: "create",
     process: null,
-    output: null,
-  });
+    output: null});
   const [outputListOpen, setOutputListOpen] = useState<OutputListState>({
     open: false,
     process: null,
-    mode: "edit",
-  });
+    mode: "edit"});
   const [procedureModal, setProcedureModal] = useState<ProcedureModalState>({
     open: false,
     mode: "create",
     process: null,
-    procedure: null,
-  });
+    procedure: null});
   const [procedureListOpen, setProcedureListOpen] = useState<ProcedureListState>({
     open: false,
     process: null,
-    mode: "edit",
-  });
+    mode: "edit"});
   const [diagramProcess, setDiagramProcess] = useState<ProcessRow | null>(null);
   const [generalDiagramOpen, setGeneralDiagramOpen] = useState(false);
 
   const fetchItems = useCallback(() => {
     setLoading(true);
-    fetch(apiUrl("/api/processes"))
+    apiFetch("/api/processes")
       .then((res) => res.json())
       .then((data: ProcessRow[]) => setItems(data))
       .catch((err) => console.error("Error al cargar procesos:", err))

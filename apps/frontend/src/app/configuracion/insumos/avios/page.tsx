@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getColumns, type Avios } from "./columns";
 import { AviosModal } from "./avios-modal";
 import { BulkUploadModal } from "@/components/bulk-upload-modal";
@@ -20,14 +20,13 @@ export default function AviosPage() {
   const [modal, setModal] = useState<ModalState>({
     open: false,
     mode: "create",
-    avios: null,
-  });
+    avios: null});
   const [bulkOpen, setBulkOpen] = useState(false);
 
   const fetchList = useCallback(() => {
     setLoading(true);
     setListError(null);
-    fetch(apiUrl("/api/avios"))
+    apiFetch("/api/avios")
       .then(async (res) => {
         const data: unknown = await res.json();
         if (!res.ok) {
@@ -107,8 +106,7 @@ export default function AviosPage() {
           setModal((prev) => ({
             ...prev,
             open,
-            avios: open ? prev.avios : null,
-          }))
+            avios: open ? prev.avios : null}))
         }
         mode={modal.mode}
         avios={modal.avios}

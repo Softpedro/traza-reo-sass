@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { UbigeoSelector, type UbigeoOption } from "@/components/ubigeo-selector";
 import type { ParentCompany } from "./columns";
 import { EMPRESA_CATEGORIAS } from "./empresa-categories";
@@ -77,7 +78,7 @@ export function EmpresaModal({
   const logoDisplaySrc = logoPreview ?? storedLogoSrc;
 
   useEffect(() => {
-    fetch(apiUrl("/api/ubigeo"))
+    apiFetch("/api/ubigeo")
       .then((r) => r.json())
       .then((data: UbigeoOption[]) => setUbigeos(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
@@ -153,7 +154,7 @@ export function EmpresaModal({
         delete (payload as Record<string, unknown>).logoParentCompany;
       }
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

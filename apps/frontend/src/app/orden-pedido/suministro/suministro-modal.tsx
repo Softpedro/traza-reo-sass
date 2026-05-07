@@ -16,6 +16,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { SuministroRow } from "./columns";
 import {
   ACTIVO_OPTIONS,
@@ -97,7 +98,7 @@ export function SuministroModal({ open, onOpenChange, mode, order, onSuccess }: 
     setUdp(emptyFile);
     setProd(emptyFile);
     setFinal(emptyFile);
-    fetch(apiUrl(`/api/order-heads/${order.idDlkOrderHead}`))
+    apiFetch(`/api/order-heads/${order.idDlkOrderHead}`)
       .then((res) => res.json())
       .then((row: SuministroDetail) => {
         setDetail(row);
@@ -171,8 +172,7 @@ export function SuministroModal({ open, onOpenChange, mode, order, onSuccess }: 
       applyKind("prod", prod, prodDate, "fileProdBase64", "fileProdDate", "clearFileProd");
       applyKind("final", final, finalDate, "fileFinalBase64", "fileFinalDate", "clearFileFinal");
 
-      const res = await fetch(
-        apiUrl(`/api/order-heads/${order.idDlkOrderHead}/suministro`),
+      const res = await apiFetch(`/api/order-heads/${order.idDlkOrderHead}/suministro`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

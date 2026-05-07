@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { SubprocessRow } from "./columns";
 import type { ProcedureSubprocessRow } from "./procedure-subprocess-modal";
 import type { InputSubprocessRow } from "./input-subprocess-modal";
@@ -18,8 +18,7 @@ interface SubprocessDiagramDialogProps {
 export function SubprocessDiagramDialog({
   open,
   onOpenChange,
-  subprocess,
-}: SubprocessDiagramDialogProps) {
+  subprocess}: SubprocessDiagramDialogProps) {
   const [procedures, setProcedures] = useState<ProcedureSubprocessRow[]>([]);
   const [inputs, setInputs] = useState<InputSubprocessRow[]>([]);
   const [outputs, setOutputs] = useState<OutputSubprocessRow[]>([]);
@@ -30,9 +29,9 @@ export function SubprocessDiagramDialog({
     const id = subprocess.idDlkSubprocess;
     setLoading(true);
     Promise.all([
-      fetch(apiUrl(`/api/procedure-subprocesses?subprocessId=${id}`)).then((r) => r.json()),
-      fetch(apiUrl(`/api/input-subprocesses?subprocessId=${id}`)).then((r) => r.json()),
-      fetch(apiUrl(`/api/output-subprocesses?subprocessId=${id}`)).then((r) => r.json()),
+      apiFetch(`/api/procedure-subprocesses?subprocessId=${id}`).then((r) => r.json()),
+      apiFetch(`/api/input-subprocesses?subprocessId=${id}`).then((r) => r.json()),
+      apiFetch(`/api/output-subprocesses?subprocessId=${id}`).then((r) => r.json()),
     ])
       .then(([procs, ins, outs]) => {
         setProcedures(Array.isArray(procs) ? procs : []);

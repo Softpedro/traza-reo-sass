@@ -228,7 +228,7 @@ export type MdParentCompanyMaquilaGroupByOutputType = {
   _max: MdParentCompanyMaquilaMaxAggregateOutputType | null
 }
 
-type GetMdParentCompanyMaquilaGroupByPayload<T extends MdParentCompanyMaquilaGroupByArgs> = Prisma.PrismaPromise<
+export type GetMdParentCompanyMaquilaGroupByPayload<T extends MdParentCompanyMaquilaGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MdParentCompanyMaquilaGroupByOutputType, T['by']> &
       {
@@ -1380,6 +1380,11 @@ export type MdParentCompanyMaquilaFindManyArgs<ExtArgs extends runtime.Types.Ext
    * Skip the first `n` MdParentCompanyMaquilas.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MdParentCompanyMaquilas.
+   */
   distinct?: Prisma.MdParentCompanyMaquilaScalarFieldEnum | Prisma.MdParentCompanyMaquilaScalarFieldEnum[]
 }
 

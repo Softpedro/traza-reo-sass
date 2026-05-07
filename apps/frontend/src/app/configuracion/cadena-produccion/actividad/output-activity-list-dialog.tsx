@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Button } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ActivityRow } from "./columns";
 import type { OutputActivityRow } from "./output-activity-modal";
 
@@ -21,15 +21,14 @@ export function OutputActivityListDialog({
   activity,
   mode,
   onCrear,
-  onSelectOutput,
-}: OutputActivityListDialogProps) {
+  onSelectOutput}: OutputActivityListDialogProps) {
   const [outputs, setOutputs] = useState<OutputActivityRow[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!open || !activity) return;
     setLoading(true);
-    fetch(apiUrl(`/api/output-activities?activityId=${activity.idDlkActivities}`))
+    apiFetch(`/api/output-activities?activityId=${activity.idDlkActivities}`)
       .then((res) => res.json())
       .then((data: OutputActivityRow[]) => setOutputs(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error al cargar outputs de actividad:", err))

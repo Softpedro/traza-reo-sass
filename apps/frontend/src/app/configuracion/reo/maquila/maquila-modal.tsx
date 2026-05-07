@@ -18,6 +18,7 @@ import {
 } from "@fullstack-reo/ui";
 import { UbigeoSelector } from "@/components/ubigeo-selector";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { Maquila } from "./columns";
 
 function logoSrcFromApi(logo: string | null | undefined): string | null {
@@ -79,7 +80,7 @@ export function MaquilaModal({
 
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/ubigeo"))
+    apiFetch("/api/ubigeo")
       .then((res) => res.json())
       .then((data: UbigeoOption[]) => setUbigeos(data))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
@@ -155,7 +156,7 @@ export function MaquilaModal({
         delete (payload as Record<string, unknown>).logoMaquila;
       }
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

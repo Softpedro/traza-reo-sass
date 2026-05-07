@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getColumns, type Brand } from "./columns";
 import { MarcaModal } from "./marca-modal";
 
@@ -18,12 +18,11 @@ export default function MarcaPage() {
   const [modal, setModal] = useState<ModalState>({
     open: false,
     mode: "create",
-    marca: null,
-  });
+    marca: null});
 
   const fetchMarcas = useCallback(() => {
     setLoading(true);
-    fetch(apiUrl("/api/brands"))
+    apiFetch("/api/brands")
       .then((res) => res.json())
       .then((data) => setMarcas(data))
       .catch((err) => console.error("Error al cargar marcas:", err))
@@ -82,8 +81,7 @@ export default function MarcaPage() {
           setModal((prev) => ({
             ...prev,
             open,
-            marca: open ? prev.marca : null,
-          }))
+            marca: open ? prev.marca : null}))
         }
         mode={modal.mode}
         marca={modal.marca}

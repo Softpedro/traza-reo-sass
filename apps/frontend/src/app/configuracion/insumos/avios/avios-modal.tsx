@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { Avios } from "./columns";
 
 type ModalMode = "create" | "edit" | "view";
@@ -228,7 +229,7 @@ export function AviosModal({ open, onOpenChange, mode, avios, onSuccess }: Avios
 
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/suppliers"))
+    apiFetch("/api/suppliers")
       .then(async (res) => {
         const data: unknown = await res.json();
         if (!res.ok || !Array.isArray(data)) {
@@ -270,7 +271,7 @@ export function AviosModal({ open, onOpenChange, mode, avios, onSuccess }: Avios
     let cancelled = false;
     void (async () => {
       try {
-        const res = await fetch(apiUrl(`/api/avios/${avios.idDlkAvio}`));
+        const res = await apiFetch(`/api/avios/${avios.idDlkAvio}`);
         if (!res.ok) return;
         const detail = (await res.json()) as Avios;
         if (cancelled) return;
@@ -324,7 +325,7 @@ export function AviosModal({ open, onOpenChange, mode, avios, onSuccess }: Avios
         payload.stateAvios = Number(form.stateAvios);
       }
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

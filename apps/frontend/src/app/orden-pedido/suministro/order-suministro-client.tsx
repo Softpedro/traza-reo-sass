@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getSuministroColumns, type SuministroRow } from "./columns";
 import { SuministroModal } from "./suministro-modal";
 
@@ -14,8 +14,7 @@ export type OrderSuministroClientProps = {
 
 export function OrderSuministroClient({
   kicker = "Orden de Pedido",
-  title = "Suministro",
-}: OrderSuministroClientProps) {
+  title = "Suministro"}: OrderSuministroClientProps) {
   const router = useRouter();
   const [rows, setRows] = useState<SuministroRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,7 +26,7 @@ export function OrderSuministroClient({
   const fetchRows = useCallback(() => {
     setLoading(true);
     setLoadError(null);
-    fetch(apiUrl(`/api/order-heads`))
+    apiFetch(`/api/order-heads`)
       .then(async (res) => {
         if (!res.ok) {
           const j = await res.json().catch(() => ({}));
@@ -72,8 +71,7 @@ export function OrderSuministroClient({
         },
         onDetalle: (row) => {
           router.push(`/orden-pedido/registro/${row.idDlkOrderHead}/detalle?step=2`);
-        },
-      }),
+        }}),
     [router]
   );
 

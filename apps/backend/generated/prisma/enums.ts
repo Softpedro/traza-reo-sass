@@ -9,7 +9,22 @@
 * 🟢 You can import this file directly.
 */
 
+export const DeviceType = {
+  PC: 'PC',
+  MOBILE: 'MOBILE',
+  TABLET: 'TABLET',
+  BOT: 'BOT',
+  OTHER: 'OTHER'
+} as const
+
+export type DeviceType = (typeof DeviceType)[keyof typeof DeviceType]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const AccessStatus = {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  BLOCKED: 'BLOCKED',
+  PENDING: 'PENDING'
+} as const
+
+export type AccessStatus = (typeof AccessStatus)[keyof typeof AccessStatus]

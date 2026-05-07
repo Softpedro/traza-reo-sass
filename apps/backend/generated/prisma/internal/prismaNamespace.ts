@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.4.2
- * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
+ * Prisma Client JS version: 7.8.0
+ * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.4.2",
-  engine: "94a226be1cf2967af2541cca5529f0f7ba866919"
+  client: "7.8.0",
+  engine: "3c6e192761c0362d496ed980de936e2f3cebcd3a"
 }
 
 /**
@@ -412,6 +412,7 @@ export const ModelName = {
   MdParentCompanyMaquila: 'MdParentCompanyMaquila',
   MdSubbrand: 'MdSubbrand',
   MdUserReo: 'MdUserReo',
+  MdUserBackupCode: 'MdUserBackupCode',
   LgUserAccess: 'LgUserAccess',
   LgParentCompany: 'LgParentCompany',
   MdDigitalIdentifier: 'MdDigitalIdentifier',
@@ -432,7 +433,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail"
+    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2284,6 +2285,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MdUserBackupCode: {
+      payload: Prisma.$MdUserBackupCodePayload<ExtArgs>
+      fields: Prisma.MdUserBackupCodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MdUserBackupCodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdUserBackupCodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MdUserBackupCodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdUserBackupCodePayload>
+        }
+        findFirst: {
+          args: Prisma.MdUserBackupCodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdUserBackupCodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MdUserBackupCodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdUserBackupCodePayload>
+        }
+        findMany: {
+          args: Prisma.MdUserBackupCodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdUserBackupCodePayload>[]
+        }
+        create: {
+          args: Prisma.MdUserBackupCodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdUserBackupCodePayload>
+        }
+        createMany: {
+          args: Prisma.MdUserBackupCodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MdUserBackupCodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdUserBackupCodePayload>
+        }
+        update: {
+          args: Prisma.MdUserBackupCodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdUserBackupCodePayload>
+        }
+        deleteMany: {
+          args: Prisma.MdUserBackupCodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MdUserBackupCodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MdUserBackupCodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdUserBackupCodePayload>
+        }
+        aggregate: {
+          args: Prisma.MdUserBackupCodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMdUserBackupCode>
+        }
+        groupBy: {
+          args: Prisma.MdUserBackupCodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdUserBackupCodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MdUserBackupCodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdUserBackupCodeCountAggregateOutputType> | number
+        }
+      }
+    }
     LgUserAccess: {
       payload: Prisma.$LgUserAccessPayload<ExtArgs>
       fields: Prisma.LgUserAccessFieldRefs
@@ -2892,6 +2959,7 @@ export const OdOrderDetailScalarFieldEnum = {
   size12: 'size12',
   size14: 'size14',
   size16: 'size16',
+  sizeXs: 'sizeXs',
   sizeS: 'sizeS',
   sizeM: 'sizeM',
   sizeL: 'sizeL',
@@ -3355,6 +3423,7 @@ export const MdUserReoScalarFieldEnum = {
   lastLoginIp: 'lastLoginIp',
   passwordExpiresAt: 'passwordExpiresAt',
   twoFactorSecret: 'twoFactorSecret',
+  twoFactorEnabled: 'twoFactorEnabled',
   stateUser: 'stateUser',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fehProcesoCargaDl: 'fehProcesoCargaDl',
@@ -3364,6 +3433,17 @@ export const MdUserReoScalarFieldEnum = {
 } as const
 
 export type MdUserReoScalarFieldEnum = (typeof MdUserReoScalarFieldEnum)[keyof typeof MdUserReoScalarFieldEnum]
+
+
+export const MdUserBackupCodeScalarFieldEnum = {
+  idBackupCode: 'idBackupCode',
+  idDlkUserReo: 'idDlkUserReo',
+  codeHash: 'codeHash',
+  usedAt: 'usedAt',
+  fehProcesoCargaDl: 'fehProcesoCargaDl'
+} as const
+
+export type MdUserBackupCodeScalarFieldEnum = (typeof MdUserBackupCodeScalarFieldEnum)[keyof typeof MdUserBackupCodeScalarFieldEnum]
 
 
 export const LgUserAccessScalarFieldEnum = {
@@ -3969,15 +4049,20 @@ export const MdUserReoOrderByRelevanceFieldEnum = {
 export type MdUserReoOrderByRelevanceFieldEnum = (typeof MdUserReoOrderByRelevanceFieldEnum)[keyof typeof MdUserReoOrderByRelevanceFieldEnum]
 
 
+export const MdUserBackupCodeOrderByRelevanceFieldEnum = {
+  codeHash: 'codeHash'
+} as const
+
+export type MdUserBackupCodeOrderByRelevanceFieldEnum = (typeof MdUserBackupCodeOrderByRelevanceFieldEnum)[keyof typeof MdUserBackupCodeOrderByRelevanceFieldEnum]
+
+
 export const LgUserAccessOrderByRelevanceFieldEnum = {
   ipAddress: 'ipAddress',
   browser: 'browser',
   browserVersion: 'browserVersion',
   operatingSystem: 'operatingSystem',
-  deviceType: 'deviceType',
   city: 'city',
   country: 'country',
-  accessStatus: 'accessStatus',
   userAgentRaw: 'userAgentRaw'
 } as const
 
@@ -4105,6 +4190,20 @@ export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
 
 
 /**
+ * Reference to a field of type 'DeviceType'
+ */
+export type EnumDeviceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeviceType'>
+    
+
+
+/**
+ * Reference to a field of type 'AccessStatus'
+ */
+export type EnumAccessStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AccessStatus'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4203,6 +4302,21 @@ export type PrismaClientOptions = ({
    * ```
    */
   comments?: runtime.SqlCommenterPlugin[]
+  /**
+   * Optional maximum size for the query plan cache. If not provided, a default size will be used.
+   * A value of `0` can be used to disable the cache entirely. A higher cache size can improve
+   * performance for applications that execute a large number of unique queries, while a smaller
+   * cache size can reduce memory usage.
+   * 
+   * @example
+   * ```
+   * const prisma = new PrismaClient({
+   *   adapter,
+   *   queryPlanCacheMaxSize: 100,
+   * })
+   * ```
+   */
+  queryPlanCacheMaxSize?: number
 }
 export type GlobalOmitConfig = {
   mdParentCompany?: Prisma.MdParentCompanyOmit
@@ -4233,6 +4347,7 @@ export type GlobalOmitConfig = {
   mdParentCompanyMaquila?: Prisma.MdParentCompanyMaquilaOmit
   mdSubbrand?: Prisma.MdSubbrandOmit
   mdUserReo?: Prisma.MdUserReoOmit
+  mdUserBackupCode?: Prisma.MdUserBackupCodeOmit
   lgUserAccess?: Prisma.LgUserAccessOmit
   lgParentCompany?: Prisma.LgParentCompanyOmit
   mdDigitalIdentifier?: Prisma.MdDigitalIdentifierOmit

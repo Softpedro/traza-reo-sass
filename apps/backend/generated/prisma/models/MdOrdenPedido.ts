@@ -268,7 +268,7 @@ export type MdOrdenPedidoGroupByOutputType = {
   _max: MdOrdenPedidoMaxAggregateOutputType | null
 }
 
-type GetMdOrdenPedidoGroupByPayload<T extends MdOrdenPedidoGroupByArgs> = Prisma.PrismaPromise<
+export type GetMdOrdenPedidoGroupByPayload<T extends MdOrdenPedidoGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MdOrdenPedidoGroupByOutputType, T['by']> &
       {
@@ -1386,6 +1386,11 @@ export type MdOrdenPedidoFindManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Skip the first `n` MdOrdenPedidos.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MdOrdenPedidos.
+   */
   distinct?: Prisma.MdOrdenPedidoScalarFieldEnum | Prisma.MdOrdenPedidoScalarFieldEnum[]
 }
 

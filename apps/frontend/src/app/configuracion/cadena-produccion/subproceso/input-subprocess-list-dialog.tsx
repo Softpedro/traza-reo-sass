@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Button } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { SubprocessRow } from "./columns";
 import type { InputSubprocessRow } from "./input-subprocess-modal";
 
@@ -21,15 +21,14 @@ export function InputSubprocessListDialog({
   subprocess,
   mode,
   onCrear,
-  onSelectInput,
-}: InputSubprocessListDialogProps) {
+  onSelectInput}: InputSubprocessListDialogProps) {
   const [inputs, setInputs] = useState<InputSubprocessRow[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!open || !subprocess) return;
     setLoading(true);
-    fetch(apiUrl(`/api/input-subprocesses?subprocessId=${subprocess.idDlkSubprocess}`))
+    apiFetch(`/api/input-subprocesses?subprocessId=${subprocess.idDlkSubprocess}`)
       .then((res) => res.json())
       .then((data: InputSubprocessRow[]) => setInputs(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error al cargar inputs:", err))

@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ProcessRow } from "./columns";
 
 // OBS Procedure: Criticidad y Validacion
@@ -153,7 +154,7 @@ export function ProcedureProcessModal({
               stateProcedureProcess: Number(form.stateProcedureProcess),
             };
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

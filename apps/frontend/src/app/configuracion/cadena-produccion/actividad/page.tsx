@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getColumns, type ActivityRow } from "./columns";
 import { ActividadModal } from "./actividad-modal";
 import { ActivityGeneralDiagramDialog } from "./activity-general-diagram-dialog";
@@ -45,7 +45,7 @@ export default function ActividadPage() {
 
   const fetchItems = useCallback(() => {
     setLoading(true);
-    fetch(apiUrl("/api/activities"))
+    apiFetch("/api/activities")
       .then((res) => res.json())
       .then((data: ActivityRow[]) => setItems(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error al cargar actividades:", err))

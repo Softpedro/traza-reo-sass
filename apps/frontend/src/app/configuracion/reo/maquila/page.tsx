@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getColumns, type Maquila } from "./columns";
 import { MaquilaModal } from "./maquila-modal";
 
@@ -18,12 +18,11 @@ export default function MaquilaPage() {
   const [modal, setModal] = useState<ModalState>({
     open: false,
     mode: "create",
-    maquila: null,
-  });
+    maquila: null});
 
   const fetchMaquilas = useCallback(() => {
     setLoading(true);
-    fetch(apiUrl("/api/maquilas"))
+    apiFetch("/api/maquilas")
       .then((res) => res.json())
       .then((data) => setMaquilas(data))
       .catch((err) => console.error("Error al cargar maquilas:", err))

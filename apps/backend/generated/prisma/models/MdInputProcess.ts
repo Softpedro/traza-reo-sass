@@ -295,7 +295,7 @@ export type MdInputProcessGroupByOutputType = {
   _max: MdInputProcessMaxAggregateOutputType | null
 }
 
-type GetMdInputProcessGroupByPayload<T extends MdInputProcessGroupByArgs> = Prisma.PrismaPromise<
+export type GetMdInputProcessGroupByPayload<T extends MdInputProcessGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MdInputProcessGroupByOutputType, T['by']> &
       {
@@ -1539,6 +1539,11 @@ export type MdInputProcessFindManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Skip the first `n` MdInputProcesses.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MdInputProcesses.
+   */
   distinct?: Prisma.MdInputProcessScalarFieldEnum | Prisma.MdInputProcessScalarFieldEnum[]
 }
 

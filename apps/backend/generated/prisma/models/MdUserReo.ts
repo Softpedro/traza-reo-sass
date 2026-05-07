@@ -34,6 +34,7 @@ export type MdUserReoAvgAggregateOutputType = {
   rolUser: number | null
   failedAttempts: number | null
   isLocked: number | null
+  twoFactorEnabled: number | null
   stateUser: number | null
   flgStatutActif: number | null
 }
@@ -46,6 +47,7 @@ export type MdUserReoSumAggregateOutputType = {
   rolUser: number | null
   failedAttempts: number | null
   isLocked: number | null
+  twoFactorEnabled: number | null
   stateUser: number | null
   flgStatutActif: number | null
 }
@@ -75,6 +77,7 @@ export type MdUserReoMinAggregateOutputType = {
   lastLoginIp: string | null
   passwordExpiresAt: Date | null
   twoFactorSecret: string | null
+  twoFactorEnabled: number | null
   stateUser: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -108,6 +111,7 @@ export type MdUserReoMaxAggregateOutputType = {
   lastLoginIp: string | null
   passwordExpiresAt: Date | null
   twoFactorSecret: string | null
+  twoFactorEnabled: number | null
   stateUser: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -141,6 +145,7 @@ export type MdUserReoCountAggregateOutputType = {
   lastLoginIp: number
   passwordExpiresAt: number
   twoFactorSecret: number
+  twoFactorEnabled: number
   stateUser: number
   codUsuarioCargaDl: number
   fehProcesoCargaDl: number
@@ -159,6 +164,7 @@ export type MdUserReoAvgAggregateInputType = {
   rolUser?: true
   failedAttempts?: true
   isLocked?: true
+  twoFactorEnabled?: true
   stateUser?: true
   flgStatutActif?: true
 }
@@ -171,6 +177,7 @@ export type MdUserReoSumAggregateInputType = {
   rolUser?: true
   failedAttempts?: true
   isLocked?: true
+  twoFactorEnabled?: true
   stateUser?: true
   flgStatutActif?: true
 }
@@ -200,6 +207,7 @@ export type MdUserReoMinAggregateInputType = {
   lastLoginIp?: true
   passwordExpiresAt?: true
   twoFactorSecret?: true
+  twoFactorEnabled?: true
   stateUser?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -233,6 +241,7 @@ export type MdUserReoMaxAggregateInputType = {
   lastLoginIp?: true
   passwordExpiresAt?: true
   twoFactorSecret?: true
+  twoFactorEnabled?: true
   stateUser?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -266,6 +275,7 @@ export type MdUserReoCountAggregateInputType = {
   lastLoginIp?: true
   passwordExpiresAt?: true
   twoFactorSecret?: true
+  twoFactorEnabled?: true
   stateUser?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -386,6 +396,7 @@ export type MdUserReoGroupByOutputType = {
   lastLoginIp: string | null
   passwordExpiresAt: Date | null
   twoFactorSecret: string | null
+  twoFactorEnabled: number
   stateUser: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl: Date
@@ -399,7 +410,7 @@ export type MdUserReoGroupByOutputType = {
   _max: MdUserReoMaxAggregateOutputType | null
 }
 
-type GetMdUserReoGroupByPayload<T extends MdUserReoGroupByArgs> = Prisma.PrismaPromise<
+export type GetMdUserReoGroupByPayload<T extends MdUserReoGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MdUserReoGroupByOutputType, T['by']> &
       {
@@ -442,6 +453,7 @@ export type MdUserReoWhereInput = {
   lastLoginIp?: Prisma.StringNullableFilter<"MdUserReo"> | string | null
   passwordExpiresAt?: Prisma.DateTimeNullableFilter<"MdUserReo"> | Date | string | null
   twoFactorSecret?: Prisma.StringNullableFilter<"MdUserReo"> | string | null
+  twoFactorEnabled?: Prisma.IntFilter<"MdUserReo"> | number
   stateUser?: Prisma.IntFilter<"MdUserReo"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdUserReo"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdUserReo"> | Date | string
@@ -449,6 +461,7 @@ export type MdUserReoWhereInput = {
   desAccion?: Prisma.StringFilter<"MdUserReo"> | string
   flgStatutActif?: Prisma.IntFilter<"MdUserReo"> | number
   accessLogs?: Prisma.LgUserAccessListRelationFilter
+  backupCodes?: Prisma.MdUserBackupCodeListRelationFilter
   parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
 }
 
@@ -477,6 +490,7 @@ export type MdUserReoOrderByWithRelationInput = {
   lastLoginIp?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   twoFactorSecret?: Prisma.SortOrderInput | Prisma.SortOrder
+  twoFactorEnabled?: Prisma.SortOrder
   stateUser?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -484,6 +498,7 @@ export type MdUserReoOrderByWithRelationInput = {
   desAccion?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
   accessLogs?: Prisma.LgUserAccessOrderByRelationAggregateInput
+  backupCodes?: Prisma.MdUserBackupCodeOrderByRelationAggregateInput
   parentCompany?: Prisma.MdParentCompanyOrderByWithRelationInput
   _relevance?: Prisma.MdUserReoOrderByRelevanceInput
 }
@@ -516,6 +531,7 @@ export type MdUserReoWhereUniqueInput = Prisma.AtLeast<{
   lastLoginIp?: Prisma.StringNullableFilter<"MdUserReo"> | string | null
   passwordExpiresAt?: Prisma.DateTimeNullableFilter<"MdUserReo"> | Date | string | null
   twoFactorSecret?: Prisma.StringNullableFilter<"MdUserReo"> | string | null
+  twoFactorEnabled?: Prisma.IntFilter<"MdUserReo"> | number
   stateUser?: Prisma.IntFilter<"MdUserReo"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdUserReo"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdUserReo"> | Date | string
@@ -523,6 +539,7 @@ export type MdUserReoWhereUniqueInput = Prisma.AtLeast<{
   desAccion?: Prisma.StringFilter<"MdUserReo"> | string
   flgStatutActif?: Prisma.IntFilter<"MdUserReo"> | number
   accessLogs?: Prisma.LgUserAccessListRelationFilter
+  backupCodes?: Prisma.MdUserBackupCodeListRelationFilter
   parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
 }, "idDlkUserReo" | "codUserReo" | "userLogin">
 
@@ -551,6 +568,7 @@ export type MdUserReoOrderByWithAggregationInput = {
   lastLoginIp?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   twoFactorSecret?: Prisma.SortOrderInput | Prisma.SortOrder
+  twoFactorEnabled?: Prisma.SortOrder
   stateUser?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -592,6 +610,7 @@ export type MdUserReoScalarWhereWithAggregatesInput = {
   lastLoginIp?: Prisma.StringNullableWithAggregatesFilter<"MdUserReo"> | string | null
   passwordExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"MdUserReo"> | Date | string | null
   twoFactorSecret?: Prisma.StringNullableWithAggregatesFilter<"MdUserReo"> | string | null
+  twoFactorEnabled?: Prisma.IntWithAggregatesFilter<"MdUserReo"> | number
   stateUser?: Prisma.IntWithAggregatesFilter<"MdUserReo"> | number
   codUsuarioCargaDl?: Prisma.StringWithAggregatesFilter<"MdUserReo"> | string
   fehProcesoCargaDl?: Prisma.DateTimeWithAggregatesFilter<"MdUserReo"> | Date | string
@@ -623,6 +642,7 @@ export type MdUserReoCreateInput = {
   lastLoginIp?: string | null
   passwordExpiresAt?: Date | string | null
   twoFactorSecret?: string | null
+  twoFactorEnabled?: number
   stateUser?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -630,6 +650,7 @@ export type MdUserReoCreateInput = {
   desAccion: string
   flgStatutActif?: number
   accessLogs?: Prisma.LgUserAccessCreateNestedManyWithoutUserInput
+  backupCodes?: Prisma.MdUserBackupCodeCreateNestedManyWithoutUserInput
   parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutUsersInput
 }
 
@@ -658,6 +679,7 @@ export type MdUserReoUncheckedCreateInput = {
   lastLoginIp?: string | null
   passwordExpiresAt?: Date | string | null
   twoFactorSecret?: string | null
+  twoFactorEnabled?: number
   stateUser?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -665,6 +687,7 @@ export type MdUserReoUncheckedCreateInput = {
   desAccion: string
   flgStatutActif?: number
   accessLogs?: Prisma.LgUserAccessUncheckedCreateNestedManyWithoutUserInput
+  backupCodes?: Prisma.MdUserBackupCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type MdUserReoUpdateInput = {
@@ -690,6 +713,7 @@ export type MdUserReoUpdateInput = {
   lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.IntFieldUpdateOperationsInput | number
   stateUser?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -697,6 +721,7 @@ export type MdUserReoUpdateInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   accessLogs?: Prisma.LgUserAccessUpdateManyWithoutUserNestedInput
+  backupCodes?: Prisma.MdUserBackupCodeUpdateManyWithoutUserNestedInput
   parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutUsersNestedInput
 }
 
@@ -725,6 +750,7 @@ export type MdUserReoUncheckedUpdateInput = {
   lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.IntFieldUpdateOperationsInput | number
   stateUser?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -732,6 +758,7 @@ export type MdUserReoUncheckedUpdateInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   accessLogs?: Prisma.LgUserAccessUncheckedUpdateManyWithoutUserNestedInput
+  backupCodes?: Prisma.MdUserBackupCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type MdUserReoCreateManyInput = {
@@ -759,6 +786,7 @@ export type MdUserReoCreateManyInput = {
   lastLoginIp?: string | null
   passwordExpiresAt?: Date | string | null
   twoFactorSecret?: string | null
+  twoFactorEnabled?: number
   stateUser?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -790,6 +818,7 @@ export type MdUserReoUpdateManyMutationInput = {
   lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.IntFieldUpdateOperationsInput | number
   stateUser?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -823,6 +852,7 @@ export type MdUserReoUncheckedUpdateManyInput = {
   lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.IntFieldUpdateOperationsInput | number
   stateUser?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -872,6 +902,7 @@ export type MdUserReoCountOrderByAggregateInput = {
   lastLoginIp?: Prisma.SortOrder
   passwordExpiresAt?: Prisma.SortOrder
   twoFactorSecret?: Prisma.SortOrder
+  twoFactorEnabled?: Prisma.SortOrder
   stateUser?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -888,6 +919,7 @@ export type MdUserReoAvgOrderByAggregateInput = {
   rolUser?: Prisma.SortOrder
   failedAttempts?: Prisma.SortOrder
   isLocked?: Prisma.SortOrder
+  twoFactorEnabled?: Prisma.SortOrder
   stateUser?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
 }
@@ -917,6 +949,7 @@ export type MdUserReoMaxOrderByAggregateInput = {
   lastLoginIp?: Prisma.SortOrder
   passwordExpiresAt?: Prisma.SortOrder
   twoFactorSecret?: Prisma.SortOrder
+  twoFactorEnabled?: Prisma.SortOrder
   stateUser?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -950,6 +983,7 @@ export type MdUserReoMinOrderByAggregateInput = {
   lastLoginIp?: Prisma.SortOrder
   passwordExpiresAt?: Prisma.SortOrder
   twoFactorSecret?: Prisma.SortOrder
+  twoFactorEnabled?: Prisma.SortOrder
   stateUser?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -966,6 +1000,7 @@ export type MdUserReoSumOrderByAggregateInput = {
   rolUser?: Prisma.SortOrder
   failedAttempts?: Prisma.SortOrder
   isLocked?: Prisma.SortOrder
+  twoFactorEnabled?: Prisma.SortOrder
   stateUser?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
 }
@@ -1017,6 +1052,20 @@ export type MdUserReoUncheckedUpdateManyWithoutParentCompanyNestedInput = {
   deleteMany?: Prisma.MdUserReoScalarWhereInput | Prisma.MdUserReoScalarWhereInput[]
 }
 
+export type MdUserReoCreateNestedOneWithoutBackupCodesInput = {
+  create?: Prisma.XOR<Prisma.MdUserReoCreateWithoutBackupCodesInput, Prisma.MdUserReoUncheckedCreateWithoutBackupCodesInput>
+  connectOrCreate?: Prisma.MdUserReoCreateOrConnectWithoutBackupCodesInput
+  connect?: Prisma.MdUserReoWhereUniqueInput
+}
+
+export type MdUserReoUpdateOneRequiredWithoutBackupCodesNestedInput = {
+  create?: Prisma.XOR<Prisma.MdUserReoCreateWithoutBackupCodesInput, Prisma.MdUserReoUncheckedCreateWithoutBackupCodesInput>
+  connectOrCreate?: Prisma.MdUserReoCreateOrConnectWithoutBackupCodesInput
+  upsert?: Prisma.MdUserReoUpsertWithoutBackupCodesInput
+  connect?: Prisma.MdUserReoWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MdUserReoUpdateToOneWithWhereWithoutBackupCodesInput, Prisma.MdUserReoUpdateWithoutBackupCodesInput>, Prisma.MdUserReoUncheckedUpdateWithoutBackupCodesInput>
+}
+
 export type MdUserReoCreateNestedOneWithoutAccessLogsInput = {
   create?: Prisma.XOR<Prisma.MdUserReoCreateWithoutAccessLogsInput, Prisma.MdUserReoUncheckedCreateWithoutAccessLogsInput>
   connectOrCreate?: Prisma.MdUserReoCreateOrConnectWithoutAccessLogsInput
@@ -1054,6 +1103,7 @@ export type MdUserReoCreateWithoutParentCompanyInput = {
   lastLoginIp?: string | null
   passwordExpiresAt?: Date | string | null
   twoFactorSecret?: string | null
+  twoFactorEnabled?: number
   stateUser?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1061,6 +1111,7 @@ export type MdUserReoCreateWithoutParentCompanyInput = {
   desAccion: string
   flgStatutActif?: number
   accessLogs?: Prisma.LgUserAccessCreateNestedManyWithoutUserInput
+  backupCodes?: Prisma.MdUserBackupCodeCreateNestedManyWithoutUserInput
 }
 
 export type MdUserReoUncheckedCreateWithoutParentCompanyInput = {
@@ -1087,6 +1138,7 @@ export type MdUserReoUncheckedCreateWithoutParentCompanyInput = {
   lastLoginIp?: string | null
   passwordExpiresAt?: Date | string | null
   twoFactorSecret?: string | null
+  twoFactorEnabled?: number
   stateUser?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1094,6 +1146,7 @@ export type MdUserReoUncheckedCreateWithoutParentCompanyInput = {
   desAccion: string
   flgStatutActif?: number
   accessLogs?: Prisma.LgUserAccessUncheckedCreateNestedManyWithoutUserInput
+  backupCodes?: Prisma.MdUserBackupCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type MdUserReoCreateOrConnectWithoutParentCompanyInput = {
@@ -1150,12 +1203,167 @@ export type MdUserReoScalarWhereInput = {
   lastLoginIp?: Prisma.StringNullableFilter<"MdUserReo"> | string | null
   passwordExpiresAt?: Prisma.DateTimeNullableFilter<"MdUserReo"> | Date | string | null
   twoFactorSecret?: Prisma.StringNullableFilter<"MdUserReo"> | string | null
+  twoFactorEnabled?: Prisma.IntFilter<"MdUserReo"> | number
   stateUser?: Prisma.IntFilter<"MdUserReo"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdUserReo"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdUserReo"> | Date | string
   fehProcesoModifDl?: Prisma.DateTimeFilter<"MdUserReo"> | Date | string
   desAccion?: Prisma.StringFilter<"MdUserReo"> | string
   flgStatutActif?: Prisma.IntFilter<"MdUserReo"> | number
+}
+
+export type MdUserReoCreateWithoutBackupCodesInput = {
+  codUserReo: string
+  codParentCompany: string
+  documentType: number
+  documentNumber: string
+  nameUser: string
+  paternalLastNameUser: string
+  maternalLastNameUser: string
+  sexUser: string
+  positionUser: number
+  rolUser: number
+  emailUser: string
+  cellularUser: string
+  userLogin: string
+  password: string
+  photograph?: runtime.Bytes | null
+  failedAttempts?: number | null
+  isLocked?: number | null
+  lockedUntil?: Date | string | null
+  lastLoginDate?: Date | string | null
+  lastLoginIp?: string | null
+  passwordExpiresAt?: Date | string | null
+  twoFactorSecret?: string | null
+  twoFactorEnabled?: number
+  stateUser?: number
+  codUsuarioCargaDl: string
+  fehProcesoCargaDl?: Date | string
+  fehProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
+  accessLogs?: Prisma.LgUserAccessCreateNestedManyWithoutUserInput
+  parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutUsersInput
+}
+
+export type MdUserReoUncheckedCreateWithoutBackupCodesInput = {
+  idDlkUserReo?: number
+  codUserReo: string
+  idDlkParentCompany: number
+  codParentCompany: string
+  documentType: number
+  documentNumber: string
+  nameUser: string
+  paternalLastNameUser: string
+  maternalLastNameUser: string
+  sexUser: string
+  positionUser: number
+  rolUser: number
+  emailUser: string
+  cellularUser: string
+  userLogin: string
+  password: string
+  photograph?: runtime.Bytes | null
+  failedAttempts?: number | null
+  isLocked?: number | null
+  lockedUntil?: Date | string | null
+  lastLoginDate?: Date | string | null
+  lastLoginIp?: string | null
+  passwordExpiresAt?: Date | string | null
+  twoFactorSecret?: string | null
+  twoFactorEnabled?: number
+  stateUser?: number
+  codUsuarioCargaDl: string
+  fehProcesoCargaDl?: Date | string
+  fehProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
+  accessLogs?: Prisma.LgUserAccessUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type MdUserReoCreateOrConnectWithoutBackupCodesInput = {
+  where: Prisma.MdUserReoWhereUniqueInput
+  create: Prisma.XOR<Prisma.MdUserReoCreateWithoutBackupCodesInput, Prisma.MdUserReoUncheckedCreateWithoutBackupCodesInput>
+}
+
+export type MdUserReoUpsertWithoutBackupCodesInput = {
+  update: Prisma.XOR<Prisma.MdUserReoUpdateWithoutBackupCodesInput, Prisma.MdUserReoUncheckedUpdateWithoutBackupCodesInput>
+  create: Prisma.XOR<Prisma.MdUserReoCreateWithoutBackupCodesInput, Prisma.MdUserReoUncheckedCreateWithoutBackupCodesInput>
+  where?: Prisma.MdUserReoWhereInput
+}
+
+export type MdUserReoUpdateToOneWithWhereWithoutBackupCodesInput = {
+  where?: Prisma.MdUserReoWhereInput
+  data: Prisma.XOR<Prisma.MdUserReoUpdateWithoutBackupCodesInput, Prisma.MdUserReoUncheckedUpdateWithoutBackupCodesInput>
+}
+
+export type MdUserReoUpdateWithoutBackupCodesInput = {
+  codUserReo?: Prisma.StringFieldUpdateOperationsInput | string
+  codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  documentType?: Prisma.IntFieldUpdateOperationsInput | number
+  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nameUser?: Prisma.StringFieldUpdateOperationsInput | string
+  paternalLastNameUser?: Prisma.StringFieldUpdateOperationsInput | string
+  maternalLastNameUser?: Prisma.StringFieldUpdateOperationsInput | string
+  sexUser?: Prisma.StringFieldUpdateOperationsInput | string
+  positionUser?: Prisma.IntFieldUpdateOperationsInput | number
+  rolUser?: Prisma.IntFieldUpdateOperationsInput | number
+  emailUser?: Prisma.StringFieldUpdateOperationsInput | string
+  cellularUser?: Prisma.StringFieldUpdateOperationsInput | string
+  userLogin?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  photograph?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  failedAttempts?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isLocked?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.IntFieldUpdateOperationsInput | number
+  stateUser?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  accessLogs?: Prisma.LgUserAccessUpdateManyWithoutUserNestedInput
+  parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutUsersNestedInput
+}
+
+export type MdUserReoUncheckedUpdateWithoutBackupCodesInput = {
+  idDlkUserReo?: Prisma.IntFieldUpdateOperationsInput | number
+  codUserReo?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
+  codParentCompany?: Prisma.StringFieldUpdateOperationsInput | string
+  documentType?: Prisma.IntFieldUpdateOperationsInput | number
+  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nameUser?: Prisma.StringFieldUpdateOperationsInput | string
+  paternalLastNameUser?: Prisma.StringFieldUpdateOperationsInput | string
+  maternalLastNameUser?: Prisma.StringFieldUpdateOperationsInput | string
+  sexUser?: Prisma.StringFieldUpdateOperationsInput | string
+  positionUser?: Prisma.IntFieldUpdateOperationsInput | number
+  rolUser?: Prisma.IntFieldUpdateOperationsInput | number
+  emailUser?: Prisma.StringFieldUpdateOperationsInput | string
+  cellularUser?: Prisma.StringFieldUpdateOperationsInput | string
+  userLogin?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  photograph?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  failedAttempts?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isLocked?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.IntFieldUpdateOperationsInput | number
+  stateUser?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  accessLogs?: Prisma.LgUserAccessUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type MdUserReoCreateWithoutAccessLogsInput = {
@@ -1181,12 +1389,14 @@ export type MdUserReoCreateWithoutAccessLogsInput = {
   lastLoginIp?: string | null
   passwordExpiresAt?: Date | string | null
   twoFactorSecret?: string | null
+  twoFactorEnabled?: number
   stateUser?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  backupCodes?: Prisma.MdUserBackupCodeCreateNestedManyWithoutUserInput
   parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutUsersInput
 }
 
@@ -1215,12 +1425,14 @@ export type MdUserReoUncheckedCreateWithoutAccessLogsInput = {
   lastLoginIp?: string | null
   passwordExpiresAt?: Date | string | null
   twoFactorSecret?: string | null
+  twoFactorEnabled?: number
   stateUser?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  backupCodes?: Prisma.MdUserBackupCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type MdUserReoCreateOrConnectWithoutAccessLogsInput = {
@@ -1262,12 +1474,14 @@ export type MdUserReoUpdateWithoutAccessLogsInput = {
   lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.IntFieldUpdateOperationsInput | number
   stateUser?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  backupCodes?: Prisma.MdUserBackupCodeUpdateManyWithoutUserNestedInput
   parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutUsersNestedInput
 }
 
@@ -1296,12 +1510,14 @@ export type MdUserReoUncheckedUpdateWithoutAccessLogsInput = {
   lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.IntFieldUpdateOperationsInput | number
   stateUser?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  backupCodes?: Prisma.MdUserBackupCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type MdUserReoCreateManyParentCompanyInput = {
@@ -1328,6 +1544,7 @@ export type MdUserReoCreateManyParentCompanyInput = {
   lastLoginIp?: string | null
   passwordExpiresAt?: Date | string | null
   twoFactorSecret?: string | null
+  twoFactorEnabled?: number
   stateUser?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1359,6 +1576,7 @@ export type MdUserReoUpdateWithoutParentCompanyInput = {
   lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.IntFieldUpdateOperationsInput | number
   stateUser?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1366,6 +1584,7 @@ export type MdUserReoUpdateWithoutParentCompanyInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   accessLogs?: Prisma.LgUserAccessUpdateManyWithoutUserNestedInput
+  backupCodes?: Prisma.MdUserBackupCodeUpdateManyWithoutUserNestedInput
 }
 
 export type MdUserReoUncheckedUpdateWithoutParentCompanyInput = {
@@ -1392,6 +1611,7 @@ export type MdUserReoUncheckedUpdateWithoutParentCompanyInput = {
   lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.IntFieldUpdateOperationsInput | number
   stateUser?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1399,6 +1619,7 @@ export type MdUserReoUncheckedUpdateWithoutParentCompanyInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   accessLogs?: Prisma.LgUserAccessUncheckedUpdateManyWithoutUserNestedInput
+  backupCodes?: Prisma.MdUserBackupCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type MdUserReoUncheckedUpdateManyWithoutParentCompanyInput = {
@@ -1425,6 +1646,7 @@ export type MdUserReoUncheckedUpdateManyWithoutParentCompanyInput = {
   lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.IntFieldUpdateOperationsInput | number
   stateUser?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1440,10 +1662,12 @@ export type MdUserReoUncheckedUpdateManyWithoutParentCompanyInput = {
 
 export type MdUserReoCountOutputType = {
   accessLogs: number
+  backupCodes: number
 }
 
 export type MdUserReoCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accessLogs?: boolean | MdUserReoCountOutputTypeCountAccessLogsArgs
+  backupCodes?: boolean | MdUserReoCountOutputTypeCountBackupCodesArgs
 }
 
 /**
@@ -1461,6 +1685,13 @@ export type MdUserReoCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
  */
 export type MdUserReoCountOutputTypeCountAccessLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LgUserAccessWhereInput
+}
+
+/**
+ * MdUserReoCountOutputType without action
+ */
+export type MdUserReoCountOutputTypeCountBackupCodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MdUserBackupCodeWhereInput
 }
 
 
@@ -1489,6 +1720,7 @@ export type MdUserReoSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   lastLoginIp?: boolean
   passwordExpiresAt?: boolean
   twoFactorSecret?: boolean
+  twoFactorEnabled?: boolean
   stateUser?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
@@ -1496,6 +1728,7 @@ export type MdUserReoSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   desAccion?: boolean
   flgStatutActif?: boolean
   accessLogs?: boolean | Prisma.MdUserReo$accessLogsArgs<ExtArgs>
+  backupCodes?: boolean | Prisma.MdUserReo$backupCodesArgs<ExtArgs>
   parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.MdUserReoCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mdUserReo"]>
@@ -1527,6 +1760,7 @@ export type MdUserReoSelectScalar = {
   lastLoginIp?: boolean
   passwordExpiresAt?: boolean
   twoFactorSecret?: boolean
+  twoFactorEnabled?: boolean
   stateUser?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
@@ -1535,9 +1769,10 @@ export type MdUserReoSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type MdUserReoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkUserReo" | "codUserReo" | "idDlkParentCompany" | "codParentCompany" | "documentType" | "documentNumber" | "nameUser" | "paternalLastNameUser" | "maternalLastNameUser" | "sexUser" | "positionUser" | "rolUser" | "emailUser" | "cellularUser" | "userLogin" | "password" | "photograph" | "failedAttempts" | "isLocked" | "lockedUntil" | "lastLoginDate" | "lastLoginIp" | "passwordExpiresAt" | "twoFactorSecret" | "stateUser" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdUserReo"]>
+export type MdUserReoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkUserReo" | "codUserReo" | "idDlkParentCompany" | "codParentCompany" | "documentType" | "documentNumber" | "nameUser" | "paternalLastNameUser" | "maternalLastNameUser" | "sexUser" | "positionUser" | "rolUser" | "emailUser" | "cellularUser" | "userLogin" | "password" | "photograph" | "failedAttempts" | "isLocked" | "lockedUntil" | "lastLoginDate" | "lastLoginIp" | "passwordExpiresAt" | "twoFactorSecret" | "twoFactorEnabled" | "stateUser" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdUserReo"]>
 export type MdUserReoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accessLogs?: boolean | Prisma.MdUserReo$accessLogsArgs<ExtArgs>
+  backupCodes?: boolean | Prisma.MdUserReo$backupCodesArgs<ExtArgs>
   parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.MdUserReoCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1546,6 +1781,7 @@ export type $MdUserReoPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   name: "MdUserReo"
   objects: {
     accessLogs: Prisma.$LgUserAccessPayload<ExtArgs>[]
+    backupCodes: Prisma.$MdUserBackupCodePayload<ExtArgs>[]
     parentCompany: Prisma.$MdParentCompanyPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1573,6 +1809,7 @@ export type $MdUserReoPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     lastLoginIp: string | null
     passwordExpiresAt: Date | null
     twoFactorSecret: string | null
+    twoFactorEnabled: number
     stateUser: number
     codUsuarioCargaDl: string
     fehProcesoCargaDl: Date
@@ -1920,6 +2157,7 @@ readonly fields: MdUserReoFieldRefs;
 export interface Prisma__MdUserReoClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   accessLogs<T extends Prisma.MdUserReo$accessLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdUserReo$accessLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LgUserAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  backupCodes<T extends Prisma.MdUserReo$backupCodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdUserReo$backupCodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdUserBackupCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   parentCompany<T extends Prisma.MdParentCompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__MdParentCompanyClient<runtime.Types.Result.GetResult<Prisma.$MdParentCompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1974,6 +2212,7 @@ export interface MdUserReoFieldRefs {
   readonly lastLoginIp: Prisma.FieldRef<"MdUserReo", 'String'>
   readonly passwordExpiresAt: Prisma.FieldRef<"MdUserReo", 'DateTime'>
   readonly twoFactorSecret: Prisma.FieldRef<"MdUserReo", 'String'>
+  readonly twoFactorEnabled: Prisma.FieldRef<"MdUserReo", 'Int'>
   readonly stateUser: Prisma.FieldRef<"MdUserReo", 'Int'>
   readonly codUsuarioCargaDl: Prisma.FieldRef<"MdUserReo", 'String'>
   readonly fehProcesoCargaDl: Prisma.FieldRef<"MdUserReo", 'DateTime'>
@@ -2176,6 +2415,11 @@ export type MdUserReoFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Skip the first `n` MdUserReos.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MdUserReos.
+   */
   distinct?: Prisma.MdUserReoScalarFieldEnum | Prisma.MdUserReoScalarFieldEnum[]
 }
 
@@ -2344,6 +2588,30 @@ export type MdUserReo$accessLogsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.LgUserAccessScalarFieldEnum | Prisma.LgUserAccessScalarFieldEnum[]
+}
+
+/**
+ * MdUserReo.backupCodes
+ */
+export type MdUserReo$backupCodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MdUserBackupCode
+   */
+  select?: Prisma.MdUserBackupCodeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MdUserBackupCode
+   */
+  omit?: Prisma.MdUserBackupCodeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MdUserBackupCodeInclude<ExtArgs> | null
+  where?: Prisma.MdUserBackupCodeWhereInput
+  orderBy?: Prisma.MdUserBackupCodeOrderByWithRelationInput | Prisma.MdUserBackupCodeOrderByWithRelationInput[]
+  cursor?: Prisma.MdUserBackupCodeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MdUserBackupCodeScalarFieldEnum | Prisma.MdUserBackupCodeScalarFieldEnum[]
 }
 
 /**

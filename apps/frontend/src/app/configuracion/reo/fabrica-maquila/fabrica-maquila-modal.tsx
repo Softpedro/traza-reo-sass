@@ -18,6 +18,7 @@ import {
 } from "@fullstack-reo/ui";
 import { UbigeoSelector } from "@/components/ubigeo-selector";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { FacilityMaquila } from "./columns";
 
 type ModalMode = "create" | "edit" | "view";
@@ -74,12 +75,12 @@ export function FabricaMaquilaModal({
 
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/maquilas"))
+    apiFetch("/api/maquilas")
       .then((res) => res.json())
       .then((data: MaquilaOption[]) => setMaquilas(data))
       .catch((err) => console.error("Error al cargar maquilas:", err));
 
-    fetch(apiUrl("/api/ubigeo"))
+    apiFetch("/api/ubigeo")
       .then((res) => res.json())
       .then((data: UbigeoOption[]) => setUbigeos(data))
       .catch((err) => console.error("Error al cargar ubigeo:", err));
@@ -119,7 +120,7 @@ export function FabricaMaquilaModal({
     let cancelled = false;
     void (async () => {
       try {
-        const res = await fetch(apiUrl(`/api/facilities-maquila/${item.idDlkFacilityMaquila}`));
+        const res = await apiFetch(`/api/facilities-maquila/${item.idDlkFacilityMaquila}`);
         if (!res.ok) return;
         const detail = (await res.json()) as FacilityMaquila;
         if (cancelled) return;
@@ -177,7 +178,7 @@ export function FabricaMaquilaModal({
         stateFacilityMaquila: Number(form.stateFacilityMaquila),
       };
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

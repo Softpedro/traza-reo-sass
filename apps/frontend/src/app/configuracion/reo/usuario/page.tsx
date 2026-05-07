@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getColumns, type UserReo } from "./columns";
 import { UsuarioModal } from "./usuario-modal";
 
@@ -18,12 +18,11 @@ export default function UsuarioPage() {
   const [modal, setModal] = useState<ModalState>({
     open: false,
     mode: "create",
-    usuario: null,
-  });
+    usuario: null});
 
   const fetchUsuarios = useCallback(() => {
     setLoading(true);
-    fetch(apiUrl("/api/users"))
+    apiFetch("/api/users")
       .then((res) => res.json())
       .then((data) => setUsuarios(data))
       .catch((err) => console.error("Error al cargar usuarios:", err))
@@ -82,8 +81,7 @@ export default function UsuarioPage() {
           setModal((prev) => ({
             ...prev,
             open,
-            usuario: open ? prev.usuario : null,
-          }))
+            usuario: open ? prev.usuario : null}))
         }
         mode={modal.mode}
         usuario={modal.usuario}

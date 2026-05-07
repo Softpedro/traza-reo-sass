@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Button } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ActivityRow } from "./columns";
 import type { InputActivityRow } from "./input-activity-modal";
 
@@ -21,15 +21,14 @@ export function InputActivityListDialog({
   activity,
   mode,
   onCrear,
-  onSelectInput,
-}: InputActivityListDialogProps) {
+  onSelectInput}: InputActivityListDialogProps) {
   const [inputs, setInputs] = useState<InputActivityRow[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!open || !activity) return;
     setLoading(true);
-    fetch(apiUrl(`/api/input-activities?activityId=${activity.idDlkActivities}`))
+    apiFetch(`/api/input-activities?activityId=${activity.idDlkActivities}`)
       .then((res) => res.json())
       .then((data: InputActivityRow[]) => setInputs(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error al cargar inputs de actividad:", err))

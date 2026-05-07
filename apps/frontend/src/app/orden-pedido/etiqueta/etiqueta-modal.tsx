@@ -13,15 +13,13 @@ import {
   SelectTrigger,
   SelectValue,
   SelectContent,
-  SelectItem,
-} from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+  SelectItem} from "@fullstack-reo/ui";
+import { apiFetch } from "@/lib/api-fetch";
 import type { EtiquetaRow } from "./columns";
 import {
   ACTIVO_OPTIONS,
   concluidoToStatus,
-  statusToConcluido,
-} from "./constants";
+  statusToConcluido} from "./constants";
 
 type ModalMode = "create" | "edit";
 
@@ -66,8 +64,7 @@ const emptyForm = {
   size: "",
   color: "",
   print: "",
-  urlDppTemplate: "",
-};
+  urlDppTemplate: ""};
 
 export function EtiquetaModal({ open, onOpenChange, mode, order, onSuccess }: Props) {
   const [saving, setSaving] = useState(false);
@@ -86,7 +83,7 @@ export function EtiquetaModal({ open, onOpenChange, mode, order, onSuccess }: Pr
   // Carga catálogo de identificadores digitales al abrir.
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/digital-identifiers"))
+    apiFetch("/api/digital-identifiers")
       .then((res) => res.json())
       .then((data: DigitalIdentifier[]) => setIdentifiers(Array.isArray(data) ? data : []))
       .catch((err) => console.error(err));
@@ -99,7 +96,7 @@ export function EtiquetaModal({ open, onOpenChange, mode, order, onSuccess }: Pr
     setForm(emptyForm);
     setConcluido(statusToConcluido(order.statusStageOrderHead));
     if (mode !== "edit") return;
-    fetch(apiUrl(`/api/order-heads/${order.idDlkOrderHead}/labels`))
+    apiFetch(`/api/order-heads/${order.idDlkOrderHead}/labels`)
       .then((res) => res.json())
       .then((rows: LabelHead[]) => {
         const first = Array.isArray(rows) && rows.length > 0 ? rows[0] : null;
@@ -117,8 +114,7 @@ export function EtiquetaModal({ open, onOpenChange, mode, order, onSuccess }: Pr
           size: "",
           color: "",
           print: "",
-          urlDppTemplate: "",
-        });
+          urlDppTemplate: ""});
         setFlgActivo(first.flgStatutActif ?? 1);
       })
       .catch((err) => console.error(err));
@@ -141,8 +137,7 @@ export function EtiquetaModal({ open, onOpenChange, mode, order, onSuccess }: Pr
           alert("Define un rango (inicio + fin) o un total > 0");
           return;
         }
-        const res = await fetch(
-          apiUrl(`/api/order-heads/${order.idDlkOrderHead}/labels`),
+        const res = await apiFetch(`/api/order-heads/${order.idDlkOrderHead}/labels`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -158,9 +153,7 @@ export function EtiquetaModal({ open, onOpenChange, mode, order, onSuccess }: Pr
               size: form.size.trim() || null,
               color: form.color.trim() || null,
               print: form.print.trim() || null,
-              urlDppTemplate: form.urlDppTemplate.trim() || null,
-            }),
-          }
+              urlDppTemplate: form.urlDppTemplate.trim() || null})}
         );
         if (!res.ok) {
           const err = await res.json().catch(() => ({}));
@@ -175,10 +168,7 @@ export function EtiquetaModal({ open, onOpenChange, mode, order, onSuccess }: Pr
           return;
         }
         const statusStageOrderHead = concluidoToStatus(concluido);
-        const res = await fetch(
-          apiUrl(
-            `/api/order-heads/${order.idDlkOrderHead}/labels/${labelHead.idDlkOrderLabelHead}`
-          ),
+        const res = await apiFetch(`/api/order-heads/${order.idDlkOrderHead}/labels/${labelHead.idDlkOrderLabelHead}`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -188,9 +178,7 @@ export function EtiquetaModal({ open, onOpenChange, mode, order, onSuccess }: Pr
               nameEstilo: form.nameEstilo.trim() || null,
               codGtin: form.codGtin.trim() || null,
               statusStageOrderHead,
-              flgStatutActif: flgActivo,
-            }),
-          }
+              flgStatutActif: flgActivo})}
         );
         if (!res.ok) {
           const err = await res.json().catch(() => ({}));
@@ -302,8 +290,7 @@ export function EtiquetaModal({ open, onOpenChange, mode, order, onSuccess }: Pr
                       setForm((f) => ({
                         ...f,
                         inicioSerializacion:
-                          e.target.value === "" ? "" : Number(e.target.value),
-                      }))
+                          e.target.value === "" ? "" : Number(e.target.value)}))
                     }
                   />
                 </div>
@@ -317,8 +304,7 @@ export function EtiquetaModal({ open, onOpenChange, mode, order, onSuccess }: Pr
                       setForm((f) => ({
                         ...f,
                         finSerializacion:
-                          e.target.value === "" ? "" : Number(e.target.value),
-                      }))
+                          e.target.value === "" ? "" : Number(e.target.value)}))
                     }
                   />
                 </div>
@@ -331,8 +317,7 @@ export function EtiquetaModal({ open, onOpenChange, mode, order, onSuccess }: Pr
                     onChange={(e) =>
                       setForm((f) => ({
                         ...f,
-                        totalLabel: e.target.value === "" ? "" : Number(e.target.value),
-                      }))
+                        totalLabel: e.target.value === "" ? "" : Number(e.target.value)}))
                     }
                   />
                 </div>

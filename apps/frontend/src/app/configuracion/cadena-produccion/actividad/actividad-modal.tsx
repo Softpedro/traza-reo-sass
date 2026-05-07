@@ -16,6 +16,7 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getTrazabilidadLabel } from "../eslabon/obs";
 import { OBS_TIPO_ACTIVIDAD } from "./obs";
 import type { ActivityRow } from "./columns";
@@ -82,15 +83,15 @@ export function ActividadModal({
 
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/production-chains"))
+    apiFetch("/api/production-chains")
       .then((r) => r.json())
       .then((data: ChainOption[]) => setChains(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error al cargar cadenas:", err));
-    fetch(apiUrl("/api/processes"))
+    apiFetch("/api/processes")
       .then((r) => r.json())
       .then((data: ProcessOption[]) => setProcesses(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error al cargar procesos:", err));
-    fetch(apiUrl("/api/subprocesses"))
+    apiFetch("/api/subprocesses")
       .then((r) => r.json())
       .then((data: SubprocessOption[]) => setSubprocesses(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Error al cargar subprocesos:", err));
@@ -182,7 +183,7 @@ export function ActividadModal({
               stateActivities: Number(form.stateActivities),
             };
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

@@ -4,10 +4,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DataTable } from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api-fetch";
 import { getOrderDetailColumns, type OrderDetailRow } from "./order-detail-columns";
 import { OrderDetailEditModal } from "./order-detail-edit-modal";
 import { OrderDetailVerModal } from "./order-detail-ver-modal";
+import { OrderDetailImageDialog } from "./order-detail-image-dialog";
 import { SuministroStepView } from "./suministro-step-view";
 
 /**
@@ -21,21 +22,18 @@ const PASOS_ORDEN = [
     step: 3,
     label: "Etiqueta",
     fallbackHref: "/orden-pedido/etiqueta",
-    inline: false,
-  },
+    inline: false},
   { step: 4, label: "Ruta", fallbackHref: "/orden-pedido/ruta", inline: false },
   {
     step: 5,
     label: "Trazabilidad",
     fallbackHref: "/orden-pedido/trazabilidad",
-    inline: false,
-  },
+    inline: false},
   {
     step: 6,
     label: "Lista negra",
     fallbackHref: "/orden-pedido/lista-negra",
-    inline: false,
-  },
+    inline: false},
 ] as const;
 
 type HeadSummary = {
@@ -70,19 +68,25 @@ export function OrderRegistroDetalleClient({ headId }: Props) {
   const [verOpen, setVerOpen] = useState(false);
   const [viewingRow, setViewingRow] = useState<OrderDetailRow | null>(null);
   const [imageVersion, setImageVersion] = useState(0);
+  const [imageDialog, setImageDialog] = useState<{
+    open: boolean;
+    src: string | null;
+    alt: string;
+    caption?: string | null;
+  }>({ open: false, src: null, alt: "Imagen" });
 
   const load = useCallback(() => {
     setLoading(true);
     setError(null);
     Promise.all([
-      fetch(apiUrl(`/api/order-heads/${headId}`)).then(async (res) => {
+      apiFetch(`/api/order-heads/${headId}`).then(async (res) => {
         if (!res.ok) {
           const j = await res.json().catch(() => ({}));
           throw new Error((j as { error?: string }).error || `Cabecera ${res.status}`);
         }
         return (await res.json()) as HeadSummary;
       }),
-      fetch(apiUrl(`/api/order-heads/${headId}/details`)).then(async (res) => {
+      apiFetch(`/api/order-heads/${headId}/details`).then(async (res) => {
         if (!res.ok) {
           const j = await res.json().catch(() => ({}));
           throw new Error((j as { error?: string }).error || `Detalle ${res.status}`);
@@ -118,8 +122,16 @@ export function OrderRegistroDetalleClient({ headId }: Props) {
           setViewingRow(row);
           setVerOpen(true);
         },
-        imageVersion,
-      }),
+        onImageClick: (row, src) => {
+          setImageDialog({
+            open: true,
+            src,
+            alt: row.nomEstilo?.trim() || row.codEstilo?.trim() || "Estilo",
+            caption:
+              [row.codEstilo, row.codOrderDetail].filter(Boolean).join(" · ") || null,
+          });
+        },
+        imageVersion}),
     [headId, imageVersion]
   );
 
@@ -257,6 +269,14 @@ export function OrderRegistroDetalleClient({ headId }: Props) {
             headId={headId}
             row={viewingRow}
             imageVersion={imageVersion}
+          />
+
+          <OrderDetailImageDialog
+            open={imageDialog.open}
+            onOpenChange={(o) => setImageDialog((prev) => ({ ...prev, open: o }))}
+            src={imageDialog.src}
+            alt={imageDialog.alt}
+            caption={imageDialog.caption}
           />
         </>
       )}

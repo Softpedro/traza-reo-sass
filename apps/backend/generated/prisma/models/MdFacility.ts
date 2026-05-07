@@ -299,7 +299,7 @@ export type MdFacilityGroupByOutputType = {
   _max: MdFacilityMaxAggregateOutputType | null
 }
 
-type GetMdFacilityGroupByPayload<T extends MdFacilityGroupByArgs> = Prisma.PrismaPromise<
+export type GetMdFacilityGroupByPayload<T extends MdFacilityGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MdFacilityGroupByOutputType, T['by']> &
       {
@@ -1545,6 +1545,11 @@ export type MdFacilityFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Skip the first `n` MdFacilities.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of MdFacilities.
+   */
   distinct?: Prisma.MdFacilityScalarFieldEnum | Prisma.MdFacilityScalarFieldEnum[]
 }
 

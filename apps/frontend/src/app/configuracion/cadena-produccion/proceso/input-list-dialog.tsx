@@ -6,9 +6,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  Button,
-} from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+  Button} from "@fullstack-reo/ui";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ProcessRow } from "./columns";
 import type { InputProcessRow } from "./input-process-modal";
 
@@ -27,15 +26,14 @@ export function InputListDialog({
   process,
   mode,
   onCrear,
-  onSelectInput,
-}: InputListDialogProps) {
+  onSelectInput}: InputListDialogProps) {
   const [inputs, setInputs] = useState<InputProcessRow[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!open || !process) return;
     setLoading(true);
-    fetch(apiUrl(`/api/input-processes?processId=${process.idDlkProcess}`))
+    apiFetch(`/api/input-processes?processId=${process.idDlkProcess}`)
       .then((res) => res.json())
       .then((data: InputProcessRow[]) => setInputs(data))
       .catch((err) => console.error("Error al cargar inputs:", err))

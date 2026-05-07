@@ -274,6 +274,7 @@ model OdOrderDetail {
   size12            Int?        @default(0) @map("SIZE_12")
   size14            Int?        @default(0) @map("SIZE_14")
   size16            Int?        @default(0) @map("SIZE_16")
+  sizeXs            Int?        @default(0) @map("SIZE_XS")
   sizeS             Int?        @default(0) @map("SIZE_S")
   sizeM             Int?        @default(0) @map("SIZE_M")
   sizeL             Int?        @default(0) @map("SIZE_L")
@@ -774,7 +775,8 @@ model MdUserReo {
   lastLoginDate        DateTime?       @map("LAST_LOGIN_DATE")
   lastLoginIp          String?         @map("LAST_LOGIN_IP") @db.VarChar(45)
   passwordExpiresAt    DateTime?       @map("PASSWORD_EXPIRES_AT")
-  twoFactorSecret      String?         @map("TWO_FACTOR_SECRET") @db.VarChar(100)
+  twoFactorSecret      String?         @map("TWO_FACTOR_SECRET") @db.VarChar(255)
+  twoFactorEnabled     Int             @default(0) @map("TWO_FACTOR_ENABLED")
   stateUser            Int             @default(1) @map("STATE_USER")
   codUsuarioCargaDl    String          @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
   fehProcesoCargaDl    DateTime        @default(now()) @map("FEH_PROCESO_CARGA_DL")
@@ -782,28 +784,60 @@ model MdUserReo {
   desAccion            String          @map("DES_ACCION") @db.VarChar(20)
   flgStatutActif       Int             @default(1) @map("FLG_STATUT_ACTIF")
   accessLogs           LgUserAccess[]
+  backupCodes          MdUserBackupCode[]
   parentCompany        MdParentCompany @relation(fields: [idDlkParentCompany], references: [idDlkParentCompany])
 
   @@index([idDlkParentCompany], map: "FK_USER_REO_PARENT_COMPANY")
   @@map("MD_USER_REO")
 }
 
+model MdUserBackupCode {
+  idBackupCode      BigInt    @id @default(autoincrement()) @map("ID_BACKUP_CODE")
+  idDlkUserReo      Int       @map("ID_DLK_USER_REO")
+  codeHash          String    @map("CODE_HASH") @db.VarChar(60)
+  usedAt            DateTime? @map("USED_AT") @db.DateTime(3)
+  fehProcesoCargaDl DateTime  @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  user              MdUserReo @relation(fields: [idDlkUserReo], references: [idDlkUserReo], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([idDlkUserReo], map: "IDX_BACKUP_CODES_USER")
+  @@map("MD_USER_BACKUP_CODES")
+}
+
+enum DeviceType {
+  PC
+  MOBILE
+  TABLET
+  BOT
+  OTHER
+
+  @@map("DEVICE_TYPE")
+}
+
+enum AccessStatus {
+  SUCCESS
+  FAILED
+  BLOCKED
+  PENDING
+
+  @@map("ACCESS_STATUS")
+}
+
 model LgUserAccess {
-  idLogAccess     BigInt    @id @default(autoincrement()) @map("ID_LOG_ACCESS")
-  idDlkUserReo    Int       @map("ID_DLK_USER_REO")
-  ipAddress       String    @map("IP_ADDRESS") @db.VarChar(45)
-  browser         String?   @map("BROWSER") @db.VarChar(50)
-  browserVersion  String?   @map("BROWSER_VERSION") @db.VarChar(50)
-  operatingSystem String?   @map("OPERATING_SYSTEM") @db.VarChar(50)
-  deviceType      String?   @default("PC") @map("DEVICE_TYPE") @db.VarChar(20)
-  latitude        Decimal?  @map("LATITUDE") @db.Decimal(10, 8)
-  longitude       Decimal?  @map("LONGITUDE") @db.Decimal(11, 8)
-  city            String?   @map("CITY") @db.VarChar(100)
-  country         String?   @map("COUNTRY") @db.VarChar(100)
-  accessStatus    String    @map("ACCESS_STATUS") @db.VarChar(20)
-  fehAccess       DateTime? @default(now()) @map("FEH_ACCESS")
-  userAgentRaw    String?   @map("USER_AGENT_RAW") @db.Text
-  user            MdUserReo @relation(fields: [idDlkUserReo], references: [idDlkUserReo])
+  idLogAccess     BigInt       @id @default(autoincrement()) @map("ID_LOG_ACCESS")
+  idDlkUserReo    Int          @map("ID_DLK_USER_REO")
+  ipAddress       String       @map("IP_ADDRESS") @db.VarChar(45)
+  browser         String?      @map("BROWSER") @db.VarChar(50)
+  browserVersion  String?      @map("BROWSER_VERSION") @db.VarChar(50)
+  operatingSystem String?      @map("OPERATING_SYSTEM") @db.VarChar(50)
+  deviceType      DeviceType   @default(PC) @map("DEVICE_TYPE")
+  latitude        Decimal?     @map("LATITUDE") @db.Decimal(10, 8)
+  longitude       Decimal?     @map("LONGITUDE") @db.Decimal(11, 8)
+  city            String?      @map("CITY") @db.VarChar(100)
+  country         String?      @map("COUNTRY") @db.VarChar(100)
+  accessStatus    AccessStatus @map("ACCESS_STATUS")
+  fehAccess       DateTime     @default(now()) @map("FEH_ACCESS") @db.DateTime(3)
+  userAgentRaw    String?      @map("USER_AGENT_RAW") @db.Text
+  user            MdUserReo    @relation(fields: [idDlkUserReo], references: [idDlkUserReo], onDelete: Restrict, onUpdate: Cascade)
 
   @@index([idDlkUserReo], map: "FK_LOG_ACCESS_USER_REO")
   @@map("LG_USER_ACCESS")

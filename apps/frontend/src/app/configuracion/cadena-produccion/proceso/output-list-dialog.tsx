@@ -6,9 +6,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  Button,
-} from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+  Button} from "@fullstack-reo/ui";
+import { apiFetch } from "@/lib/api-fetch";
 import type { ProcessRow } from "./columns";
 import type { OutputProcessRow } from "./output-process-modal";
 
@@ -27,15 +26,14 @@ export function OutputListDialog({
   process,
   mode,
   onCrear,
-  onSelectOutput,
-}: OutputListDialogProps) {
+  onSelectOutput}: OutputListDialogProps) {
   const [outputs, setOutputs] = useState<OutputProcessRow[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!open || !process) return;
     setLoading(true);
-    fetch(apiUrl(`/api/output-processes?processId=${process.idDlkProcess}`))
+    apiFetch(`/api/output-processes?processId=${process.idDlkProcess}`)
       .then((res) => res.json())
       .then((data: OutputProcessRow[]) => setOutputs(data))
       .catch((err) => console.error("Error al cargar outputs:", err))

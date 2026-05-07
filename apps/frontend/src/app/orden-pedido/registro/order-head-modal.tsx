@@ -13,16 +13,14 @@ import {
   SelectTrigger,
   SelectValue,
   SelectContent,
-  SelectItem,
-} from "@fullstack-reo/ui";
-import { apiUrl } from "@/lib/api";
+  SelectItem} from "@fullstack-reo/ui";
+import { apiFetch } from "@/lib/api-fetch";
 import type { OrderHeadRow } from "./columns";
 import {
   ORDER_HEAD_STAGES,
   ACTIVO_OPTIONS,
   concluidoToStatus,
-  statusToConcluido,
-} from "./constants";
+  statusToConcluido} from "./constants";
 
 type BrandOption = { idDlkBrand: number; nameBrand: string; codBrand: string };
 
@@ -62,16 +60,14 @@ const emptyCreate = {
   concluido: 0,
   flgStatutActif: 1,
   archivoBase64: "" as string,
-  archivoNombre: "" as string,
-};
+  archivoNombre: "" as string};
 
 export function OrderHeadModal({
   open,
   onOpenChange,
   mode,
   order,
-  onSuccess,
-}: Props) {
+  onSuccess}: Props) {
   const [brands, setBrands] = useState<BrandOption[]>([]);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState(emptyCreate);
@@ -82,7 +78,7 @@ export function OrderHeadModal({
 
   useEffect(() => {
     if (!open) return;
-    fetch(apiUrl("/api/brands"))
+    apiFetch("/api/brands")
       .then((res) => res.json())
       .then((data: BrandOption[]) => setBrands(data))
       .catch((err) => console.error(err));
@@ -106,14 +102,13 @@ export function OrderHeadModal({
       concluido: statusToConcluido(order.statusStageOrderHead),
       flgStatutActif: 1,
       archivoBase64: "",
-      archivoNombre: "",
-    });
+      archivoNombre: ""});
     setFileLabel("");
   }, [open, mode, order]);
 
   useEffect(() => {
     if (!open || mode !== "edit" || !order?.idDlkOrderHead) return;
-    fetch(apiUrl(`/api/order-heads/${order.idDlkOrderHead}`))
+    apiFetch(`/api/order-heads/${order.idDlkOrderHead}`)
       .then((res) => res.json())
       .then((row: { flgStatutActif?: number | null; hasArchivo?: boolean }) => {
         if (row.flgStatutActif != null) {
@@ -143,7 +138,7 @@ export function OrderHeadModal({
           : Number(form.quantityOrderHead);
 
       if (mode === "create") {
-        const res = await fetch(apiUrl("/api/order-heads"), {
+        const res = await apiFetch("/api/order-heads", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -155,9 +150,7 @@ export function OrderHeadModal({
             stageOrderHead: form.stageOrderHead,
             statusStageOrderHead,
             archivoBase64: form.archivoBase64 || null,
-            archivoNombre: form.archivoNombre.trim() || null,
-          }),
-        });
+            archivoNombre: form.archivoNombre.trim() || null})});
         if (!res.ok) {
           const err = await res.json().catch(() => ({}));
           throw new Error(err.error || "Error al crear");
@@ -176,18 +169,16 @@ export function OrderHeadModal({
           dateProbableDespatch: form.dateProbableDespatch || null,
           stageOrderHead: form.stageOrderHead,
           statusStageOrderHead,
-          flgStatutActif: form.flgStatutActif,
-        };
+          flgStatutActif: form.flgStatutActif};
         if (form.archivoBase64 === "__CLEAR__") {
           putBody.clearArchivo = true;
         } else if (form.archivoBase64) {
           putBody.archivoBase64 = form.archivoBase64;
         }
-        const res = await fetch(apiUrl(`/api/order-heads/${order.idDlkOrderHead}`), {
+        const res = await apiFetch(`/api/order-heads/${order.idDlkOrderHead}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(putBody),
-        });
+          body: JSON.stringify(putBody)});
         if (!res.ok) {
           const err = await res.json().catch(() => ({}));
           throw new Error(err.error || "Error al actualizar");
@@ -216,8 +207,7 @@ export function OrderHeadModal({
     setForm((f) => ({
       ...f,
       archivoBase64: isEdit ? "__CLEAR__" : "",
-      archivoNombre: "",
-    }));
+      archivoNombre: ""}));
   }
 
   return (
@@ -264,8 +254,7 @@ export function OrderHeadModal({
               onChange={(e) =>
                 setForm((f) => ({
                   ...f,
-                  quantityOrderHead: e.target.value === "" ? "" : Number(e.target.value),
-                }))
+                  quantityOrderHead: e.target.value === "" ? "" : Number(e.target.value)}))
               }
               disabled={fieldsLocked}
             />

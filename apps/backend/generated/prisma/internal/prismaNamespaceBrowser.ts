@@ -169,6 +169,7 @@ export const MdBrandScalarFieldEnum = {
   whatsappBrand: 'whatsappBrand',
   ecommerceBrand: 'ecommerceBrand',
   logoBrand: 'logoBrand',
+  subdomainBrand: 'subdomainBrand',
   stateBrand: 'stateBrand',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fehProcesoCargaDl: 'fehProcesoCargaDl',
@@ -226,6 +227,10 @@ export const MdMaterialScalarFieldEnum = {
   patterns: 'patterns',
   recoveryMaterials: 'recoveryMaterials',
   certification: 'certification',
+  orderForm: 'orderForm',
+  colorMaterial: 'colorMaterial',
+  rollMaterial: 'rollMaterial',
+  invoiceMaterial: 'invoiceMaterial',
   stateMaterials: 'stateMaterials',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fehProcesoCargaDl: 'fehProcesoCargaDl',
@@ -255,6 +260,9 @@ export const MdAvioScalarFieldEnum = {
   recycledInputSource: 'recycledInputSource',
   certificates: 'certificates',
   observation: 'observation',
+  orderForm: 'orderForm',
+  measuresAvio: 'measuresAvio',
+  invoiceAvio: 'invoiceAvio',
   stateAvios: 'stateAvios',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fehProcesoCargaDl: 'fehProcesoCargaDl',
@@ -1015,6 +1023,7 @@ export const MdBrandOrderByRelevanceFieldEnum = {
   instagramBrand: 'instagramBrand',
   whatsappBrand: 'whatsappBrand',
   ecommerceBrand: 'ecommerceBrand',
+  subdomainBrand: 'subdomainBrand',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   desAccion: 'desAccion'
 } as const
@@ -1054,6 +1063,10 @@ export const MdMaterialOrderByRelevanceFieldEnum = {
   patterns: 'patterns',
   recoveryMaterials: 'recoveryMaterials',
   certification: 'certification',
+  orderForm: 'orderForm',
+  colorMaterial: 'colorMaterial',
+  rollMaterial: 'rollMaterial',
+  invoiceMaterial: 'invoiceMaterial',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   desAccion: 'desAccion'
 } as const
@@ -1073,6 +1086,9 @@ export const MdAvioOrderByRelevanceFieldEnum = {
   recycledInputSource: 'recycledInputSource',
   certificates: 'certificates',
   observation: 'observation',
+  orderForm: 'orderForm',
+  measuresAvio: 'measuresAvio',
+  invoiceAvio: 'invoiceAvio',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   desAccion: 'desAccion'
 } as const

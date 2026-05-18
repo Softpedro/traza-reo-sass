@@ -56,6 +56,10 @@ type FormState = {
   patterns: string;
   recoveryMaterials: string;
   certification: string;
+  orderForm: string;
+  colorMaterial: string;
+  rollMaterial: string;
+  invoiceMaterial: string;
   stateMaterials: number;
 };
 
@@ -79,6 +83,10 @@ const emptyForm: FormState = {
   patterns: "",
   recoveryMaterials: "",
   certification: "",
+  orderForm: "",
+  colorMaterial: "",
+  rollMaterial: "",
+  invoiceMaterial: "",
   stateMaterials: 1,
 };
 
@@ -112,6 +120,10 @@ function rowToForm(m: Material): FormState {
     patterns: strToStr(m.patterns),
     recoveryMaterials: strToStr(m.recoveryMaterials),
     certification: strToStr(m.certification),
+    orderForm: strToStr(m.orderForm),
+    colorMaterial: strToStr(m.colorMaterial),
+    rollMaterial: strToStr(m.rollMaterial),
+    invoiceMaterial: strToStr(m.invoiceMaterial),
     stateMaterials: active ? 1 : 0,
   };
 }
@@ -337,6 +349,10 @@ export function MaterialModal({ open, onOpenChange, mode, material, onSuccess }:
         patterns: toPayloadText(form.patterns),
         recoveryMaterials: toPayloadText(form.recoveryMaterials),
         certification: toPayloadText(form.certification),
+        orderForm: toPayloadText(form.orderForm),
+        colorMaterial: toPayloadText(form.colorMaterial),
+        rollMaterial: toPayloadText(form.rollMaterial),
+        invoiceMaterial: toPayloadText(form.invoiceMaterial),
       };
 
       if (mode === "edit") {
@@ -568,6 +584,34 @@ export function MaterialModal({ open, onOpenChange, mode, material, onSuccess }:
             label="Certificaciones"
             value={form.certification}
             onChange={(v) => set("certification", v)}
+            readOnly={readOnly}
+          />
+
+          <SectionTitle>Pedido</SectionTitle>
+          <FieldText
+            label="Orden de pedido"
+            value={form.orderForm}
+            onChange={(v) => set("orderForm", v)}
+            readOnly={readOnly}
+            placeholder="Orden para la que se requiere el material"
+          />
+          <FieldText
+            label="Color"
+            value={form.colorMaterial}
+            onChange={(v) => set("colorMaterial", v)}
+            readOnly={readOnly}
+          />
+          <FieldText
+            label="Rollo"
+            value={form.rollMaterial}
+            onChange={(v) => set("rollMaterial", v)}
+            readOnly={readOnly}
+            placeholder="Código del rollo de tela"
+          />
+          <FieldText
+            label="Factura"
+            value={form.invoiceMaterial}
+            onChange={(v) => set("invoiceMaterial", v)}
             readOnly={readOnly}
           />
 

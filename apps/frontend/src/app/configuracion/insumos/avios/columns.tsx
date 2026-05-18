@@ -23,6 +23,9 @@ export type Avios = {
   recycledInputSource: string | null;
   certificates: string | null;
   observation: string | null;
+  orderForm: string | null;
+  measuresAvio: string | null;
+  invoiceAvio: string | null;
   stateAvios: number | null;
   flgStatutActif?: number | null;
   fehProcesoCargaDl?: string | null;

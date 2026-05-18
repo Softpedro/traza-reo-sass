@@ -91,6 +91,10 @@ type MaterialRow = {
   patterns: string | null;
   recoveryMaterials: string | null;
   certification: string | null;
+  orderForm: string | null;
+  colorMaterial: string | null;
+  rollMaterial: string | null;
+  invoiceMaterial: string | null;
   stateMaterials: number | null;
   codUsuarioCargaDl: string | null;
   fehProcesoCargaDl: Date | null;
@@ -131,6 +135,10 @@ function mapRawToMaterialRow(r: RawJoinRow): MaterialRow {
     patterns: toStr(r.patterns),
     recoveryMaterials: toStr(r.recoveryMaterials),
     certification: toStr(r.certification),
+    orderForm: toStr(r.orderForm),
+    colorMaterial: toStr(r.colorMaterial),
+    rollMaterial: toStr(r.rollMaterial),
+    invoiceMaterial: toStr(r.invoiceMaterial),
     stateMaterials: toNum(r.stateMaterials),
     codUsuarioCargaDl: toStr(r.codUsuarioCargaDl),
     fehProcesoCargaDl: (r.fehProcesoCargaDl as Date | null) ?? null,
@@ -178,6 +186,10 @@ const materialSelectBase = Prisma.sql`
     m.PATTERNS AS patterns,
     m.RECOVERY_MATERIALS AS recoveryMaterials,
     m.CERTIFICATION AS certification,
+    m.ORDER_FORM AS orderForm,
+    m.COLOR_MATERIAL AS colorMaterial,
+    m.ROLL_MATERIAL AS rollMaterial,
+    m.INVOICE_MATERIAL AS invoiceMaterial,
     m.STATE_MATERIALS AS stateMaterials,
     m.COD_USUARIO_CARGA_DL AS codUsuarioCargaDl,
     m.FEH_PROCESO_CARGA_DL AS fehProcesoCargaDl,
@@ -212,6 +224,10 @@ export type MaterialCreateInput = {
   patterns?: string | null;
   recoveryMaterials?: string | null;
   certification?: string | null;
+  orderForm?: string | null;
+  colorMaterial?: string | null;
+  rollMaterial?: string | null;
+  invoiceMaterial?: string | null;
   stateMaterials?: number;
 };
 
@@ -278,6 +294,10 @@ export class MaterialService {
           PATTERNS,
           RECOVERY_MATERIALS,
           CERTIFICATION,
+          ORDER_FORM,
+          COLOR_MATERIAL,
+          ROLL_MATERIAL,
+          INVOICE_MATERIAL,
           STATE_MATERIALS,
           COD_USUARIO_CARGA_DL,
           FEH_PROCESO_CARGA_DL,
@@ -305,6 +325,10 @@ export class MaterialService {
           ${nullableText(data.patterns)},
           ${nullableText(data.recoveryMaterials)},
           ${nullableText(data.certification)},
+          ${nullableText(data.orderForm)},
+          ${nullableText(data.colorMaterial)},
+          ${nullableText(data.rollMaterial)},
+          ${nullableText(data.invoiceMaterial)},
           ${stateMaterials},
           ${"SYSTEM"},
           ${now},
@@ -347,6 +371,10 @@ export class MaterialService {
     if (data.patterns !== undefined) parts.push(Prisma.sql`PATTERNS = ${nullableText(data.patterns)}`);
     if (data.recoveryMaterials !== undefined) parts.push(Prisma.sql`RECOVERY_MATERIALS = ${nullableText(data.recoveryMaterials)}`);
     if (data.certification !== undefined) parts.push(Prisma.sql`CERTIFICATION = ${nullableText(data.certification)}`);
+    if (data.orderForm !== undefined) parts.push(Prisma.sql`ORDER_FORM = ${nullableText(data.orderForm)}`);
+    if (data.colorMaterial !== undefined) parts.push(Prisma.sql`COLOR_MATERIAL = ${nullableText(data.colorMaterial)}`);
+    if (data.rollMaterial !== undefined) parts.push(Prisma.sql`ROLL_MATERIAL = ${nullableText(data.rollMaterial)}`);
+    if (data.invoiceMaterial !== undefined) parts.push(Prisma.sql`INVOICE_MATERIAL = ${nullableText(data.invoiceMaterial)}`);
     if (data.stateMaterials !== undefined) {
       const s = Number(data.stateMaterials);
       parts.push(Prisma.sql`STATE_MATERIALS = ${s}`);

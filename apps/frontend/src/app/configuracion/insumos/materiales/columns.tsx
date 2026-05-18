@@ -26,6 +26,10 @@ export type Material = {
   patterns: string | null;
   recoveryMaterials: string | null;
   certification: string | null;
+  orderForm: string | null;
+  colorMaterial: string | null;
+  rollMaterial: string | null;
+  invoiceMaterial: string | null;
   stateMaterials: number | null;
   flgStatutActif?: number | null;
   fehProcesoCargaDl?: string | null;

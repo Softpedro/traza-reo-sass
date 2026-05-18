@@ -19,6 +19,8 @@ export type Brand = {
   instagramBrand?: string | null;
   whatsappBrand?: string | null;
   ecommerceBrand?: string | null;
+  /** Subdominio de la marca (multi-tenant) */
+  subdomainBrand?: string | null;
   /** Data URL desde API (logo binario mapeado en backend) */
   logoBrand?: string | null;
   stateBrand: number;

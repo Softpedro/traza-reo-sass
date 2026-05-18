@@ -87,6 +87,7 @@ export class BrandService {
     instagramBrand?: string | null;
     whatsappBrand?: string | null;
     ecommerceBrand?: string | null;
+    subdomainBrand?: string | null;
     logoBrand?: string;
     stateBrand?: number;
   }) {
@@ -117,6 +118,7 @@ export class BrandService {
       instagramBrand: data.instagramBrand ?? null,
       whatsappBrand: data.whatsappBrand ?? null,
       ecommerceBrand: data.ecommerceBrand ?? null,
+      subdomainBrand: data.subdomainBrand ?? null,
       ...(data.logoBrand
         ? { logoBrand: Buffer.from(data.logoBrand, "base64") }
         : {}),
@@ -160,6 +162,7 @@ export class BrandService {
       instagramBrand: string | null;
       whatsappBrand: string | null;
       ecommerceBrand: string | null;
+      subdomainBrand: string | null;
       logoBrand: string;
       stateBrand: number;
     }>
@@ -180,6 +183,7 @@ export class BrandService {
       "instagramBrand",
       "whatsappBrand",
       "ecommerceBrand",
+      "subdomainBrand",
       "stateBrand",
     ] as const;
 

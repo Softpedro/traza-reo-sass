@@ -80,6 +80,7 @@ model MdBrand {
   whatsappBrand      String?         @map("WHATSAPP_BRAND") @db.VarChar(150)
   ecommerceBrand     String?         @map("ECOMMERCE_BRAND") @db.VarChar(150)
   logoBrand          Bytes?          @map("LOGO_BRAND")
+  subdomainBrand     String?         @map("SUBDOMAIN_BRAND") @db.VarChar(100)
   stateBrand         Int             @default(1) @map("STATE_BRAND")
   codUsuarioCargaDl  String          @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
   fehProcesoCargaDl  DateTime        @default(now()) @map("FEH_PROCESO_CARGA_DL")
@@ -146,6 +147,14 @@ model MdMaterial {
   patterns                    String?    @map("PATTERNS") @db.VarChar(100)
   recoveryMaterials           String?    @map("RECOVERY_MATERIALS") @db.VarChar(100)
   certification               String?    @map("CERTIFICATION") @db.VarChar(1000)
+  /** Orden del Pedido para el cual se requiere el material */
+  orderForm                   String?    @map("ORDER_FORM") @db.VarChar(20)
+  /** Color del material */
+  colorMaterial               String?    @map("COLOR_MATERIAL") @db.VarChar(100)
+  /** Rollo del material, ejemplo: Codigo del rollo de tela */
+  rollMaterial                String?    @map("ROLL_MATERIAL") @db.VarChar(45)
+  /** Factura del material */
+  invoiceMaterial             String?    @map("INVOICE_MATERIAL") @db.VarChar(45)
   stateMaterials              Int?       @default(1) @map("STATE_MATERIALS") @db.TinyInt
   codUsuarioCargaDl           String?    @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
   fehProcesoCargaDl           DateTime?  @default(now()) @map("FEH_PROCESO_CARGA_DL")
@@ -177,6 +186,12 @@ model MdAvio {
   recycledInputSource         String?    @map("RECYCLED_INPUT_SOURCE") @db.VarChar(500)
   certificates                String?    @map("CERTIFICATES") @db.VarChar(1000)
   observation                 String?    @map("OBSERVATION") @db.VarChar(500)
+  /** Orden de Pedido para el cual se requiere el avio */
+  orderForm                   String?    @map("ORDER_FORM") @db.VarChar(20)
+  /** Medidas del Avio */
+  measuresAvio                String?    @map("MEASURES_AVIO") @db.VarChar(100)
+  /** Factura del Avio */
+  invoiceAvio                 String?    @map("INVOICE_AVIO") @db.VarChar(45)
   stateAvios                  Int?       @default(1) @map("STATE_AVIOS") @db.TinyInt
   codUsuarioCargaDl           String?    @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
   fehProcesoCargaDl           DateTime?  @default(now()) @map("FEH_PROCESO_CARGA_DL")

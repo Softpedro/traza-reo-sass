@@ -59,6 +59,7 @@ export type MdBrandMinAggregateOutputType = {
   whatsappBrand: string | null
   ecommerceBrand: string | null
   logoBrand: runtime.Bytes | null
+  subdomainBrand: string | null
   stateBrand: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -84,6 +85,7 @@ export type MdBrandMaxAggregateOutputType = {
   whatsappBrand: string | null
   ecommerceBrand: string | null
   logoBrand: runtime.Bytes | null
+  subdomainBrand: string | null
   stateBrand: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -109,6 +111,7 @@ export type MdBrandCountAggregateOutputType = {
   whatsappBrand: number
   ecommerceBrand: number
   logoBrand: number
+  subdomainBrand: number
   stateBrand: number
   codUsuarioCargaDl: number
   fehProcesoCargaDl: number
@@ -152,6 +155,7 @@ export type MdBrandMinAggregateInputType = {
   whatsappBrand?: true
   ecommerceBrand?: true
   logoBrand?: true
+  subdomainBrand?: true
   stateBrand?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -177,6 +181,7 @@ export type MdBrandMaxAggregateInputType = {
   whatsappBrand?: true
   ecommerceBrand?: true
   logoBrand?: true
+  subdomainBrand?: true
   stateBrand?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -202,6 +207,7 @@ export type MdBrandCountAggregateInputType = {
   whatsappBrand?: true
   ecommerceBrand?: true
   logoBrand?: true
+  subdomainBrand?: true
   stateBrand?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -314,6 +320,7 @@ export type MdBrandGroupByOutputType = {
   whatsappBrand: string | null
   ecommerceBrand: string | null
   logoBrand: runtime.Bytes | null
+  subdomainBrand: string | null
   stateBrand: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl: Date
@@ -362,6 +369,7 @@ export type MdBrandWhereInput = {
   whatsappBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   ecommerceBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   logoBrand?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  subdomainBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   stateBrand?: Prisma.IntFilter<"MdBrand"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdBrand"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdBrand"> | Date | string
@@ -390,6 +398,7 @@ export type MdBrandOrderByWithRelationInput = {
   whatsappBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   ecommerceBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   logoBrand?: Prisma.SortOrderInput | Prisma.SortOrder
+  subdomainBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -422,6 +431,7 @@ export type MdBrandWhereUniqueInput = Prisma.AtLeast<{
   whatsappBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   ecommerceBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   logoBrand?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  subdomainBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   stateBrand?: Prisma.IntFilter<"MdBrand"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdBrand"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdBrand"> | Date | string
@@ -450,6 +460,7 @@ export type MdBrandOrderByWithAggregationInput = {
   whatsappBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   ecommerceBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   logoBrand?: Prisma.SortOrderInput | Prisma.SortOrder
+  subdomainBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -483,6 +494,7 @@ export type MdBrandScalarWhereWithAggregatesInput = {
   whatsappBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null
   ecommerceBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null
   logoBrand?: Prisma.BytesNullableWithAggregatesFilter<"MdBrand"> | runtime.Bytes | null
+  subdomainBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null
   stateBrand?: Prisma.IntWithAggregatesFilter<"MdBrand"> | number
   codUsuarioCargaDl?: Prisma.StringWithAggregatesFilter<"MdBrand"> | string
   fehProcesoCargaDl?: Prisma.DateTimeWithAggregatesFilter<"MdBrand"> | Date | string
@@ -506,6 +518,7 @@ export type MdBrandCreateInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -534,6 +547,7 @@ export type MdBrandUncheckedCreateInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -559,6 +573,7 @@ export type MdBrandUpdateInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -587,6 +602,7 @@ export type MdBrandUncheckedUpdateInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -614,6 +630,7 @@ export type MdBrandCreateManyInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -637,6 +654,7 @@ export type MdBrandUpdateManyMutationInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -662,6 +680,7 @@ export type MdBrandUncheckedUpdateManyInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -703,6 +722,7 @@ export type MdBrandCountOrderByAggregateInput = {
   whatsappBrand?: Prisma.SortOrder
   ecommerceBrand?: Prisma.SortOrder
   logoBrand?: Prisma.SortOrder
+  subdomainBrand?: Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -736,6 +756,7 @@ export type MdBrandMaxOrderByAggregateInput = {
   whatsappBrand?: Prisma.SortOrder
   ecommerceBrand?: Prisma.SortOrder
   logoBrand?: Prisma.SortOrder
+  subdomainBrand?: Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -761,6 +782,7 @@ export type MdBrandMinOrderByAggregateInput = {
   whatsappBrand?: Prisma.SortOrder
   ecommerceBrand?: Prisma.SortOrder
   logoBrand?: Prisma.SortOrder
+  subdomainBrand?: Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -867,6 +889,7 @@ export type MdBrandCreateWithoutParentCompanyInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -893,6 +916,7 @@ export type MdBrandUncheckedCreateWithoutParentCompanyInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -949,6 +973,7 @@ export type MdBrandScalarWhereInput = {
   whatsappBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   ecommerceBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   logoBrand?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  subdomainBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   stateBrand?: Prisma.IntFilter<"MdBrand"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdBrand"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdBrand"> | Date | string
@@ -972,6 +997,7 @@ export type MdBrandCreateWithoutOrderHeadsInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -999,6 +1025,7 @@ export type MdBrandUncheckedCreateWithoutOrderHeadsInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1039,6 +1066,7 @@ export type MdBrandUpdateWithoutOrderHeadsInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1066,6 +1094,7 @@ export type MdBrandUncheckedUpdateWithoutOrderHeadsInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1090,6 +1119,7 @@ export type MdBrandCreateWithoutSubbrandsInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1117,6 +1147,7 @@ export type MdBrandUncheckedCreateWithoutSubbrandsInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1157,6 +1188,7 @@ export type MdBrandUpdateWithoutSubbrandsInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1184,6 +1216,7 @@ export type MdBrandUncheckedUpdateWithoutSubbrandsInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1209,6 +1242,7 @@ export type MdBrandCreateManyParentCompanyInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1232,6 +1266,7 @@ export type MdBrandUpdateWithoutParentCompanyInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1258,6 +1293,7 @@ export type MdBrandUncheckedUpdateWithoutParentCompanyInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1284,6 +1320,7 @@ export type MdBrandUncheckedUpdateManyWithoutParentCompanyInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1349,6 +1386,7 @@ export type MdBrandSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   whatsappBrand?: boolean
   ecommerceBrand?: boolean
   logoBrand?: boolean
+  subdomainBrand?: boolean
   stateBrand?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
@@ -1380,6 +1418,7 @@ export type MdBrandSelectScalar = {
   whatsappBrand?: boolean
   ecommerceBrand?: boolean
   logoBrand?: boolean
+  subdomainBrand?: boolean
   stateBrand?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
@@ -1388,7 +1427,7 @@ export type MdBrandSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type MdBrandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkBrand" | "codBrand" | "idDlkParentCompany" | "codParentCompany" | "nameBrand" | "desBrand" | "codUbigeoBrand" | "addressBrand" | "locationBrand" | "emailBrand" | "cellularBrand" | "facebookBrand" | "instagramBrand" | "whatsappBrand" | "ecommerceBrand" | "logoBrand" | "stateBrand" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdBrand"]>
+export type MdBrandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkBrand" | "codBrand" | "idDlkParentCompany" | "codParentCompany" | "nameBrand" | "desBrand" | "codUbigeoBrand" | "addressBrand" | "locationBrand" | "emailBrand" | "cellularBrand" | "facebookBrand" | "instagramBrand" | "whatsappBrand" | "ecommerceBrand" | "logoBrand" | "subdomainBrand" | "stateBrand" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdBrand"]>
 export type MdBrandInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   subbrands?: boolean | Prisma.MdBrand$subbrandsArgs<ExtArgs>
@@ -1420,6 +1459,7 @@ export type $MdBrandPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     whatsappBrand: string | null
     ecommerceBrand: string | null
     logoBrand: runtime.Bytes | null
+    subdomainBrand: string | null
     stateBrand: number
     codUsuarioCargaDl: string
     fehProcesoCargaDl: Date
@@ -1814,6 +1854,7 @@ export interface MdBrandFieldRefs {
   readonly whatsappBrand: Prisma.FieldRef<"MdBrand", 'String'>
   readonly ecommerceBrand: Prisma.FieldRef<"MdBrand", 'String'>
   readonly logoBrand: Prisma.FieldRef<"MdBrand", 'Bytes'>
+  readonly subdomainBrand: Prisma.FieldRef<"MdBrand", 'String'>
   readonly stateBrand: Prisma.FieldRef<"MdBrand", 'Int'>
   readonly codUsuarioCargaDl: Prisma.FieldRef<"MdBrand", 'String'>
   readonly fehProcesoCargaDl: Prisma.FieldRef<"MdBrand", 'DateTime'>

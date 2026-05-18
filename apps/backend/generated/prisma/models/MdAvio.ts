@@ -66,6 +66,9 @@ export type MdAvioMinAggregateOutputType = {
   recycledInputSource: string | null
   certificates: string | null
   observation: string | null
+  orderForm: string | null
+  measuresAvio: string | null
+  invoiceAvio: string | null
   stateAvios: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -92,6 +95,9 @@ export type MdAvioMaxAggregateOutputType = {
   recycledInputSource: string | null
   certificates: string | null
   observation: string | null
+  orderForm: string | null
+  measuresAvio: string | null
+  invoiceAvio: string | null
   stateAvios: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -118,6 +124,9 @@ export type MdAvioCountAggregateOutputType = {
   recycledInputSource: number
   certificates: number
   observation: number
+  orderForm: number
+  measuresAvio: number
+  invoiceAvio: number
   stateAvios: number
   codUsuarioCargaDl: number
   fehProcesoCargaDl: number
@@ -168,6 +177,9 @@ export type MdAvioMinAggregateInputType = {
   recycledInputSource?: true
   certificates?: true
   observation?: true
+  orderForm?: true
+  measuresAvio?: true
+  invoiceAvio?: true
   stateAvios?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -194,6 +206,9 @@ export type MdAvioMaxAggregateInputType = {
   recycledInputSource?: true
   certificates?: true
   observation?: true
+  orderForm?: true
+  measuresAvio?: true
+  invoiceAvio?: true
   stateAvios?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -220,6 +235,9 @@ export type MdAvioCountAggregateInputType = {
   recycledInputSource?: true
   certificates?: true
   observation?: true
+  orderForm?: true
+  measuresAvio?: true
+  invoiceAvio?: true
   stateAvios?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -333,6 +351,9 @@ export type MdAvioGroupByOutputType = {
   recycledInputSource: string | null
   certificates: string | null
   observation: string | null
+  orderForm: string | null
+  measuresAvio: string | null
+  invoiceAvio: string | null
   stateAvios: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -382,6 +403,9 @@ export type MdAvioWhereInput = {
   recycledInputSource?: Prisma.StringNullableFilter<"MdAvio"> | string | null
   certificates?: Prisma.StringNullableFilter<"MdAvio"> | string | null
   observation?: Prisma.StringNullableFilter<"MdAvio"> | string | null
+  orderForm?: Prisma.StringNullableFilter<"MdAvio"> | string | null
+  measuresAvio?: Prisma.StringNullableFilter<"MdAvio"> | string | null
+  invoiceAvio?: Prisma.StringNullableFilter<"MdAvio"> | string | null
   stateAvios?: Prisma.IntNullableFilter<"MdAvio"> | number | null
   codUsuarioCargaDl?: Prisma.StringNullableFilter<"MdAvio"> | string | null
   fehProcesoCargaDl?: Prisma.DateTimeNullableFilter<"MdAvio"> | Date | string | null
@@ -409,6 +433,9 @@ export type MdAvioOrderByWithRelationInput = {
   recycledInputSource?: Prisma.SortOrderInput | Prisma.SortOrder
   certificates?: Prisma.SortOrderInput | Prisma.SortOrder
   observation?: Prisma.SortOrderInput | Prisma.SortOrder
+  orderForm?: Prisma.SortOrderInput | Prisma.SortOrder
+  measuresAvio?: Prisma.SortOrderInput | Prisma.SortOrder
+  invoiceAvio?: Prisma.SortOrderInput | Prisma.SortOrder
   stateAvios?: Prisma.SortOrderInput | Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -440,6 +467,9 @@ export type MdAvioWhereUniqueInput = Prisma.AtLeast<{
   recycledInputSource?: Prisma.StringNullableFilter<"MdAvio"> | string | null
   certificates?: Prisma.StringNullableFilter<"MdAvio"> | string | null
   observation?: Prisma.StringNullableFilter<"MdAvio"> | string | null
+  orderForm?: Prisma.StringNullableFilter<"MdAvio"> | string | null
+  measuresAvio?: Prisma.StringNullableFilter<"MdAvio"> | string | null
+  invoiceAvio?: Prisma.StringNullableFilter<"MdAvio"> | string | null
   stateAvios?: Prisma.IntNullableFilter<"MdAvio"> | number | null
   codUsuarioCargaDl?: Prisma.StringNullableFilter<"MdAvio"> | string | null
   fehProcesoCargaDl?: Prisma.DateTimeNullableFilter<"MdAvio"> | Date | string | null
@@ -467,6 +497,9 @@ export type MdAvioOrderByWithAggregationInput = {
   recycledInputSource?: Prisma.SortOrderInput | Prisma.SortOrder
   certificates?: Prisma.SortOrderInput | Prisma.SortOrder
   observation?: Prisma.SortOrderInput | Prisma.SortOrder
+  orderForm?: Prisma.SortOrderInput | Prisma.SortOrder
+  measuresAvio?: Prisma.SortOrderInput | Prisma.SortOrder
+  invoiceAvio?: Prisma.SortOrderInput | Prisma.SortOrder
   stateAvios?: Prisma.SortOrderInput | Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -501,6 +534,9 @@ export type MdAvioScalarWhereWithAggregatesInput = {
   recycledInputSource?: Prisma.StringNullableWithAggregatesFilter<"MdAvio"> | string | null
   certificates?: Prisma.StringNullableWithAggregatesFilter<"MdAvio"> | string | null
   observation?: Prisma.StringNullableWithAggregatesFilter<"MdAvio"> | string | null
+  orderForm?: Prisma.StringNullableWithAggregatesFilter<"MdAvio"> | string | null
+  measuresAvio?: Prisma.StringNullableWithAggregatesFilter<"MdAvio"> | string | null
+  invoiceAvio?: Prisma.StringNullableWithAggregatesFilter<"MdAvio"> | string | null
   stateAvios?: Prisma.IntNullableWithAggregatesFilter<"MdAvio"> | number | null
   codUsuarioCargaDl?: Prisma.StringNullableWithAggregatesFilter<"MdAvio"> | string | null
   fehProcesoCargaDl?: Prisma.DateTimeNullableWithAggregatesFilter<"MdAvio"> | Date | string | null
@@ -525,6 +561,9 @@ export type MdAvioCreateInput = {
   recycledInputSource?: string | null
   certificates?: string | null
   observation?: string | null
+  orderForm?: string | null
+  measuresAvio?: string | null
+  invoiceAvio?: string | null
   stateAvios?: number | null
   codUsuarioCargaDl?: string | null
   fehProcesoCargaDl?: Date | string | null
@@ -552,6 +591,9 @@ export type MdAvioUncheckedCreateInput = {
   recycledInputSource?: string | null
   certificates?: string | null
   observation?: string | null
+  orderForm?: string | null
+  measuresAvio?: string | null
+  invoiceAvio?: string | null
   stateAvios?: number | null
   codUsuarioCargaDl?: string | null
   fehProcesoCargaDl?: Date | string | null
@@ -576,6 +618,9 @@ export type MdAvioUpdateInput = {
   recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certificates?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   observation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  measuresAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateAvios?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -603,6 +648,9 @@ export type MdAvioUncheckedUpdateInput = {
   recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certificates?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   observation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  measuresAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateAvios?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -629,6 +677,9 @@ export type MdAvioCreateManyInput = {
   recycledInputSource?: string | null
   certificates?: string | null
   observation?: string | null
+  orderForm?: string | null
+  measuresAvio?: string | null
+  invoiceAvio?: string | null
   stateAvios?: number | null
   codUsuarioCargaDl?: string | null
   fehProcesoCargaDl?: Date | string | null
@@ -653,6 +704,9 @@ export type MdAvioUpdateManyMutationInput = {
   recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certificates?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   observation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  measuresAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateAvios?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -679,6 +733,9 @@ export type MdAvioUncheckedUpdateManyInput = {
   recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certificates?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   observation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  measuresAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateAvios?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -721,6 +778,9 @@ export type MdAvioCountOrderByAggregateInput = {
   recycledInputSource?: Prisma.SortOrder
   certificates?: Prisma.SortOrder
   observation?: Prisma.SortOrder
+  orderForm?: Prisma.SortOrder
+  measuresAvio?: Prisma.SortOrder
+  invoiceAvio?: Prisma.SortOrder
   stateAvios?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -758,6 +818,9 @@ export type MdAvioMaxOrderByAggregateInput = {
   recycledInputSource?: Prisma.SortOrder
   certificates?: Prisma.SortOrder
   observation?: Prisma.SortOrder
+  orderForm?: Prisma.SortOrder
+  measuresAvio?: Prisma.SortOrder
+  invoiceAvio?: Prisma.SortOrder
   stateAvios?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -784,6 +847,9 @@ export type MdAvioMinOrderByAggregateInput = {
   recycledInputSource?: Prisma.SortOrder
   certificates?: Prisma.SortOrder
   observation?: Prisma.SortOrder
+  orderForm?: Prisma.SortOrder
+  measuresAvio?: Prisma.SortOrder
+  invoiceAvio?: Prisma.SortOrder
   stateAvios?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -861,6 +927,9 @@ export type MdAvioCreateWithoutSupplierInput = {
   recycledInputSource?: string | null
   certificates?: string | null
   observation?: string | null
+  orderForm?: string | null
+  measuresAvio?: string | null
+  invoiceAvio?: string | null
   stateAvios?: number | null
   codUsuarioCargaDl?: string | null
   fehProcesoCargaDl?: Date | string | null
@@ -886,6 +955,9 @@ export type MdAvioUncheckedCreateWithoutSupplierInput = {
   recycledInputSource?: string | null
   certificates?: string | null
   observation?: string | null
+  orderForm?: string | null
+  measuresAvio?: string | null
+  invoiceAvio?: string | null
   stateAvios?: number | null
   codUsuarioCargaDl?: string | null
   fehProcesoCargaDl?: Date | string | null
@@ -941,6 +1013,9 @@ export type MdAvioScalarWhereInput = {
   recycledInputSource?: Prisma.StringNullableFilter<"MdAvio"> | string | null
   certificates?: Prisma.StringNullableFilter<"MdAvio"> | string | null
   observation?: Prisma.StringNullableFilter<"MdAvio"> | string | null
+  orderForm?: Prisma.StringNullableFilter<"MdAvio"> | string | null
+  measuresAvio?: Prisma.StringNullableFilter<"MdAvio"> | string | null
+  invoiceAvio?: Prisma.StringNullableFilter<"MdAvio"> | string | null
   stateAvios?: Prisma.IntNullableFilter<"MdAvio"> | number | null
   codUsuarioCargaDl?: Prisma.StringNullableFilter<"MdAvio"> | string | null
   fehProcesoCargaDl?: Prisma.DateTimeNullableFilter<"MdAvio"> | Date | string | null
@@ -966,6 +1041,9 @@ export type MdAvioCreateManySupplierInput = {
   recycledInputSource?: string | null
   certificates?: string | null
   observation?: string | null
+  orderForm?: string | null
+  measuresAvio?: string | null
+  invoiceAvio?: string | null
   stateAvios?: number | null
   codUsuarioCargaDl?: string | null
   fehProcesoCargaDl?: Date | string | null
@@ -990,6 +1068,9 @@ export type MdAvioUpdateWithoutSupplierInput = {
   recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certificates?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   observation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  measuresAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateAvios?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1015,6 +1096,9 @@ export type MdAvioUncheckedUpdateWithoutSupplierInput = {
   recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certificates?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   observation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  measuresAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateAvios?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1040,6 +1124,9 @@ export type MdAvioUncheckedUpdateManyWithoutSupplierInput = {
   recycledInputSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certificates?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   observation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  measuresAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceAvio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateAvios?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1068,6 +1155,9 @@ export type MdAvioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   recycledInputSource?: boolean
   certificates?: boolean
   observation?: boolean
+  orderForm?: boolean
+  measuresAvio?: boolean
+  invoiceAvio?: boolean
   stateAvios?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
@@ -1097,6 +1187,9 @@ export type MdAvioSelectScalar = {
   recycledInputSource?: boolean
   certificates?: boolean
   observation?: boolean
+  orderForm?: boolean
+  measuresAvio?: boolean
+  invoiceAvio?: boolean
   stateAvios?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
@@ -1105,7 +1198,7 @@ export type MdAvioSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type MdAvioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkAvio" | "idDlkSupplier" | "codAvio" | "typeAvio" | "nameAvio" | "materialAvio" | "contentValueMaterial" | "contentSourceMaterial" | "materialTradeMarks" | "color" | "weight" | "unitMeasurement" | "recycled" | "percentageRecycledMaterials" | "recycledInputSource" | "certificates" | "observation" | "stateAvios" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdAvio"]>
+export type MdAvioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkAvio" | "idDlkSupplier" | "codAvio" | "typeAvio" | "nameAvio" | "materialAvio" | "contentValueMaterial" | "contentSourceMaterial" | "materialTradeMarks" | "color" | "weight" | "unitMeasurement" | "recycled" | "percentageRecycledMaterials" | "recycledInputSource" | "certificates" | "observation" | "orderForm" | "measuresAvio" | "invoiceAvio" | "stateAvios" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdAvio"]>
 export type MdAvioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   supplier?: boolean | Prisma.MdSupplierDefaultArgs<ExtArgs>
 }
@@ -1133,6 +1226,18 @@ export type $MdAvioPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     recycledInputSource: string | null
     certificates: string | null
     observation: string | null
+    /**
+     * * Orden de Pedido para el cual se requiere el avio
+     */
+    orderForm: string | null
+    /**
+     * * Medidas del Avio
+     */
+    measuresAvio: string | null
+    /**
+     * * Factura del Avio
+     */
+    invoiceAvio: string | null
     stateAvios: number | null
     codUsuarioCargaDl: string | null
     fehProcesoCargaDl: Date | null
@@ -1526,6 +1631,9 @@ export interface MdAvioFieldRefs {
   readonly recycledInputSource: Prisma.FieldRef<"MdAvio", 'String'>
   readonly certificates: Prisma.FieldRef<"MdAvio", 'String'>
   readonly observation: Prisma.FieldRef<"MdAvio", 'String'>
+  readonly orderForm: Prisma.FieldRef<"MdAvio", 'String'>
+  readonly measuresAvio: Prisma.FieldRef<"MdAvio", 'String'>
+  readonly invoiceAvio: Prisma.FieldRef<"MdAvio", 'String'>
   readonly stateAvios: Prisma.FieldRef<"MdAvio", 'Int'>
   readonly codUsuarioCargaDl: Prisma.FieldRef<"MdAvio", 'String'>
   readonly fehProcesoCargaDl: Prisma.FieldRef<"MdAvio", 'DateTime'>

@@ -72,6 +72,10 @@ export type MdMaterialMinAggregateOutputType = {
   patterns: string | null
   recoveryMaterials: string | null
   certification: string | null
+  orderForm: string | null
+  colorMaterial: string | null
+  rollMaterial: string | null
+  invoiceMaterial: string | null
   stateMaterials: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -102,6 +106,10 @@ export type MdMaterialMaxAggregateOutputType = {
   patterns: string | null
   recoveryMaterials: string | null
   certification: string | null
+  orderForm: string | null
+  colorMaterial: string | null
+  rollMaterial: string | null
+  invoiceMaterial: string | null
   stateMaterials: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -132,6 +140,10 @@ export type MdMaterialCountAggregateOutputType = {
   patterns: number
   recoveryMaterials: number
   certification: number
+  orderForm: number
+  colorMaterial: number
+  rollMaterial: number
+  invoiceMaterial: number
   stateMaterials: number
   codUsuarioCargaDl: number
   fehProcesoCargaDl: number
@@ -188,6 +200,10 @@ export type MdMaterialMinAggregateInputType = {
   patterns?: true
   recoveryMaterials?: true
   certification?: true
+  orderForm?: true
+  colorMaterial?: true
+  rollMaterial?: true
+  invoiceMaterial?: true
   stateMaterials?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -218,6 +234,10 @@ export type MdMaterialMaxAggregateInputType = {
   patterns?: true
   recoveryMaterials?: true
   certification?: true
+  orderForm?: true
+  colorMaterial?: true
+  rollMaterial?: true
+  invoiceMaterial?: true
   stateMaterials?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -248,6 +268,10 @@ export type MdMaterialCountAggregateInputType = {
   patterns?: true
   recoveryMaterials?: true
   certification?: true
+  orderForm?: true
+  colorMaterial?: true
+  rollMaterial?: true
+  invoiceMaterial?: true
   stateMaterials?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -365,6 +389,10 @@ export type MdMaterialGroupByOutputType = {
   patterns: string | null
   recoveryMaterials: string | null
   certification: string | null
+  orderForm: string | null
+  colorMaterial: string | null
+  rollMaterial: string | null
+  invoiceMaterial: string | null
   stateMaterials: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -418,6 +446,10 @@ export type MdMaterialWhereInput = {
   patterns?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
   recoveryMaterials?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
   certification?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  orderForm?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  colorMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  rollMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  invoiceMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
   stateMaterials?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
   codUsuarioCargaDl?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
   fehProcesoCargaDl?: Prisma.DateTimeNullableFilter<"MdMaterial"> | Date | string | null
@@ -449,6 +481,10 @@ export type MdMaterialOrderByWithRelationInput = {
   patterns?: Prisma.SortOrderInput | Prisma.SortOrder
   recoveryMaterials?: Prisma.SortOrderInput | Prisma.SortOrder
   certification?: Prisma.SortOrderInput | Prisma.SortOrder
+  orderForm?: Prisma.SortOrderInput | Prisma.SortOrder
+  colorMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  rollMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  invoiceMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
   stateMaterials?: Prisma.SortOrderInput | Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -484,6 +520,10 @@ export type MdMaterialWhereUniqueInput = Prisma.AtLeast<{
   patterns?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
   recoveryMaterials?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
   certification?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  orderForm?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  colorMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  rollMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  invoiceMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
   stateMaterials?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
   codUsuarioCargaDl?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
   fehProcesoCargaDl?: Prisma.DateTimeNullableFilter<"MdMaterial"> | Date | string | null
@@ -515,6 +555,10 @@ export type MdMaterialOrderByWithAggregationInput = {
   patterns?: Prisma.SortOrderInput | Prisma.SortOrder
   recoveryMaterials?: Prisma.SortOrderInput | Prisma.SortOrder
   certification?: Prisma.SortOrderInput | Prisma.SortOrder
+  orderForm?: Prisma.SortOrderInput | Prisma.SortOrder
+  colorMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  rollMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  invoiceMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
   stateMaterials?: Prisma.SortOrderInput | Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -553,6 +597,10 @@ export type MdMaterialScalarWhereWithAggregatesInput = {
   patterns?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
   recoveryMaterials?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
   certification?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  orderForm?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  colorMaterial?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  rollMaterial?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
+  invoiceMaterial?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
   stateMaterials?: Prisma.IntNullableWithAggregatesFilter<"MdMaterial"> | number | null
   codUsuarioCargaDl?: Prisma.StringNullableWithAggregatesFilter<"MdMaterial"> | string | null
   fehProcesoCargaDl?: Prisma.DateTimeNullableWithAggregatesFilter<"MdMaterial"> | Date | string | null
@@ -581,6 +629,10 @@ export type MdMaterialCreateInput = {
   patterns?: string | null
   recoveryMaterials?: string | null
   certification?: string | null
+  orderForm?: string | null
+  colorMaterial?: string | null
+  rollMaterial?: string | null
+  invoiceMaterial?: string | null
   stateMaterials?: number | null
   codUsuarioCargaDl?: string | null
   fehProcesoCargaDl?: Date | string | null
@@ -612,6 +664,10 @@ export type MdMaterialUncheckedCreateInput = {
   patterns?: string | null
   recoveryMaterials?: string | null
   certification?: string | null
+  orderForm?: string | null
+  colorMaterial?: string | null
+  rollMaterial?: string | null
+  invoiceMaterial?: string | null
   stateMaterials?: number | null
   codUsuarioCargaDl?: string | null
   fehProcesoCargaDl?: Date | string | null
@@ -640,6 +696,10 @@ export type MdMaterialUpdateInput = {
   patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -671,6 +731,10 @@ export type MdMaterialUncheckedUpdateInput = {
   patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -701,6 +765,10 @@ export type MdMaterialCreateManyInput = {
   patterns?: string | null
   recoveryMaterials?: string | null
   certification?: string | null
+  orderForm?: string | null
+  colorMaterial?: string | null
+  rollMaterial?: string | null
+  invoiceMaterial?: string | null
   stateMaterials?: number | null
   codUsuarioCargaDl?: string | null
   fehProcesoCargaDl?: Date | string | null
@@ -729,6 +797,10 @@ export type MdMaterialUpdateManyMutationInput = {
   patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -759,6 +831,10 @@ export type MdMaterialUncheckedUpdateManyInput = {
   patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -805,6 +881,10 @@ export type MdMaterialCountOrderByAggregateInput = {
   patterns?: Prisma.SortOrder
   recoveryMaterials?: Prisma.SortOrder
   certification?: Prisma.SortOrder
+  orderForm?: Prisma.SortOrder
+  colorMaterial?: Prisma.SortOrder
+  rollMaterial?: Prisma.SortOrder
+  invoiceMaterial?: Prisma.SortOrder
   stateMaterials?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -847,6 +927,10 @@ export type MdMaterialMaxOrderByAggregateInput = {
   patterns?: Prisma.SortOrder
   recoveryMaterials?: Prisma.SortOrder
   certification?: Prisma.SortOrder
+  orderForm?: Prisma.SortOrder
+  colorMaterial?: Prisma.SortOrder
+  rollMaterial?: Prisma.SortOrder
+  invoiceMaterial?: Prisma.SortOrder
   stateMaterials?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -877,6 +961,10 @@ export type MdMaterialMinOrderByAggregateInput = {
   patterns?: Prisma.SortOrder
   recoveryMaterials?: Prisma.SortOrder
   certification?: Prisma.SortOrder
+  orderForm?: Prisma.SortOrder
+  colorMaterial?: Prisma.SortOrder
+  rollMaterial?: Prisma.SortOrder
+  invoiceMaterial?: Prisma.SortOrder
   stateMaterials?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -979,6 +1067,10 @@ export type MdMaterialCreateWithoutSupplierInput = {
   patterns?: string | null
   recoveryMaterials?: string | null
   certification?: string | null
+  orderForm?: string | null
+  colorMaterial?: string | null
+  rollMaterial?: string | null
+  invoiceMaterial?: string | null
   stateMaterials?: number | null
   codUsuarioCargaDl?: string | null
   fehProcesoCargaDl?: Date | string | null
@@ -1008,6 +1100,10 @@ export type MdMaterialUncheckedCreateWithoutSupplierInput = {
   patterns?: string | null
   recoveryMaterials?: string | null
   certification?: string | null
+  orderForm?: string | null
+  colorMaterial?: string | null
+  rollMaterial?: string | null
+  invoiceMaterial?: string | null
   stateMaterials?: number | null
   codUsuarioCargaDl?: string | null
   fehProcesoCargaDl?: Date | string | null
@@ -1067,6 +1163,10 @@ export type MdMaterialScalarWhereInput = {
   patterns?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
   recoveryMaterials?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
   certification?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  orderForm?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  colorMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  rollMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
+  invoiceMaterial?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
   stateMaterials?: Prisma.IntNullableFilter<"MdMaterial"> | number | null
   codUsuarioCargaDl?: Prisma.StringNullableFilter<"MdMaterial"> | string | null
   fehProcesoCargaDl?: Prisma.DateTimeNullableFilter<"MdMaterial"> | Date | string | null
@@ -1096,6 +1196,10 @@ export type MdMaterialCreateManySupplierInput = {
   patterns?: string | null
   recoveryMaterials?: string | null
   certification?: string | null
+  orderForm?: string | null
+  colorMaterial?: string | null
+  rollMaterial?: string | null
+  invoiceMaterial?: string | null
   stateMaterials?: number | null
   codUsuarioCargaDl?: string | null
   fehProcesoCargaDl?: Date | string | null
@@ -1124,6 +1228,10 @@ export type MdMaterialUpdateWithoutSupplierInput = {
   patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1153,6 +1261,10 @@ export type MdMaterialUncheckedUpdateWithoutSupplierInput = {
   patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1182,6 +1294,10 @@ export type MdMaterialUncheckedUpdateManyWithoutSupplierInput = {
   patterns?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recoveryMaterials?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateMaterials?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1214,6 +1330,10 @@ export type MdMaterialSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   patterns?: boolean
   recoveryMaterials?: boolean
   certification?: boolean
+  orderForm?: boolean
+  colorMaterial?: boolean
+  rollMaterial?: boolean
+  invoiceMaterial?: boolean
   stateMaterials?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
@@ -1247,6 +1367,10 @@ export type MdMaterialSelectScalar = {
   patterns?: boolean
   recoveryMaterials?: boolean
   certification?: boolean
+  orderForm?: boolean
+  colorMaterial?: boolean
+  rollMaterial?: boolean
+  invoiceMaterial?: boolean
   stateMaterials?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
@@ -1255,7 +1379,7 @@ export type MdMaterialSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type MdMaterialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkMaterial" | "idDlkSupplier" | "codMaterial" | "material" | "contentNameMaterial" | "contentValueMaterial" | "contentSourceMaterials" | "materialTradeMarks" | "recycled" | "percentageRecycledMaterials" | "recycledInputSource" | "renewableMaterial" | "percentageRenewableMaterial" | "renewableInputSource" | "typeDyes" | "dyeClass" | "classStandardDyes" | "finishes" | "patterns" | "recoveryMaterials" | "certification" | "stateMaterials" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdMaterial"]>
+export type MdMaterialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkMaterial" | "idDlkSupplier" | "codMaterial" | "material" | "contentNameMaterial" | "contentValueMaterial" | "contentSourceMaterials" | "materialTradeMarks" | "recycled" | "percentageRecycledMaterials" | "recycledInputSource" | "renewableMaterial" | "percentageRenewableMaterial" | "renewableInputSource" | "typeDyes" | "dyeClass" | "classStandardDyes" | "finishes" | "patterns" | "recoveryMaterials" | "certification" | "orderForm" | "colorMaterial" | "rollMaterial" | "invoiceMaterial" | "stateMaterials" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdMaterial"]>
 export type MdMaterialInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   supplier?: boolean | Prisma.MdSupplierDefaultArgs<ExtArgs>
 }
@@ -1287,6 +1411,22 @@ export type $MdMaterialPayload<ExtArgs extends runtime.Types.Extensions.Internal
     patterns: string | null
     recoveryMaterials: string | null
     certification: string | null
+    /**
+     * * Orden del Pedido para el cual se requiere el material
+     */
+    orderForm: string | null
+    /**
+     * * Color del material
+     */
+    colorMaterial: string | null
+    /**
+     * * Rollo del material, ejemplo: Codigo del rollo de tela
+     */
+    rollMaterial: string | null
+    /**
+     * * Factura del material
+     */
+    invoiceMaterial: string | null
     stateMaterials: number | null
     codUsuarioCargaDl: string | null
     fehProcesoCargaDl: Date | null
@@ -1684,6 +1824,10 @@ export interface MdMaterialFieldRefs {
   readonly patterns: Prisma.FieldRef<"MdMaterial", 'String'>
   readonly recoveryMaterials: Prisma.FieldRef<"MdMaterial", 'String'>
   readonly certification: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly orderForm: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly colorMaterial: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly rollMaterial: Prisma.FieldRef<"MdMaterial", 'String'>
+  readonly invoiceMaterial: Prisma.FieldRef<"MdMaterial", 'String'>
   readonly stateMaterials: Prisma.FieldRef<"MdMaterial", 'Int'>
   readonly codUsuarioCargaDl: Prisma.FieldRef<"MdMaterial", 'String'>
   readonly fehProcesoCargaDl: Prisma.FieldRef<"MdMaterial", 'DateTime'>

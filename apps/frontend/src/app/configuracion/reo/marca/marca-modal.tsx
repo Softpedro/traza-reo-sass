@@ -64,6 +64,7 @@ const emptyForm = {
   instagramBrand: "",
   whatsappBrand: "",
   ecommerceBrand: "",
+  subdomainBrand: "",
   logoBrand: "",
   /** 1 = activa, 0 = desactivada */
   stateBrand: 1,
@@ -128,6 +129,7 @@ export function MarcaModal({
         instagramBrand: b.instagramBrand ?? "",
         whatsappBrand: b.whatsappBrand ?? "",
         ecommerceBrand: b.ecommerceBrand ?? "",
+        subdomainBrand: b.subdomainBrand ?? "",
         logoBrand: "",
         stateBrand: b.stateBrand === 1 ? 1 : 0,
       };
@@ -452,6 +454,18 @@ export function MarcaModal({
               value={form.ecommerceBrand}
               onChange={(e) => handleChange("ecommerceBrand", e.target.value)}
               readOnly={readOnly}
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label className="text-right text-primary font-semibold">Subdominio:</Label>
+            <Input
+              className="col-span-3"
+              value={form.subdomainBrand}
+              onChange={(e) => handleChange("subdomainBrand", e.target.value)}
+              readOnly={readOnly}
+              maxLength={100}
+              placeholder="p.ej. mimarca"
             />
           </div>
 

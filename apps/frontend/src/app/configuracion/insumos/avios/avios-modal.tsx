@@ -52,6 +52,9 @@ type FormState = {
   recycledInputSource: string;
   certificates: string;
   observation: string;
+  orderForm: string;
+  measuresAvio: string;
+  invoiceAvio: string;
   stateAvios: number;
 };
 
@@ -71,6 +74,9 @@ const emptyForm: FormState = {
   recycledInputSource: "",
   certificates: "",
   observation: "",
+  orderForm: "",
+  measuresAvio: "",
+  invoiceAvio: "",
   stateAvios: 1,
 };
 
@@ -100,6 +106,9 @@ function rowToForm(a: Avios): FormState {
     recycledInputSource: strToStr(a.recycledInputSource),
     certificates: strToStr(a.certificates),
     observation: strToStr(a.observation),
+    orderForm: strToStr(a.orderForm),
+    measuresAvio: strToStr(a.measuresAvio),
+    invoiceAvio: strToStr(a.invoiceAvio),
     stateAvios: active ? 1 : 0,
   };
 }
@@ -319,6 +328,9 @@ export function AviosModal({ open, onOpenChange, mode, avios, onSuccess }: Avios
         recycledInputSource: toPayloadText(form.recycledInputSource),
         certificates: toPayloadText(form.certificates),
         observation: toPayloadText(form.observation),
+        orderForm: toPayloadText(form.orderForm),
+        measuresAvio: toPayloadText(form.measuresAvio),
+        invoiceAvio: toPayloadText(form.invoiceAvio),
       };
 
       if (mode === "edit") {
@@ -524,6 +536,28 @@ export function AviosModal({ open, onOpenChange, mode, avios, onSuccess }: Avios
             value={form.observation}
             onChange={(v) => set("observation", v)}
             readOnly={readOnly}
+          />
+
+          <SectionTitle>Pedido</SectionTitle>
+          <FieldText
+            label="Orden de pedido"
+            value={form.orderForm}
+            onChange={(v) => set("orderForm", v)}
+            readOnly={readOnly}
+            placeholder="Orden para la que se requiere el avío"
+          />
+          <FieldText
+            label="Medidas"
+            value={form.measuresAvio}
+            onChange={(v) => set("measuresAvio", v)}
+            readOnly={readOnly}
+          />
+          <FieldText
+            label="Factura"
+            value={form.invoiceAvio}
+            onChange={(v) => set("invoiceAvio", v)}
+            readOnly={readOnly}
+            span={2}
           />
 
           {(mode === "edit" || mode === "view") && (

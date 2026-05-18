@@ -83,6 +83,9 @@ type AvioRow = {
   recycledInputSource: string | null;
   certificates: string | null;
   observation: string | null;
+  orderForm: string | null;
+  measuresAvio: string | null;
+  invoiceAvio: string | null;
   stateAvios: number | null;
   codUsuarioCargaDl: string | null;
   fehProcesoCargaDl: Date | null;
@@ -119,6 +122,9 @@ function mapRawToAvioRow(r: RawJoinRow): AvioRow {
     recycledInputSource: toStr(r.recycledInputSource),
     certificates: toStr(r.certificates),
     observation: toStr(r.observation),
+    orderForm: toStr(r.orderForm),
+    measuresAvio: toStr(r.measuresAvio),
+    invoiceAvio: toStr(r.invoiceAvio),
     stateAvios: toNum(r.stateAvios),
     codUsuarioCargaDl: toStr(r.codUsuarioCargaDl),
     fehProcesoCargaDl: (r.fehProcesoCargaDl as Date | null) ?? null,
@@ -162,6 +168,9 @@ const avioSelectBase = Prisma.sql`
     a.RECYCLED_INPUT_SOURCE AS recycledInputSource,
     a.CERTIFICATES AS certificates,
     a.OBSERVATION AS observation,
+    a.ORDER_FORM AS orderForm,
+    a.MEASURES_AVIO AS measuresAvio,
+    a.INVOICE_AVIO AS invoiceAvio,
     a.STATE_AVIOS AS stateAvios,
     a.COD_USUARIO_CARGA_DL AS codUsuarioCargaDl,
     a.FEH_PROCESO_CARGA_DL AS fehProcesoCargaDl,
@@ -192,6 +201,9 @@ export type AvioCreateInput = {
   recycledInputSource?: string | null;
   certificates?: string | null;
   observation?: string | null;
+  orderForm?: string | null;
+  measuresAvio?: string | null;
+  invoiceAvio?: string | null;
   stateAvios?: number;
 };
 
@@ -254,6 +266,9 @@ export class AviosService {
           RECYCLED_INPUT_SOURCE,
           CERTIFICATES,
           OBSERVATION,
+          ORDER_FORM,
+          MEASURES_AVIO,
+          INVOICE_AVIO,
           STATE_AVIOS,
           COD_USUARIO_CARGA_DL,
           FEH_PROCESO_CARGA_DL,
@@ -277,6 +292,9 @@ export class AviosService {
           ${nullableText(data.recycledInputSource)},
           ${nullableText(data.certificates)},
           ${nullableText(data.observation)},
+          ${nullableText(data.orderForm)},
+          ${nullableText(data.measuresAvio)},
+          ${nullableText(data.invoiceAvio)},
           ${stateAvios},
           ${"SYSTEM"},
           ${now},
@@ -315,6 +333,9 @@ export class AviosService {
     if (data.recycledInputSource !== undefined) parts.push(Prisma.sql`RECYCLED_INPUT_SOURCE = ${nullableText(data.recycledInputSource)}`);
     if (data.certificates !== undefined) parts.push(Prisma.sql`CERTIFICATES = ${nullableText(data.certificates)}`);
     if (data.observation !== undefined) parts.push(Prisma.sql`OBSERVATION = ${nullableText(data.observation)}`);
+    if (data.orderForm !== undefined) parts.push(Prisma.sql`ORDER_FORM = ${nullableText(data.orderForm)}`);
+    if (data.measuresAvio !== undefined) parts.push(Prisma.sql`MEASURES_AVIO = ${nullableText(data.measuresAvio)}`);
+    if (data.invoiceAvio !== undefined) parts.push(Prisma.sql`INVOICE_AVIO = ${nullableText(data.invoiceAvio)}`);
     if (data.stateAvios !== undefined) {
       const s = Number(data.stateAvios);
       parts.push(Prisma.sql`STATE_AVIOS = ${s}`);

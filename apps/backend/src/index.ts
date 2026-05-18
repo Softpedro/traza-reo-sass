@@ -21,6 +21,8 @@ import { MaterialService } from "./services/material.service.js";
 import { materialRoutes } from "./routes/material.routes.js";
 import { AviosService } from "./services/avios.service.js";
 import { aviosRoutes } from "./routes/avios.routes.js";
+import { DigitalIdentifierService } from "./services/digital-identifier.service.js";
+import { digitalIdentifierRoutes } from "./routes/digital-identifier.routes.js";
 import { UserReoService } from "./services/user-reo.service.js";
 import { userReoRoutes } from "./routes/user-reo.routes.js";
 import { AuthService } from "./services/auth.service.js";
@@ -154,6 +156,7 @@ const subbrandService = new SubbrandService(prisma);
 const supplierService = new SupplierService(prisma);
 const materialService = new MaterialService(prisma);
 const aviosService = new AviosService(prisma);
+const digitalIdentifierService = new DigitalIdentifierService(prisma);
 const userReoService = new UserReoService(prisma);
 const authService = new AuthService(prisma);
 const productionChainService = new ProductionChainService(prisma);
@@ -196,6 +199,7 @@ app.use("/api/subbrands", subbrandRoutes(subbrandService));
 app.use("/api/suppliers", supplierRoutes(supplierService));
 app.use("/api/materials", materialRoutes(materialService));
 app.use("/api/avios", aviosRoutes(aviosService));
+app.use("/api/digital-identifiers", digitalIdentifierRoutes(digitalIdentifierService));
 app.use("/api/users", userReoRoutes(userReoService));
 app.use("/api/production-chains", productionChainRoutes(productionChainService));
 app.use("/api/processes", processRoutes(processService));
@@ -249,31 +253,6 @@ app.get("/api/ubigeo", async (req, res) => {
     res.json(list);
   } catch (e) {
     console.error("[ubigeo:list]", e);
-    const err = errorResponse(e);
-    res.status(err.status).json(err.body);
-  }
-});
-
-// ── Identificadores digitales (MD_DIGITAL_IDENTIFIER) ────────────────
-app.get("/api/digital-identifiers", async (_req, res) => {
-  try {
-    const list = await prisma.mdDigitalIdentifier.findMany({
-      where: { flgStatutActif: 1 },
-      orderBy: { idDlkDigitalIdentifier: "asc" },
-      select: {
-        idDlkDigitalIdentifier: true,
-        codDigitalIdentifier: true,
-        typeDigitalIdentifier: true,
-        materialDigitalIdentifier: true,
-        locationDigitalIdentifier: true,
-        supplierDigitalIdentifier: true,
-        modelDigitalIdentifier: true,
-        stateDigitalIdentifier: true,
-      },
-    });
-    res.json(list);
-  } catch (e) {
-    console.error("[digital-identifiers:list]", e);
     const err = errorResponse(e);
     res.status(err.status).json(err.body);
   }

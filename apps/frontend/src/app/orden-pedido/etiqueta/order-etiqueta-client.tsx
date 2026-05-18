@@ -7,6 +7,7 @@ import { apiFetch } from "@/lib/api-fetch";
 import { getEtiquetaColumns, type EtiquetaRow } from "./columns";
 import { EtiquetaModal } from "./etiqueta-modal";
 import { STAGE_ETIQUETA } from "./constants";
+import { IdentificadorDigitalBar } from "./identificador-digital/identificador-digital-bar";
 
 export type OrderEtiquetaClientProps = {
   kicker?: string;
@@ -83,6 +84,10 @@ export function OrderEtiquetaClient({
           <p className="text-xs text-muted-foreground">{kicker}</p>
           <h1 className="text-xl font-semibold">{title}</h1>
         </div>
+      </div>
+
+      <div className="rounded-md border bg-muted/30 px-3 py-2">
+        <IdentificadorDigitalBar />
       </div>
 
       {loadError && (

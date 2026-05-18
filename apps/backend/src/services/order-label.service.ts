@@ -123,6 +123,11 @@ export type CreateLabelHeadInput = {
   print?: string | null;
   /** Nombres de pieza para sets; si no llega y el colorway es set, se usan los por defecto. */
   pieceTypes?: string[] | null;
+  /**
+   * Desglose de producción por talla (cantidad real cortada). Si llega, manda sobre el
+   * desglose del colorway — permite el +15% de merma o los saldos de tela.
+   */
+  sizeBreakdown?: { size: string; qty: number }[] | null;
   codUsuarioCargaDl?: string;
 };
 
@@ -308,8 +313,20 @@ export class OrderLabelService {
 
     // Unidades a generar, agrupadas por talla.
     let sizeUnits: { label: string | null; qty: number }[];
-    if (detail) {
-      if (detail.sizes.length > 0) {
+    // Desglose de producción enviado desde el modal (corte real: +15% merma o saldos).
+    const explicitSizes = (input.sizeBreakdown ?? [])
+      .map((s) => ({
+        label: (s.size ?? "").trim() || null,
+        qty: Math.trunc(Number(s.qty) || 0),
+      }))
+      .filter((s) => s.qty > 0);
+    if (explicitSizes.length > 0) {
+      sizeUnits = explicitSizes;
+    } else if (detail) {
+      if (input.totalLabel != null && Number(input.totalLabel) > 0) {
+        // Total de producción plano (colorway sin desglose por talla).
+        sizeUnits = [{ label: null, qty: Math.trunc(Number(input.totalLabel)) }];
+      } else if (detail.sizes.length > 0) {
         sizeUnits = detail.sizes;
       } else if (detail.totalEstilo && detail.totalEstilo > 0) {
         // Sin desglose por talla: lote único sin talla a partir del total.

@@ -144,6 +144,7 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
                 <th className="border px-2 py-1.5 font-semibold">Orden Producción</th>
                 <th className="border px-2 py-1.5 font-semibold">Estilo</th>
                 <th className="border px-2 py-1.5 font-semibold">Color Way</th>
+                <th className="border px-2 py-1.5 font-semibold">Fondo de Tela</th>
                 <th className="border px-2 py-1.5 font-semibold">GTIN</th>
                 <th className="border px-2 py-1.5 font-semibold">Tipo</th>
                 <th className="border px-2 py-1.5 font-semibold">Total</th>
@@ -169,6 +170,7 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
                       </span>
                     )}
                   </td>
+                  <td className="border px-2 py-1.5">{cw.fondoTela ?? "—"}</td>
                   <td className="border px-2 py-1.5">{label?.codGtin ?? "—"}</td>
                   <td className="border px-2 py-1.5">{label?.identifierType ?? "—"}</td>
                   <td className="border px-2 py-1.5">

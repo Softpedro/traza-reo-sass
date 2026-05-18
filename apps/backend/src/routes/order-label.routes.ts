@@ -87,6 +87,12 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
         pieceTypes: Array.isArray(body.pieceTypes)
           ? (body.pieceTypes as unknown[]).map((p) => String(p))
           : null,
+        sizeBreakdown: Array.isArray(body.sizeBreakdown)
+          ? (body.sizeBreakdown as unknown[]).map((s) => {
+              const o = (s ?? {}) as Record<string, unknown>;
+              return { size: String(o.size ?? ""), qty: Number(o.qty) || 0 };
+            })
+          : null,
         codUsuarioCargaDl:
           body.codUsuarioCargaDl != null ? String(body.codUsuarioCargaDl) : undefined,
       });

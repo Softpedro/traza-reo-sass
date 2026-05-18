@@ -55,6 +55,8 @@ export type OdOrderLabelDetailMinAggregateOutputType = {
   color: string | null
   print: string | null
   size: string | null
+  pieceType: string | null
+  setGroupId: string | null
   isBlacklisted: number | null
   reasonBlacklist: string | null
   stateOrderLabelDetail: number | null
@@ -74,6 +76,8 @@ export type OdOrderLabelDetailMaxAggregateOutputType = {
   color: string | null
   print: string | null
   size: string | null
+  pieceType: string | null
+  setGroupId: string | null
   isBlacklisted: number | null
   reasonBlacklist: string | null
   stateOrderLabelDetail: number | null
@@ -93,6 +97,8 @@ export type OdOrderLabelDetailCountAggregateOutputType = {
   color: number
   print: number
   size: number
+  pieceType: number
+  setGroupId: number
   isBlacklisted: number
   reasonBlacklist: number
   stateOrderLabelDetail: number
@@ -132,6 +138,8 @@ export type OdOrderLabelDetailMinAggregateInputType = {
   color?: true
   print?: true
   size?: true
+  pieceType?: true
+  setGroupId?: true
   isBlacklisted?: true
   reasonBlacklist?: true
   stateOrderLabelDetail?: true
@@ -151,6 +159,8 @@ export type OdOrderLabelDetailMaxAggregateInputType = {
   color?: true
   print?: true
   size?: true
+  pieceType?: true
+  setGroupId?: true
   isBlacklisted?: true
   reasonBlacklist?: true
   stateOrderLabelDetail?: true
@@ -170,6 +180,8 @@ export type OdOrderLabelDetailCountAggregateInputType = {
   color?: true
   print?: true
   size?: true
+  pieceType?: true
+  setGroupId?: true
   isBlacklisted?: true
   reasonBlacklist?: true
   stateOrderLabelDetail?: true
@@ -276,6 +288,8 @@ export type OdOrderLabelDetailGroupByOutputType = {
   color: string | null
   print: string | null
   size: string | null
+  pieceType: string | null
+  setGroupId: string | null
   isBlacklisted: number | null
   reasonBlacklist: string | null
   stateOrderLabelDetail: number | null
@@ -318,6 +332,8 @@ export type OdOrderLabelDetailWhereInput = {
   color?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   print?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   size?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+  pieceType?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+  setGroupId?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   isBlacklisted?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
   reasonBlacklist?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   stateOrderLabelDetail?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
@@ -338,6 +354,8 @@ export type OdOrderLabelDetailOrderByWithRelationInput = {
   color?: Prisma.SortOrderInput | Prisma.SortOrder
   print?: Prisma.SortOrderInput | Prisma.SortOrder
   size?: Prisma.SortOrderInput | Prisma.SortOrder
+  pieceType?: Prisma.SortOrderInput | Prisma.SortOrder
+  setGroupId?: Prisma.SortOrderInput | Prisma.SortOrder
   isBlacklisted?: Prisma.SortOrderInput | Prisma.SortOrder
   reasonBlacklist?: Prisma.SortOrderInput | Prisma.SortOrder
   stateOrderLabelDetail?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -362,6 +380,8 @@ export type OdOrderLabelDetailWhereUniqueInput = Prisma.AtLeast<{
   color?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   print?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   size?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+  pieceType?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+  setGroupId?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   isBlacklisted?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
   reasonBlacklist?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   stateOrderLabelDetail?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
@@ -382,6 +402,8 @@ export type OdOrderLabelDetailOrderByWithAggregationInput = {
   color?: Prisma.SortOrderInput | Prisma.SortOrder
   print?: Prisma.SortOrderInput | Prisma.SortOrder
   size?: Prisma.SortOrderInput | Prisma.SortOrder
+  pieceType?: Prisma.SortOrderInput | Prisma.SortOrder
+  setGroupId?: Prisma.SortOrderInput | Prisma.SortOrder
   isBlacklisted?: Prisma.SortOrderInput | Prisma.SortOrder
   reasonBlacklist?: Prisma.SortOrderInput | Prisma.SortOrder
   stateOrderLabelDetail?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -409,6 +431,8 @@ export type OdOrderLabelDetailScalarWhereWithAggregatesInput = {
   color?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelDetail"> | string | null
   print?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelDetail"> | string | null
   size?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelDetail"> | string | null
+  pieceType?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelDetail"> | string | null
+  setGroupId?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelDetail"> | string | null
   isBlacklisted?: Prisma.IntNullableWithAggregatesFilter<"OdOrderLabelDetail"> | number | null
   reasonBlacklist?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelDetail"> | string | null
   stateOrderLabelDetail?: Prisma.IntNullableWithAggregatesFilter<"OdOrderLabelDetail"> | number | null
@@ -426,6 +450,8 @@ export type OdOrderLabelDetailCreateInput = {
   color?: string | null
   print?: string | null
   size?: string | null
+  pieceType?: string | null
+  setGroupId?: string | null
   isBlacklisted?: number | null
   reasonBlacklist?: string | null
   stateOrderLabelDetail?: number | null
@@ -446,6 +472,8 @@ export type OdOrderLabelDetailUncheckedCreateInput = {
   color?: string | null
   print?: string | null
   size?: string | null
+  pieceType?: string | null
+  setGroupId?: string | null
   isBlacklisted?: number | null
   reasonBlacklist?: string | null
   stateOrderLabelDetail?: number | null
@@ -463,6 +491,8 @@ export type OdOrderLabelDetailUpdateInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -483,6 +513,8 @@ export type OdOrderLabelDetailUncheckedUpdateInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -502,6 +534,8 @@ export type OdOrderLabelDetailCreateManyInput = {
   color?: string | null
   print?: string | null
   size?: string | null
+  pieceType?: string | null
+  setGroupId?: string | null
   isBlacklisted?: number | null
   reasonBlacklist?: string | null
   stateOrderLabelDetail?: number | null
@@ -519,6 +553,8 @@ export type OdOrderLabelDetailUpdateManyMutationInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -538,6 +574,8 @@ export type OdOrderLabelDetailUncheckedUpdateManyInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -573,6 +611,8 @@ export type OdOrderLabelDetailCountOrderByAggregateInput = {
   color?: Prisma.SortOrder
   print?: Prisma.SortOrder
   size?: Prisma.SortOrder
+  pieceType?: Prisma.SortOrder
+  setGroupId?: Prisma.SortOrder
   isBlacklisted?: Prisma.SortOrder
   reasonBlacklist?: Prisma.SortOrder
   stateOrderLabelDetail?: Prisma.SortOrder
@@ -601,6 +641,8 @@ export type OdOrderLabelDetailMaxOrderByAggregateInput = {
   color?: Prisma.SortOrder
   print?: Prisma.SortOrder
   size?: Prisma.SortOrder
+  pieceType?: Prisma.SortOrder
+  setGroupId?: Prisma.SortOrder
   isBlacklisted?: Prisma.SortOrder
   reasonBlacklist?: Prisma.SortOrder
   stateOrderLabelDetail?: Prisma.SortOrder
@@ -620,6 +662,8 @@ export type OdOrderLabelDetailMinOrderByAggregateInput = {
   color?: Prisma.SortOrder
   print?: Prisma.SortOrder
   size?: Prisma.SortOrder
+  pieceType?: Prisma.SortOrder
+  setGroupId?: Prisma.SortOrder
   isBlacklisted?: Prisma.SortOrder
   reasonBlacklist?: Prisma.SortOrder
   stateOrderLabelDetail?: Prisma.SortOrder
@@ -688,6 +732,8 @@ export type OdOrderLabelDetailCreateWithoutLabelHeadInput = {
   color?: string | null
   print?: string | null
   size?: string | null
+  pieceType?: string | null
+  setGroupId?: string | null
   isBlacklisted?: number | null
   reasonBlacklist?: string | null
   stateOrderLabelDetail?: number | null
@@ -706,6 +752,8 @@ export type OdOrderLabelDetailUncheckedCreateWithoutLabelHeadInput = {
   color?: string | null
   print?: string | null
   size?: string | null
+  pieceType?: string | null
+  setGroupId?: string | null
   isBlacklisted?: number | null
   reasonBlacklist?: string | null
   stateOrderLabelDetail?: number | null
@@ -754,6 +802,8 @@ export type OdOrderLabelDetailScalarWhereInput = {
   color?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   print?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   size?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+  pieceType?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+  setGroupId?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   isBlacklisted?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
   reasonBlacklist?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   stateOrderLabelDetail?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
@@ -772,6 +822,8 @@ export type OdOrderLabelDetailCreateManyLabelHeadInput = {
   color?: string | null
   print?: string | null
   size?: string | null
+  pieceType?: string | null
+  setGroupId?: string | null
   isBlacklisted?: number | null
   reasonBlacklist?: string | null
   stateOrderLabelDetail?: number | null
@@ -789,6 +841,8 @@ export type OdOrderLabelDetailUpdateWithoutLabelHeadInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -807,6 +861,8 @@ export type OdOrderLabelDetailUncheckedUpdateWithoutLabelHeadInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -825,6 +881,8 @@ export type OdOrderLabelDetailUncheckedUpdateManyWithoutLabelHeadInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -846,6 +904,8 @@ export type OdOrderLabelDetailSelect<ExtArgs extends runtime.Types.Extensions.In
   color?: boolean
   print?: boolean
   size?: boolean
+  pieceType?: boolean
+  setGroupId?: boolean
   isBlacklisted?: boolean
   reasonBlacklist?: boolean
   stateOrderLabelDetail?: boolean
@@ -868,6 +928,8 @@ export type OdOrderLabelDetailSelectScalar = {
   color?: boolean
   print?: boolean
   size?: boolean
+  pieceType?: boolean
+  setGroupId?: boolean
   isBlacklisted?: boolean
   reasonBlacklist?: boolean
   stateOrderLabelDetail?: boolean
@@ -876,7 +938,7 @@ export type OdOrderLabelDetailSelectScalar = {
   codUsuarioAuditor?: boolean
 }
 
-export type OdOrderLabelDetailOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkOrderLabelDetail" | "idDlkOrderLabelHead" | "itemGlobal" | "itemBySize" | "serialNumber" | "sgtinFull" | "urlDppFull" | "color" | "print" | "size" | "isBlacklisted" | "reasonBlacklist" | "stateOrderLabelDetail" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "codUsuarioAuditor", ExtArgs["result"]["odOrderLabelDetail"]>
+export type OdOrderLabelDetailOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkOrderLabelDetail" | "idDlkOrderLabelHead" | "itemGlobal" | "itemBySize" | "serialNumber" | "sgtinFull" | "urlDppFull" | "color" | "print" | "size" | "pieceType" | "setGroupId" | "isBlacklisted" | "reasonBlacklist" | "stateOrderLabelDetail" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "codUsuarioAuditor", ExtArgs["result"]["odOrderLabelDetail"]>
 export type OdOrderLabelDetailInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labelHead?: boolean | Prisma.OdOrderLabelHeadDefaultArgs<ExtArgs>
 }
@@ -897,6 +959,8 @@ export type $OdOrderLabelDetailPayload<ExtArgs extends runtime.Types.Extensions.
     color: string | null
     print: string | null
     size: string | null
+    pieceType: string | null
+    setGroupId: string | null
     isBlacklisted: number | null
     reasonBlacklist: string | null
     stateOrderLabelDetail: number | null
@@ -1283,6 +1347,8 @@ export interface OdOrderLabelDetailFieldRefs {
   readonly color: Prisma.FieldRef<"OdOrderLabelDetail", 'String'>
   readonly print: Prisma.FieldRef<"OdOrderLabelDetail", 'String'>
   readonly size: Prisma.FieldRef<"OdOrderLabelDetail", 'String'>
+  readonly pieceType: Prisma.FieldRef<"OdOrderLabelDetail", 'String'>
+  readonly setGroupId: Prisma.FieldRef<"OdOrderLabelDetail", 'String'>
   readonly isBlacklisted: Prisma.FieldRef<"OdOrderLabelDetail", 'Int'>
   readonly reasonBlacklist: Prisma.FieldRef<"OdOrderLabelDetail", 'String'>
   readonly stateOrderLabelDetail: Prisma.FieldRef<"OdOrderLabelDetail", 'Int'>

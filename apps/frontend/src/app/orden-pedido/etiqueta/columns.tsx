@@ -28,16 +28,10 @@ function formatQty(n: number | null | undefined) {
 }
 
 type ColProps = {
-  onCrear: (row: EtiquetaRow) => void;
-  onEditar: (row: EtiquetaRow) => void;
-  onDetalle: (row: EtiquetaRow) => void;
+  onOpen: (row: EtiquetaRow) => void;
 };
 
-export function getEtiquetaColumns({
-  onCrear,
-  onEditar,
-  onDetalle,
-}: ColProps): ColumnDef<EtiquetaRow>[] {
+export function getEtiquetaColumns({ onOpen }: ColProps): ColumnDef<EtiquetaRow>[] {
   return [
     {
       accessorKey: "codOrderHead",
@@ -84,29 +78,13 @@ export function getEtiquetaColumns({
       id: "accion",
       header: "Acción",
       cell: ({ row }) => (
-        <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm">
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onCrear(row.original)}
-          >
-            Crear
-          </button>
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onEditar(row.original)}
-          >
-            Editar
-          </button>
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onDetalle(row.original)}
-          >
-            Ver Detalle
-          </button>
-        </div>
+        <button
+          type="button"
+          className="font-medium text-primary hover:underline"
+          onClick={() => onOpen(row.original)}
+        >
+          Abrir etiqueta
+        </button>
       ),
     },
   ];

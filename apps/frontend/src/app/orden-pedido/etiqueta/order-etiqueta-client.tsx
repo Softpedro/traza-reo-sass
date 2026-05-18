@@ -5,9 +5,7 @@ import { useRouter } from "next/navigation";
 import { DataTable } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
 import { getEtiquetaColumns, type EtiquetaRow } from "./columns";
-import { EtiquetaModal } from "./etiqueta-modal";
 import { STAGE_ETIQUETA } from "./constants";
-import { IdentificadorDigitalBar } from "./identificador-digital/identificador-digital-bar";
 
 export type OrderEtiquetaClientProps = {
   kicker?: string;
@@ -16,14 +14,12 @@ export type OrderEtiquetaClientProps = {
 
 export function OrderEtiquetaClient({
   kicker = "Orden de Pedido",
-  title = "Etiqueta"}: OrderEtiquetaClientProps) {
+  title = "Etiqueta",
+}: OrderEtiquetaClientProps) {
   const router = useRouter();
   const [rows, setRows] = useState<EtiquetaRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [createOpen, setCreateOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
-  const [selected, setSelected] = useState<EtiquetaRow | null>(null);
 
   const fetchRows = useCallback(() => {
     setLoading(true);
@@ -63,17 +59,8 @@ export function OrderEtiquetaClient({
   const columns = useMemo(
     () =>
       getEtiquetaColumns({
-        onCrear: (row) => {
-          setSelected(row);
-          setCreateOpen(true);
-        },
-        onEditar: (row) => {
-          setSelected(row);
-          setEditOpen(true);
-        },
-        onDetalle: (row) => {
-          router.push(`/orden-pedido/registro/${row.idDlkOrderHead}/detalle?step=3`);
-        }}),
+        onOpen: (row) => router.push(`/orden-pedido/etiqueta/${row.idDlkOrderHead}`),
+      }),
     [router]
   );
 
@@ -84,10 +71,6 @@ export function OrderEtiquetaClient({
           <p className="text-xs text-muted-foreground">{kicker}</p>
           <h1 className="text-xl font-semibold">{title}</h1>
         </div>
-      </div>
-
-      <div className="rounded-md border bg-muted/30 px-3 py-2">
-        <IdentificadorDigitalBar />
       </div>
 
       {loadError && (
@@ -110,25 +93,9 @@ export function OrderEtiquetaClient({
       )}
 
       <p className="text-xs text-muted-foreground leading-relaxed">
-        <span className="font-medium">OBS:</span> Cada cabecera de etiqueta genera N unidades
-        serializadas en <code>OD_ORDER_LABEL_DETAIL</code> con su sGTIN y URL DPP. Marcar la
-        etapa como <em>Concluido</em> promueve la orden a <em>Ruta</em>.
+        <span className="font-medium">OBS:</span> Abre una orden para gestionar sus etiquetas
+        por colorway. Cada cabecera genera N unidades serializadas con su sGTIN y URL DPP.
       </p>
-
-      <EtiquetaModal
-        open={createOpen}
-        onOpenChange={setCreateOpen}
-        mode="create"
-        order={selected}
-        onSuccess={fetchRows}
-      />
-      <EtiquetaModal
-        open={editOpen}
-        onOpenChange={setEditOpen}
-        mode="edit"
-        order={selected}
-        onSuccess={fetchRows}
-      />
     </div>
   );
 }

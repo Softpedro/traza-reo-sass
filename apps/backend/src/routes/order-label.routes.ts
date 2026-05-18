@@ -53,6 +53,10 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
       const created = await service.create({
         idDlkOrderHead: orderHeadId,
         idDlkDigitalIdentifier: idDigital,
+        idDlkOrderDetail:
+          body.idDlkOrderDetail === "" || body.idDlkOrderDetail == null
+            ? null
+            : Number(body.idDlkOrderDetail),
         codOrderLabel: body.codOrderLabel == null ? null : String(body.codOrderLabel),
         codEstilo: body.codEstilo == null ? null : String(body.codEstilo),
         nameEstilo: body.nameEstilo == null ? null : String(body.nameEstilo),
@@ -61,6 +65,7 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
         genderEstilo: body.genderEstilo == null ? null : String(body.genderEstilo),
         seasonEstilo: body.seasonEstilo == null ? null : String(body.seasonEstilo),
         codGtin: body.codGtin == null ? null : String(body.codGtin),
+        estampado: body.estampado == null ? null : String(body.estampado),
         identifierType: body.identifierType == null ? null : String(body.identifierType),
         identifierMaterial:
           body.identifierMaterial == null ? null : String(body.identifierMaterial),
@@ -79,7 +84,9 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
         size: body.size == null ? null : String(body.size),
         color: body.color == null ? null : String(body.color),
         print: body.print == null ? null : String(body.print),
-        urlDppTemplate: body.urlDppTemplate == null ? null : String(body.urlDppTemplate),
+        pieceTypes: Array.isArray(body.pieceTypes)
+          ? (body.pieceTypes as unknown[]).map((p) => String(p))
+          : null,
         codUsuarioCargaDl:
           body.codUsuarioCargaDl != null ? String(body.codUsuarioCargaDl) : undefined,
       });
@@ -155,6 +162,9 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
         }),
         ...(body.codGtin !== undefined && {
           codGtin: body.codGtin == null ? null : String(body.codGtin),
+        }),
+        ...(body.estampado !== undefined && {
+          estampado: body.estampado == null ? null : String(body.estampado),
         }),
         ...(body.identifierType !== undefined && {
           identifierType: body.identifierType == null ? null : String(body.identifierType),

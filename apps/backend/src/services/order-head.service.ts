@@ -150,6 +150,8 @@ export type OrderDetailListRow = {
   sizeXl: number | null;
   sizeXxl: number | null;
   totalEstilo: number | null;
+  esSet: number | null;
+  numPiezas: number | null;
   hasImgEstilo: boolean;
   stateOrderDetail: number | null;
   flgStatutActif: number | null;
@@ -246,6 +248,8 @@ export class OrderHeadService {
         sizeXl: true,
         sizeXxl: true,
         totalEstilo: true,
+        esSet: true,
+        numPiezas: true,
         imgEstilo: true,
         stateOrderDetail: true,
         flgStatutActif: true,

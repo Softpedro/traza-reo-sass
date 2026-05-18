@@ -297,6 +297,10 @@ model OdOrderDetail {
   sizeXxl           Int?        @default(0) @map("SIZE_XXL")
   /** Prisma conserva `totalEstilo`; columna DB renombrada a TOTAL_ORDER_PRODUCTION. */
   totalEstilo       Int?        @map("TOTAL_ORDER_PRODUCTION")
+  /** 1 = la orden de producción es un set (varias piezas por unidad). */
+  esSet             Int         @default(0) @map("ES_SET") @db.TinyInt
+  /** Piezas por unidad (2 = pijama pantalón + camisa). */
+  numPiezas         Int         @default(1) @map("NUM_PIEZAS")
   supplyFile        Bytes?      @map("SUPPLY_FILE") @db.MediumBlob
   stateOrderDetail  Int?        @default(1) @map("STATE_ORDER_DETAIL") @db.TinyInt
   codUsuarioCargaDl String?     @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
@@ -305,6 +309,7 @@ model OdOrderDetail {
   desAccion         String?     @map("DES_ACCION") @db.VarChar(20)
   flgStatutActif    Int?        @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
   orderHead         OdOrderHead @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: Cascade, onUpdate: Cascade, map: "fk_detail_order_head")
+  labelHeads        OdOrderLabelHead[]
 
   @@index([idDlkOrderHead], map: "idx_order_detail_head")
   @@map("OD_ORDER_DETAIL")
@@ -915,6 +920,7 @@ model OdOrderLabelHead {
   idDlkOrderLabelHead       Int                  @id @default(autoincrement()) @map("ID_DLK_ORDER_LABEL_HEAD")
   idDlkOrderHead            Int                  @map("ID_DLK_ORDER_HEAD")
   idDlkDigitalIdentifier    Int                  @map("ID_DLK_DIGITAL_IDENTIFIER")
+  idDlkOrderDetail          Int?                 @map("ID_DLK_ORDER_DETAIL")
   codOrderLabel             String?              @map("COD_ORDER_LABEL") @db.VarChar(20)
   codEstilo                 String?              @map("COD_ESTILO") @db.VarChar(50)
   nameEstilo                String?              @map("NAME_ESTILO") @db.VarChar(200)
@@ -922,6 +928,7 @@ model OdOrderLabelHead {
   genderEstilo              String?              @map("GENDER_ESTILO") @db.VarChar(45)
   seasonEstilo              String?              @map("SEASON_ESTILO") @db.VarChar(45)
   codGtin                   String?              @map("COD_GTIN") @db.VarChar(14)
+  estampado                 String?              @map("ESTAMPADO") @db.VarChar(100)
   identifierType            String?              @map("IDENTIFIER_TYPE") @db.VarChar(45)
   identifierMaterial        String?              @map("IDENTIFIER_MATERIAL") @db.VarChar(500)
   identifierLocation        String?              @map("IDENTIFIER_LOCATION") @db.VarChar(200)
@@ -941,10 +948,12 @@ model OdOrderLabelHead {
   flgStatutActif            Int?                 @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
   orderHead                 OdOrderHead          @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_order")
   digitalIdentifier         MdDigitalIdentifier  @relation(fields: [idDlkDigitalIdentifier], references: [idDlkDigitalIdentifier], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_digital_master")
+  orderDetail               OdOrderDetail?       @relation(fields: [idDlkOrderDetail], references: [idDlkOrderDetail], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_order_detail")
   details                   OdOrderLabelDetail[]
 
   @@index([idDlkOrderHead], map: "idx_label_head_order")
   @@index([idDlkDigitalIdentifier], map: "idx_label_head_digital_id")
+  @@index([idDlkOrderDetail], map: "fk_label_head_order_detail")
   @@map("OD_ORDER_LABEL_HEAD")
 }
 
@@ -960,6 +969,8 @@ model OdOrderLabelDetail {
   color                   String?          @map("COLOR") @db.VarChar(100)
   print                   String?          @map("PRINT") @db.VarChar(100)
   size                    String?          @map("SIZE") @db.VarChar(50)
+  pieceType               String?          @map("PIECE_TYPE") @db.VarChar(45)
+  setGroupId              String?          @map("SET_GROUP_ID") @db.VarChar(50)
   isBlacklisted           Int?             @default(0) @map("IS_BLACKLISTED") @db.TinyInt
   reasonBlacklist         String?          @map("REASON_BLACKLIST") @db.VarChar(100)
   stateOrderLabelDetail   Int?             @default(1) @map("STATE_ORDER_LABEL_DETAIL") @db.TinyInt

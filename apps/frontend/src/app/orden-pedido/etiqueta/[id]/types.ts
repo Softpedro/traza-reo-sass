@@ -95,6 +95,16 @@ export type LabelHead = {
     codDigitalIdentifier: string;
     typeDigitalIdentifier: string | null;
   } | null;
+  /** Colorway de origen (OD_ORDER_DETAIL); fondoTela es constante para toda la etiqueta. */
+  orderDetail?: {
+    idDlkOrderDetail: number;
+    codEstilo: string | null;
+    nomEstilo: string | null;
+    colorAway: string | null;
+    fondoTela: string | null;
+    esSet: number | null;
+    numPiezas: number | null;
+  } | null;
 };
 
 /** Unidad serializada (OD_ORDER_LABEL_DETAIL) — el detalle 1 a 1. */

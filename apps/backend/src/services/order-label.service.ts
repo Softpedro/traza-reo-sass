@@ -36,6 +36,7 @@ const LABEL_HEAD_FOR_LIST = {
       codEstilo: true,
       nomEstilo: true,
       colorAway: true,
+      fondoTela: true,
       esSet: true,
       numPiezas: true,
     },
@@ -123,6 +124,10 @@ export type CreateLabelHeadInput = {
   print?: string | null;
   /** Nombres de pieza para sets; si no llega y el colorway es set, se usan los por defecto. */
   pieceTypes?: string[] | null;
+  /** Marca manual de set desde el formulario: si es true, cada unidad genera un DPP por pieza. */
+  esSet?: boolean | number | null;
+  /** Cantidad de piezas por unidad cuando `esSet`; mínimo 2, por defecto 2. */
+  numPiezas?: number | null;
   /**
    * Desglose de producción por talla (cantidad real cortada). Si llega, manda sobre el
    * desglose del colorway — permite el +15% de merma o los saldos de tela.
@@ -356,8 +361,10 @@ export class OrderLabelService {
     const totalUnits = sizeUnits.reduce((a, s) => a + s.qty, 0);
     if (totalUnits <= 0) throw new Error("El rango de serialización es inválido (total ≤ 0)");
 
-    // Sets: cada unidad genera `numPiezas` DPPs (uno por pieza).
-    const numPiezas = detail && detail.esSet === 1 ? Math.max(detail.numPiezas || 1, 1) : 1;
+    // Sets: bandera manual del formulario, independiente del colorway.
+    // Cada unidad de un set genera `numPiezas` DPPs (uno por pieza).
+    const esSet = input.esSet === true || input.esSet === 1;
+    const numPiezas = esSet ? Math.max(Math.trunc(Number(input.numPiezas) || 2), 2) : 1;
     const pieceLabels: (string | null)[] =
       numPiezas > 1
         ? input.pieceTypes && input.pieceTypes.length === numPiezas

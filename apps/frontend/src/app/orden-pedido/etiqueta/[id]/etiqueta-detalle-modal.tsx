@@ -71,7 +71,7 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-7xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             Detalle de etiqueta — {labelHead?.codEstilo ?? ""} {labelHead?.nameEstilo ?? ""}
@@ -112,6 +112,7 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
                   <th className="border px-2 py-1.5 font-semibold">sGTIN</th>
                   <th className="border px-2 py-1.5 font-semibold">QR / DPP</th>
                   <th className="border px-2 py-1.5 font-semibold">Color</th>
+                  <th className="border px-2 py-1.5 font-semibold">Fondo de tela</th>
                   <th className="border px-2 py-1.5 font-semibold">Estampado</th>
                 </tr>
               </thead>
@@ -147,6 +148,7 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
                       </a>
                     </td>
                     <td className="border px-2 py-1">{d.color ?? "—"}</td>
+                    <td className="border px-2 py-1">{labelHead?.orderDetail?.fondoTela ?? "—"}</td>
                     <td className="border px-2 py-1">{d.print ?? "—"}</td>
                   </tr>
                   );

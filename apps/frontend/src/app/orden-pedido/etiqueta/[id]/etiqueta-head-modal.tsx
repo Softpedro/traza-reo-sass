@@ -73,13 +73,12 @@ export function EtiquetaHeadModal({
   const [estampado, setEstampado] = useState("");
   const [inicio, setInicio] = useState("");
   const [estado, setEstado] = useState(1);
+  const [esSet, setEsSet] = useState(false);
+  const [numPiezas, setNumPiezas] = useState(2);
   const [pieceNames, setPieceNames] = useState<string[]>([]);
   const [sizeQtys, setSizeQtys] = useState<SizeQty[]>([]);
   const [totalQty, setTotalQty] = useState("");
   const [saving, setSaving] = useState(false);
-
-  const esSet = colorway?.esSet === 1;
-  const numPiezas = esSet ? Math.max(colorway?.numPiezas ?? 1, 1) : 1;
 
   /** Tallas que el colorway trae con cantidad > 0 (las tallas "activas" del estilo). */
   const colorwaySizeRows = useMemo(() => {
@@ -126,6 +125,9 @@ export function EtiquetaHeadModal({
 
   useEffect(() => {
     if (!open) return;
+    // El toggle de set arranca siempre inactivo; no depende del colorway.
+    setEsSet(false);
+    setNumPiezas(2);
     if (mode === "edit" && labelHead) {
       setIdDigital(labelHead.idDlkDigitalIdentifier);
       setGtin(labelHead.codGtin ?? "");
@@ -138,14 +140,22 @@ export function EtiquetaHeadModal({
       setEstampado("");
       setInicio("");
       setEstado(1);
-      setPieceNames(esSet ? defaultPieceNames(numPiezas) : []);
       // Defaults de producción = cantidades del pedido (el usuario las ajusta).
       setSizeQtys(
         colorwaySizeRows.map((r) => ({ field: r.field, label: r.label, qty: String(r.qty) }))
       );
       setTotalQty(colorway?.totalEstilo ? String(colorway.totalEstilo) : "");
     }
-  }, [open, mode, labelHead, esSet, numPiezas, colorwaySizeRows, colorway]);
+  }, [open, mode, labelHead, colorwaySizeRows, colorway]);
+
+  // Mantiene `pieceNames` alineado con la cantidad de piezas, preservando lo escrito.
+  useEffect(() => {
+    if (!esSet) {
+      setPieceNames([]);
+      return;
+    }
+    setPieceNames((prev) => defaultPieceNames(numPiezas).map((def, i) => prev[i] ?? def));
+  }, [esSet, numPiezas]);
 
   /** Total de unidades a producir (suma de la grilla, o el Total plano). */
   const total = useGrid
@@ -181,6 +191,10 @@ export function EtiquetaHeadModal({
         alert("Ingresa la cantidad de producción");
         return;
       }
+      if (esSet && numPiezas < 2) {
+        alert("Un set debe tener al menos 2 piezas");
+        return;
+      }
       if (esSet && pieceNames.some((p) => !p.trim())) {
         alert("Asigna un nombre a cada pieza del set");
         return;
@@ -203,7 +217,10 @@ export function EtiquetaHeadModal({
           ...(inicioNum != null && Number.isFinite(inicioNum)
             ? { inicioSerializacion: inicioNum }
             : {}),
-          ...(esSet ? { pieceTypes: pieceNames.map((p) => p.trim()) } : {}),
+          esSet: esSet ? 1 : 0,
+          ...(esSet
+            ? { numPiezas, pieceTypes: pieceNames.map((p) => p.trim()) }
+            : {}),
           ...(useGrid
             ? {
                 sizeBreakdown: sizeQtys.map((s) => ({
@@ -334,6 +351,34 @@ export function EtiquetaHeadModal({
             </Select>
           </Row>
 
+          {mode === "create" && (
+            <>
+              <Row label="¿Es set?">
+                <Select value={esSet ? "1" : "0"} onValueChange={(v) => setEsSet(v === "1")}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="0">No</SelectItem>
+                    <SelectItem value="1">Sí — un DPP por pieza</SelectItem>
+                  </SelectContent>
+                </Select>
+              </Row>
+              {esSet && (
+                <Row label="Cantidad de piezas">
+                  <Input
+                    type="number"
+                    min="2"
+                    value={numPiezas}
+                    onChange={(e) =>
+                      setNumPiezas(Math.max(2, Math.trunc(Number(e.target.value) || 2)))
+                    }
+                  />
+                </Row>
+              )}
+            </>
+          )}
+
           {/* Cantidad de producción — editable solo al Crear. */}
           {mode === "edit" ? (
             <Row label="Total">
@@ -452,7 +497,7 @@ export function EtiquetaHeadModal({
           {mode === "create" && esSet && (
             <div className="flex flex-col gap-2 rounded-md border border-amber-300 bg-amber-50 px-3 py-2">
               <p className="text-xs text-amber-800">
-                Este colorway es un <strong>set de {numPiezas} piezas</strong>: se generarán{" "}
+                Etiqueta marcada como <strong>set de {numPiezas} piezas</strong>: se generarán{" "}
                 <strong>{totalDetails > 0 ? totalDetails : numPiezas}</strong> DPPs (
                 {numPiezas} por unidad), uno por pieza.
               </p>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { FileDown } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +11,14 @@ import {
 } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
 import type { LabelDetail, LabelHead, OrderHeadInfo } from "./types";
+
+/** Escapa texto para insertarlo de forma segura en el HTML del PDF. */
+function escapeHtml(value: unknown): string {
+  return String(value ?? "—").replace(
+    /[&<>"]/g,
+    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] ?? c
+  );
+}
 
 interface Props {
   open: boolean;
@@ -67,11 +76,95 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
     return { unidades: units.size, hasSets: sets, groupParity: parity };
   }, [items]);
 
+  /** Abre el detalle en una ventana aparte en formato horizontal y lanza el diálogo de PDF. */
+  const handleExportPdf = useCallback(() => {
+    if (items.length === 0) return;
+    const win = window.open("", "_blank");
+    if (!win) {
+      setError("El navegador bloqueó la ventana de exportación. Habilita las ventanas emergentes.");
+      return;
+    }
+
+    const fondoTela = labelHead?.orderDetail?.fondoTela ?? "—";
+    const titulo = `${labelHead?.codEstilo ?? ""} ${labelHead?.nameEstilo ?? ""}`.trim() || "Etiqueta";
+    const ordenTxt = order?.codOrderHead ? `Orden ${order.codOrderHead}` : "";
+    const resumen =
+      total > 0
+        ? `${unidades} ${unidades === 1 ? "unidad" : "unidades"} · ${total} DPPs` +
+          (hasSets && unidades > 0 ? ` (${total / unidades} piezas por unidad)` : "")
+        : "";
+
+    const filas = items
+      .map(
+        (d) => `<tr${d.isBlacklisted === 1 ? ' class="bl"' : ""}>
+          <td>${escapeHtml(d.itemGlobal)}</td>
+          <td>${escapeHtml(d.itemBySize)}</td>
+          <td>${escapeHtml(d.size ?? "—")}</td>
+          <td>${escapeHtml(d.pieceType ?? "—")}</td>
+          <td class="mono">${escapeHtml(d.serialNumber)}</td>
+          <td class="mono">${escapeHtml(d.sgtinFull)}</td>
+          <td class="mono url">${escapeHtml(d.urlDppFull)}</td>
+          <td>${escapeHtml(d.color ?? "—")}</td>
+          <td>${escapeHtml(fondoTela)}</td>
+          <td>${escapeHtml(d.print ?? "—")}</td>
+        </tr>`
+      )
+      .join("");
+
+    win.document.write(`<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Detalle de etiqueta — ${escapeHtml(titulo)}</title>
+<style>
+  @page { size: A4 landscape; margin: 10mm; }
+  * { box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; color: #1a1a1a; margin: 0; padding: 16px; }
+  h1 { font-size: 15px; margin: 0 0 2px; }
+  .meta { font-size: 11px; color: #555; margin: 0 0 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 9px; }
+  th, td { border: 1px solid #999; padding: 3px 5px; text-align: left; }
+  thead th { background: #ffedd5; color: #1a1a1a; font-weight: 700; }
+  tbody tr:nth-child(even) { background: #f7f7f7; }
+  tbody tr.bl { background: #fde2e1; }
+  .mono { font-family: "Courier New", monospace; }
+  .url { word-break: break-all; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+</style>
+</head>
+<body onload="window.focus();window.print();">
+  <h1>Detalle de etiqueta — ${escapeHtml(titulo)}</h1>
+  <p class="meta">${escapeHtml([ordenTxt, resumen].filter(Boolean).join(" · "))}</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th><th>Ítem talla</th><th>Talla</th><th>Pieza</th><th>Serial</th>
+        <th>sGTIN</th><th>QR / DPP</th><th>Color</th><th>Fondo de tela</th><th>Estampado</th>
+      </tr>
+    </thead>
+    <tbody>${filas}</tbody>
+  </table>
+</body>
+</html>`);
+    win.document.close();
+  }, [items, labelHead, order, unidades, total, hasSets]);
+
   if (!open) return null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-7xl max-h-[90vh] overflow-y-auto">
+        <button
+          type="button"
+          onClick={handleExportPdf}
+          disabled={items.length === 0}
+          className="absolute right-12 top-4 inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-2.5 py-1 text-xs font-medium transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
+        >
+          <FileDown className="h-3.5 w-3.5" />
+          Exportar PDF
+        </button>
+
         <DialogHeader>
           <DialogTitle>
             Detalle de etiqueta — {labelHead?.codEstilo ?? ""} {labelHead?.nameEstilo ?? ""}

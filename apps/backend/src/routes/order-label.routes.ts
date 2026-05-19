@@ -1,5 +1,6 @@
 import { Router } from "express";
 import type { OrderLabelService } from "../services/order-label.service.js";
+import { isLabelSize } from "../services/label-pdf.js";
 
 function errorResponse(e: unknown) {
   const message = e instanceof Error ? e.message : "Error desconocido";
@@ -110,6 +111,35 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
     }
   });
 
+  // PDF con TODAS las etiquetas de la orden. Va antes de "/:labelId" para que
+  // el segmento literal "pdf" no se interprete como un labelId.
+  router.get("/pdf", async (req, res) => {
+    try {
+      const orderHeadId = parseId(String((req.params as Record<string, string>).id));
+      if (!orderHeadId) {
+        return res.status(400).json({ error: "ID de orden inválido", type: "VALIDATION" });
+      }
+      const size = String(req.query.size ?? "");
+      if (!isLabelSize(size)) {
+        return res
+          .status(400)
+          .json({ error: "Tamaño inválido (usa 25x50 o 40x50)", type: "VALIDATION" });
+      }
+      const { pdf, count } = await service.buildAllLabelsPdf(orderHeadId, size);
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="etiquetas-orden-${orderHeadId}-${size}.pdf"`
+      );
+      res.setHeader("X-Label-Count", String(count));
+      res.send(Buffer.from(pdf));
+    } catch (e) {
+      console.error("[order-labels:pdf-all]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
   router.get("/:labelId", async (req, res) => {
     try {
       const labelId = parseId(String(req.params.labelId));
@@ -140,6 +170,35 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
       res.json(result);
     } catch (e) {
       console.error("[order-labels:details]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  // PDF imprimible de una etiqueta (una página por unidad serializada).
+  router.get("/:labelId/pdf", async (req, res) => {
+    try {
+      const orderHeadId = parseId(String((req.params as Record<string, string>).id));
+      const labelId = parseId(String(req.params.labelId));
+      if (!orderHeadId || !labelId) {
+        return res.status(400).json({ error: "IDs inválidos", type: "VALIDATION" });
+      }
+      const size = String(req.query.size ?? "");
+      if (!isLabelSize(size)) {
+        return res
+          .status(400)
+          .json({ error: "Tamaño inválido (usa 25x50 o 40x50)", type: "VALIDATION" });
+      }
+      const { pdf, count } = await service.buildLabelPdf(orderHeadId, labelId, size);
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="etiqueta-${labelId}-${size}.pdf"`
+      );
+      res.setHeader("X-Label-Count", String(count));
+      res.send(Buffer.from(pdf));
+    } catch (e) {
+      console.error("[order-labels:pdf]", e);
       const err = errorResponse(e);
       res.status(err.status).json(err.body);
     }

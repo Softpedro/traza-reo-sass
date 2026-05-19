@@ -6,6 +6,7 @@ import { apiFetch } from "@/lib/api-fetch";
 import { IdentificadorDigitalBar } from "../identificador-digital/identificador-digital-bar";
 import { EtiquetaHeadModal } from "./etiqueta-head-modal";
 import { EtiquetaDetalleModal } from "./etiqueta-detalle-modal";
+import { GenerarPdfModal } from "./generar-pdf-modal";
 import type { Colorway, LabelHead, OrderHeadInfo } from "./types";
 
 const PASOS = [
@@ -64,6 +65,10 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
     labelHead: LabelHead | null;
   }>({ open: false, mode: "create", colorway: null, labelHead: null });
   const [detalle, setDetalle] = useState<{ open: boolean; labelHead: LabelHead | null }>({
+    open: false,
+    labelHead: null,
+  });
+  const [pdfModal, setPdfModal] = useState<{ open: boolean; labelHead: LabelHead | null }>({
     open: false,
     labelHead: null,
   });
@@ -128,6 +133,18 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
         <p className="rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
           {error}
         </p>
+      )}
+
+      {labels.length > 0 && (
+        <div className="flex justify-end">
+          <button
+            type="button"
+            className="rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:opacity-90"
+            onClick={() => setPdfModal({ open: true, labelHead: null })}
+          >
+            Generar PDF de todas las etiquetas
+          </button>
+        </div>
       )}
 
       {rows.length === 0 ? (
@@ -203,6 +220,13 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
                           >
                             Ver
                           </button>
+                          <button
+                            type="button"
+                            className="font-medium text-primary hover:underline"
+                            onClick={() => setPdfModal({ open: true, labelHead: label })}
+                          >
+                            Generar
+                          </button>
                         </>
                       ) : (
                         <button
@@ -252,6 +276,12 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
         onOpenChange={(o) => setDetalle((s) => ({ ...s, open: o }))}
         order={order}
         labelHead={detalle.labelHead}
+      />
+      <GenerarPdfModal
+        open={pdfModal.open}
+        onOpenChange={(o) => setPdfModal((s) => ({ ...s, open: o }))}
+        order={order}
+        labelHead={pdfModal.labelHead}
       />
     </div>
   );

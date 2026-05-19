@@ -1,4 +1,10 @@
 import type { Prisma, PrismaClient } from "../../generated/prisma/client.js";
+import {
+  buildLabelsPdf,
+  detectImageKind,
+  type LabelLogo,
+  type LabelSizeKey,
+} from "./label-pdf.js";
 
 /** Tope defensivo para evitar generar millones de detalles por error de cálculo. */
 const MAX_LABEL_RANGE = 100_000;
@@ -571,6 +577,97 @@ export class OrderLabelService {
     }
 
     return this.getById(labelId);
+  }
+
+  /** Marca + logo de la marca de una orden, para encabezar las etiquetas. */
+  private async getBrandForOrder(
+    orderHeadId: number
+  ): Promise<{ name: string; logo: LabelLogo | null }> {
+    const order = await this.prisma.odOrderHead.findUnique({
+      where: { idDlkOrderHead: orderHeadId },
+      select: { brand: { select: { nameBrand: true, logoBrand: true } } },
+    });
+    const name = order?.brand?.nameBrand ?? "TRAZA";
+    let logo: LabelLogo | null = null;
+    const blob = order?.brand?.logoBrand;
+    if (blob && blob.length > 0) {
+      const bytes = new Uint8Array(blob);
+      const kind = detectImageKind(bytes);
+      if (kind) logo = { bytes, kind };
+    }
+    return { name, logo };
+  }
+
+  /**
+   * PDF imprimible de una etiqueta: una página por unidad serializada (DPP),
+   * en el tamaño elegido. Pensado para la GODEX G500 (1 página = 1 etiqueta).
+   */
+  async buildLabelPdf(
+    orderHeadId: number,
+    labelId: number,
+    size: LabelSizeKey
+  ): Promise<{ pdf: Uint8Array; count: number }> {
+    const head = await this.prisma.odOrderLabelHead.findUnique({
+      where: { idDlkOrderLabelHead: labelId },
+      select: { idDlkOrderLabelHead: true, idDlkOrderHead: true },
+    });
+    if (!head) throw new Error("Etiqueta no encontrada");
+    if (head.idDlkOrderHead !== orderHeadId) {
+      throw new Error("La etiqueta no pertenece a esta orden de pedido");
+    }
+
+    const details = await this.prisma.odOrderLabelDetail.findMany({
+      where: { idDlkOrderLabelHead: labelId },
+      orderBy: [{ itemGlobal: "asc" }, { idDlkOrderLabelDetail: "asc" }],
+      select: { sgtinFull: true, urlDppFull: true },
+    });
+    if (details.length === 0) {
+      throw new Error("La etiqueta no tiene unidades serializadas para imprimir");
+    }
+
+    const brand = await this.getBrandForOrder(orderHeadId);
+    const pdf = await buildLabelsPdf(
+      details.map((d) => ({ sgtinFull: d.sgtinFull ?? "", urlDppFull: d.urlDppFull ?? "" })),
+      { size, brandName: brand.name, logo: brand.logo }
+    );
+    return { pdf, count: details.length };
+  }
+
+  /**
+   * PDF imprimible con TODAS las etiquetas activas de una orden: concatena las
+   * unidades de cada cabecera en un solo documento, en el tamaño elegido.
+   */
+  async buildAllLabelsPdf(
+    orderHeadId: number,
+    size: LabelSizeKey
+  ): Promise<{ pdf: Uint8Array; count: number }> {
+    const heads = await this.prisma.odOrderLabelHead.findMany({
+      where: { idDlkOrderHead: orderHeadId, flgStatutActif: 1 },
+      select: { idDlkOrderLabelHead: true },
+      orderBy: { idDlkOrderLabelHead: "asc" },
+    });
+    if (heads.length === 0) throw new Error("Esta orden no tiene etiquetas creadas");
+
+    const ids = heads.map((h) => h.idDlkOrderLabelHead);
+    const details = await this.prisma.odOrderLabelDetail.findMany({
+      where: { idDlkOrderLabelHead: { in: ids } },
+      orderBy: [
+        { idDlkOrderLabelHead: "asc" },
+        { itemGlobal: "asc" },
+        { idDlkOrderLabelDetail: "asc" },
+      ],
+      select: { sgtinFull: true, urlDppFull: true },
+    });
+    if (details.length === 0) {
+      throw new Error("Las etiquetas de esta orden no tienen unidades para imprimir");
+    }
+
+    const brand = await this.getBrandForOrder(orderHeadId);
+    const pdf = await buildLabelsPdf(
+      details.map((d) => ({ sgtinFull: d.sgtinFull ?? "", urlDppFull: d.urlDppFull ?? "" })),
+      { size, brandName: brand.name, logo: brand.logo }
+    );
+    return { pdf, count: details.length };
   }
 
   /** Marca / desmarca una unidad serializada como rechazada (lista negra). */

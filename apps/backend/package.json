@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "tsc && node scripts/copy-assets.mjs",
     "start": "node dist/src/index.js",
     "db:generate": "node scripts/check-prisma-node.mjs && prisma generate",
     "db:push": "prisma db push",

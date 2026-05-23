@@ -7,6 +7,7 @@ import { IdentificadorDigitalBar } from "../identificador-digital/identificador-
 import { EtiquetaHeadModal } from "./etiqueta-head-modal";
 import { EtiquetaDetalleModal } from "./etiqueta-detalle-modal";
 import { GenerarPdfModal } from "./generar-pdf-modal";
+import { AgregarTallaModal } from "./agregar-talla-modal";
 import { SIZE_FIELDS, type Colorway, type LabelHead, type OrderHeadInfo } from "./types";
 
 type TallaRow = {
@@ -16,6 +17,8 @@ type TallaRow = {
   cantidad: number;
   isFirstOfColorway: boolean;
   colorwayRowSpan: number;
+  /** Fila especial al final del colorway con el link "+ Agregar talla". */
+  isAddRow?: boolean;
 };
 
 function buildTallaRows(colorways: Colorway[], labels: LabelHead[]): TallaRow[] {
@@ -27,6 +30,9 @@ function buildTallaRows(colorways: Colorway[], labels: LabelHead[]): TallaRow[] 
       cantidad: (cw[s.field] as number | null) ?? 0,
     })).filter((t) => t.cantidad > 0);
 
+    // rowSpan = tallas activas + 1 (la fila de "+ Agregar talla" cierra el grupo).
+    const rowSpan = Math.max(tallas.length, 1) + 1;
+
     if (tallas.length === 0) {
       out.push({
         colorway: cw,
@@ -34,20 +40,31 @@ function buildTallaRows(colorways: Colorway[], labels: LabelHead[]): TallaRow[] 
         talla: "—",
         cantidad: cw.totalEstilo ?? 0,
         isFirstOfColorway: true,
-        colorwayRowSpan: 1,
+        colorwayRowSpan: rowSpan,
       });
-      continue;
+    } else {
+      tallas.forEach((t, idx) => {
+        const labelOfTalla = labelsByDetail.find((l) => l.size === t.talla) ?? null;
+        out.push({
+          colorway: cw,
+          label: labelOfTalla,
+          talla: t.talla,
+          cantidad: t.cantidad,
+          isFirstOfColorway: idx === 0,
+          colorwayRowSpan: rowSpan,
+        });
+      });
     }
-    tallas.forEach((t, idx) => {
-      const labelOfTalla = labelsByDetail.find((l) => l.size === t.talla) ?? null;
-      out.push({
-        colorway: cw,
-        label: labelOfTalla,
-        talla: t.talla,
-        cantidad: t.cantidad,
-        isFirstOfColorway: idx === 0,
-        colorwayRowSpan: tallas.length,
-      });
+
+    // Fila de cierre del colorway con el link.
+    out.push({
+      colorway: cw,
+      label: null,
+      talla: "",
+      cantidad: 0,
+      isFirstOfColorway: false,
+      colorwayRowSpan: rowSpan,
+      isAddRow: true,
     });
   }
   return out;
@@ -117,6 +134,10 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
     open: false,
     labelHead: null,
   });
+  const [agregarTalla, setAgregarTalla] = useState<{
+    open: boolean;
+    colorway: Colorway | null;
+  }>({ open: false, colorway: null });
 
   const fetchAll = useCallback(() => {
     setLoading(true);
@@ -212,7 +233,22 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
             </thead>
             <tbody>
               {rows.map((row) => {
-                const { colorway: cw, label, talla, cantidad, isFirstOfColorway, colorwayRowSpan } = row;
+                const { colorway: cw, label, talla, cantidad, isFirstOfColorway, colorwayRowSpan, isAddRow } = row;
+                if (isAddRow) {
+                  return (
+                    <tr key={`${cw.idDlkOrderDetail}-add`} className="hover:bg-muted/40">
+                      <td className="border px-2 py-1.5 text-center text-xs" colSpan={7}>
+                        <button
+                          type="button"
+                          className="font-medium text-primary hover:underline"
+                          onClick={() => setAgregarTalla({ open: true, colorway: cw })}
+                        >
+                          + Agregar talla
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                }
                 return (
                   <tr key={`${cw.idDlkOrderDetail}-${talla}`} className="hover:bg-muted/40">
                     {isFirstOfColorway && (
@@ -342,6 +378,13 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
         onOpenChange={(o) => setPdfModal((s) => ({ ...s, open: o }))}
         order={order}
         labelHead={pdfModal.labelHead}
+      />
+      <AgregarTallaModal
+        open={agregarTalla.open}
+        onOpenChange={(o) => setAgregarTalla((s) => ({ ...s, open: o }))}
+        order={order}
+        colorway={agregarTalla.colorway}
+        onSuccess={fetchAll}
       />
     </div>
   );

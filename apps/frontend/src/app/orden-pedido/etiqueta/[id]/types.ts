@@ -84,6 +84,8 @@ export type LabelHead = {
   codEstilo: string | null;
   nameEstilo: string | null;
   codGtin: string | null;
+  /** Talla de la etiqueta. Una cabecera vive a nivel de (colorway × talla). */
+  size: string | null;
   estampado: string | null;
   identifierType: string | null;
   inicioSerializacion: number | null;

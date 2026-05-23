@@ -123,7 +123,7 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
       if (!isLabelSize(size)) {
         return res
           .status(400)
-          .json({ error: "Tamaño inválido (usa 25x50 o 40x50)", type: "VALIDATION" });
+          .json({ error: "Tamaño inválido (usa 40x100)", type: "VALIDATION" });
       }
       const { pdf, count } = await service.buildAllLabelsPdf(orderHeadId, size);
       res.setHeader("Content-Type", "application/pdf");
@@ -187,7 +187,7 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
       if (!isLabelSize(size)) {
         return res
           .status(400)
-          .json({ error: "Tamaño inválido (usa 25x50 o 40x50)", type: "VALIDATION" });
+          .json({ error: "Tamaño inválido (usa 40x100)", type: "VALIDATION" });
       }
       const { pdf, count } = await service.buildLabelPdf(orderHeadId, labelId, size);
       res.setHeader("Content-Type", "application/pdf");

@@ -7,22 +7,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-  Label,
   Button,
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
 } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
 import type { LabelHead, OrderHeadInfo } from "./types";
 
-/** Tamaños de etiqueta (deben coincidir con LABEL_SIZES del backend). */
-const SIZE_OPTIONS = [
-  { value: "25x50", label: "25 × 50 mm (vertical)" },
-  { value: "40x50", label: "40 × 50 mm (ancha)" },
-] as const;
+/** Único tamaño soportado: 40 × 100 mm. */
+const LABEL_SIZE = "40x100";
 
 interface Props {
   open: boolean;
@@ -37,7 +28,6 @@ interface Props {
  * (una página por unidad/DPP). Formato pensado para la impresora GODEX G500.
  */
 export function GenerarPdfModal({ open, onOpenChange, order, labelHead }: Props) {
-  const [size, setSize] = useState<string>("40x50");
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -50,8 +40,8 @@ export function GenerarPdfModal({ open, onOpenChange, order, labelHead }: Props)
     try {
       const base = `/api/order-heads/${order.idDlkOrderHead}/labels`;
       const url = isAll
-        ? `${base}/pdf?size=${size}`
-        : `${base}/${labelHead!.idDlkOrderLabelHead}/pdf?size=${size}`;
+        ? `${base}/pdf?size=${LABEL_SIZE}`
+        : `${base}/${labelHead!.idDlkOrderLabelHead}/pdf?size=${LABEL_SIZE}`;
 
       const res = await apiFetch(url);
       if (!res.ok) {
@@ -62,8 +52,8 @@ export function GenerarPdfModal({ open, onOpenChange, order, labelHead }: Props)
       const blob = await res.blob();
       const objUrl = URL.createObjectURL(blob);
       const filename = isAll
-        ? `etiquetas-orden-${order.idDlkOrderHead}-${size}.pdf`
-        : `etiqueta-${labelHead!.idDlkOrderLabelHead}-${size}.pdf`;
+        ? `etiquetas-orden-${order.idDlkOrderHead}-${LABEL_SIZE}.pdf`
+        : `etiqueta-${labelHead!.idDlkOrderLabelHead}-${LABEL_SIZE}.pdf`;
       const a = document.createElement("a");
       a.href = objUrl;
       a.download = filename;
@@ -107,26 +97,10 @@ export function GenerarPdfModal({ open, onOpenChange, order, labelHead }: Props)
             )}
           </div>
 
-          <div className="space-y-1.5">
-            <Label>Tamaño de etiqueta</Label>
-            <Select value={size} onValueChange={setSize}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {SIZE_OPTIONS.map((o) => (
-                  <SelectItem key={o.value} value={o.value}>
-                    {o.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
           <p className="rounded-md border bg-muted/30 px-3 py-2 text-xs text-muted-foreground">
-            Una página = una etiqueta (un DPP). Al imprimir en la GODEX G500, usa
-            escala <strong>100%</strong> — no &quot;ajustar a página&quot; — para conservar
-            las medidas en milímetros.
+            Formato: <strong>40 × 100 mm</strong>. Una página = una etiqueta (un DPP).
+            Al imprimir en la GODEX G500, usa escala <strong>100%</strong> — no
+            &quot;ajustar a página&quot; — para conservar las medidas en milímetros.
           </p>
 
           {error && (

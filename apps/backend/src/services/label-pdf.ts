@@ -1,31 +1,35 @@
 /**
  * Renderizador del PDF de etiquetas (Pasaporte Digital de Producto).
  *
- * Cada unidad serializada (OD_ORDER_LABEL_DETAIL) se dibuja como una página
- * cuyo tamaño físico es exactamente la etiqueta elegida — formato pensado para
- * la impresora GODEX G500 (203 dpi, versión con cutter): 1 página = 1 etiqueta.
+ * 1 página = 1 etiqueta. Tamaño físico: 40 × 100 mm (única opción).
+ * Pensado para impresora GODEX G500 (203 dpi).
  */
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import type { PDFFont, PDFImage, PDFPage, RGB } from "pdf-lib";
 import QRCode from "qrcode";
 
 const MM_TO_PT = 72 / 25.4;
 
-/** El QR se imprime a un tamaño fijo de 15 × 15 mm: legible y cabe en ambas etiquetas. */
-const QR_SIZE_MM = 15;
+/** Tamaño del QR fijo (legible, deja espacio para iconos y texto). */
+const QR_SIZE_MM = 22;
 /** Quiet zone (margen blanco obligatorio) alrededor del QR. */
 const QR_QUIET_MM = 2;
 
-export type LabelSizeKey = "25x50" | "40x50";
+/** Grosor uniforme y fino de las líneas divisorias (en pt). */
+const LINE_THICKNESS = 0.25;
 
-/** Tamaños ofrecidos en el modal. Coinciden con las dos páginas del PDF de referencia. */
+export type LabelSizeKey = "40x100";
+
+/** Único tamaño soportado. */
 export const LABEL_SIZES: Record<LabelSizeKey, { wMm: number; hMm: number; label: string }> = {
-  "25x50": { wMm: 25, hMm: 50, label: "25 × 50 mm" },
-  "40x50": { wMm: 40, hMm: 50, label: "40 × 50 mm" },
+  "40x100": { wMm: 40, hMm: 100, label: "40 × 100 mm" },
 };
 
 export function isLabelSize(v: unknown): v is LabelSizeKey {
-  return v === "25x50" || v === "40x50";
+  return v === "40x100";
 }
 
 export type LabelUnit = { sgtinFull: string; urlDppFull: string };
@@ -57,71 +61,31 @@ export function detectImageKind(bytes: Uint8Array): "png" | "jpg" | null {
 
 /* ----------------------------- íconos ----------------------------- */
 /**
- * Íconos de sostenibilidad como paths SVG (viewBox 24×24, un solo trazo).
- * Aproximaciones limpias de los del PDF de referencia; se pueden sustituir
- * por los SVG exactos si la marca los provee.
+ * Íconos de sostenibilidad cargados desde apps/backend/src/assets/label-icons/.
+ * Se leen una vez al iniciar el módulo y se reutilizan en cada PDF.
  */
-const ICON_PATHS: string[] = [
-  // Pin de trazabilidad
-  "M12 2c-3.9 0-7 3.1-7 7 0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7z",
-  // Flechas circulares (reúso / circularidad)
-  "M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z",
-  // (índice 2 reservado para la huella de carbono — se dibuja con primitivas)
-  "",
-  // Gota de agua
-  "M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z",
-  // Hoja (no tóxico)
-  "M6.05 8.05c-2.73 2.73-2.73 7.15-.02 9.88 1.47-3.4 4.09-6.24 7.36-7.93-2.77 2.34-4.71 5.61-5.39 9.32 2.6 1.23 5.8.78 7.95-1.37C19.43 14.47 20 4 20 4S9.53 4.57 6.05 8.05z",
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ICONS_DIR = join(__dirname, "..", "assets", "label-icons");
+
+type IconAsset = { bytes: Uint8Array; kind: "png" | "jpg" };
+
+function loadIcon(filename: string): IconAsset {
+  const bytes = new Uint8Array(readFileSync(join(ICONS_DIR, filename)));
+  const kind = detectImageKind(bytes);
+  if (!kind) throw new Error(`Icono inválido: ${filename}`);
+  return { bytes, kind };
+}
+
+/** Orden de presentación en la fila inferior de la etiqueta. */
+const ICON_FILES: { file: string; alt: string }[] = [
+  { file: "trazabilidad.png", alt: "Trazabilidad" },
+  { file: "circular.png", alt: "Economía circular" },
+  { file: "carbono.png", alt: "Huella de carbono" },
+  { file: "agua.png", alt: "Agua" },
+  { file: "no-toxico.png", alt: "No tóxico" },
 ];
 
-/** Dibuja la huella de carbono con primitivas (suela + dedos). */
-function drawFoot(page: PDFPage, cx: number, topY: number, size: number, color: RGB) {
-  // Suela
-  page.drawEllipse({
-    x: cx,
-    y: topY - size * 0.6,
-    xScale: size * 0.26,
-    yScale: size * 0.33,
-    color,
-  });
-  // Dedos: uno grande + tres pequeños sobre un arco.
-  page.drawCircle({ x: cx - size * 0.16, y: topY - size * 0.13, size: size * 0.115, color });
-  const toes = [0.06, 0.2, 0.32];
-  const toeY = [0.16, 0.2, 0.27];
-  for (let i = 0; i < toes.length; i++) {
-    page.drawCircle({
-      x: cx + size * toes[i],
-      y: topY - size * toeY[i],
-      size: size * 0.075,
-      color,
-    });
-  }
-}
-
-/** Fila de 5 íconos repartidos uniformemente entre x1 y x2. */
-function drawIconRow(
-  page: PDFPage,
-  x1: number,
-  x2: number,
-  topY: number,
-  size: number,
-  color: RGB
-) {
-  const slot = (x2 - x1) / 5;
-  for (let i = 0; i < 5; i++) {
-    const cx = x1 + slot * (i + 0.5);
-    if (i === 2) {
-      drawFoot(page, cx, topY, size, color);
-      continue;
-    }
-    page.drawSvgPath(ICON_PATHS[i], {
-      x: cx - size / 2,
-      y: topY,
-      scale: size / 24,
-      color,
-    });
-  }
-}
+const ICON_ASSETS: IconAsset[] = ICON_FILES.map((i) => loadIcon(i.file));
 
 /* ----------------------------- helpers de texto ----------------------------- */
 
@@ -167,8 +131,30 @@ function drawCentered(
   page.drawText(text, { x: (pageW - tw) / 2, y: baselineY, size: fs, font, color });
 }
 
+/** Dibuja varios segmentos (cada uno con su font) como una sola línea centrada. */
+function drawCenteredSegments(
+  page: PDFPage,
+  segments: { text: string; font: PDFFont }[],
+  fs: number,
+  pageW: number,
+  baselineY: number,
+  color: RGB
+) {
+  const totalW = segments.reduce((a, s) => a + s.font.widthOfTextAtSize(s.text, fs), 0);
+  let x = (pageW - totalW) / 2;
+  for (const s of segments) {
+    page.drawText(s.text, { x, y: baselineY, size: fs, font: s.font, color });
+    x += s.font.widthOfTextAtSize(s.text, fs);
+  }
+}
+
 function hr(page: PDFPage, x1: number, x2: number, y: number, color: RGB) {
-  page.drawLine({ start: { x: x1, y }, end: { x: x2, y }, thickness: 0.5, color });
+  page.drawLine({
+    start: { x: x1, y },
+    end: { x: x2, y },
+    thickness: LINE_THICKNESS,
+    color,
+  });
 }
 
 /* ----------------------------- render ----------------------------- */
@@ -181,6 +167,7 @@ type DrawCtx = {
   unit: LabelUnit;
   logo: PDFImage | null;
   qrImg: PDFImage;
+  icons: PDFImage[];
   font: PDFFont;
   fontBold: PDFFont;
   brandName: string;
@@ -188,24 +175,32 @@ type DrawCtx = {
 
 /** Dibuja una etiqueta completa en su página. */
 function drawLabel(page: PDFPage, ctx: DrawCtx) {
-  const { w, h, unit, logo, qrImg, font, fontBold, brandName } = ctx;
+  const { w, h, unit, logo, qrImg, icons, font, fontBold, brandName } = ctx;
   const black = rgb(0, 0, 0);
-  const mx = w * 0.085;
+  const mx = w * 0.08;
   const innerW = w - 2 * mx;
 
-  // Bloque inferior (íconos + pie): se reserva su altura para que el QR ocupe el resto.
-  const footerFs = clamp(h * 0.026, 3, 7);
-  const footerLineH = footerFs * 1.25;
-  const footerH = footerLineH * 3;
-  const iconSize = h * 0.06;
-  const bottomMargin = h * 0.05;
-  const iconsGap = h * 0.02;
-  const bottomBlockTop = bottomMargin + footerH + iconsGap + iconSize;
+  // ---------- Spacing rítmico ----------
+  // GAP = espacio base entre bloques. Todos los gaps verticales son múltiplos de GAP
+  // para mantener la etiqueta visualmente uniforme.
+  const GAP = 3 * MM_TO_PT;       // 3 mm entre bloques de texto/separadores
+  const BIG_GAP = 4 * MM_TO_PT;   // 4 mm alrededor de la fila de iconos (más aire)
 
-  let y = h - h * 0.05; // cursor descendente desde el borde superior
+  // Alturas reservadas (en mm) para tener layout estable en 40 × 100.
+  // topMargin = 10 mm: zona de costura. La etiqueta se cose por arriba y esos
+  // primeros 10 mm quedan ocultos dentro del dobladillo — nada visible va ahí.
+  const topMargin = 10 * MM_TO_PT;
+  const bottomMargin = 3 * MM_TO_PT;
+  const footerLineH = 2.6 * MM_TO_PT;
+  const footerH = footerLineH * 3;
+  const iconSize = 4 * MM_TO_PT;      // 4 mm cuadrado: aire amplio entre iconos
+  // Bloque inferior: footer + gap + iconos + gap + línea separadora superior.
+  const bottomBlockTop = bottomMargin + footerH + BIG_GAP + iconSize + BIG_GAP;
+
+  let y = h - topMargin; // cursor descendente desde el borde superior
 
   // Logo de marca (o nombre de la marca si no hay logo).
-  const logoMaxH = h * 0.085;
+  const logoMaxH = 9 * MM_TO_PT;
   if (logo) {
     const s = Math.min(innerW / logo.width, logoMaxH / logo.height);
     const lw = logo.width * s;
@@ -213,38 +208,39 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
     page.drawImage(logo, { x: (w - lw) / 2, y: y - lh, width: lw, height: lh });
     y -= lh;
   } else {
-    const fs = fitFont(brandName, fontBold, innerW, h * 0.05);
+    const fs = fitFont(brandName, fontBold, innerW, 13);
     y -= fs;
     drawCentered(page, brandName, fontBold, fs, w, y, black);
   }
-  y -= h * 0.024;
+  y -= GAP;
 
   hr(page, mx, w - mx, y, black);
-  y -= h * 0.028;
+  y -= GAP;
 
   // sGTIN — código grande, centrado.
-  const gFs = fitFont(unit.sgtinFull, fontBold, innerW, h * 0.055);
+  const gFs = fitFont(unit.sgtinFull, fontBold, innerW, 11);
   y -= gFs;
   drawCentered(page, unit.sgtinFull, fontBold, gFs, w, y, black);
-  y -= h * 0.016;
+  y -= GAP;
 
   hr(page, mx, w - mx, y, black);
-  y -= h * 0.024;
+  y -= GAP;
 
-  // Subtítulo (ajustado en líneas).
-  const subFs = clamp(h * 0.027, 3.2, 8);
+  // Subtítulo.
+  const subFs = 6.5;
   for (const ln of wrap(SUBTITLE, font, subFs, innerW)) {
     y -= subFs * 1.18;
     drawCentered(page, ln, font, subFs, w, y, black);
   }
-  y -= h * 0.018;
+  y -= GAP;
 
-  // QR — tamaño fijo 15 × 15 mm, centrado en el espacio libre, con quiet zone
-  // blanca alrededor (negro sobre blanco, sin texto ni íconos pegados).
+  // QR — 22 mm. El espacio sobrante se reparte 70% arriba / 30% abajo para que
+  // el QR quede más cerca de los iconos (visualmente "centrado bajo").
   const qrSide = QR_SIZE_MM * MM_TO_PT;
   const qrPad = QR_QUIET_MM * MM_TO_PT;
   const band = y - bottomBlockTop;
-  const qrTop = y - Math.max(0, (band - qrSide) / 2);
+  const QR_TOP_BIAS = 0.7;
+  const qrTop = y - Math.max(0, (band - qrSide) * QR_TOP_BIAS);
   const qrX = (w - qrSide) / 2;
   const qrBottom = qrTop - qrSide;
   page.drawRectangle({
@@ -256,10 +252,28 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
   });
   page.drawImage(qrImg, { x: qrX, y: qrBottom, width: qrSide, height: qrSide });
 
-  // Fila de íconos.
-  drawIconRow(page, mx, w - mx, bottomMargin + footerH + iconsGap + iconSize, iconSize, black);
+  // Posicionamiento de los iconos (sin línea separadora arriba).
+  const iconsBottom = bottomMargin + footerH + BIG_GAP;
+
+  // Fila de 5 íconos uniformemente repartidos.
+  const slot = (w - 2 * mx) / icons.length;
+  for (let i = 0; i < icons.length; i++) {
+    const img = icons[i];
+    // Encajar el icono manteniendo aspect ratio dentro de iconSize × iconSize.
+    const ratio = img.width / img.height;
+    const iw = ratio >= 1 ? iconSize : iconSize * ratio;
+    const ih = ratio >= 1 ? iconSize / ratio : iconSize;
+    const cx = mx + slot * (i + 0.5);
+    page.drawImage(img, {
+      x: cx - iw / 2,
+      y: iconsBottom + (iconSize - ih) / 2,
+      width: iw,
+      height: ih,
+    });
+  }
 
   // Pie (3 líneas).
+  const footerFs = 5.5;
   drawCentered(
     page,
     "Proveedor del servicio:",
@@ -278,10 +292,13 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
     bottomMargin + footerLineH + footerFs * 0.2,
     black
   );
-  drawCentered(
+  drawCenteredSegments(
     page,
-    "Plataforma TRAZA SaaS DPP",
-    font,
+    [
+      { text: "Plataforma ", font },
+      { text: "TRAZA", font: fontBold },
+      { text: " SaaS DPP", font },
+    ],
     footerFs,
     w,
     bottomMargin + footerFs * 0.2,
@@ -318,19 +335,36 @@ export async function buildLabelsPdf(
     }
   }
 
+  // Iconos: se embeben una sola vez por documento.
+  const icons: PDFImage[] = [];
+  for (const asset of ICON_ASSETS) {
+    icons.push(
+      asset.kind === "png"
+        ? await doc.embedPng(asset.bytes)
+        : await doc.embedJpg(asset.bytes)
+    );
+  }
+
   for (const unit of units) {
     const page = doc.addPage([w, h]);
-    // QR del DPP: 1000 px (≫300 dpi a 15 mm), negro puro sobre blanco.
-    // margin 0 = la imagen es exactamente el código; la quiet zone se dibuja
-    // como recuadro blanco en la etiqueta para que el QR mida 15 mm netos.
     const qrPng = await QRCode.toBuffer(unit.urlDppFull || unit.sgtinFull, {
       errorCorrectionLevel: "M",
       margin: 0,
-      width: 1000,
+      width: 1200,
       color: { dark: "#000000", light: "#ffffff" },
     });
     const qrImg = await doc.embedPng(qrPng);
-    drawLabel(page, { w, h, unit, logo, qrImg, font, fontBold, brandName: opts.brandName });
+    drawLabel(page, {
+      w,
+      h,
+      unit,
+      logo,
+      qrImg,
+      icons,
+      font,
+      fontBold,
+      brandName: opts.brandName,
+    });
   }
 
   return doc.save();

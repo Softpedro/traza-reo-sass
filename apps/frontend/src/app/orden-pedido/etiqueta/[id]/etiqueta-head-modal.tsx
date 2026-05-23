@@ -35,13 +35,13 @@ interface Props {
   order: OrderHeadInfo | null;
   colorway: Colorway | null;
   labelHead: LabelHead | null;
+  /** Talla específica que esta etiqueta cubre (cada cabecera vive por (colorway × talla)). */
+  talla: string | null;
   onSuccess: () => void;
 }
 
-/** Opciones de estampado. Se guardan tal cual en OD_ORDER_LABEL_HEAD.ESTAMPADO. */
 const ESTAMPADO_OPTIONS = ["SIN ESTAMPADO", "CON ESTAMPADO"] as const;
 
-/** Nombres de pieza por defecto para un colorway que es set. */
 function defaultPieceNames(numPiezas: number): string[] {
   if (numPiezas === 2) return ["PANTALON", "CAMISA"];
   return Array.from({ length: numPiezas }, (_, i) => `PIEZA ${i + 1}`);
@@ -56,8 +56,6 @@ function Row(props: { label: string; children: React.ReactNode }) {
   );
 }
 
-type SizeQty = { field: string; label: string; qty: string };
-
 export function EtiquetaHeadModal({
   open,
   onOpenChange,
@@ -65,6 +63,7 @@ export function EtiquetaHeadModal({
   order,
   colorway,
   labelHead,
+  talla,
   onSuccess,
 }: Props) {
   const [identifiers, setIdentifiers] = useState<DigitalIdentifierOption[]>([]);
@@ -76,42 +75,30 @@ export function EtiquetaHeadModal({
   const [esSet, setEsSet] = useState(false);
   const [numPiezas, setNumPiezas] = useState(2);
   const [pieceNames, setPieceNames] = useState<string[]>([]);
-  const [sizeQtys, setSizeQtys] = useState<SizeQty[]>([]);
-  const [totalQty, setTotalQty] = useState("");
+  const [cantidad, setCantidad] = useState("");
   const [saving, setSaving] = useState(false);
 
-  /** Tallas que el colorway trae con cantidad > 0 (las tallas "activas" del estilo). */
-  const colorwaySizeRows = useMemo(() => {
-    if (!colorway) return [] as { field: string; label: string; qty: number }[];
-    return SIZE_FIELDS.map((f) => ({
-      field: f.field as string,
-      label: f.label,
-      qty: Number(colorway[f.field] ?? 0) || 0,
-    })).filter((r) => r.qty > 0);
-  }, [colorway]);
+  /** Talla efectiva: la que llega por prop (create) o la guardada en labelHead (edit). */
+  const tallaActual = talla ?? labelHead?.size ?? null;
 
-  /** Si hay tallas en la grilla se trabaja por talla; si no, Total plano. */
-  const useGrid = sizeQtys.length > 0;
+  /** Cantidad por defecto = lo que el pedido trae para esta talla. */
+  const defaultQtyForTalla = useMemo(() => {
+    if (!colorway || !tallaActual) return 0;
+    const field = SIZE_FIELDS.find((s) => s.label === tallaActual)?.field;
+    if (!field) return 0;
+    return Number(colorway[field] ?? 0) || 0;
+  }, [colorway, tallaActual]);
 
-  /** Tallas aún no presentes en la grilla — disponibles para "Agregar talla". */
-  const availableSizes = SIZE_FIELDS.filter(
-    (f) => !sizeQtys.some((s) => s.field === String(f.field))
-  );
+  const totalUnidades = Number(cantidad) || 0;
+  const totalDetails = totalUnidades * (esSet ? numPiezas : 1);
 
-  function addSize(field: string) {
-    const f = SIZE_FIELDS.find((x) => String(x.field) === field);
-    if (!f) return;
-    const order = SIZE_FIELDS.map((x) => String(x.field));
-    setSizeQtys((prev) =>
-      [...prev, { field: String(f.field), label: f.label, qty: "" }].sort(
-        (a, b) => order.indexOf(a.field) - order.indexOf(b.field)
-      )
-    );
-  }
-
-  function removeSize(field: string) {
-    setSizeQtys((prev) => prev.filter((s) => s.field !== field));
-  }
+  const inicioNum = inicio.trim() === "" ? null : Number(inicio);
+  const finaliza =
+    mode === "edit"
+      ? (labelHead?.finSerializacion ?? null)
+      : inicioNum != null && Number.isFinite(inicioNum) && totalDetails > 0
+        ? inicioNum + totalDetails - 1
+        : null;
 
   useEffect(() => {
     if (!open) return;
@@ -125,7 +112,6 @@ export function EtiquetaHeadModal({
 
   useEffect(() => {
     if (!open) return;
-    // El toggle de set arranca siempre inactivo; no depende del colorway.
     setEsSet(false);
     setNumPiezas(2);
     if (mode === "edit" && labelHead) {
@@ -134,21 +120,17 @@ export function EtiquetaHeadModal({
       setEstampado(labelHead.estampado ?? "");
       setInicio(labelHead.inicioSerializacion != null ? String(labelHead.inicioSerializacion) : "");
       setEstado(labelHead.stateOrderLabelHead === 0 ? 0 : 1);
+      setCantidad(labelHead.totalLabel != null ? String(labelHead.totalLabel) : "");
     } else {
       setIdDigital(0);
       setGtin("");
       setEstampado("");
       setInicio("");
       setEstado(1);
-      // Defaults de producción = cantidades del pedido (el usuario las ajusta).
-      setSizeQtys(
-        colorwaySizeRows.map((r) => ({ field: r.field, label: r.label, qty: String(r.qty) }))
-      );
-      setTotalQty(colorway?.totalEstilo ? String(colorway.totalEstilo) : "");
+      setCantidad(defaultQtyForTalla > 0 ? String(defaultQtyForTalla) : "");
     }
-  }, [open, mode, labelHead, colorwaySizeRows, colorway]);
+  }, [open, mode, labelHead, defaultQtyForTalla]);
 
-  // Mantiene `pieceNames` alineado con la cantidad de piezas, preservando lo escrito.
   useEffect(() => {
     if (!esSet) {
       setPieceNames([]);
@@ -157,28 +139,13 @@ export function EtiquetaHeadModal({
     setPieceNames((prev) => defaultPieceNames(numPiezas).map((def, i) => prev[i] ?? def));
   }, [esSet, numPiezas]);
 
-  /** Total de unidades a producir (suma de la grilla, o el Total plano). */
-  const total = useGrid
-    ? sizeQtys.reduce((a, s) => a + (Number(s.qty) || 0), 0)
-    : Number(totalQty) || 0;
-  /** DPPs a generar = unidades × piezas por unidad. */
-  const totalDetails = total * numPiezas;
-
-  const inicioNum = inicio.trim() === "" ? null : Number(inicio);
-  const finaliza =
-    mode === "edit"
-      ? (labelHead?.finSerializacion ?? null)
-      : inicioNum != null && Number.isFinite(inicioNum) && totalDetails > 0
-        ? inicioNum + totalDetails - 1
-        : null;
-
-  function setSizeQty(field: string, value: string) {
-    setSizeQtys((prev) => prev.map((s) => (s.field === field ? { ...s, qty: value } : s)));
-  }
-
   async function handleSubmit() {
     if (!order || !colorway) return;
     if (mode === "create") {
+      if (!tallaActual) {
+        alert("Falta la talla — recargá la página");
+        return;
+      }
       if (!idDigital || idDigital <= 0) {
         alert("Debes seleccionar un identificador digital");
         return;
@@ -187,8 +154,8 @@ export function EtiquetaHeadModal({
         alert("El GTIN es obligatorio");
         return;
       }
-      if (!total || total <= 0) {
-        alert("Ingresa la cantidad de producción");
+      if (totalUnidades <= 0) {
+        alert("Ingresa la cantidad de producción para esta talla");
         return;
       }
       if (esSet && numPiezas < 2) {
@@ -213,6 +180,8 @@ export function EtiquetaHeadModal({
           idDlkOrderDetail: colorway.idDlkOrderDetail,
           idDlkDigitalIdentifier: idDigital,
           codGtin: gtin.trim() || null,
+          size: tallaActual,
+          totalLabel: totalUnidades,
           estampado: estampado.trim() || null,
           ...(inicioNum != null && Number.isFinite(inicioNum)
             ? { inicioSerializacion: inicioNum }
@@ -221,14 +190,6 @@ export function EtiquetaHeadModal({
           ...(esSet
             ? { numPiezas, pieceTypes: pieceNames.map((p) => p.trim()) }
             : {}),
-          ...(useGrid
-            ? {
-                sizeBreakdown: sizeQtys.map((s) => ({
-                  size: s.label,
-                  qty: Number(s.qty) || 0,
-                })),
-              }
-            : { totalLabel: total }),
         };
       } else {
         url = apiUrl(
@@ -269,10 +230,11 @@ export function EtiquetaHeadModal({
         <DialogHeader>
           <DialogTitle>
             {mode === "create" ? "Crear etiqueta" : "Actualizar etiqueta"}
+            {tallaActual ? ` — Talla ${tallaActual}` : ""}
           </DialogTitle>
           <DialogDescription>
             {mode === "create"
-              ? "Genera los DPPs de este colorway."
+              ? "Cada talla genera su propia cabecera y GTIN."
               : "Modifica los datos de la cabecera de etiqueta."}
           </DialogDescription>
         </DialogHeader>
@@ -296,12 +258,15 @@ export function EtiquetaHeadModal({
           <Row label="Fondo de tela">
             <Input readOnly value={colorway?.fondoTela ?? "—"} />
           </Row>
+          <Row label="Talla">
+            <Input readOnly value={tallaActual ?? "—"} />
+          </Row>
           <Row label="GTIN">
             <Input
               value={gtin}
               onChange={(e) => setGtin(e.target.value)}
               maxLength={14}
-              placeholder="GTIN-14 del modelo"
+              placeholder="GTIN-14 de esta talla"
             />
           </Row>
           <Row label="Identificador Digital">
@@ -379,91 +344,26 @@ export function EtiquetaHeadModal({
             </>
           )}
 
-          {/* Cantidad de producción — editable solo al Crear. */}
           {mode === "edit" ? (
             <Row label="Total">
               <Input readOnly value={labelHead?.totalLabel != null ? String(labelHead.totalLabel) : "—"} />
             </Row>
-          ) : useGrid ? (
-            <div className="flex flex-col gap-2 rounded-md border bg-muted/30 px-3 py-2">
-              <p className="text-xs font-semibold text-primary">
-                Cantidad de producción por talla
-              </p>
-              <div className="grid grid-cols-4 gap-2">
-                {sizeQtys.map((s) => (
-                  <div key={s.field} className="flex flex-col gap-0.5">
-                    <div className="flex items-center justify-between">
-                      <Label className="text-[10px] text-muted-foreground">{s.label}</Label>
-                      <button
-                        type="button"
-                        className="text-[10px] leading-none text-muted-foreground hover:text-destructive"
-                        onClick={() => removeSize(s.field)}
-                        title="Quitar talla"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                    <Input
-                      type="number"
-                      min="0"
-                      className="h-8"
-                      value={s.qty}
-                      onChange={(e) => setSizeQty(s.field, e.target.value)}
-                    />
-                  </div>
-                ))}
-              </div>
-              {availableSizes.length > 0 && (
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-muted-foreground">Agregar talla:</span>
-                  <Select value="" onValueChange={addSize}>
-                    <SelectTrigger className="h-8 w-28">
-                      <SelectValue placeholder="Talla" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {availableSizes.map((f) => (
-                        <SelectItem key={String(f.field)} value={String(f.field)}>
-                          {f.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
-              <p className="text-xs text-muted-foreground">
-                Total producción: <strong>{total}</strong>
-                {esSet ? ` · ${totalDetails} DPPs` : ""}
-                {colorway?.totalEstilo != null ? ` · pedido: ${colorway.totalEstilo}` : ""}
-              </p>
-            </div>
           ) : (
             <div className="flex flex-col gap-2 rounded-md border bg-muted/30 px-3 py-2">
-              <Row label="Total">
+              <Row label="Cantidad">
                 <Input
                   type="number"
                   min="0"
-                  value={totalQty}
-                  onChange={(e) => setTotalQty(e.target.value)}
-                  placeholder="Cantidad de producción"
+                  value={cantidad}
+                  onChange={(e) => setCantidad(e.target.value)}
+                  placeholder={`Unidades para talla ${tallaActual ?? ""}`}
                 />
               </Row>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] text-muted-foreground">
-                  ¿Manejar por talla? Agregar talla:
-                </span>
-                <Select value="" onValueChange={addSize}>
-                  <SelectTrigger className="h-8 w-28">
-                    <SelectValue placeholder="Talla" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {availableSizes.map((f) => (
-                      <SelectItem key={String(f.field)} value={String(f.field)}>
-                        {f.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <p className="text-xs text-muted-foreground">
+                Producción: <strong>{totalUnidades}</strong>
+                {esSet ? ` · ${totalDetails} DPPs` : ""}
+                {defaultQtyForTalla > 0 ? ` · pedido: ${defaultQtyForTalla}` : ""}
+              </p>
             </div>
           )}
 

@@ -19,6 +19,7 @@ const LABEL_HEAD_FOR_LIST = {
   codEstilo: true,
   nameEstilo: true,
   codGtin: true,
+  size: true,
   estampado: true,
   identifierType: true,
   inicioSerializacion: true,
@@ -278,7 +279,13 @@ export class OrderLabelService {
       sizes: { label: string; qty: number }[];
     } | null = null;
 
+    // Talla obligatoria cuando se etiqueta un colorway: cada cabecera vive a nivel
+    // de (colorway × talla). El GTIN se asigna por talla.
+    const tallaInput = (input.size ?? "").trim() || null;
     if (input.idDlkOrderDetail != null) {
+      if (!tallaInput) {
+        throw new Error("Debes indicar la talla para generar la etiqueta");
+      }
       const d = await this.prisma.odOrderDetail.findUnique({
         where: { idDlkOrderDetail: input.idDlkOrderDetail },
         omit: { imgEstilo: true, supplyFile: true },
@@ -287,13 +294,17 @@ export class OrderLabelService {
       if (d.idDlkOrderHead !== input.idDlkOrderHead) {
         throw new Error("El colorway no pertenece a esta orden de pedido");
       }
-      // Un colorway solo puede tener una cabecera de etiqueta.
+      // Una etiqueta por (colorway × talla).
       const dup = await this.prisma.odOrderLabelHead.findFirst({
-        where: { idDlkOrderDetail: input.idDlkOrderDetail, flgStatutActif: 1 },
+        where: {
+          idDlkOrderDetail: input.idDlkOrderDetail,
+          size: tallaInput,
+          flgStatutActif: 1,
+        },
         select: { idDlkOrderLabelHead: true },
       });
       if (dup) {
-        throw new Error("Este colorway ya tiene una etiqueta generada");
+        throw new Error(`La talla ${tallaInput} de este colorway ya tiene etiqueta generada`);
       }
       const rec = d as unknown as Record<string, number | null>;
       const sizes = SIZE_COLUMNS.map((s) => ({
@@ -322,7 +333,7 @@ export class OrderLabelService {
         ? Number(input.finSerializacion)
         : null;
 
-    // Unidades a generar, agrupadas por talla.
+    // Unidades a generar. Con colorway + talla, una sola entrada por la talla seleccionada.
     let sizeUnits: { label: string | null; qty: number }[];
     // Desglose de producción enviado desde el modal (corte real: +15% merma o saldos).
     const explicitSizes = (input.sizeBreakdown ?? [])
@@ -331,16 +342,27 @@ export class OrderLabelService {
         qty: Math.trunc(Number(s.qty) || 0),
       }))
       .filter((s) => s.qty > 0);
-    if (explicitSizes.length > 0) {
+    if (detail && tallaInput) {
+      // Cantidad: lo que mande el modal para esta talla (merma/saldos) o lo del colorway.
+      const breakdownQty = explicitSizes.find((s) => s.label === tallaInput)?.qty;
+      const detailQty = detail.sizes.find((s) => s.label === tallaInput)?.qty;
+      const totalOverride =
+        input.totalLabel != null && Number(input.totalLabel) > 0
+          ? Math.trunc(Number(input.totalLabel))
+          : null;
+      const qty = breakdownQty ?? totalOverride ?? detailQty ?? 0;
+      if (!qty || qty <= 0) {
+        throw new Error(`La talla ${tallaInput} no tiene cantidad para generar etiquetas`);
+      }
+      sizeUnits = [{ label: tallaInput, qty }];
+    } else if (explicitSizes.length > 0) {
       sizeUnits = explicitSizes;
     } else if (detail) {
       if (input.totalLabel != null && Number(input.totalLabel) > 0) {
-        // Total de producción plano (colorway sin desglose por talla).
         sizeUnits = [{ label: null, qty: Math.trunc(Number(input.totalLabel)) }];
       } else if (detail.sizes.length > 0) {
         sizeUnits = detail.sizes;
       } else if (detail.totalEstilo && detail.totalEstilo > 0) {
-        // Sin desglose por talla: lote único sin talla a partir del total.
         sizeUnits = [{ label: null, qty: detail.totalEstilo }];
       } else {
         throw new Error(
@@ -420,6 +442,7 @@ export class OrderLabelService {
           genderEstilo: input.genderEstilo ?? null,
           seasonEstilo: input.seasonEstilo ?? null,
           codGtin: gtin,
+          size: tallaInput ?? (sizeUnits.length === 1 ? sizeUnits[0].label : null),
           estampado: input.estampado ?? null,
           identifierType: input.identifierType ?? digital.typeDigitalIdentifier ?? null,
           identifierMaterial: input.identifierMaterial ?? null,

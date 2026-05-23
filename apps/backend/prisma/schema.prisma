@@ -928,6 +928,7 @@ model OdOrderLabelHead {
   genderEstilo              String?              @map("GENDER_ESTILO") @db.VarChar(45)
   seasonEstilo              String?              @map("SEASON_ESTILO") @db.VarChar(45)
   codGtin                   String?              @map("COD_GTIN") @db.VarChar(14)
+  size                      String?              @map("SIZE") @db.VarChar(50)
   estampado                 String?              @map("ESTAMPADO") @db.VarChar(100)
   identifierType            String?              @map("IDENTIFIER_TYPE") @db.VarChar(45)
   identifierMaterial        String?              @map("IDENTIFIER_MATERIAL") @db.VarChar(500)
@@ -951,6 +952,7 @@ model OdOrderLabelHead {
   orderDetail               OdOrderDetail?       @relation(fields: [idDlkOrderDetail], references: [idDlkOrderDetail], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_order_detail")
   details                   OdOrderLabelDetail[]
 
+  @@unique([idDlkOrderDetail, size], map: "uq_label_head_detail_size")
   @@index([idDlkOrderHead], map: "idx_label_head_order")
   @@index([idDlkDigitalIdentifier], map: "idx_label_head_digital_id")
   @@index([idDlkOrderDetail], map: "fk_label_head_order_detail")

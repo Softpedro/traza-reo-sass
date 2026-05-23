@@ -7,7 +7,51 @@ import { IdentificadorDigitalBar } from "../identificador-digital/identificador-
 import { EtiquetaHeadModal } from "./etiqueta-head-modal";
 import { EtiquetaDetalleModal } from "./etiqueta-detalle-modal";
 import { GenerarPdfModal } from "./generar-pdf-modal";
-import type { Colorway, LabelHead, OrderHeadInfo } from "./types";
+import { SIZE_FIELDS, type Colorway, type LabelHead, type OrderHeadInfo } from "./types";
+
+type TallaRow = {
+  colorway: Colorway;
+  label: LabelHead | null;
+  talla: string;
+  cantidad: number;
+  isFirstOfColorway: boolean;
+  colorwayRowSpan: number;
+};
+
+function buildTallaRows(colorways: Colorway[], labels: LabelHead[]): TallaRow[] {
+  const out: TallaRow[] = [];
+  for (const cw of colorways) {
+    const labelsByDetail = labels.filter((l) => l.idDlkOrderDetail === cw.idDlkOrderDetail);
+    const tallas = SIZE_FIELDS.map((s) => ({
+      talla: s.label,
+      cantidad: (cw[s.field] as number | null) ?? 0,
+    })).filter((t) => t.cantidad > 0);
+
+    if (tallas.length === 0) {
+      out.push({
+        colorway: cw,
+        label: labelsByDetail[0] ?? null,
+        talla: "—",
+        cantidad: cw.totalEstilo ?? 0,
+        isFirstOfColorway: true,
+        colorwayRowSpan: 1,
+      });
+      continue;
+    }
+    tallas.forEach((t, idx) => {
+      const labelOfTalla = labelsByDetail.find((l) => l.size === t.talla) ?? null;
+      out.push({
+        colorway: cw,
+        label: labelOfTalla,
+        talla: t.talla,
+        cantidad: t.cantidad,
+        isFirstOfColorway: idx === 0,
+        colorwayRowSpan: tallas.length,
+      });
+    });
+  }
+  return out;
+}
 
 const PASOS = [
   { step: 1, label: "Registro" },
@@ -63,7 +107,8 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
     mode: "create" | "edit";
     colorway: Colorway | null;
     labelHead: LabelHead | null;
-  }>({ open: false, mode: "create", colorway: null, labelHead: null });
+    talla: string | null;
+  }>({ open: false, mode: "create", colorway: null, labelHead: null, talla: null });
   const [detalle, setDetalle] = useState<{ open: boolean; labelHead: LabelHead | null }>({
     open: false,
     labelHead: null,
@@ -98,15 +143,9 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
     fetchAll();
   }, [fetchAll]);
 
-  /** Cada colorway con su cabecera de etiqueta (si ya fue creada). */
-  const rows = useMemo(
-    () =>
-      colorways.map((cw) => ({
-        colorway: cw,
-        label: labels.find((l) => l.idDlkOrderDetail === cw.idDlkOrderDetail) ?? null,
-      })),
-    [colorways, labels]
-  );
+  /** Una fila por (colorway × talla activa). Las celdas que se comparten entre tallas del
+   *  mismo colorway se renderizan solo en la primera fila con `rowSpan`. */
+  const rows = useMemo(() => buildTallaRows(colorways, labels), [colorways, labels]);
 
   if (loading) {
     return <p className="p-4 text-sm text-muted-foreground">Cargando…</p>;
@@ -162,6 +201,7 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
                 <th className="border px-2 py-1.5 font-semibold">Estilo</th>
                 <th className="border px-2 py-1.5 font-semibold">Color Way</th>
                 <th className="border px-2 py-1.5 font-semibold">Fondo de Tela</th>
+                <th className="border px-2 py-1.5 font-semibold">Talla</th>
                 <th className="border px-2 py-1.5 font-semibold">GTIN</th>
                 <th className="border px-2 py-1.5 font-semibold">Tipo</th>
                 <th className="border px-2 py-1.5 font-semibold">Total</th>
@@ -171,83 +211,102 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
               </tr>
             </thead>
             <tbody>
-              {rows.map(({ colorway: cw, label }) => (
-                <tr key={cw.idDlkOrderDetail} className="hover:bg-muted/40">
-                  <td className="border px-2 py-1.5">{order?.codOrderHead ?? "—"}</td>
-                  <td className="border px-2 py-1.5 font-medium text-primary">
-                    {cw.codEstilo ?? "—"}
-                  </td>
-                  <td className="border px-2 py-1.5">{cw.codOrderDetail ?? "—"}</td>
-                  <td className="border px-2 py-1.5">{cw.nomEstilo ?? "—"}</td>
-                  <td className="border px-2 py-1.5">
-                    {cw.colorAway ?? "—"}
-                    {cw.esSet === 1 && (
-                      <span className="ml-1 rounded bg-amber-100 px-1 text-[10px] font-semibold text-amber-800">
-                        SET ×{cw.numPiezas ?? 2}
-                      </span>
+              {rows.map((row) => {
+                const { colorway: cw, label, talla, cantidad, isFirstOfColorway, colorwayRowSpan } = row;
+                return (
+                  <tr key={`${cw.idDlkOrderDetail}-${talla}`} className="hover:bg-muted/40">
+                    {isFirstOfColorway && (
+                      <>
+                        <td className="border px-2 py-1.5 align-top" rowSpan={colorwayRowSpan}>
+                          {order?.codOrderHead ?? "—"}
+                        </td>
+                        <td
+                          className="border px-2 py-1.5 align-top font-medium text-primary"
+                          rowSpan={colorwayRowSpan}
+                        >
+                          {cw.codEstilo ?? "—"}
+                        </td>
+                        <td className="border px-2 py-1.5 align-top" rowSpan={colorwayRowSpan}>
+                          {cw.codOrderDetail ?? "—"}
+                        </td>
+                        <td className="border px-2 py-1.5 align-top" rowSpan={colorwayRowSpan}>
+                          {cw.nomEstilo ?? "—"}
+                        </td>
+                        <td className="border px-2 py-1.5 align-top" rowSpan={colorwayRowSpan}>
+                          {cw.colorAway ?? "—"}
+                          {cw.esSet === 1 && (
+                            <span className="ml-1 rounded bg-amber-100 px-1 text-[10px] font-semibold text-amber-800">
+                              SET ×{cw.numPiezas ?? 2}
+                            </span>
+                          )}
+                        </td>
+                        <td className="border px-2 py-1.5 align-top" rowSpan={colorwayRowSpan}>
+                          {cw.fondoTela ?? "—"}
+                        </td>
+                      </>
                     )}
-                  </td>
-                  <td className="border px-2 py-1.5">{cw.fondoTela ?? "—"}</td>
-                  <td className="border px-2 py-1.5">{label?.codGtin ?? "—"}</td>
-                  <td className="border px-2 py-1.5">{label?.identifierType ?? "—"}</td>
-                  <td className="border px-2 py-1.5">
-                    {label?.totalLabel ?? cw.totalEstilo ?? "—"}
-                  </td>
-                  <td className="border px-2 py-1.5">{label?.inicioSerializacion ?? "—"}</td>
-                  <td className="border px-2 py-1.5">{label?.finSerializacion ?? "—"}</td>
-                  <td className="border px-2 py-1.5">
-                    <div className="flex gap-3">
-                      {label ? (
-                        <>
+                    <td className="border px-2 py-1.5">{talla}</td>
+                    <td className="border px-2 py-1.5">{label?.codGtin ?? "—"}</td>
+                    <td className="border px-2 py-1.5">{label?.identifierType ?? "—"}</td>
+                    <td className="border px-2 py-1.5">{label?.totalLabel ?? cantidad ?? "—"}</td>
+                    <td className="border px-2 py-1.5">{label?.inicioSerializacion ?? "—"}</td>
+                    <td className="border px-2 py-1.5">{label?.finSerializacion ?? "—"}</td>
+                    <td className="border px-2 py-1.5">
+                      <div className="flex gap-3">
+                        {label ? (
+                          <>
+                            <button
+                              type="button"
+                              className="font-medium text-primary hover:underline"
+                              onClick={() =>
+                                setHeadModal({
+                                  open: true,
+                                  mode: "edit",
+                                  colorway: cw,
+                                  labelHead: label,
+                                  talla,
+                                })
+                              }
+                            >
+                              Editar
+                            </button>
+                            <button
+                              type="button"
+                              className="font-medium text-primary hover:underline"
+                              onClick={() => setDetalle({ open: true, labelHead: label })}
+                            >
+                              Ver
+                            </button>
+                            <button
+                              type="button"
+                              className="font-medium text-primary hover:underline"
+                              onClick={() => setPdfModal({ open: true, labelHead: label })}
+                            >
+                              Generar
+                            </button>
+                          </>
+                        ) : (
                           <button
                             type="button"
                             className="font-medium text-primary hover:underline"
                             onClick={() =>
                               setHeadModal({
                                 open: true,
-                                mode: "edit",
+                                mode: "create",
                                 colorway: cw,
-                                labelHead: label,
+                                labelHead: null,
+                                talla,
                               })
                             }
                           >
-                            Editar
+                            Crear
                           </button>
-                          <button
-                            type="button"
-                            className="font-medium text-primary hover:underline"
-                            onClick={() => setDetalle({ open: true, labelHead: label })}
-                          >
-                            Ver
-                          </button>
-                          <button
-                            type="button"
-                            className="font-medium text-primary hover:underline"
-                            onClick={() => setPdfModal({ open: true, labelHead: label })}
-                          >
-                            Generar
-                          </button>
-                        </>
-                      ) : (
-                        <button
-                          type="button"
-                          className="font-medium text-primary hover:underline"
-                          onClick={() =>
-                            setHeadModal({
-                              open: true,
-                              mode: "create",
-                              colorway: cw,
-                              labelHead: null,
-                            })
-                          }
-                        >
-                          Crear
-                        </button>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -269,6 +328,7 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
         order={order}
         colorway={headModal.colorway}
         labelHead={headModal.labelHead}
+        talla={headModal.talla}
         onSuccess={fetchAll}
       />
       <EtiquetaDetalleModal

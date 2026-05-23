@@ -62,6 +62,7 @@ export type OdOrderLabelHeadMinAggregateOutputType = {
   genderEstilo: string | null
   seasonEstilo: string | null
   codGtin: string | null
+  size: string | null
   estampado: string | null
   identifierType: string | null
   identifierMaterial: string | null
@@ -94,6 +95,7 @@ export type OdOrderLabelHeadMaxAggregateOutputType = {
   genderEstilo: string | null
   seasonEstilo: string | null
   codGtin: string | null
+  size: string | null
   estampado: string | null
   identifierType: string | null
   identifierMaterial: string | null
@@ -126,6 +128,7 @@ export type OdOrderLabelHeadCountAggregateOutputType = {
   genderEstilo: number
   seasonEstilo: number
   codGtin: number
+  size: number
   estampado: number
   identifierType: number
   identifierMaterial: number
@@ -184,6 +187,7 @@ export type OdOrderLabelHeadMinAggregateInputType = {
   genderEstilo?: true
   seasonEstilo?: true
   codGtin?: true
+  size?: true
   estampado?: true
   identifierType?: true
   identifierMaterial?: true
@@ -216,6 +220,7 @@ export type OdOrderLabelHeadMaxAggregateInputType = {
   genderEstilo?: true
   seasonEstilo?: true
   codGtin?: true
+  size?: true
   estampado?: true
   identifierType?: true
   identifierMaterial?: true
@@ -248,6 +253,7 @@ export type OdOrderLabelHeadCountAggregateInputType = {
   genderEstilo?: true
   seasonEstilo?: true
   codGtin?: true
+  size?: true
   estampado?: true
   identifierType?: true
   identifierMaterial?: true
@@ -367,6 +373,7 @@ export type OdOrderLabelHeadGroupByOutputType = {
   genderEstilo: string | null
   seasonEstilo: string | null
   codGtin: string | null
+  size: string | null
   estampado: string | null
   identifierType: string | null
   identifierMaterial: string | null
@@ -422,6 +429,7 @@ export type OdOrderLabelHeadWhereInput = {
   genderEstilo?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   seasonEstilo?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   codGtin?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
+  size?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   estampado?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   identifierType?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   identifierMaterial?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
@@ -458,6 +466,7 @@ export type OdOrderLabelHeadOrderByWithRelationInput = {
   genderEstilo?: Prisma.SortOrderInput | Prisma.SortOrder
   seasonEstilo?: Prisma.SortOrderInput | Prisma.SortOrder
   codGtin?: Prisma.SortOrderInput | Prisma.SortOrder
+  size?: Prisma.SortOrderInput | Prisma.SortOrder
   estampado?: Prisma.SortOrderInput | Prisma.SortOrder
   identifierType?: Prisma.SortOrderInput | Prisma.SortOrder
   identifierMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -485,6 +494,7 @@ export type OdOrderLabelHeadOrderByWithRelationInput = {
 
 export type OdOrderLabelHeadWhereUniqueInput = Prisma.AtLeast<{
   idDlkOrderLabelHead?: number
+  idDlkOrderDetail_size?: Prisma.OdOrderLabelHeadIdDlkOrderDetailSizeCompoundUniqueInput
   AND?: Prisma.OdOrderLabelHeadWhereInput | Prisma.OdOrderLabelHeadWhereInput[]
   OR?: Prisma.OdOrderLabelHeadWhereInput[]
   NOT?: Prisma.OdOrderLabelHeadWhereInput | Prisma.OdOrderLabelHeadWhereInput[]
@@ -498,6 +508,7 @@ export type OdOrderLabelHeadWhereUniqueInput = Prisma.AtLeast<{
   genderEstilo?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   seasonEstilo?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   codGtin?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
+  size?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   estampado?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   identifierType?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   identifierMaterial?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
@@ -520,7 +531,7 @@ export type OdOrderLabelHeadWhereUniqueInput = Prisma.AtLeast<{
   digitalIdentifier?: Prisma.XOR<Prisma.MdDigitalIdentifierScalarRelationFilter, Prisma.MdDigitalIdentifierWhereInput>
   orderDetail?: Prisma.XOR<Prisma.OdOrderDetailNullableScalarRelationFilter, Prisma.OdOrderDetailWhereInput> | null
   details?: Prisma.OdOrderLabelDetailListRelationFilter
-}, "idDlkOrderLabelHead">
+}, "idDlkOrderLabelHead" | "idDlkOrderDetail_size">
 
 export type OdOrderLabelHeadOrderByWithAggregationInput = {
   idDlkOrderLabelHead?: Prisma.SortOrder
@@ -534,6 +545,7 @@ export type OdOrderLabelHeadOrderByWithAggregationInput = {
   genderEstilo?: Prisma.SortOrderInput | Prisma.SortOrder
   seasonEstilo?: Prisma.SortOrderInput | Prisma.SortOrder
   codGtin?: Prisma.SortOrderInput | Prisma.SortOrder
+  size?: Prisma.SortOrderInput | Prisma.SortOrder
   estampado?: Prisma.SortOrderInput | Prisma.SortOrder
   identifierType?: Prisma.SortOrderInput | Prisma.SortOrder
   identifierMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -574,6 +586,7 @@ export type OdOrderLabelHeadScalarWhereWithAggregatesInput = {
   genderEstilo?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelHead"> | string | null
   seasonEstilo?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelHead"> | string | null
   codGtin?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelHead"> | string | null
+  size?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelHead"> | string | null
   estampado?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelHead"> | string | null
   identifierType?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelHead"> | string | null
   identifierMaterial?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelHead"> | string | null
@@ -602,6 +615,7 @@ export type OdOrderLabelHeadCreateInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -638,6 +652,7 @@ export type OdOrderLabelHeadUncheckedCreateInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -667,6 +682,7 @@ export type OdOrderLabelHeadUpdateInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -703,6 +719,7 @@ export type OdOrderLabelHeadUncheckedUpdateInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -736,6 +753,7 @@ export type OdOrderLabelHeadCreateManyInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -764,6 +782,7 @@ export type OdOrderLabelHeadUpdateManyMutationInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -796,6 +815,7 @@ export type OdOrderLabelHeadUncheckedUpdateManyInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -832,6 +852,11 @@ export type OdOrderLabelHeadOrderByRelevanceInput = {
   search: string
 }
 
+export type OdOrderLabelHeadIdDlkOrderDetailSizeCompoundUniqueInput = {
+  idDlkOrderDetail: number
+  size: string
+}
+
 export type OdOrderLabelHeadCountOrderByAggregateInput = {
   idDlkOrderLabelHead?: Prisma.SortOrder
   idDlkOrderHead?: Prisma.SortOrder
@@ -844,6 +869,7 @@ export type OdOrderLabelHeadCountOrderByAggregateInput = {
   genderEstilo?: Prisma.SortOrder
   seasonEstilo?: Prisma.SortOrder
   codGtin?: Prisma.SortOrder
+  size?: Prisma.SortOrder
   estampado?: Prisma.SortOrder
   identifierType?: Prisma.SortOrder
   identifierMaterial?: Prisma.SortOrder
@@ -888,6 +914,7 @@ export type OdOrderLabelHeadMaxOrderByAggregateInput = {
   genderEstilo?: Prisma.SortOrder
   seasonEstilo?: Prisma.SortOrder
   codGtin?: Prisma.SortOrder
+  size?: Prisma.SortOrder
   estampado?: Prisma.SortOrder
   identifierType?: Prisma.SortOrder
   identifierMaterial?: Prisma.SortOrder
@@ -920,6 +947,7 @@ export type OdOrderLabelHeadMinOrderByAggregateInput = {
   genderEstilo?: Prisma.SortOrder
   seasonEstilo?: Prisma.SortOrder
   codGtin?: Prisma.SortOrder
+  size?: Prisma.SortOrder
   estampado?: Prisma.SortOrder
   identifierType?: Prisma.SortOrder
   identifierMaterial?: Prisma.SortOrder
@@ -1105,6 +1133,7 @@ export type OdOrderLabelHeadCreateWithoutOrderHeadInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -1139,6 +1168,7 @@ export type OdOrderLabelHeadUncheckedCreateWithoutOrderHeadInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -1201,6 +1231,7 @@ export type OdOrderLabelHeadScalarWhereInput = {
   genderEstilo?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   seasonEstilo?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   codGtin?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
+  size?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   estampado?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   identifierType?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   identifierMaterial?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
@@ -1229,6 +1260,7 @@ export type OdOrderLabelHeadCreateWithoutOrderDetailInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -1263,6 +1295,7 @@ export type OdOrderLabelHeadUncheckedCreateWithoutOrderDetailInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -1318,6 +1351,7 @@ export type OdOrderLabelHeadCreateWithoutDigitalIdentifierInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -1352,6 +1386,7 @@ export type OdOrderLabelHeadUncheckedCreateWithoutDigitalIdentifierInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -1407,6 +1442,7 @@ export type OdOrderLabelHeadCreateWithoutDetailsInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -1442,6 +1478,7 @@ export type OdOrderLabelHeadUncheckedCreateWithoutDetailsInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -1486,6 +1523,7 @@ export type OdOrderLabelHeadUpdateWithoutDetailsInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1521,6 +1559,7 @@ export type OdOrderLabelHeadUncheckedUpdateWithoutDetailsInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1552,6 +1591,7 @@ export type OdOrderLabelHeadCreateManyOrderHeadInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -1580,6 +1620,7 @@ export type OdOrderLabelHeadUpdateWithoutOrderHeadInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1614,6 +1655,7 @@ export type OdOrderLabelHeadUncheckedUpdateWithoutOrderHeadInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1646,6 +1688,7 @@ export type OdOrderLabelHeadUncheckedUpdateManyWithoutOrderHeadInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1677,6 +1720,7 @@ export type OdOrderLabelHeadCreateManyOrderDetailInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -1705,6 +1749,7 @@ export type OdOrderLabelHeadUpdateWithoutOrderDetailInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1739,6 +1784,7 @@ export type OdOrderLabelHeadUncheckedUpdateWithoutOrderDetailInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1771,6 +1817,7 @@ export type OdOrderLabelHeadUncheckedUpdateManyWithoutOrderDetailInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1802,6 +1849,7 @@ export type OdOrderLabelHeadCreateManyDigitalIdentifierInput = {
   genderEstilo?: string | null
   seasonEstilo?: string | null
   codGtin?: string | null
+  size?: string | null
   estampado?: string | null
   identifierType?: string | null
   identifierMaterial?: string | null
@@ -1830,6 +1878,7 @@ export type OdOrderLabelHeadUpdateWithoutDigitalIdentifierInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1864,6 +1913,7 @@ export type OdOrderLabelHeadUncheckedUpdateWithoutDigitalIdentifierInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1896,6 +1946,7 @@ export type OdOrderLabelHeadUncheckedUpdateManyWithoutDigitalIdentifierInput = {
   genderEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codGtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estampado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   identifierMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1959,6 +2010,7 @@ export type OdOrderLabelHeadSelect<ExtArgs extends runtime.Types.Extensions.Inte
   genderEstilo?: boolean
   seasonEstilo?: boolean
   codGtin?: boolean
+  size?: boolean
   estampado?: boolean
   identifierType?: boolean
   identifierMaterial?: boolean
@@ -1998,6 +2050,7 @@ export type OdOrderLabelHeadSelectScalar = {
   genderEstilo?: boolean
   seasonEstilo?: boolean
   codGtin?: boolean
+  size?: boolean
   estampado?: boolean
   identifierType?: boolean
   identifierMaterial?: boolean
@@ -2018,7 +2071,7 @@ export type OdOrderLabelHeadSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type OdOrderLabelHeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkOrderLabelHead" | "idDlkOrderHead" | "idDlkDigitalIdentifier" | "idDlkOrderDetail" | "codOrderLabel" | "codEstilo" | "nameEstilo" | "descriptionEstilo" | "genderEstilo" | "seasonEstilo" | "codGtin" | "estampado" | "identifierType" | "identifierMaterial" | "identifierLocation" | "inicioSerializacion" | "finSerializacion" | "totalLabel" | "signOpenResponsible" | "fehSignOpen" | "signCloseResponsible" | "fehSignClose" | "digitalCertificateId" | "stateOrderLabelHead" | "codUsuarioCargaDl" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["odOrderLabelHead"]>
+export type OdOrderLabelHeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkOrderLabelHead" | "idDlkOrderHead" | "idDlkDigitalIdentifier" | "idDlkOrderDetail" | "codOrderLabel" | "codEstilo" | "nameEstilo" | "descriptionEstilo" | "genderEstilo" | "seasonEstilo" | "codGtin" | "size" | "estampado" | "identifierType" | "identifierMaterial" | "identifierLocation" | "inicioSerializacion" | "finSerializacion" | "totalLabel" | "signOpenResponsible" | "fehSignOpen" | "signCloseResponsible" | "fehSignClose" | "digitalCertificateId" | "stateOrderLabelHead" | "codUsuarioCargaDl" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["odOrderLabelHead"]>
 export type OdOrderLabelHeadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderHead?: boolean | Prisma.OdOrderHeadDefaultArgs<ExtArgs>
   digitalIdentifier?: boolean | Prisma.MdDigitalIdentifierDefaultArgs<ExtArgs>
@@ -2047,6 +2100,7 @@ export type $OdOrderLabelHeadPayload<ExtArgs extends runtime.Types.Extensions.In
     genderEstilo: string | null
     seasonEstilo: string | null
     codGtin: string | null
+    size: string | null
     estampado: string | null
     identifierType: string | null
     identifierMaterial: string | null
@@ -2449,6 +2503,7 @@ export interface OdOrderLabelHeadFieldRefs {
   readonly genderEstilo: Prisma.FieldRef<"OdOrderLabelHead", 'String'>
   readonly seasonEstilo: Prisma.FieldRef<"OdOrderLabelHead", 'String'>
   readonly codGtin: Prisma.FieldRef<"OdOrderLabelHead", 'String'>
+  readonly size: Prisma.FieldRef<"OdOrderLabelHead", 'String'>
   readonly estampado: Prisma.FieldRef<"OdOrderLabelHead", 'String'>
   readonly identifierType: Prisma.FieldRef<"OdOrderLabelHead", 'String'>
   readonly identifierMaterial: Prisma.FieldRef<"OdOrderLabelHead", 'String'>

@@ -34,17 +34,20 @@ export type MdUbigeo = Prisma.MdUbigeoModel
 export type MdBrand = Prisma.MdBrandModel
 /**
  * Model MdSupplier
- * * Tabla física MD_SUPPLIER (DDL negocio: sin empresa matriz).
+ * *
+ *  * Tabla física MD_SUPPLIER (DDL negocio: sin empresa matriz).
  */
 export type MdSupplier = Prisma.MdSupplierModel
 /**
  * Model MdMaterial
- * * Tabla física MD_MATERIAL. Overhaul 2026-04-19: composición, sostenibilidad, tintes y certificaciones.
+ * *
+ *  * Tabla física MD_MATERIAL. Overhaul 2026-04-19: composición, sostenibilidad, tintes y certificaciones.
  */
 export type MdMaterial = Prisma.MdMaterialModel
 /**
  * Model MdAvio
- * * Tabla física MD_AVIO. Overhaul 2026-04-19: tipo, color, peso/unidad, sostenibilidad, certificados.
+ * *
+ *  * Tabla física MD_AVIO. Overhaul 2026-04-19: tipo, color, peso/unidad, sostenibilidad, certificados.
  */
 export type MdAvio = Prisma.MdAvioModel
 /**
@@ -54,12 +57,14 @@ export type MdAvio = Prisma.MdAvioModel
 export type MdOrdenPedido = Prisma.MdOrdenPedidoModel
 /**
  * Model OdOrderHead
- * * Cabecera de orden (OD_ORDER_HEAD). PK ID_DLK_ORDER_HEAD.
+ * *
+ *  * Cabecera de orden (OD_ORDER_HEAD). PK ID_DLK_ORDER_HEAD.
  */
 export type OdOrderHead = Prisma.OdOrderHeadModel
 /**
  * Model OdOrderDetail
- * * Detalle de orden (OD_ORDER_DETAIL).
+ * *
+ *  * Detalle de orden (OD_ORDER_DETAIL).
  */
 export type OdOrderDetail = Prisma.OdOrderDetailModel
 /**
@@ -174,16 +179,92 @@ export type LgUserAccess = Prisma.LgUserAccessModel
 export type LgParentCompany = Prisma.LgParentCompanyModel
 /**
  * Model MdDigitalIdentifier
- * * Maestro de identificadores digitales (QR/NFC/RFID) usados en etiquetas.
+ * *
+ *  * Maestro de identificadores digitales (QR/NFC/RFID) usados en etiquetas.
  */
 export type MdDigitalIdentifier = Prisma.MdDigitalIdentifierModel
 /**
  * Model OdOrderLabelHead
- * * Cabecera de orden de etiquetas (DPP) — etapa 3 del flujo de orden de pedido.
+ * *
+ *  * Cabecera de orden de etiquetas (DPP) — etapa 3 del flujo de orden de pedido.
  */
 export type OdOrderLabelHead = Prisma.OdOrderLabelHeadModel
 /**
  * Model OdOrderLabelDetail
- * * Detalle (unidad serializada) de una orden de etiquetas.
+ * *
+ *  * Detalle (unidad serializada) de una orden de etiquetas.
  */
 export type OdOrderLabelDetail = Prisma.OdOrderLabelDetailModel
+/**
+ * Model OdOrderComponent
+ * *
+ *  * Componente de una orden (explota un OD_ORDER_DETAIL set en sus piezas: chaqueta, pantalón…).
+ */
+export type OdOrderComponent = Prisma.OdOrderComponentModel
+/**
+ * Model OdProcessRoute
+ * *
+ *  * Ruta por lote del componente (proceso).
+ */
+export type OdProcessRoute = Prisma.OdProcessRouteModel
+/**
+ * Model OdInputProcessRoute
+ * 
+ */
+export type OdInputProcessRoute = Prisma.OdInputProcessRouteModel
+/**
+ * Model OdProcedureProcessRoute
+ * 
+ */
+export type OdProcedureProcessRoute = Prisma.OdProcedureProcessRouteModel
+/**
+ * Model OdOutputProcessRoute
+ * 
+ */
+export type OdOutputProcessRoute = Prisma.OdOutputProcessRouteModel
+/**
+ * Model OdSubprocessRoute
+ * 
+ */
+export type OdSubprocessRoute = Prisma.OdSubprocessRouteModel
+/**
+ * Model OdInputSubprocessRoute
+ * 
+ */
+export type OdInputSubprocessRoute = Prisma.OdInputSubprocessRouteModel
+/**
+ * Model OdProcedureSubprocessRoute
+ * 
+ */
+export type OdProcedureSubprocessRoute = Prisma.OdProcedureSubprocessRouteModel
+/**
+ * Model OdOutputSubprocessRoute
+ * 
+ */
+export type OdOutputSubprocessRoute = Prisma.OdOutputSubprocessRouteModel
+/**
+ * Model OdActivitiesRoute
+ * 
+ */
+export type OdActivitiesRoute = Prisma.OdActivitiesRouteModel
+/**
+ * Model OdInputActivitiesRoute
+ * 
+ */
+export type OdInputActivitiesRoute = Prisma.OdInputActivitiesRouteModel
+/**
+ * Model OdProcedureActivitiesRoute
+ * 
+ */
+export type OdProcedureActivitiesRoute = Prisma.OdProcedureActivitiesRouteModel
+/**
+ * Model OdOutputActivitiesRoute
+ * 
+ */
+export type OdOutputActivitiesRoute = Prisma.OdOutputActivitiesRouteModel
+/**
+ * Model OdUnitTrace
+ * *
+ *  * Eventos por unidad serializada (SGTIN) desde el ensamble + etiqueta: IoT, acabados, QC, empaque.
+ */
+export type OdUnitTrace = Prisma.OdUnitTraceModel

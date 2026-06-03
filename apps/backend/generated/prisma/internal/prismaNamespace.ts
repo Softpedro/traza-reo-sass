@@ -417,7 +417,21 @@ export const ModelName = {
   LgParentCompany: 'LgParentCompany',
   MdDigitalIdentifier: 'MdDigitalIdentifier',
   OdOrderLabelHead: 'OdOrderLabelHead',
-  OdOrderLabelDetail: 'OdOrderLabelDetail'
+  OdOrderLabelDetail: 'OdOrderLabelDetail',
+  OdOrderComponent: 'OdOrderComponent',
+  OdProcessRoute: 'OdProcessRoute',
+  OdInputProcessRoute: 'OdInputProcessRoute',
+  OdProcedureProcessRoute: 'OdProcedureProcessRoute',
+  OdOutputProcessRoute: 'OdOutputProcessRoute',
+  OdSubprocessRoute: 'OdSubprocessRoute',
+  OdInputSubprocessRoute: 'OdInputSubprocessRoute',
+  OdProcedureSubprocessRoute: 'OdProcedureSubprocessRoute',
+  OdOutputSubprocessRoute: 'OdOutputSubprocessRoute',
+  OdActivitiesRoute: 'OdActivitiesRoute',
+  OdInputActivitiesRoute: 'OdInputActivitiesRoute',
+  OdProcedureActivitiesRoute: 'OdProcedureActivitiesRoute',
+  OdOutputActivitiesRoute: 'OdOutputActivitiesRoute',
+  OdUnitTrace: 'OdUnitTrace'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -433,7 +447,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail"
+    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2681,6 +2695,930 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    OdOrderComponent: {
+      payload: Prisma.$OdOrderComponentPayload<ExtArgs>
+      fields: Prisma.OdOrderComponentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdOrderComponentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderComponentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdOrderComponentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderComponentPayload>
+        }
+        findFirst: {
+          args: Prisma.OdOrderComponentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderComponentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdOrderComponentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderComponentPayload>
+        }
+        findMany: {
+          args: Prisma.OdOrderComponentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderComponentPayload>[]
+        }
+        create: {
+          args: Prisma.OdOrderComponentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderComponentPayload>
+        }
+        createMany: {
+          args: Prisma.OdOrderComponentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdOrderComponentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderComponentPayload>
+        }
+        update: {
+          args: Prisma.OdOrderComponentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderComponentPayload>
+        }
+        deleteMany: {
+          args: Prisma.OdOrderComponentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdOrderComponentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdOrderComponentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderComponentPayload>
+        }
+        aggregate: {
+          args: Prisma.OdOrderComponentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdOrderComponent>
+        }
+        groupBy: {
+          args: Prisma.OdOrderComponentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOrderComponentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdOrderComponentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOrderComponentCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdProcessRoute: {
+      payload: Prisma.$OdProcessRoutePayload<ExtArgs>
+      fields: Prisma.OdProcessRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdProcessRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcessRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdProcessRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcessRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.OdProcessRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcessRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdProcessRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcessRoutePayload>
+        }
+        findMany: {
+          args: Prisma.OdProcessRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcessRoutePayload>[]
+        }
+        create: {
+          args: Prisma.OdProcessRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcessRoutePayload>
+        }
+        createMany: {
+          args: Prisma.OdProcessRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdProcessRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcessRoutePayload>
+        }
+        update: {
+          args: Prisma.OdProcessRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcessRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdProcessRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdProcessRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdProcessRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcessRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.OdProcessRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdProcessRoute>
+        }
+        groupBy: {
+          args: Prisma.OdProcessRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdProcessRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdProcessRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdProcessRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdInputProcessRoute: {
+      payload: Prisma.$OdInputProcessRoutePayload<ExtArgs>
+      fields: Prisma.OdInputProcessRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdInputProcessRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputProcessRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdInputProcessRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputProcessRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.OdInputProcessRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputProcessRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdInputProcessRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputProcessRoutePayload>
+        }
+        findMany: {
+          args: Prisma.OdInputProcessRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputProcessRoutePayload>[]
+        }
+        create: {
+          args: Prisma.OdInputProcessRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputProcessRoutePayload>
+        }
+        createMany: {
+          args: Prisma.OdInputProcessRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdInputProcessRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputProcessRoutePayload>
+        }
+        update: {
+          args: Prisma.OdInputProcessRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputProcessRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdInputProcessRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdInputProcessRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdInputProcessRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputProcessRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.OdInputProcessRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdInputProcessRoute>
+        }
+        groupBy: {
+          args: Prisma.OdInputProcessRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdInputProcessRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdInputProcessRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdInputProcessRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdProcedureProcessRoute: {
+      payload: Prisma.$OdProcedureProcessRoutePayload<ExtArgs>
+      fields: Prisma.OdProcedureProcessRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdProcedureProcessRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureProcessRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdProcedureProcessRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureProcessRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.OdProcedureProcessRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureProcessRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdProcedureProcessRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureProcessRoutePayload>
+        }
+        findMany: {
+          args: Prisma.OdProcedureProcessRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureProcessRoutePayload>[]
+        }
+        create: {
+          args: Prisma.OdProcedureProcessRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureProcessRoutePayload>
+        }
+        createMany: {
+          args: Prisma.OdProcedureProcessRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdProcedureProcessRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureProcessRoutePayload>
+        }
+        update: {
+          args: Prisma.OdProcedureProcessRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureProcessRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdProcedureProcessRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdProcedureProcessRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdProcedureProcessRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureProcessRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.OdProcedureProcessRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdProcedureProcessRoute>
+        }
+        groupBy: {
+          args: Prisma.OdProcedureProcessRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdProcedureProcessRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdProcedureProcessRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdProcedureProcessRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdOutputProcessRoute: {
+      payload: Prisma.$OdOutputProcessRoutePayload<ExtArgs>
+      fields: Prisma.OdOutputProcessRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdOutputProcessRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputProcessRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdOutputProcessRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputProcessRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.OdOutputProcessRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputProcessRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdOutputProcessRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputProcessRoutePayload>
+        }
+        findMany: {
+          args: Prisma.OdOutputProcessRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputProcessRoutePayload>[]
+        }
+        create: {
+          args: Prisma.OdOutputProcessRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputProcessRoutePayload>
+        }
+        createMany: {
+          args: Prisma.OdOutputProcessRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdOutputProcessRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputProcessRoutePayload>
+        }
+        update: {
+          args: Prisma.OdOutputProcessRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputProcessRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdOutputProcessRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdOutputProcessRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdOutputProcessRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputProcessRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.OdOutputProcessRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdOutputProcessRoute>
+        }
+        groupBy: {
+          args: Prisma.OdOutputProcessRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOutputProcessRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdOutputProcessRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOutputProcessRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdSubprocessRoute: {
+      payload: Prisma.$OdSubprocessRoutePayload<ExtArgs>
+      fields: Prisma.OdSubprocessRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdSubprocessRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSubprocessRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdSubprocessRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSubprocessRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.OdSubprocessRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSubprocessRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdSubprocessRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSubprocessRoutePayload>
+        }
+        findMany: {
+          args: Prisma.OdSubprocessRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSubprocessRoutePayload>[]
+        }
+        create: {
+          args: Prisma.OdSubprocessRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSubprocessRoutePayload>
+        }
+        createMany: {
+          args: Prisma.OdSubprocessRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdSubprocessRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSubprocessRoutePayload>
+        }
+        update: {
+          args: Prisma.OdSubprocessRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSubprocessRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdSubprocessRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdSubprocessRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdSubprocessRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSubprocessRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.OdSubprocessRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdSubprocessRoute>
+        }
+        groupBy: {
+          args: Prisma.OdSubprocessRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdSubprocessRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdSubprocessRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdSubprocessRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdInputSubprocessRoute: {
+      payload: Prisma.$OdInputSubprocessRoutePayload<ExtArgs>
+      fields: Prisma.OdInputSubprocessRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdInputSubprocessRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputSubprocessRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdInputSubprocessRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputSubprocessRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.OdInputSubprocessRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputSubprocessRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdInputSubprocessRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputSubprocessRoutePayload>
+        }
+        findMany: {
+          args: Prisma.OdInputSubprocessRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputSubprocessRoutePayload>[]
+        }
+        create: {
+          args: Prisma.OdInputSubprocessRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputSubprocessRoutePayload>
+        }
+        createMany: {
+          args: Prisma.OdInputSubprocessRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdInputSubprocessRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputSubprocessRoutePayload>
+        }
+        update: {
+          args: Prisma.OdInputSubprocessRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputSubprocessRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdInputSubprocessRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdInputSubprocessRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdInputSubprocessRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputSubprocessRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.OdInputSubprocessRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdInputSubprocessRoute>
+        }
+        groupBy: {
+          args: Prisma.OdInputSubprocessRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdInputSubprocessRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdInputSubprocessRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdInputSubprocessRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdProcedureSubprocessRoute: {
+      payload: Prisma.$OdProcedureSubprocessRoutePayload<ExtArgs>
+      fields: Prisma.OdProcedureSubprocessRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdProcedureSubprocessRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureSubprocessRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdProcedureSubprocessRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureSubprocessRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.OdProcedureSubprocessRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureSubprocessRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdProcedureSubprocessRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureSubprocessRoutePayload>
+        }
+        findMany: {
+          args: Prisma.OdProcedureSubprocessRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureSubprocessRoutePayload>[]
+        }
+        create: {
+          args: Prisma.OdProcedureSubprocessRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureSubprocessRoutePayload>
+        }
+        createMany: {
+          args: Prisma.OdProcedureSubprocessRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdProcedureSubprocessRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureSubprocessRoutePayload>
+        }
+        update: {
+          args: Prisma.OdProcedureSubprocessRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureSubprocessRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdProcedureSubprocessRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdProcedureSubprocessRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdProcedureSubprocessRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureSubprocessRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.OdProcedureSubprocessRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdProcedureSubprocessRoute>
+        }
+        groupBy: {
+          args: Prisma.OdProcedureSubprocessRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdProcedureSubprocessRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdProcedureSubprocessRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdProcedureSubprocessRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdOutputSubprocessRoute: {
+      payload: Prisma.$OdOutputSubprocessRoutePayload<ExtArgs>
+      fields: Prisma.OdOutputSubprocessRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdOutputSubprocessRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputSubprocessRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdOutputSubprocessRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputSubprocessRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.OdOutputSubprocessRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputSubprocessRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdOutputSubprocessRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputSubprocessRoutePayload>
+        }
+        findMany: {
+          args: Prisma.OdOutputSubprocessRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputSubprocessRoutePayload>[]
+        }
+        create: {
+          args: Prisma.OdOutputSubprocessRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputSubprocessRoutePayload>
+        }
+        createMany: {
+          args: Prisma.OdOutputSubprocessRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdOutputSubprocessRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputSubprocessRoutePayload>
+        }
+        update: {
+          args: Prisma.OdOutputSubprocessRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputSubprocessRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdOutputSubprocessRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdOutputSubprocessRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdOutputSubprocessRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputSubprocessRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.OdOutputSubprocessRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdOutputSubprocessRoute>
+        }
+        groupBy: {
+          args: Prisma.OdOutputSubprocessRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOutputSubprocessRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdOutputSubprocessRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOutputSubprocessRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdActivitiesRoute: {
+      payload: Prisma.$OdActivitiesRoutePayload<ExtArgs>
+      fields: Prisma.OdActivitiesRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdActivitiesRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdActivitiesRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdActivitiesRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdActivitiesRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.OdActivitiesRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdActivitiesRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdActivitiesRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdActivitiesRoutePayload>
+        }
+        findMany: {
+          args: Prisma.OdActivitiesRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdActivitiesRoutePayload>[]
+        }
+        create: {
+          args: Prisma.OdActivitiesRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdActivitiesRoutePayload>
+        }
+        createMany: {
+          args: Prisma.OdActivitiesRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdActivitiesRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdActivitiesRoutePayload>
+        }
+        update: {
+          args: Prisma.OdActivitiesRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdActivitiesRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdActivitiesRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdActivitiesRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdActivitiesRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdActivitiesRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.OdActivitiesRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdActivitiesRoute>
+        }
+        groupBy: {
+          args: Prisma.OdActivitiesRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdActivitiesRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdActivitiesRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdActivitiesRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdInputActivitiesRoute: {
+      payload: Prisma.$OdInputActivitiesRoutePayload<ExtArgs>
+      fields: Prisma.OdInputActivitiesRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdInputActivitiesRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputActivitiesRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdInputActivitiesRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputActivitiesRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.OdInputActivitiesRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputActivitiesRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdInputActivitiesRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputActivitiesRoutePayload>
+        }
+        findMany: {
+          args: Prisma.OdInputActivitiesRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputActivitiesRoutePayload>[]
+        }
+        create: {
+          args: Prisma.OdInputActivitiesRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputActivitiesRoutePayload>
+        }
+        createMany: {
+          args: Prisma.OdInputActivitiesRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdInputActivitiesRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputActivitiesRoutePayload>
+        }
+        update: {
+          args: Prisma.OdInputActivitiesRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputActivitiesRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdInputActivitiesRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdInputActivitiesRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdInputActivitiesRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdInputActivitiesRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.OdInputActivitiesRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdInputActivitiesRoute>
+        }
+        groupBy: {
+          args: Prisma.OdInputActivitiesRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdInputActivitiesRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdInputActivitiesRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdInputActivitiesRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdProcedureActivitiesRoute: {
+      payload: Prisma.$OdProcedureActivitiesRoutePayload<ExtArgs>
+      fields: Prisma.OdProcedureActivitiesRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdProcedureActivitiesRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureActivitiesRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdProcedureActivitiesRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureActivitiesRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.OdProcedureActivitiesRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureActivitiesRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdProcedureActivitiesRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureActivitiesRoutePayload>
+        }
+        findMany: {
+          args: Prisma.OdProcedureActivitiesRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureActivitiesRoutePayload>[]
+        }
+        create: {
+          args: Prisma.OdProcedureActivitiesRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureActivitiesRoutePayload>
+        }
+        createMany: {
+          args: Prisma.OdProcedureActivitiesRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdProcedureActivitiesRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureActivitiesRoutePayload>
+        }
+        update: {
+          args: Prisma.OdProcedureActivitiesRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureActivitiesRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdProcedureActivitiesRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdProcedureActivitiesRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdProcedureActivitiesRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdProcedureActivitiesRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.OdProcedureActivitiesRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdProcedureActivitiesRoute>
+        }
+        groupBy: {
+          args: Prisma.OdProcedureActivitiesRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdProcedureActivitiesRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdProcedureActivitiesRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdProcedureActivitiesRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdOutputActivitiesRoute: {
+      payload: Prisma.$OdOutputActivitiesRoutePayload<ExtArgs>
+      fields: Prisma.OdOutputActivitiesRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdOutputActivitiesRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputActivitiesRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdOutputActivitiesRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputActivitiesRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.OdOutputActivitiesRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputActivitiesRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdOutputActivitiesRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputActivitiesRoutePayload>
+        }
+        findMany: {
+          args: Prisma.OdOutputActivitiesRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputActivitiesRoutePayload>[]
+        }
+        create: {
+          args: Prisma.OdOutputActivitiesRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputActivitiesRoutePayload>
+        }
+        createMany: {
+          args: Prisma.OdOutputActivitiesRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdOutputActivitiesRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputActivitiesRoutePayload>
+        }
+        update: {
+          args: Prisma.OdOutputActivitiesRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputActivitiesRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdOutputActivitiesRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdOutputActivitiesRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdOutputActivitiesRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOutputActivitiesRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.OdOutputActivitiesRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdOutputActivitiesRoute>
+        }
+        groupBy: {
+          args: Prisma.OdOutputActivitiesRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOutputActivitiesRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdOutputActivitiesRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOutputActivitiesRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdUnitTrace: {
+      payload: Prisma.$OdUnitTracePayload<ExtArgs>
+      fields: Prisma.OdUnitTraceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdUnitTraceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUnitTracePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdUnitTraceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUnitTracePayload>
+        }
+        findFirst: {
+          args: Prisma.OdUnitTraceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUnitTracePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdUnitTraceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUnitTracePayload>
+        }
+        findMany: {
+          args: Prisma.OdUnitTraceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUnitTracePayload>[]
+        }
+        create: {
+          args: Prisma.OdUnitTraceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUnitTracePayload>
+        }
+        createMany: {
+          args: Prisma.OdUnitTraceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdUnitTraceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUnitTracePayload>
+        }
+        update: {
+          args: Prisma.OdUnitTraceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUnitTracePayload>
+        }
+        deleteMany: {
+          args: Prisma.OdUnitTraceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdUnitTraceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdUnitTraceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUnitTracePayload>
+        }
+        aggregate: {
+          args: Prisma.OdUnitTraceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdUnitTrace>
+        }
+        groupBy: {
+          args: Prisma.OdUnitTraceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdUnitTraceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdUnitTraceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdUnitTraceCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3585,6 +4523,294 @@ export const OdOrderLabelDetailScalarFieldEnum = {
 export type OdOrderLabelDetailScalarFieldEnum = (typeof OdOrderLabelDetailScalarFieldEnum)[keyof typeof OdOrderLabelDetailScalarFieldEnum]
 
 
+export const OdOrderComponentScalarFieldEnum = {
+  idDlkOrderComponent: 'idDlkOrderComponent',
+  idDlkOrderHead: 'idDlkOrderHead',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  codComponent: 'codComponent',
+  nameComponent: 'nameComponent',
+  stateOrderComponent: 'stateOrderComponent',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOrderComponentScalarFieldEnum = (typeof OdOrderComponentScalarFieldEnum)[keyof typeof OdOrderComponentScalarFieldEnum]
+
+
+export const OdProcessRouteScalarFieldEnum = {
+  idDlkProcessRoute: 'idDlkProcessRoute',
+  idDlkOrderComponent: 'idDlkOrderComponent',
+  ordenPrecedenciaProcess: 'ordenPrecedenciaProcess',
+  codProcess: 'codProcess',
+  nameProcess: 'nameProcess',
+  criticalityProcess: 'criticalityProcess',
+  outsourcedProcess: 'outsourcedProcess',
+  estimatedTimeProcess: 'estimatedTimeProcess',
+  responsibleUnit: 'responsibleUnit',
+  responsibleProcess: 'responsibleProcess',
+  inputTimeProcessRoute: 'inputTimeProcessRoute',
+  outputTimeProcessRoute: 'outputTimeProcessRoute',
+  stateProcessRoute: 'stateProcessRoute',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdProcessRouteScalarFieldEnum = (typeof OdProcessRouteScalarFieldEnum)[keyof typeof OdProcessRouteScalarFieldEnum]
+
+
+export const OdInputProcessRouteScalarFieldEnum = {
+  idDlkInputProcessRoute: 'idDlkInputProcessRoute',
+  idDlkProcessRoute: 'idDlkProcessRoute',
+  codInputProcess: 'codInputProcess',
+  nameInputProcess: 'nameInputProcess',
+  supplierInputProcess: 'supplierInputProcess',
+  fileInputProcessRoute: 'fileInputProcessRoute',
+  observationInputProcess: 'observationInputProcess',
+  stateInputProcess: 'stateInputProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdInputProcessRouteScalarFieldEnum = (typeof OdInputProcessRouteScalarFieldEnum)[keyof typeof OdInputProcessRouteScalarFieldEnum]
+
+
+export const OdProcedureProcessRouteScalarFieldEnum = {
+  idDlkProcedureProcess: 'idDlkProcedureProcess',
+  idDlkProcessRoute: 'idDlkProcessRoute',
+  codProcedureProcess: 'codProcedureProcess',
+  nameProcedureProcess: 'nameProcedureProcess',
+  criticalityProcedureProcess: 'criticalityProcedureProcess',
+  timeProcedureProcessRoute: 'timeProcedureProcessRoute',
+  validationProcedureProcess: 'validationProcedureProcess',
+  fileProcedureProcess: 'fileProcedureProcess',
+  stateProcedureProcess: 'stateProcedureProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdProcedureProcessRouteScalarFieldEnum = (typeof OdProcedureProcessRouteScalarFieldEnum)[keyof typeof OdProcedureProcessRouteScalarFieldEnum]
+
+
+export const OdOutputProcessRouteScalarFieldEnum = {
+  idDlkOutputProcess: 'idDlkOutputProcess',
+  idDlkProcessRoute: 'idDlkProcessRoute',
+  codOutputProcess: 'codOutputProcess',
+  nameOutputProcess: 'nameOutputProcess',
+  typeOutputProcess: 'typeOutputProcess',
+  destinationOutputProcess: 'destinationOutputProcess',
+  unitQuantity: 'unitQuantity',
+  stateOutputProcess: 'stateOutputProcess',
+  fileOutputProcessRoute: 'fileOutputProcessRoute',
+  observationOutputProcess: 'observationOutputProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOutputProcessRouteScalarFieldEnum = (typeof OdOutputProcessRouteScalarFieldEnum)[keyof typeof OdOutputProcessRouteScalarFieldEnum]
+
+
+export const OdSubprocessRouteScalarFieldEnum = {
+  idDlkSubprocessRoute: 'idDlkSubprocessRoute',
+  idDlkProcessRoute: 'idDlkProcessRoute',
+  ordenPrecedenciaSubprocess: 'ordenPrecedenciaSubprocess',
+  codSubprocess: 'codSubprocess',
+  nameSubprocess: 'nameSubprocess',
+  criticalitySubprocess: 'criticalitySubprocess',
+  outsourcedSubprocess: 'outsourcedSubprocess',
+  estimatedTimeSubprocess: 'estimatedTimeSubprocess',
+  responsibleUnit: 'responsibleUnit',
+  responsibleRole: 'responsibleRole',
+  inputTimeSubprocessRoute: 'inputTimeSubprocessRoute',
+  outputTimeSubprocessRoute: 'outputTimeSubprocessRoute',
+  stateSubprocess: 'stateSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdSubprocessRouteScalarFieldEnum = (typeof OdSubprocessRouteScalarFieldEnum)[keyof typeof OdSubprocessRouteScalarFieldEnum]
+
+
+export const OdInputSubprocessRouteScalarFieldEnum = {
+  idDlkInputSubprocessRoute: 'idDlkInputSubprocessRoute',
+  idDlkSubprocessRoute: 'idDlkSubprocessRoute',
+  codInputSubprocess: 'codInputSubprocess',
+  nameInputSubprocess: 'nameInputSubprocess',
+  typeInputSubprocess: 'typeInputSubprocess',
+  supplierInputSubprocess: 'supplierInputSubprocess',
+  fileInputSubprocess: 'fileInputSubprocess',
+  observationInputSubprocess: 'observationInputSubprocess',
+  stateInputSubprocess: 'stateInputSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdInputSubprocessRouteScalarFieldEnum = (typeof OdInputSubprocessRouteScalarFieldEnum)[keyof typeof OdInputSubprocessRouteScalarFieldEnum]
+
+
+export const OdProcedureSubprocessRouteScalarFieldEnum = {
+  idDlkProcedureSubprocessRoute: 'idDlkProcedureSubprocessRoute',
+  idDlkSubprocessRoute: 'idDlkSubprocessRoute',
+  codProcedureSubprocess: 'codProcedureSubprocess',
+  nameProcedureSubprocess: 'nameProcedureSubprocess',
+  responsibleProcedureSubprocess: 'responsibleProcedureSubprocess',
+  estimatedTimeProcedureSubprocess: 'estimatedTimeProcedureSubprocess',
+  criticalityProcedureSubprocess: 'criticalityProcedureSubprocess',
+  validationMethodSubprocess: 'validationMethodSubprocess',
+  fileProcedureSubprocess: 'fileProcedureSubprocess',
+  stateProcedureSubprocess: 'stateProcedureSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdProcedureSubprocessRouteScalarFieldEnum = (typeof OdProcedureSubprocessRouteScalarFieldEnum)[keyof typeof OdProcedureSubprocessRouteScalarFieldEnum]
+
+
+export const OdOutputSubprocessRouteScalarFieldEnum = {
+  idDlkOutputSubprocessRoute: 'idDlkOutputSubprocessRoute',
+  idDlkSubprocessRoute: 'idDlkSubprocessRoute',
+  codOutputSubprocess: 'codOutputSubprocess',
+  nameOutputSubprocess: 'nameOutputSubprocess',
+  destinationOutputSubprocess: 'destinationOutputSubprocess',
+  unitQuantity: 'unitQuantity',
+  fileOutputSubprocessRoute: 'fileOutputSubprocessRoute',
+  observationOutputSubprocess: 'observationOutputSubprocess',
+  stateOutputSubprocess: 'stateOutputSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOutputSubprocessRouteScalarFieldEnum = (typeof OdOutputSubprocessRouteScalarFieldEnum)[keyof typeof OdOutputSubprocessRouteScalarFieldEnum]
+
+
+export const OdActivitiesRouteScalarFieldEnum = {
+  idDlkActivitiesRoute: 'idDlkActivitiesRoute',
+  idDlkSubprocessRoute: 'idDlkSubprocessRoute',
+  codActivities: 'codActivities',
+  nameActivities: 'nameActivities',
+  typeActivities: 'typeActivities',
+  orderActivities: 'orderActivities',
+  estimatedTimeActivities: 'estimatedTimeActivities',
+  responsibleName: 'responsibleName',
+  inputTimeActivitiesRoute: 'inputTimeActivitiesRoute',
+  outputTimeActivitiesRoute: 'outputTimeActivitiesRoute',
+  stateActivities: 'stateActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdActivitiesRouteScalarFieldEnum = (typeof OdActivitiesRouteScalarFieldEnum)[keyof typeof OdActivitiesRouteScalarFieldEnum]
+
+
+export const OdInputActivitiesRouteScalarFieldEnum = {
+  idDlkInputActivitiesRoute: 'idDlkInputActivitiesRoute',
+  idDlkActivitiesRoute: 'idDlkActivitiesRoute',
+  codInputActivities: 'codInputActivities',
+  nameInputActivities: 'nameInputActivities',
+  typeInputActivities: 'typeInputActivities',
+  criticalCheckActivities: 'criticalCheckActivities',
+  fileInputActivities: 'fileInputActivities',
+  observationInputActivities: 'observationInputActivities',
+  stateInputActivities: 'stateInputActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdInputActivitiesRouteScalarFieldEnum = (typeof OdInputActivitiesRouteScalarFieldEnum)[keyof typeof OdInputActivitiesRouteScalarFieldEnum]
+
+
+export const OdProcedureActivitiesRouteScalarFieldEnum = {
+  idDlkProcedureActivitiesRoute: 'idDlkProcedureActivitiesRoute',
+  idDlkActivitiesRoute: 'idDlkActivitiesRoute',
+  codProcedureActivities: 'codProcedureActivities',
+  nameProcedureActivities: 'nameProcedureActivities',
+  responsibleExecution: 'responsibleExecution',
+  estimatedTimeProcedure: 'estimatedTimeProcedure',
+  criticalPointActivities: 'criticalPointActivities',
+  fileProcedureActivities: 'fileProcedureActivities',
+  observationActivities: 'observationActivities',
+  stateProcedureActivities: 'stateProcedureActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdProcedureActivitiesRouteScalarFieldEnum = (typeof OdProcedureActivitiesRouteScalarFieldEnum)[keyof typeof OdProcedureActivitiesRouteScalarFieldEnum]
+
+
+export const OdOutputActivitiesRouteScalarFieldEnum = {
+  idDlkOutputActivities: 'idDlkOutputActivities',
+  idDlkActivitiesRoute: 'idDlkActivitiesRoute',
+  codOutputActivities: 'codOutputActivities',
+  nameOutputActivities: 'nameOutputActivities',
+  typeOutputActivities: 'typeOutputActivities',
+  nextDestinationActivities: 'nextDestinationActivities',
+  qualityStandardActivities: 'qualityStandardActivities',
+  fileOutputActivities: 'fileOutputActivities',
+  stateOutputActivities: 'stateOutputActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOutputActivitiesRouteScalarFieldEnum = (typeof OdOutputActivitiesRouteScalarFieldEnum)[keyof typeof OdOutputActivitiesRouteScalarFieldEnum]
+
+
+export const OdUnitTraceScalarFieldEnum = {
+  idDlkUnitTrace: 'idDlkUnitTrace',
+  idDlkOrderLabelDetail: 'idDlkOrderLabelDetail',
+  idItemUnicoIot: 'idItemUnicoIot',
+  idDlkActivitiesRoute: 'idDlkActivitiesRoute',
+  typeEvent: 'typeEvent',
+  eventTime: 'eventTime',
+  stateUnitTrace: 'stateUnitTrace',
+  observationUnitTrace: 'observationUnitTrace',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdUnitTraceScalarFieldEnum = (typeof OdUnitTraceScalarFieldEnum)[keyof typeof OdUnitTraceScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -4168,6 +5394,184 @@ export const OdOrderLabelDetailOrderByRelevanceFieldEnum = {
 export type OdOrderLabelDetailOrderByRelevanceFieldEnum = (typeof OdOrderLabelDetailOrderByRelevanceFieldEnum)[keyof typeof OdOrderLabelDetailOrderByRelevanceFieldEnum]
 
 
+export const OdOrderComponentOrderByRelevanceFieldEnum = {
+  codComponent: 'codComponent',
+  nameComponent: 'nameComponent',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOrderComponentOrderByRelevanceFieldEnum = (typeof OdOrderComponentOrderByRelevanceFieldEnum)[keyof typeof OdOrderComponentOrderByRelevanceFieldEnum]
+
+
+export const OdProcessRouteOrderByRelevanceFieldEnum = {
+  codProcess: 'codProcess',
+  nameProcess: 'nameProcess',
+  responsibleUnit: 'responsibleUnit',
+  responsibleProcess: 'responsibleProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdProcessRouteOrderByRelevanceFieldEnum = (typeof OdProcessRouteOrderByRelevanceFieldEnum)[keyof typeof OdProcessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdInputProcessRouteOrderByRelevanceFieldEnum = {
+  codInputProcess: 'codInputProcess',
+  nameInputProcess: 'nameInputProcess',
+  supplierInputProcess: 'supplierInputProcess',
+  fileInputProcessRoute: 'fileInputProcessRoute',
+  observationInputProcess: 'observationInputProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdInputProcessRouteOrderByRelevanceFieldEnum = (typeof OdInputProcessRouteOrderByRelevanceFieldEnum)[keyof typeof OdInputProcessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdProcedureProcessRouteOrderByRelevanceFieldEnum = {
+  codProcedureProcess: 'codProcedureProcess',
+  nameProcedureProcess: 'nameProcedureProcess',
+  validationProcedureProcess: 'validationProcedureProcess',
+  fileProcedureProcess: 'fileProcedureProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdProcedureProcessRouteOrderByRelevanceFieldEnum = (typeof OdProcedureProcessRouteOrderByRelevanceFieldEnum)[keyof typeof OdProcedureProcessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdOutputProcessRouteOrderByRelevanceFieldEnum = {
+  codOutputProcess: 'codOutputProcess',
+  nameOutputProcess: 'nameOutputProcess',
+  typeOutputProcess: 'typeOutputProcess',
+  destinationOutputProcess: 'destinationOutputProcess',
+  fileOutputProcessRoute: 'fileOutputProcessRoute',
+  observationOutputProcess: 'observationOutputProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOutputProcessRouteOrderByRelevanceFieldEnum = (typeof OdOutputProcessRouteOrderByRelevanceFieldEnum)[keyof typeof OdOutputProcessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdSubprocessRouteOrderByRelevanceFieldEnum = {
+  codSubprocess: 'codSubprocess',
+  nameSubprocess: 'nameSubprocess',
+  responsibleUnit: 'responsibleUnit',
+  responsibleRole: 'responsibleRole',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdSubprocessRouteOrderByRelevanceFieldEnum = (typeof OdSubprocessRouteOrderByRelevanceFieldEnum)[keyof typeof OdSubprocessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdInputSubprocessRouteOrderByRelevanceFieldEnum = {
+  codInputSubprocess: 'codInputSubprocess',
+  nameInputSubprocess: 'nameInputSubprocess',
+  typeInputSubprocess: 'typeInputSubprocess',
+  supplierInputSubprocess: 'supplierInputSubprocess',
+  fileInputSubprocess: 'fileInputSubprocess',
+  observationInputSubprocess: 'observationInputSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdInputSubprocessRouteOrderByRelevanceFieldEnum = (typeof OdInputSubprocessRouteOrderByRelevanceFieldEnum)[keyof typeof OdInputSubprocessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdProcedureSubprocessRouteOrderByRelevanceFieldEnum = {
+  codProcedureSubprocess: 'codProcedureSubprocess',
+  nameProcedureSubprocess: 'nameProcedureSubprocess',
+  responsibleProcedureSubprocess: 'responsibleProcedureSubprocess',
+  validationMethodSubprocess: 'validationMethodSubprocess',
+  fileProcedureSubprocess: 'fileProcedureSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdProcedureSubprocessRouteOrderByRelevanceFieldEnum = (typeof OdProcedureSubprocessRouteOrderByRelevanceFieldEnum)[keyof typeof OdProcedureSubprocessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdOutputSubprocessRouteOrderByRelevanceFieldEnum = {
+  codOutputSubprocess: 'codOutputSubprocess',
+  nameOutputSubprocess: 'nameOutputSubprocess',
+  destinationOutputSubprocess: 'destinationOutputSubprocess',
+  fileOutputSubprocessRoute: 'fileOutputSubprocessRoute',
+  observationOutputSubprocess: 'observationOutputSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOutputSubprocessRouteOrderByRelevanceFieldEnum = (typeof OdOutputSubprocessRouteOrderByRelevanceFieldEnum)[keyof typeof OdOutputSubprocessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdActivitiesRouteOrderByRelevanceFieldEnum = {
+  codActivities: 'codActivities',
+  nameActivities: 'nameActivities',
+  typeActivities: 'typeActivities',
+  responsibleName: 'responsibleName',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdActivitiesRouteOrderByRelevanceFieldEnum = (typeof OdActivitiesRouteOrderByRelevanceFieldEnum)[keyof typeof OdActivitiesRouteOrderByRelevanceFieldEnum]
+
+
+export const OdInputActivitiesRouteOrderByRelevanceFieldEnum = {
+  codInputActivities: 'codInputActivities',
+  nameInputActivities: 'nameInputActivities',
+  typeInputActivities: 'typeInputActivities',
+  criticalCheckActivities: 'criticalCheckActivities',
+  fileInputActivities: 'fileInputActivities',
+  observationInputActivities: 'observationInputActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdInputActivitiesRouteOrderByRelevanceFieldEnum = (typeof OdInputActivitiesRouteOrderByRelevanceFieldEnum)[keyof typeof OdInputActivitiesRouteOrderByRelevanceFieldEnum]
+
+
+export const OdProcedureActivitiesRouteOrderByRelevanceFieldEnum = {
+  codProcedureActivities: 'codProcedureActivities',
+  nameProcedureActivities: 'nameProcedureActivities',
+  responsibleExecution: 'responsibleExecution',
+  criticalPointActivities: 'criticalPointActivities',
+  fileProcedureActivities: 'fileProcedureActivities',
+  observationActivities: 'observationActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdProcedureActivitiesRouteOrderByRelevanceFieldEnum = (typeof OdProcedureActivitiesRouteOrderByRelevanceFieldEnum)[keyof typeof OdProcedureActivitiesRouteOrderByRelevanceFieldEnum]
+
+
+export const OdOutputActivitiesRouteOrderByRelevanceFieldEnum = {
+  codOutputActivities: 'codOutputActivities',
+  nameOutputActivities: 'nameOutputActivities',
+  typeOutputActivities: 'typeOutputActivities',
+  nextDestinationActivities: 'nextDestinationActivities',
+  qualityStandardActivities: 'qualityStandardActivities',
+  fileOutputActivities: 'fileOutputActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOutputActivitiesRouteOrderByRelevanceFieldEnum = (typeof OdOutputActivitiesRouteOrderByRelevanceFieldEnum)[keyof typeof OdOutputActivitiesRouteOrderByRelevanceFieldEnum]
+
+
+export const OdUnitTraceOrderByRelevanceFieldEnum = {
+  idItemUnicoIot: 'idItemUnicoIot',
+  typeEvent: 'typeEvent',
+  observationUnitTrace: 'observationUnitTrace',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdUnitTraceOrderByRelevanceFieldEnum = (typeof OdUnitTraceOrderByRelevanceFieldEnum)[keyof typeof OdUnitTraceOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -4227,6 +5631,13 @@ export type EnumDeviceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'AccessStatus'
  */
 export type EnumAccessStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AccessStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'Criticality'
+ */
+export type EnumCriticalityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Criticality'>
     
 
 
@@ -4380,6 +5791,20 @@ export type GlobalOmitConfig = {
   mdDigitalIdentifier?: Prisma.MdDigitalIdentifierOmit
   odOrderLabelHead?: Prisma.OdOrderLabelHeadOmit
   odOrderLabelDetail?: Prisma.OdOrderLabelDetailOmit
+  odOrderComponent?: Prisma.OdOrderComponentOmit
+  odProcessRoute?: Prisma.OdProcessRouteOmit
+  odInputProcessRoute?: Prisma.OdInputProcessRouteOmit
+  odProcedureProcessRoute?: Prisma.OdProcedureProcessRouteOmit
+  odOutputProcessRoute?: Prisma.OdOutputProcessRouteOmit
+  odSubprocessRoute?: Prisma.OdSubprocessRouteOmit
+  odInputSubprocessRoute?: Prisma.OdInputSubprocessRouteOmit
+  odProcedureSubprocessRoute?: Prisma.OdProcedureSubprocessRouteOmit
+  odOutputSubprocessRoute?: Prisma.OdOutputSubprocessRouteOmit
+  odActivitiesRoute?: Prisma.OdActivitiesRouteOmit
+  odInputActivitiesRoute?: Prisma.OdInputActivitiesRouteOmit
+  odProcedureActivitiesRoute?: Prisma.OdProcedureActivitiesRouteOmit
+  odOutputActivitiesRoute?: Prisma.OdOutputActivitiesRouteOmit
+  odUnitTrace?: Prisma.OdUnitTraceOmit
 }
 
 /* Types for Logging */

@@ -18,31 +18,18 @@ export const ORDER_HEAD_STATUS: Record<number, string> = {
   3: "3. Concluido",
 };
 
-/** Opciones del select de Estado en el modal de Actualizar etiqueta. */
-export const ETIQUETA_STATUS_OPTIONS: { value: number; label: string }[] = [
+/** Opciones del select de Ruta (estado) en el modal de Actualizar. */
+export const RUTA_STATUS_OPTIONS: { value: number; label: string }[] = [
   { value: 1, label: "1 - Sin Iniciar" },
   { value: 2, label: "2 - Iniciado" },
   { value: 3, label: "3 - Concluido" },
 ];
 
-export const SI_NO: { value: number; label: string }[] = [
-  { value: 0, label: "No" },
-  { value: 1, label: "Sí" },
-];
-
+/** Estado activo (FLG_STATUT_ACTIF): On / Off. */
 export const ACTIVO_OPTIONS: { value: number; label: string }[] = [
-  { value: 0, label: "Off" },
   { value: 1, label: "On" },
+  { value: 0, label: "Off" },
 ];
 
-/** Concluido en formulario: No → Iniciado (1), Sí → Concluido (2). */
-export function concluidoToStatus(concluido: number): number {
-  return concluido === 1 ? 2 : 1;
-}
-
-export function statusToConcluido(status: number | null | undefined): number {
-  return status === 2 ? 1 : 0;
-}
-
-/** Etapa fija del módulo Etiqueta. */
-export const STAGE_ETIQUETA = 3;
+/** Etapa fija del módulo Ruta. */
+export const STAGE_RUTA = 4;

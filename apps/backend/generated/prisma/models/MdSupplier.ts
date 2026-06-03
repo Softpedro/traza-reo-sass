@@ -14,7 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model MdSupplier
- * * Tabla física MD_SUPPLIER (DDL negocio: sin empresa matriz).
+ * *
+ *  * Tabla física MD_SUPPLIER (DDL negocio: sin empresa matriz).
  */
 export type MdSupplierModel = runtime.Types.Result.DefaultSelection<Prisma.$MdSupplierPayload>
 
@@ -1014,11 +1015,13 @@ export type $MdSupplierPayload<ExtArgs extends runtime.Types.Extensions.Internal
     nameSupplier: string
     rucSupplier: string
     /**
-     * * 1=Fibra, 2=Hilado, 3=Tela, 4=Químico, 5=Servicios, 6=Otro
+     * *
+     *    * 1=Fibra, 2=Hilado, 3=Tela, 4=Químico, 5=Servicios, 6=Otro
      */
     typeSupplier: number
     /**
-     * * Código ubigeo 6 caracteres (ej. 150101)
+     * *
+     *    * Código ubigeo 6 caracteres (ej. 150101)
      */
     ubigeoSupplier: string
     addressSupplier: string

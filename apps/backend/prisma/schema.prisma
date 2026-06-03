@@ -10,9 +10,13 @@ datasource db {
 model MdParentCompany {
   idDlkParentCompany          Int                      @id @default(autoincrement()) @map("ID_DLK_PARENT_COMPANY")
   codParentCompany            String                   @unique(map: "uk_cod_parent") @map("COD_PARENT_COMPANY") @db.VarChar(10)
-  /** Código REO SaaS (enlace con administración multi-tenant) */
+  /**
+   * Código REO SaaS (enlace con administración multi-tenant)
+   */
   idDlkAdmReo                 String?                  @map("ID_DLK_ADM_REO") @db.VarChar(10)
-  /** 1=Marca Propia, 2=Maquila, 3=Híbrido, 4=Comercializadora */
+  /**
+   * 1=Marca Propia, 2=Maquila, 3=Híbrido, 4=Comercializadora
+   */
   typeParentCompany           Int                      @default(1) @map("TYPE_PARENT_COMPANY") @db.TinyInt
   codGlnParentCompany         String                   @map("COD_GLN_PARENT_COMPANY") @db.VarChar(13)
   nameParentCompany           String                   @map("NAME_PARENT_COMPANY") @db.VarChar(100)
@@ -96,35 +100,43 @@ model MdBrand {
   @@map("MD_BRAND")
 }
 
-/** Tabla física MD_SUPPLIER (DDL negocio: sin empresa matriz). */
+/**
+ * Tabla física MD_SUPPLIER (DDL negocio: sin empresa matriz).
+ */
 model MdSupplier {
-  idDlkSupplier    Int         @id @default(autoincrement()) @map("ID_DLK_SUPPLIER")
-  codSupplier      String?     @map("COD_SUPPLIER") @db.VarChar(20)
-  nameSupplier     String      @map("NAME_SUPPLIER") @db.VarChar(200)
-  rucSupplier      String      @map("RUC_SUPPLIER") @db.VarChar(11)
-  /** 1=Fibra, 2=Hilado, 3=Tela, 4=Químico, 5=Servicios, 6=Otro */
-  typeSupplier     Int         @map("TYPE_SUPPLIER")
-  /** Código ubigeo 6 caracteres (ej. 150101) */
-  ubigeoSupplier   String      @map("UBIGEO_SUPPLIER") @db.VarChar(6)
-  addressSupplier  String      @map("ADDRESS_SUPPLIER") @db.VarChar(200)
-  gpsSupplier      String?     @map("GPS_SUPPLIER") @db.VarChar(100)
-  emailSupplier    String      @map("EMAIL_SUPPLIER") @db.VarChar(100)
-  cellularSupplier String      @map("CELLULAR_SUPPLIER") @db.VarChar(25)
-  webSupplier      String?     @map("WEB_SUPPLIER") @db.VarChar(100)
-  logoSupplier     Bytes?      @map("LOGO_SUPPLIER")
-  stateSupplier    Int         @map("STATE_SUPPLIER")
-  codUsuarioCargaDl String     @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
-  fehProcesoCargaDl DateTime   @default(now()) @map("FEH_PROCESO_CARGA_DL")
-  fehProcesoModifDl DateTime   @updatedAt @map("FEH_PROCESO_MODIF_DL")
-  desAccion        String      @map("DES_ACCION") @db.VarChar(20)
-  flgStatutActif   Int         @default(1) @map("FLG_STATUT_ACTIF")
-  materials        MdMaterial[]
-  avios            MdAvio[]
+  idDlkSupplier     Int          @id @default(autoincrement()) @map("ID_DLK_SUPPLIER")
+  codSupplier       String?      @map("COD_SUPPLIER") @db.VarChar(20)
+  nameSupplier      String       @map("NAME_SUPPLIER") @db.VarChar(200)
+  rucSupplier       String       @map("RUC_SUPPLIER") @db.VarChar(11)
+  /**
+   * 1=Fibra, 2=Hilado, 3=Tela, 4=Químico, 5=Servicios, 6=Otro
+   */
+  typeSupplier      Int          @map("TYPE_SUPPLIER")
+  /**
+   * Código ubigeo 6 caracteres (ej. 150101)
+   */
+  ubigeoSupplier    String       @map("UBIGEO_SUPPLIER") @db.VarChar(6)
+  addressSupplier   String       @map("ADDRESS_SUPPLIER") @db.VarChar(200)
+  gpsSupplier       String?      @map("GPS_SUPPLIER") @db.VarChar(100)
+  emailSupplier     String       @map("EMAIL_SUPPLIER") @db.VarChar(100)
+  cellularSupplier  String       @map("CELLULAR_SUPPLIER") @db.VarChar(25)
+  webSupplier       String?      @map("WEB_SUPPLIER") @db.VarChar(100)
+  logoSupplier      Bytes?       @map("LOGO_SUPPLIER")
+  stateSupplier     Int          @map("STATE_SUPPLIER")
+  codUsuarioCargaDl String       @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl DateTime     @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl DateTime     @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion         String       @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif    Int          @default(1) @map("FLG_STATUT_ACTIF")
+  materials         MdMaterial[]
+  avios             MdAvio[]
 
   @@map("MD_SUPPLIER")
 }
 
-/** Tabla física MD_MATERIAL. Overhaul 2026-04-19: composición, sostenibilidad, tintes y certificaciones. */
+/**
+ * Tabla física MD_MATERIAL. Overhaul 2026-04-19: composición, sostenibilidad, tintes y certificaciones.
+ */
 model MdMaterial {
   idDlkMaterial               Int        @id @default(autoincrement()) @map("ID_DLK_MATERIAL")
   idDlkSupplier               Int        @map("ID_DLK_SUPPLIER")
@@ -147,13 +159,21 @@ model MdMaterial {
   patterns                    String?    @map("PATTERNS") @db.VarChar(100)
   recoveryMaterials           String?    @map("RECOVERY_MATERIALS") @db.VarChar(100)
   certification               String?    @map("CERTIFICATION") @db.VarChar(1000)
-  /** Orden del Pedido para el cual se requiere el material */
+  /**
+   * Orden del Pedido para el cual se requiere el material
+   */
   orderForm                   String?    @map("ORDER_FORM") @db.VarChar(20)
-  /** Color del material */
+  /**
+   * Color del material
+   */
   colorMaterial               String?    @map("COLOR_MATERIAL") @db.VarChar(100)
-  /** Rollo del material, ejemplo: Codigo del rollo de tela */
+  /**
+   * Rollo del material, ejemplo: Codigo del rollo de tela
+   */
   rollMaterial                String?    @map("ROLL_MATERIAL") @db.VarChar(45)
-  /** Factura del material */
+  /**
+   * Factura del material
+   */
   invoiceMaterial             String?    @map("INVOICE_MATERIAL") @db.VarChar(45)
   stateMaterials              Int?       @default(1) @map("STATE_MATERIALS") @db.TinyInt
   codUsuarioCargaDl           String?    @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
@@ -167,7 +187,9 @@ model MdMaterial {
   @@map("MD_MATERIAL")
 }
 
-/** Tabla física MD_AVIO. Overhaul 2026-04-19: tipo, color, peso/unidad, sostenibilidad, certificados. */
+/**
+ * Tabla física MD_AVIO. Overhaul 2026-04-19: tipo, color, peso/unidad, sostenibilidad, certificados.
+ */
 model MdAvio {
   idDlkAvio                   Int        @id @default(autoincrement()) @map("ID_DLK_AVIO")
   idDlkSupplier               Int        @map("ID_DLK_SUPPLIER")
@@ -186,11 +208,17 @@ model MdAvio {
   recycledInputSource         String?    @map("RECYCLED_INPUT_SOURCE") @db.VarChar(500)
   certificates                String?    @map("CERTIFICATES") @db.VarChar(1000)
   observation                 String?    @map("OBSERVATION") @db.VarChar(500)
-  /** Orden de Pedido para el cual se requiere el avio */
+  /**
+   * Orden de Pedido para el cual se requiere el avio
+   */
   orderForm                   String?    @map("ORDER_FORM") @db.VarChar(20)
-  /** Medidas del Avio */
+  /**
+   * Medidas del Avio
+   */
   measuresAvio                String?    @map("MEASURES_AVIO") @db.VarChar(100)
-  /** Factura del Avio */
+  /**
+   * Factura del Avio
+   */
   invoiceAvio                 String?    @map("INVOICE_AVIO") @db.VarChar(45)
   stateAvios                  Int?       @default(1) @map("STATE_AVIOS") @db.TinyInt
   codUsuarioCargaDl           String?    @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
@@ -224,92 +252,110 @@ model MdOrdenPedido {
   @@map("MD_ORDEN_PEDIDO")
 }
 
-/** Cabecera de orden (OD_ORDER_HEAD). PK ID_DLK_ORDER_HEAD. */
+/**
+ * Cabecera de orden (OD_ORDER_HEAD). PK ID_DLK_ORDER_HEAD.
+ */
 model OdOrderHead {
-  idDlkOrderHead           Int             @id @default(autoincrement()) @map("ID_DLK_ORDER_HEAD")
-  idDlkBrand               Int             @map("ID_DLK_BRAND")
-  codOrderHead             String          @map("COD_ORDER_HEAD") @db.VarChar(100)
-  quantityOrderHead        Int             @map("QUANTITY_ORDER_HEAD")
-  /** Prisma conserva el nombre `fecEntry` por compatibilidad; columna DB renombrada a DATE_ENTRY. */
-  fecEntry                 DateTime        @map("DATE_ENTRY") @db.Date
-  /** Prisma conserva `dateProbableDespatch`; columna DB corregida a DATE_PROBABLE_DISPATCH. */
-  dateProbableDespatch     DateTime        @map("DATE_PROBABLE_DISPATCH") @db.Date
-  fileOrderHead            Bytes?          @map("FILE_ORDER_HEAD") @db.MediumBlob
-  stageOrderHead           Int?            @map("STAGE_ORDER_HEAD") @db.TinyInt
-  statusStageOrderHead     Int?            @map("STATUS_STAGE_ORDER_HEAD") @db.TinyInt
-  fileSuppliesUdp          Bytes?          @map("FILE_SUPPLIES_UDP") @db.MediumBlob
-  fehFileSuppliesUdp       DateTime?       @map("FEH_FILE_SUPPLIES_UDP") @db.Date
-  fileSuppliesProd         Bytes?          @map("FILE_SUPPLIES_PROD") @db.MediumBlob
-  fehFileSuppliesProd      DateTime?       @map("FEH_FILE_SUPPLIES_PROD") @db.Date
-  fileSuppliesFinal        Bytes?          @map("FILE_SUPPLIES_FINAL") @db.MediumBlob
-  fehFileSuppliesFinal     DateTime?       @map("FEH_FILE_SUPPLIES_FINAL") @db.Date
-  stateOrderHead           Int             @default(1) @map("STATE_ORDER_HEAD") @db.TinyInt
-  codUsuarioCargaDl        String          @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
-  fecProcesoCargaDl        DateTime        @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
-  fecProcesoModifDl        DateTime        @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
-  desAccion                String          @map("DES_ACCION") @db.VarChar(20)
-  flgStatutActif           Int             @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
-  brand                    MdBrand            @relation(fields: [idDlkBrand], references: [idDlkBrand], onDelete: Restrict, onUpdate: Cascade, map: "fk_order_head_brand")
-  details                  OdOrderDetail[]
-  labels                   OdOrderLabelHead[]
+  idDlkOrderHead       Int                @id @default(autoincrement()) @map("ID_DLK_ORDER_HEAD")
+  idDlkBrand           Int                @map("ID_DLK_BRAND")
+  codOrderHead         String             @map("COD_ORDER_HEAD") @db.VarChar(100)
+  quantityOrderHead    Int                @map("QUANTITY_ORDER_HEAD")
+  /**
+   * Prisma conserva el nombre `fecEntry` por compatibilidad; columna DB renombrada a DATE_ENTRY.
+   */
+  fecEntry             DateTime           @map("DATE_ENTRY") @db.Date
+  /**
+   * Prisma conserva `dateProbableDespatch`; columna DB corregida a DATE_PROBABLE_DISPATCH.
+   */
+  dateProbableDespatch DateTime           @map("DATE_PROBABLE_DISPATCH") @db.Date
+  fileOrderHead        Bytes?             @map("FILE_ORDER_HEAD") @db.MediumBlob
+  stageOrderHead       Int?               @map("STAGE_ORDER_HEAD") @db.TinyInt
+  statusStageOrderHead Int?               @map("STATUS_STAGE_ORDER_HEAD") @db.TinyInt
+  fileSuppliesUdp      Bytes?             @map("FILE_SUPPLIES_UDP") @db.MediumBlob
+  fehFileSuppliesUdp   DateTime?          @map("FEH_FILE_SUPPLIES_UDP") @db.Date
+  fileSuppliesProd     Bytes?             @map("FILE_SUPPLIES_PROD") @db.MediumBlob
+  fehFileSuppliesProd  DateTime?          @map("FEH_FILE_SUPPLIES_PROD") @db.Date
+  fileSuppliesFinal    Bytes?             @map("FILE_SUPPLIES_FINAL") @db.MediumBlob
+  fehFileSuppliesFinal DateTime?          @map("FEH_FILE_SUPPLIES_FINAL") @db.Date
+  stateOrderHead       Int                @default(1) @map("STATE_ORDER_HEAD") @db.TinyInt
+  codUsuarioCargaDl    String             @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl    DateTime           @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl    DateTime           @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion            String             @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif       Int                @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  brand                MdBrand            @relation(fields: [idDlkBrand], references: [idDlkBrand], onDelete: Restrict, onUpdate: Cascade, map: "fk_order_head_brand")
+  details              OdOrderDetail[]
+  labels               OdOrderLabelHead[]
+  components           OdOrderComponent[]
 
   @@index([idDlkBrand], map: "idx_order_head_brand")
   @@map("OD_ORDER_HEAD")
 }
 
-/** Detalle de orden (OD_ORDER_DETAIL). */
+/**
+ * Detalle de orden (OD_ORDER_DETAIL).
+ */
 model OdOrderDetail {
-  idDlkOrderDetail  Int         @id @default(autoincrement()) @map("ID_DLK_ORDER_DETAIL")
-  idDlkOrderHead    Int         @map("ID_DLK_ORDER_HEAD")
-  codOrderDetail    String?     @map("COD_ORDER_DETAIL") @db.VarChar(50)
-  codEstilo         String?     @map("COD_ESTILO") @db.VarChar(50)
-  /** Prisma conserva `nomEstilo`; columna DB renombrada a NAME_ESTILO. */
-  nomEstilo         String?     @map("NAME_ESTILO") @db.VarChar(200)
-  imgEstilo         Bytes?      @map("IMG_ESTILO") @db.MediumBlob
-  desTela           String?     @map("DES_TELA") @db.VarChar(200)
-  colorAway         String?     @map("COLOR_AWAY") @db.VarChar(50)
-  fondoTela         String?     @map("FONDO_TELA") @db.VarChar(50)
-  versionTela       String?     @map("VERSION_TELA") @db.VarChar(50)
-  orderSample       Int?        @default(0) @map("ORDER_SAMPLE") @db.TinyInt
-  size0_3           Int?        @default(0) @map("SIZE_0_3")
-  size3_6           Int?        @default(0) @map("SIZE_3_6")
-  size0_6           Int?        @default(0) @map("SIZE_0_6")
-  size6_12          Int?        @default(0) @map("SIZE_6_12")
-  size12_18         Int?        @default(0) @map("SIZE_12_18")
-  size2             Int?        @default(0) @map("SIZE_2")
-  size3             Int?        @default(0) @map("SIZE_3")
-  size4             Int?        @default(0) @map("SIZE_4")
-  size5             Int?        @default(0) @map("SIZE_5")
-  size6             Int?        @default(0) @map("SIZE_6")
-  size7             Int?        @default(0) @map("SIZE_7")
-  size8             Int?        @default(0) @map("SIZE_8")
-  size9             Int?        @default(0) @map("SIZE_9")
-  size10            Int?        @default(0) @map("SIZE_10")
-  size11            Int?        @default(0) @map("SIZE_11")
-  size12            Int?        @default(0) @map("SIZE_12")
-  size14            Int?        @default(0) @map("SIZE_14")
-  size16            Int?        @default(0) @map("SIZE_16")
-  sizeXs            Int?        @default(0) @map("SIZE_XS")
-  sizeS             Int?        @default(0) @map("SIZE_S")
-  sizeM             Int?        @default(0) @map("SIZE_M")
-  sizeL             Int?        @default(0) @map("SIZE_L")
-  sizeXl            Int?        @default(0) @map("SIZE_XL")
-  sizeXxl           Int?        @default(0) @map("SIZE_XXL")
-  /** Prisma conserva `totalEstilo`; columna DB renombrada a TOTAL_ORDER_PRODUCTION. */
-  totalEstilo       Int?        @map("TOTAL_ORDER_PRODUCTION")
-  /** 1 = la orden de producción es un set (varias piezas por unidad). */
-  esSet             Int         @default(0) @map("ES_SET") @db.TinyInt
-  /** Piezas por unidad (2 = pijama pantalón + camisa). */
-  numPiezas         Int         @default(1) @map("NUM_PIEZAS")
-  supplyFile        Bytes?      @map("SUPPLY_FILE") @db.MediumBlob
-  stateOrderDetail  Int?        @default(1) @map("STATE_ORDER_DETAIL") @db.TinyInt
-  codUsuarioCargaDl String?     @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
-  fecProcesoCargaDl DateTime?   @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
-  fecProcesoModifDl DateTime?   @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
-  desAccion         String?     @map("DES_ACCION") @db.VarChar(20)
-  flgStatutActif    Int?        @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
-  orderHead         OdOrderHead @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: Cascade, onUpdate: Cascade, map: "fk_detail_order_head")
+  idDlkOrderDetail  Int                @id @default(autoincrement()) @map("ID_DLK_ORDER_DETAIL")
+  idDlkOrderHead    Int                @map("ID_DLK_ORDER_HEAD")
+  codOrderDetail    String?            @map("COD_ORDER_DETAIL") @db.VarChar(50)
+  codEstilo         String?            @map("COD_ESTILO") @db.VarChar(50)
+  /**
+   * Prisma conserva `nomEstilo`; columna DB renombrada a NAME_ESTILO.
+   */
+  nomEstilo         String?            @map("NAME_ESTILO") @db.VarChar(200)
+  imgEstilo         Bytes?             @map("IMG_ESTILO") @db.MediumBlob
+  desTela           String?            @map("DES_TELA") @db.VarChar(200)
+  colorAway         String?            @map("COLOR_AWAY") @db.VarChar(50)
+  fondoTela         String?            @map("FONDO_TELA") @db.VarChar(50)
+  versionTela       String?            @map("VERSION_TELA") @db.VarChar(50)
+  orderSample       Int?               @default(0) @map("ORDER_SAMPLE") @db.TinyInt
+  size0_3           Int?               @default(0) @map("SIZE_0_3")
+  size3_6           Int?               @default(0) @map("SIZE_3_6")
+  size0_6           Int?               @default(0) @map("SIZE_0_6")
+  size6_12          Int?               @default(0) @map("SIZE_6_12")
+  size12_18         Int?               @default(0) @map("SIZE_12_18")
+  size2             Int?               @default(0) @map("SIZE_2")
+  size3             Int?               @default(0) @map("SIZE_3")
+  size4             Int?               @default(0) @map("SIZE_4")
+  size5             Int?               @default(0) @map("SIZE_5")
+  size6             Int?               @default(0) @map("SIZE_6")
+  size7             Int?               @default(0) @map("SIZE_7")
+  size8             Int?               @default(0) @map("SIZE_8")
+  size9             Int?               @default(0) @map("SIZE_9")
+  size10            Int?               @default(0) @map("SIZE_10")
+  size11            Int?               @default(0) @map("SIZE_11")
+  size12            Int?               @default(0) @map("SIZE_12")
+  size14            Int?               @default(0) @map("SIZE_14")
+  size16            Int?               @default(0) @map("SIZE_16")
+  sizeXs            Int?               @default(0) @map("SIZE_XS")
+  sizeS             Int?               @default(0) @map("SIZE_S")
+  sizeM             Int?               @default(0) @map("SIZE_M")
+  sizeL             Int?               @default(0) @map("SIZE_L")
+  sizeXl            Int?               @default(0) @map("SIZE_XL")
+  sizeXxl           Int?               @default(0) @map("SIZE_XXL")
+  /**
+   * Prisma conserva `totalEstilo`; columna DB renombrada a TOTAL_ORDER_PRODUCTION.
+   */
+  totalEstilo       Int?               @map("TOTAL_ORDER_PRODUCTION")
+  /**
+   * 1 = la orden de producción es un set (varias piezas por unidad).
+   */
+  esSet             Int                @default(0) @map("ES_SET") @db.TinyInt
+  /**
+   * Piezas por unidad (2 = pijama pantalón + camisa).
+   */
+  numPiezas         Int                @default(1) @map("NUM_PIEZAS")
+  supplyFile        Bytes?             @map("SUPPLY_FILE") @db.MediumBlob
+  stateOrderDetail  Int?               @default(1) @map("STATE_ORDER_DETAIL") @db.TinyInt
+  codUsuarioCargaDl String?            @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl DateTime?          @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl DateTime?          @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion         String?            @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif    Int?               @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  orderHead         OdOrderHead        @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: Cascade, onUpdate: Cascade, map: "fk_detail_order_head")
   labelHeads        OdOrderLabelHead[]
+  components        OdOrderComponent[]
 
   @@index([idDlkOrderHead], map: "idx_order_detail_head")
   @@map("OD_ORDER_DETAIL")
@@ -772,40 +818,40 @@ model MdSubbrand {
 }
 
 model MdUserReo {
-  idDlkUserReo         Int             @id @default(autoincrement()) @map("ID_DLK_USER_REO")
-  codUserReo           String          @unique(map: "UK_COD_USER_REO") @map("COD_USER_REO") @db.VarChar(20)
-  idDlkParentCompany   Int             @map("ID_DLK_PARENT_COMPANY")
-  codParentCompany     String          @map("COD_PARENT_COMPANY") @db.VarChar(10)
-  documentType         Int             @map("DOCUMENT_TYPE")
-  documentNumber       String          @map("DOCUMENT_NUMBER") @db.VarChar(15)
-  nameUser             String          @map("NAME_USER") @db.VarChar(100)
-  paternalLastNameUser String          @map("PATERNAL_LAST_NAME_USER") @db.VarChar(100)
-  maternalLastNameUser String          @map("MATERNAL_LAST_NAME_USER") @db.VarChar(100)
-  sexUser              String          @map("SEX_USER") @db.VarChar(1)
-  positionUser         Int             @map("POSITION_USER")
-  rolUser              Int             @map("ROL_USER")
-  emailUser            String          @map("EMAIL_USER") @db.VarChar(100)
-  cellularUser         String          @map("CELLULAR_USER") @db.VarChar(20)
-  userLogin            String          @unique(map: "USER_LOGIN") @map("USER_LOGIN") @db.VarChar(20)
-  password             String          @map("PASSWORD") @db.VarChar(255)
-  photograph           Bytes?          @map("PHOTOGRAPH")
-  failedAttempts       Int?            @default(0) @map("FAILED_ATTEMPTS")
-  isLocked             Int?            @default(0) @map("IS_LOCKED")
-  lockedUntil          DateTime?       @map("LOCKED_UNTIL")
-  lastLoginDate        DateTime?       @map("LAST_LOGIN_DATE")
-  lastLoginIp          String?         @map("LAST_LOGIN_IP") @db.VarChar(45)
-  passwordExpiresAt    DateTime?       @map("PASSWORD_EXPIRES_AT")
-  twoFactorSecret      String?         @map("TWO_FACTOR_SECRET") @db.VarChar(255)
-  twoFactorEnabled     Int             @default(0) @map("TWO_FACTOR_ENABLED")
-  stateUser            Int             @default(1) @map("STATE_USER")
-  codUsuarioCargaDl    String          @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
-  fehProcesoCargaDl    DateTime        @default(now()) @map("FEH_PROCESO_CARGA_DL")
-  fehProcesoModifDl    DateTime        @updatedAt @map("FEH_PROCESO_MODIF_DL")
-  desAccion            String          @map("DES_ACCION") @db.VarChar(20)
-  flgStatutActif       Int             @default(1) @map("FLG_STATUT_ACTIF")
+  idDlkUserReo         Int                @id @default(autoincrement()) @map("ID_DLK_USER_REO")
+  codUserReo           String             @unique(map: "UK_COD_USER_REO") @map("COD_USER_REO") @db.VarChar(20)
+  idDlkParentCompany   Int                @map("ID_DLK_PARENT_COMPANY")
+  codParentCompany     String             @map("COD_PARENT_COMPANY") @db.VarChar(10)
+  documentType         Int                @map("DOCUMENT_TYPE")
+  documentNumber       String             @map("DOCUMENT_NUMBER") @db.VarChar(15)
+  nameUser             String             @map("NAME_USER") @db.VarChar(100)
+  paternalLastNameUser String             @map("PATERNAL_LAST_NAME_USER") @db.VarChar(100)
+  maternalLastNameUser String             @map("MATERNAL_LAST_NAME_USER") @db.VarChar(100)
+  sexUser              String             @map("SEX_USER") @db.VarChar(1)
+  positionUser         Int                @map("POSITION_USER")
+  rolUser              Int                @map("ROL_USER")
+  emailUser            String             @map("EMAIL_USER") @db.VarChar(100)
+  cellularUser         String             @map("CELLULAR_USER") @db.VarChar(20)
+  userLogin            String             @unique(map: "USER_LOGIN") @map("USER_LOGIN") @db.VarChar(20)
+  password             String             @map("PASSWORD") @db.VarChar(255)
+  photograph           Bytes?             @map("PHOTOGRAPH")
+  failedAttempts       Int?               @default(0) @map("FAILED_ATTEMPTS")
+  isLocked             Int?               @default(0) @map("IS_LOCKED")
+  lockedUntil          DateTime?          @map("LOCKED_UNTIL")
+  lastLoginDate        DateTime?          @map("LAST_LOGIN_DATE")
+  lastLoginIp          String?            @map("LAST_LOGIN_IP") @db.VarChar(45)
+  passwordExpiresAt    DateTime?          @map("PASSWORD_EXPIRES_AT")
+  twoFactorSecret      String?            @map("TWO_FACTOR_SECRET") @db.VarChar(255)
+  twoFactorEnabled     Int                @default(0) @map("TWO_FACTOR_ENABLED")
+  stateUser            Int                @default(1) @map("STATE_USER")
+  codUsuarioCargaDl    String             @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl    DateTime           @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl    DateTime           @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion            String             @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif       Int                @default(1) @map("FLG_STATUT_ACTIF")
   accessLogs           LgUserAccess[]
   backupCodes          MdUserBackupCode[]
-  parentCompany        MdParentCompany @relation(fields: [idDlkParentCompany], references: [idDlkParentCompany])
+  parentCompany        MdParentCompany    @relation(fields: [idDlkParentCompany], references: [idDlkParentCompany])
 
   @@index([idDlkParentCompany], map: "FK_USER_REO_PARENT_COMPANY")
   @@map("MD_USER_REO")
@@ -892,65 +938,69 @@ model LgParentCompany {
   @@map("LG_PARENT_COMPANY")
 }
 
-/** Maestro de identificadores digitales (QR/NFC/RFID) usados en etiquetas. */
+/**
+ * Maestro de identificadores digitales (QR/NFC/RFID) usados en etiquetas.
+ */
 model MdDigitalIdentifier {
-  idDlkDigitalIdentifier        Int                @id @default(autoincrement()) @map("ID_DLK_DIGITAL_IDENTIFIER")
-  codDigitalIdentifier          String             @unique(map: "idx_cod_digital_unique") @map("COD_DIGITAL_IDENTIFIER") @db.VarChar(255)
-  typeDigitalIdentifier         String?            @map("TYPE_DIGITAL_IDENTIFIER") @db.VarChar(100)
-  materialDigitalIdentifier     String?            @map("MATERIAL_DIGITAL_IDENTIFIER") @db.VarChar(150)
-  locationDigitalIdentifier     String?            @map("LOCATION_DIGITAL_IDENTIFIER") @db.VarChar(255)
-  standardIsoDigitalIdentifier  String?            @map("STANDARD_ISO_DIGITAL_IDENTIFIER") @db.VarChar(100)
-  supplierDigitalIdentifier     String?            @map("SUPPLIER_DIGITAL_IDENTIFIER") @db.VarChar(150)
-  modelDigitalIdentifier        String?            @map("MODEL_DIGITAL_IDENTIFIER") @db.VarChar(150)
-  specificationDigitalIdentifier Bytes?            @map("SPECIFICATION_DIGITAL_IDENTIFIER") @db.MediumBlob
-  observationDigitalIdentifier  String?            @map("OBSERVATION_DIGITAL_IDENTIFIER") @db.Text
-  stateDigitalIdentifier        Int?               @default(1) @map("STATE_DIGITAL_IDENTIFIER") @db.TinyInt
-  codUsuarioCargaDl             String?            @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
-  fecProcesoCargaDl             DateTime?          @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(0)
-  fecProcesoModifDl             DateTime?          @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(0)
-  desAccion                     String?            @map("DES_ACCION") @db.VarChar(20)
-  flgStatutActif                Int?               @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
-  labelHeads                    OdOrderLabelHead[]
+  idDlkDigitalIdentifier         Int                @id @default(autoincrement()) @map("ID_DLK_DIGITAL_IDENTIFIER")
+  codDigitalIdentifier           String             @unique(map: "idx_cod_digital_unique") @map("COD_DIGITAL_IDENTIFIER") @db.VarChar(255)
+  typeDigitalIdentifier          String?            @map("TYPE_DIGITAL_IDENTIFIER") @db.VarChar(100)
+  materialDigitalIdentifier      String?            @map("MATERIAL_DIGITAL_IDENTIFIER") @db.VarChar(150)
+  locationDigitalIdentifier      String?            @map("LOCATION_DIGITAL_IDENTIFIER") @db.VarChar(255)
+  standardIsoDigitalIdentifier   String?            @map("STANDARD_ISO_DIGITAL_IDENTIFIER") @db.VarChar(100)
+  supplierDigitalIdentifier      String?            @map("SUPPLIER_DIGITAL_IDENTIFIER") @db.VarChar(150)
+  modelDigitalIdentifier         String?            @map("MODEL_DIGITAL_IDENTIFIER") @db.VarChar(150)
+  specificationDigitalIdentifier Bytes?             @map("SPECIFICATION_DIGITAL_IDENTIFIER") @db.MediumBlob
+  observationDigitalIdentifier   String?            @map("OBSERVATION_DIGITAL_IDENTIFIER") @db.Text
+  stateDigitalIdentifier         Int?               @default(1) @map("STATE_DIGITAL_IDENTIFIER") @db.TinyInt
+  codUsuarioCargaDl              String?            @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl              DateTime?          @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(0)
+  fecProcesoModifDl              DateTime?          @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(0)
+  desAccion                      String?            @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif                 Int?               @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  labelHeads                     OdOrderLabelHead[]
 
   @@map("MD_DIGITAL_IDENTIFIER")
 }
 
-/** Cabecera de orden de etiquetas (DPP) — etapa 3 del flujo de orden de pedido. */
+/**
+ * Cabecera de orden de etiquetas (DPP) — etapa 3 del flujo de orden de pedido.
+ */
 model OdOrderLabelHead {
-  idDlkOrderLabelHead       Int                  @id @default(autoincrement()) @map("ID_DLK_ORDER_LABEL_HEAD")
-  idDlkOrderHead            Int                  @map("ID_DLK_ORDER_HEAD")
-  idDlkDigitalIdentifier    Int                  @map("ID_DLK_DIGITAL_IDENTIFIER")
-  idDlkOrderDetail          Int?                 @map("ID_DLK_ORDER_DETAIL")
-  codOrderLabel             String?              @map("COD_ORDER_LABEL") @db.VarChar(20)
-  codEstilo                 String?              @map("COD_ESTILO") @db.VarChar(50)
-  nameEstilo                String?              @map("NAME_ESTILO") @db.VarChar(200)
-  descriptionEstilo         String?              @map("DESCRIPTION_ESTILO") @db.Text
-  genderEstilo              String?              @map("GENDER_ESTILO") @db.VarChar(45)
-  seasonEstilo              String?              @map("SEASON_ESTILO") @db.VarChar(45)
-  codGtin                   String?              @map("COD_GTIN") @db.VarChar(14)
-  size                      String?              @map("SIZE") @db.VarChar(50)
-  estampado                 String?              @map("ESTAMPADO") @db.VarChar(100)
-  identifierType            String?              @map("IDENTIFIER_TYPE") @db.VarChar(45)
-  identifierMaterial        String?              @map("IDENTIFIER_MATERIAL") @db.VarChar(500)
-  identifierLocation        String?              @map("IDENTIFIER_LOCATION") @db.VarChar(200)
-  inicioSerializacion       Int?                 @map("INICIO_SERIALIZACION")
-  finSerializacion          Int?                 @map("FIN_SERIALIZACION")
-  totalLabel                Int?                 @map("TOTAL_LABEL")
-  signOpenResponsible       String?              @map("SIGN_OPEN_RESPONSIBLE") @db.Text
-  fehSignOpen               DateTime?            @map("FEH_SIGN_OPEN") @db.DateTime(3)
-  signCloseResponsible      String?              @map("SIGN_CLOSE_RESPONSIBLE") @db.Text
-  fehSignClose              DateTime?            @map("FEH_SIGN_CLOSE") @db.DateTime(3)
-  digitalCertificateId      String?              @map("DIGITAL_CERTIFICATE_ID") @db.VarChar(100)
-  stateOrderLabelHead       Int?                 @default(1) @map("STATE_ORDER_LABEL_HEAD") @db.TinyInt
-  codUsuarioCargaDl         String?              @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
-  fecProcesoCargaDl         DateTime?            @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
-  fecProcesoModifDl         DateTime?            @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
-  desAccion                 String?              @map("DES_ACCION") @db.VarChar(20)
-  flgStatutActif            Int?                 @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
-  orderHead                 OdOrderHead          @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_order")
-  digitalIdentifier         MdDigitalIdentifier  @relation(fields: [idDlkDigitalIdentifier], references: [idDlkDigitalIdentifier], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_digital_master")
-  orderDetail               OdOrderDetail?       @relation(fields: [idDlkOrderDetail], references: [idDlkOrderDetail], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_order_detail")
-  details                   OdOrderLabelDetail[]
+  idDlkOrderLabelHead    Int                  @id @default(autoincrement()) @map("ID_DLK_ORDER_LABEL_HEAD")
+  idDlkOrderHead         Int                  @map("ID_DLK_ORDER_HEAD")
+  idDlkDigitalIdentifier Int                  @map("ID_DLK_DIGITAL_IDENTIFIER")
+  idDlkOrderDetail       Int?                 @map("ID_DLK_ORDER_DETAIL")
+  codOrderLabel          String?              @map("COD_ORDER_LABEL") @db.VarChar(20)
+  codEstilo              String?              @map("COD_ESTILO") @db.VarChar(50)
+  nameEstilo             String?              @map("NAME_ESTILO") @db.VarChar(200)
+  descriptionEstilo      String?              @map("DESCRIPTION_ESTILO") @db.Text
+  genderEstilo           String?              @map("GENDER_ESTILO") @db.VarChar(45)
+  seasonEstilo           String?              @map("SEASON_ESTILO") @db.VarChar(45)
+  codGtin                String?              @map("COD_GTIN") @db.VarChar(14)
+  size                   String?              @map("SIZE") @db.VarChar(50)
+  estampado              String?              @map("ESTAMPADO") @db.VarChar(100)
+  identifierType         String?              @map("IDENTIFIER_TYPE") @db.VarChar(45)
+  identifierMaterial     String?              @map("IDENTIFIER_MATERIAL") @db.VarChar(500)
+  identifierLocation     String?              @map("IDENTIFIER_LOCATION") @db.VarChar(200)
+  inicioSerializacion    Int?                 @map("INICIO_SERIALIZACION")
+  finSerializacion       Int?                 @map("FIN_SERIALIZACION")
+  totalLabel             Int?                 @map("TOTAL_LABEL")
+  signOpenResponsible    String?              @map("SIGN_OPEN_RESPONSIBLE") @db.Text
+  fehSignOpen            DateTime?            @map("FEH_SIGN_OPEN") @db.DateTime(3)
+  signCloseResponsible   String?              @map("SIGN_CLOSE_RESPONSIBLE") @db.Text
+  fehSignClose           DateTime?            @map("FEH_SIGN_CLOSE") @db.DateTime(3)
+  digitalCertificateId   String?              @map("DIGITAL_CERTIFICATE_ID") @db.VarChar(100)
+  stateOrderLabelHead    Int?                 @default(1) @map("STATE_ORDER_LABEL_HEAD") @db.TinyInt
+  codUsuarioCargaDl      String?              @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl      DateTime?            @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl      DateTime?            @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion              String?              @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif         Int?                 @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  orderHead              OdOrderHead          @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_order")
+  digitalIdentifier      MdDigitalIdentifier  @relation(fields: [idDlkDigitalIdentifier], references: [idDlkDigitalIdentifier], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_digital_master")
+  orderDetail            OdOrderDetail?       @relation(fields: [idDlkOrderDetail], references: [idDlkOrderDetail], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_order_detail")
+  details                OdOrderLabelDetail[]
 
   @@unique([idDlkOrderDetail, size], map: "uq_label_head_detail_size")
   @@index([idDlkOrderHead], map: "idx_label_head_order")
@@ -959,29 +1009,396 @@ model OdOrderLabelHead {
   @@map("OD_ORDER_LABEL_HEAD")
 }
 
-/** Detalle (unidad serializada) de una orden de etiquetas. */
+/**
+ * Detalle (unidad serializada) de una orden de etiquetas.
+ */
 model OdOrderLabelDetail {
-  idDlkOrderLabelDetail   Int              @id @default(autoincrement()) @map("ID_DLK_ORDER_LABEL_DETAIL")
-  idDlkOrderLabelHead     Int              @map("ID_DLK_ORDER_LABEL_HEAD")
-  itemGlobal              Int              @map("ITEM_GLOBAL")
-  itemBySize              Int              @map("ITEM_BY_SIZE")
-  serialNumber            String           @map("SERIAL_NUMBER") @db.VarChar(20)
-  sgtinFull               String           @unique(map: "idx_sgtin_unique") @map("SGTIN_FULL") @db.VarChar(150)
-  urlDppFull              String           @map("URL_DPP_FULL") @db.VarChar(1000)
-  color                   String?          @map("COLOR") @db.VarChar(100)
-  print                   String?          @map("PRINT") @db.VarChar(100)
-  size                    String?          @map("SIZE") @db.VarChar(50)
-  pieceType               String?          @map("PIECE_TYPE") @db.VarChar(45)
-  setGroupId              String?          @map("SET_GROUP_ID") @db.VarChar(50)
-  isBlacklisted           Int?             @default(0) @map("IS_BLACKLISTED") @db.TinyInt
-  reasonBlacklist         String?          @map("REASON_BLACKLIST") @db.VarChar(100)
-  stateOrderLabelDetail   Int?             @default(1) @map("STATE_ORDER_LABEL_DETAIL") @db.TinyInt
-  fecProcesoCargaDl       DateTime?        @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
-  fecProcesoModifDl       DateTime?        @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
-  codUsuarioAuditor       String?          @map("COD_USUARIO_AUDITOR") @db.VarChar(20)
-  labelHead               OdOrderLabelHead @relation(fields: [idDlkOrderLabelHead], references: [idDlkOrderLabelHead], onDelete: Cascade, onUpdate: Cascade, map: "fk_label_detail_to_head")
+  idDlkOrderLabelDetail Int              @id @default(autoincrement()) @map("ID_DLK_ORDER_LABEL_DETAIL")
+  idDlkOrderLabelHead   Int              @map("ID_DLK_ORDER_LABEL_HEAD")
+  itemGlobal            Int              @map("ITEM_GLOBAL")
+  itemBySize            Int              @map("ITEM_BY_SIZE")
+  serialNumber          String           @map("SERIAL_NUMBER") @db.VarChar(20)
+  sgtinFull             String           @unique(map: "idx_sgtin_unique") @map("SGTIN_FULL") @db.VarChar(150)
+  urlDppFull            String           @map("URL_DPP_FULL") @db.VarChar(1000)
+  color                 String?          @map("COLOR") @db.VarChar(100)
+  print                 String?          @map("PRINT") @db.VarChar(100)
+  size                  String?          @map("SIZE") @db.VarChar(50)
+  pieceType             String?          @map("PIECE_TYPE") @db.VarChar(45)
+  setGroupId            String?          @map("SET_GROUP_ID") @db.VarChar(50)
+  isBlacklisted         Int?             @default(0) @map("IS_BLACKLISTED") @db.TinyInt
+  reasonBlacklist       String?          @map("REASON_BLACKLIST") @db.VarChar(100)
+  stateOrderLabelDetail Int?             @default(1) @map("STATE_ORDER_LABEL_DETAIL") @db.TinyInt
+  fecProcesoCargaDl     DateTime?        @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl     DateTime?        @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  codUsuarioAuditor     String?          @map("COD_USUARIO_AUDITOR") @db.VarChar(20)
+  labelHead             OdOrderLabelHead @relation(fields: [idDlkOrderLabelHead], references: [idDlkOrderLabelHead], onDelete: Cascade, onUpdate: Cascade, map: "fk_label_detail_to_head")
+  unitTraces            OdUnitTrace[]
 
   @@index([idDlkOrderLabelHead], map: "idx_label_detail_head")
   @@index([isBlacklisted], map: "idx_quality_control")
   @@map("OD_ORDER_LABEL_DETAIL")
+}
+
+// =====================================================================
+//  FLUJO "RUTA DE PRODUCCIÓN" (por LOTE, a nivel de componente)
+//  Ver diseño en docs/sql/ruta-produccion.sql
+// =====================================================================
+
+enum Criticality {
+  LOW
+  MEDIUM
+  HIGH
+
+  @@map("CRITICALITY")
+}
+
+/**
+ * Componente de una orden (explota un OD_ORDER_DETAIL set en sus piezas: chaqueta, pantalón…).
+ */
+model OdOrderComponent {
+  idDlkOrderComponent Int              @id @default(autoincrement()) @map("ID_DLK_ORDER_COMPONENT")
+  idDlkOrderHead      Int              @map("ID_DLK_ORDER_HEAD")
+  idDlkOrderDetail    Int              @map("ID_DLK_ORDER_DETAIL")
+  codComponent        String?          @map("COD_COMPONENT") @db.VarChar(50)
+  nameComponent       String?          @map("NAME_COMPONENT") @db.VarChar(200)
+  stateOrderComponent Int              @default(1) @map("STATE_ORDER_COMPONENT") @db.UnsignedTinyInt
+  codUsuarioCargaDl   String           @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl   DateTime         @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl   DateTime         @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion           String           @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif      Int              @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  orderHead           OdOrderHead      @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: NoAction, onUpdate: NoAction, map: "fk_OD_ORDER_COMPONENT_OD_ORDER_HEAD1")
+  orderDetail         OdOrderDetail    @relation(fields: [idDlkOrderDetail], references: [idDlkOrderDetail], onDelete: NoAction, onUpdate: NoAction, map: "fk_OD_ORDER_COMPONENT_OD_ORDER_DETAIL1")
+  processRoutes       OdProcessRoute[]
+
+  @@index([idDlkOrderHead], map: "idx_component_head")
+  @@index([idDlkOrderDetail], map: "idx_component_detail")
+  @@index([codComponent], map: "idx_component_code")
+  @@map("OD_ORDER_COMPONENT")
+}
+
+// ---------- NIVEL 1 · PROCESO ----------
+
+/**
+ * Ruta por lote del componente (proceso).
+ */
+model OdProcessRoute {
+  idDlkProcessRoute       Int                       @id @default(autoincrement()) @map("ID_DLK_PROCESS_ROUTE")
+  idDlkOrderComponent     Int                       @map("ID_DLK_ORDER_COMPONENT")
+  ordenPrecedenciaProcess Int                       @map("ORDEN_PRECEDENCIA_PROCESS") @db.UnsignedSmallInt
+  codProcess              String                    @map("COD_PROCESS") @db.VarChar(50)
+  nameProcess             String                    @map("NAME_PROCESS") @db.VarChar(100)
+  criticalityProcess      Criticality               @default(MEDIUM) @map("CRITICALITY_PROCESS")
+  outsourcedProcess       Int                       @default(0) @map("OUTSOURCED_PROCESS") @db.UnsignedTinyInt
+  estimatedTimeProcess    Int                       @default(0) @map("ESTIMATED_TIME_PROCESS") @db.UnsignedInt
+  responsibleUnit         String                    @map("RESPONSIBLE_UNIT") @db.VarChar(50)
+  responsibleProcess      String                    @map("RESPONSIBLE_PROCESS") @db.VarChar(50)
+  inputTimeProcessRoute   DateTime?                 @map("INPUT_TIME_PROCESS_ROUTE") @db.DateTime(3)
+  outputTimeProcessRoute  DateTime?                 @map("OUTPUT_TIME_PROCESS_ROUTE") @db.DateTime(3)
+  stateProcessRoute       Int                       @default(1) @map("STATE_PROCESS_ROUTE") @db.UnsignedTinyInt
+  codUsuarioCargaDl       String                    @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl       DateTime                  @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl       DateTime                  @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion               String                    @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif          Int                       @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  orderComponent          OdOrderComponent          @relation(fields: [idDlkOrderComponent], references: [idDlkOrderComponent], onDelete: NoAction, onUpdate: NoAction, map: "fk_OD_PROCESS_ROUTE_OD_ORDER_COMPONENT1")
+  inputs                  OdInputProcessRoute[]
+  procedures              OdProcedureProcessRoute[]
+  outputs                 OdOutputProcessRoute[]
+  subprocesses            OdSubprocessRoute[]
+
+  @@unique([idDlkOrderComponent, ordenPrecedenciaProcess], map: "uq_process_route_precedence")
+  @@map("OD_PROCESS_ROUTE")
+}
+
+model OdInputProcessRoute {
+  idDlkInputProcessRoute  Int            @id @default(autoincrement()) @map("ID_DLK_INPUT_PROCESS_ROUTE")
+  idDlkProcessRoute       Int            @map("ID_DLK_PROCESS_ROUTE")
+  codInputProcess         String         @map("COD_INPUT_PROCESS") @db.VarChar(50)
+  nameInputProcess        String         @map("NAME_INPUT_PROCESS") @db.VarChar(100)
+  supplierInputProcess    String?        @map("SUPPLIER_INPUT_PROCESS") @db.VarChar(120)
+  fileInputProcessRoute   String?        @map("FILE_INPUT_PROCESS_ROUTE") @db.VarChar(255)
+  observationInputProcess String?        @map("OBSERVATION_INPUT_PROCESS") @db.VarChar(255)
+  stateInputProcess       Int            @default(1) @map("STATE_INPUT_PROCESS") @db.UnsignedTinyInt
+  codUsuarioCargaDl       String         @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl       DateTime       @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl       DateTime       @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion               String         @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif          Int            @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  processRoute            OdProcessRoute @relation(fields: [idDlkProcessRoute], references: [idDlkProcessRoute], onDelete: Cascade, onUpdate: NoAction, map: "fk_OD_INPUT_PROCESS_ROUTE_OD_PROCESS_ROUTE1")
+
+  @@index([idDlkProcessRoute], map: "fk_OD_INPUT_PROCESS_ROUTE_OD_PROCESS_ROUTE1_idx")
+  @@index([codInputProcess], map: "idx_input_code")
+  @@map("OD_INPUT_PROCESS_ROUTE")
+}
+
+model OdProcedureProcessRoute {
+  idDlkProcedureProcess       Int            @id @default(autoincrement()) @map("ID_DLK_PROCEDURE_PROCESS")
+  idDlkProcessRoute           Int            @map("ID_DLK_PROCESS_ROUTE")
+  codProcedureProcess         String         @map("COD_PROCEDURE_PROCESS") @db.VarChar(50)
+  nameProcedureProcess        String         @map("NAME_PROCEDURE_PROCESS") @db.VarChar(150)
+  criticalityProcedureProcess Criticality    @default(MEDIUM) @map("CRITICALITY_PROCEDURE_PROCESS")
+  timeProcedureProcessRoute   Int            @default(0) @map("TIME_PROCEDURE_PROCESS_ROUTE") @db.UnsignedInt
+  validationProcedureProcess  String         @map("VALIDATION_PROCEDURE_PROCESS") @db.VarChar(255)
+  fileProcedureProcess        String?        @map("FILE_PROCEDURE_PROCESS") @db.VarChar(255)
+  stateProcedureProcess       Int            @default(1) @map("STATE_PROCEDURE_PROCESS") @db.UnsignedTinyInt
+  codUsuarioCargaDl           String         @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl           DateTime       @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl           DateTime       @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                   String         @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif              Int            @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  processRoute                OdProcessRoute @relation(fields: [idDlkProcessRoute], references: [idDlkProcessRoute], onDelete: Cascade, onUpdate: NoAction, map: "fk_OD_PROCEDURE_PROCESS_OD_PROCESS_ROUTE1")
+
+  @@index([idDlkProcessRoute], map: "fk_OD_PROCEDURE_PROCESS_ROUTE_idx")
+  @@index([codProcedureProcess], map: "idx_procedure_code")
+  @@map("OD_PROCEDURE_PROCESS_ROUTE")
+}
+
+model OdOutputProcessRoute {
+  idDlkOutputProcess       Int            @id @default(autoincrement()) @map("ID_DLK_OUTPUT_PROCESS")
+  idDlkProcessRoute        Int            @map("ID_DLK_PROCESS_ROUTE")
+  codOutputProcess         String         @map("COD_OUTPUT_PROCESS") @db.VarChar(50)
+  nameOutputProcess        String         @map("NAME_OUTPUT_PROCESS") @db.VarChar(150)
+  typeOutputProcess        String         @map("TYPE_OUTPUT_PROCESS") @db.VarChar(50)
+  destinationOutputProcess String         @map("DESTINATION_OUTPUT_PROCESS") @db.VarChar(100)
+  unitQuantity             Decimal        @default(1.00) @map("UNIT_QUANTITY") @db.Decimal(10, 2)
+  stateOutputProcess       Int            @default(1) @map("STATE_OUTPUT_PROCESS") @db.UnsignedTinyInt
+  fileOutputProcessRoute   String?        @map("FILE_OUTPUT_PROCESS_ROUTE") @db.VarChar(255)
+  observationOutputProcess String?        @map("OBSERVATION_OUTPUT_PROCESS") @db.VarChar(255)
+  codUsuarioCargaDl        String         @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl        DateTime       @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl        DateTime       @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                String         @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif           Int            @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  processRoute             OdProcessRoute @relation(fields: [idDlkProcessRoute], references: [idDlkProcessRoute], onDelete: Cascade, onUpdate: NoAction, map: "fk_OD_OUTPUT_PROCESS_ROUTE_OD_PROCESS_ROUTE1")
+
+  @@index([idDlkProcessRoute], map: "fk_OD_OUTPUT_PROCESS_ROUTE_OD_PROCESS_ROUTE1_idx")
+  @@index([codOutputProcess], map: "idx_output_code")
+  @@map("OD_OUTPUT_PROCESS_ROUTE")
+}
+
+// ---------- NIVEL 2 · SUBPROCESO ----------
+
+model OdSubprocessRoute {
+  idDlkSubprocessRoute       Int                          @id @default(autoincrement()) @map("ID_DLK_SUBPROCESS_ROUTE")
+  idDlkProcessRoute          Int                          @map("ID_DLK_PROCESS_ROUTE")
+  ordenPrecedenciaSubprocess Int                          @map("ORDEN_PRECEDENCIA_SUBPROCESS") @db.UnsignedSmallInt
+  codSubprocess              String                       @map("COD_SUBPROCESS") @db.VarChar(20)
+  nameSubprocess             String                       @map("NAME_SUBPROCESS") @db.VarChar(100)
+  criticalitySubprocess      Criticality                  @default(MEDIUM) @map("CRITICALITY_SUBPROCESS")
+  outsourcedSubprocess       Int                          @default(0) @map("OUTSOURCED_SUBPROCESS") @db.UnsignedTinyInt
+  estimatedTimeSubprocess    Int                          @default(0) @map("ESTIMATED_TIME_SUBPROCESS") @db.UnsignedInt
+  responsibleUnit            String?                      @map("RESPONSIBLE_UNIT") @db.VarChar(50)
+  responsibleRole            String?                      @map("RESPONSIBLE_ROLE") @db.VarChar(50)
+  inputTimeSubprocessRoute   DateTime?                    @map("INPUT_TIME_SUBPROCESS_ROUTE") @db.DateTime(3)
+  outputTimeSubprocessRoute  DateTime?                    @map("OUTPUT_TIME_SUBPROCESS_ROUTE") @db.DateTime(3)
+  stateSubprocess            Int                          @default(1) @map("STATE_SUBPROCESS") @db.UnsignedTinyInt
+  codUsuarioCargaDl          String                       @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl          DateTime                     @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl          DateTime                     @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                  String                       @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif             Int                          @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  processRoute               OdProcessRoute               @relation(fields: [idDlkProcessRoute], references: [idDlkProcessRoute], onDelete: Cascade, onUpdate: NoAction, map: "fk_OD_SUBPROCESS_ROUTE_OD_PROCESS_ROUTE1")
+  inputs                     OdInputSubprocessRoute[]
+  procedures                 OdProcedureSubprocessRoute[]
+  outputs                    OdOutputSubprocessRoute[]
+  activities                 OdActivitiesRoute[]
+
+  @@unique([idDlkProcessRoute, ordenPrecedenciaSubprocess], map: "uq_subprocess_route_precedence")
+  @@index([idDlkProcessRoute, ordenPrecedenciaSubprocess], map: "fk_OD_SUBPROCESS_ROUTE_OD_PROCESS_ROUTE1_idx")
+  @@index([codSubprocess], map: "idx_subprocess_code")
+  @@map("OD_SUBPROCESS_ROUTE")
+}
+
+model OdInputSubprocessRoute {
+  idDlkInputSubprocessRoute  Int               @id @default(autoincrement()) @map("ID_DLK_INPUT_SUBPROCESS_ROUTE")
+  idDlkSubprocessRoute       Int               @map("ID_DLK_SUBPROCESS_ROUTE")
+  codInputSubprocess         String            @map("COD_INPUT_SUBPROCESS") @db.VarChar(50)
+  nameInputSubprocess        String            @map("NAME_INPUT_SUBPROCESS") @db.VarChar(150)
+  typeInputSubprocess        String            @map("TYPE_INPUT_SUBPROCESS") @db.VarChar(50)
+  supplierInputSubprocess    String?           @map("SUPPLIER_INPUT_SUBPROCESS") @db.VarChar(120)
+  fileInputSubprocess        String?           @map("FILE_INPUT_SUBPROCESS") @db.VarChar(255)
+  observationInputSubprocess String?           @map("OBSERVATION_INPUT_SUBPROCESS") @db.VarChar(255)
+  stateInputSubprocess       Int               @default(1) @map("STATE_INPUT_SUBPROCESS") @db.UnsignedTinyInt
+  codUsuarioCargaDl          String            @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl          DateTime          @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl          DateTime          @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                  String            @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif             Int               @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  subprocessRoute            OdSubprocessRoute @relation(fields: [idDlkSubprocessRoute], references: [idDlkSubprocessRoute], onDelete: Cascade, onUpdate: NoAction, map: "fk_OD_INPUT_SUBPROCESS_OD_SUBPROCESS_ROUTE1")
+
+  @@index([idDlkSubprocessRoute], map: "fk_OD_INPUT_SUBPROCESS_OD_SUBPROCESS_ROUTE1_idx")
+  @@index([codInputSubprocess], map: "idx_input_sub_code")
+  @@map("OD_INPUT_SUBPROCESS_ROUTE")
+}
+
+model OdProcedureSubprocessRoute {
+  idDlkProcedureSubprocessRoute    Int               @id @default(autoincrement()) @map("ID_DLK_PROCEDURE_SUBPROCESS_ROUTE")
+  idDlkSubprocessRoute             Int               @map("ID_DLK_SUBPROCESS_ROUTE")
+  codProcedureSubprocess           String            @map("COD_PROCEDURE_SUBPROCESS") @db.VarChar(50)
+  nameProcedureSubprocess          String            @map("NAME_PROCEDURE_SUBPROCESS") @db.VarChar(150)
+  responsibleProcedureSubprocess   String            @map("RESPONSIBLE_PROCEDURE_SUBPROCESS") @db.VarChar(100)
+  estimatedTimeProcedureSubprocess Int               @default(0) @map("ESTIMATED_TIME_PROCEDURE_SUBPROCESS") @db.UnsignedInt
+  criticalityProcedureSubprocess   Criticality       @default(MEDIUM) @map("CRITICALITY_PROCEDURE_SUBPROCESS")
+  validationMethodSubprocess       String            @map("VALIDATION_METHOD_SUBPROCESS") @db.VarChar(255)
+  fileProcedureSubprocess          String?           @map("FILE_PROCEDURE_SUBPROCESS") @db.VarChar(255)
+  stateProcedureSubprocess         Int               @default(1) @map("STATE_PROCEDURE_SUBPROCESS") @db.UnsignedTinyInt
+  codUsuarioCargaDl                String            @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl                DateTime          @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl                DateTime          @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                        String            @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif                   Int               @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  subprocessRoute                  OdSubprocessRoute @relation(fields: [idDlkSubprocessRoute], references: [idDlkSubprocessRoute], onDelete: Cascade, onUpdate: NoAction, map: "fk_OD_PROCEDURE_SUBPROCESS_OD_SUBPROCESS_ROUTE1")
+
+  @@index([idDlkSubprocessRoute], map: "fk_OD_PROCEDURE_SUBPROCESS_ROUTE_SUBPROCESS_idx")
+  @@index([codProcedureSubprocess], map: "idx_procedure_sub_code")
+  @@map("OD_PROCEDURE_SUBPROCESS_ROUTE")
+}
+
+model OdOutputSubprocessRoute {
+  idDlkOutputSubprocessRoute  Int               @id @default(autoincrement()) @map("ID_DLK_OUTPUT_SUBPROCESS_ROUTE")
+  idDlkSubprocessRoute        Int               @map("ID_DLK_SUBPROCESS_ROUTE")
+  codOutputSubprocess         String            @map("COD_OUTPUT_SUBPROCESS") @db.VarChar(50)
+  nameOutputSubprocess        String            @map("NAME_OUTPUT_SUBPROCESS") @db.VarChar(150)
+  destinationOutputSubprocess String            @map("DESTINATION_OUTPUT_SUBPROCESS") @db.VarChar(100)
+  unitQuantity                Decimal           @default(1.00) @map("UNIT_QUANTITY") @db.Decimal(10, 2)
+  fileOutputSubprocessRoute   String?           @map("FILE_OUTPUT_SUBPROCESS_ROUTE") @db.VarChar(255)
+  observationOutputSubprocess String?           @map("OBSERVATION_OUTPUT_SUBPROCESS") @db.VarChar(255)
+  stateOutputSubprocess       Int               @default(1) @map("STATE_OUTPUT_SUBPROCESS") @db.UnsignedTinyInt
+  codUsuarioCargaDl           String            @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl           DateTime          @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl           DateTime          @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                   String            @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif              Int               @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  subprocessRoute             OdSubprocessRoute @relation(fields: [idDlkSubprocessRoute], references: [idDlkSubprocessRoute], onDelete: Cascade, onUpdate: NoAction, map: "fk_OD_OUTPUT_SUBPROCESS_OD_SUBPROCESS_ROUTE1")
+
+  @@index([idDlkSubprocessRoute], map: "fk_OD_OUTPUT_SUBPROCESS_ROUTE_SUBPROCESS_idx")
+  @@index([codOutputSubprocess], map: "idx_output_sub_code")
+  @@map("OD_OUTPUT_SUBPROCESS_ROUTE")
+}
+
+// ---------- NIVEL 3 · ACTIVIDAD ----------
+
+model OdActivitiesRoute {
+  idDlkActivitiesRoute      Int                          @id @default(autoincrement()) @map("ID_DLK_ACTIVITIES_ROUTE")
+  idDlkSubprocessRoute      Int                          @map("ID_DLK_SUBPROCESS_ROUTE")
+  codActivities             String                       @map("COD_ACTIVITIES") @db.VarChar(20)
+  nameActivities            String                       @map("NAME_ACTIVITIES") @db.VarChar(150)
+  typeActivities            String                       @map("TYPE_ACTIVITIES") @db.VarChar(50)
+  orderActivities           Int                          @map("ORDER_ACTIVITIES") @db.UnsignedSmallInt
+  estimatedTimeActivities   Int                          @default(0) @map("ESTIMATED_TIME_ACTIVITIES") @db.UnsignedInt
+  responsibleName           String?                      @map("RESPONSIBLE_NAME") @db.VarChar(100)
+  inputTimeActivitiesRoute  DateTime?                    @map("INPUT_TIME_ACTIVITIES_ROUTE") @db.DateTime(3)
+  outputTimeActivitiesRoute DateTime?                    @map("OUTPUT_TIME_ACTIVITIES_ROUTE") @db.DateTime(3)
+  stateActivities           Int                          @default(1) @map("STATE_ACTIVITIES") @db.UnsignedTinyInt
+  codUsuarioCargaDl         String                       @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl         DateTime                     @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl         DateTime                     @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                 String                       @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif            Int                          @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  subprocessRoute           OdSubprocessRoute            @relation(fields: [idDlkSubprocessRoute], references: [idDlkSubprocessRoute], onDelete: Cascade, onUpdate: NoAction, map: "fk_OD_ACTIVITIES_ROUTE_OD_SUBPROCESS_ROUTE1")
+  inputs                    OdInputActivitiesRoute[]
+  procedures                OdProcedureActivitiesRoute[]
+  outputs                   OdOutputActivitiesRoute[]
+  unitTraces                OdUnitTrace[]
+
+  @@unique([idDlkSubprocessRoute, orderActivities], map: "uq_activities_route_order")
+  @@index([idDlkSubprocessRoute, orderActivities], map: "fk_OD_ACTIVITIES_ROUTE_OD_SUBPROCESS_ROUTE1_idx")
+  @@index([codActivities], map: "idx_activities_code")
+  @@map("OD_ACTIVITIES_ROUTE")
+}
+
+model OdInputActivitiesRoute {
+  idDlkInputActivitiesRoute  Int               @id @default(autoincrement()) @map("ID_DLK_INPUT_ACTIVITIES_ROUTE")
+  idDlkActivitiesRoute       Int               @map("ID_DLK_ACTIVITIES_ROUTE")
+  codInputActivities         String            @map("COD_INPUT_ACTIVITIES") @db.VarChar(50)
+  nameInputActivities        String            @map("NAME_INPUT_ACTIVITIES") @db.VarChar(150)
+  typeInputActivities        String            @map("TYPE_INPUT_ACTIVITIES") @db.VarChar(50)
+  criticalCheckActivities    String?           @map("CRITICAL_CHECK_ACTIVITIES") @db.VarChar(150)
+  fileInputActivities        String?           @map("FILE_INPUT_ACTIVITIES") @db.VarChar(255)
+  observationInputActivities String?           @map("OBSERVATION_INPUT_ACTIVITIES") @db.VarChar(255)
+  stateInputActivities       Int               @default(1) @map("STATE_INPUT_ACTIVITIES") @db.UnsignedTinyInt
+  codUsuarioCargaDl          String            @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl          DateTime          @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl          DateTime          @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                  String            @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif             Int               @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  activitiesRoute            OdActivitiesRoute @relation(fields: [idDlkActivitiesRoute], references: [idDlkActivitiesRoute], onDelete: Cascade, onUpdate: NoAction, map: "fk_OD_INPUT_ACTIVITIES_ROUTE_OD_ACTIVITIES_ROUTE1")
+
+  @@index([idDlkActivitiesRoute], map: "fk_OD_INPUT_ACTIVITIES_ROUTE_ACTIVITIES_idx")
+  @@index([codInputActivities], map: "idx_input_act_code")
+  @@map("OD_INPUT_ACTIVITIES_ROUTE")
+}
+
+model OdProcedureActivitiesRoute {
+  idDlkProcedureActivitiesRoute Int               @id @default(autoincrement()) @map("ID_DLK_PROCEDURE_ACTIVITIES_ROUTE")
+  idDlkActivitiesRoute          Int               @map("ID_DLK_ACTIVITIES_ROUTE")
+  codProcedureActivities        String            @map("COD_PROCEDURE_ACTIVITIES") @db.VarChar(50)
+  nameProcedureActivities       String            @map("NAME_PROCEDURE_ACTIVITIES") @db.VarChar(150)
+  responsibleExecution          String            @map("RESPONSIBLE_EXECUTION") @db.VarChar(100)
+  estimatedTimeProcedure        Int               @default(0) @map("ESTIMATED_TIME_PROCEDURE") @db.UnsignedInt
+  criticalPointActivities       String            @map("CRITICAL_POINT_ACTIVITIES") @db.VarChar(255)
+  fileProcedureActivities       String?           @map("FILE_PROCEDURE_ACTIVITIES") @db.VarChar(255)
+  observationActivities         String?           @map("OBSERVATION_ACTIVITIES") @db.VarChar(255)
+  stateProcedureActivities      Int               @default(1) @map("STATE_PROCEDURE_ACTIVITIES") @db.UnsignedTinyInt
+  codUsuarioCargaDl             String            @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl             DateTime          @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl             DateTime          @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                     String            @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif                Int               @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  activitiesRoute               OdActivitiesRoute @relation(fields: [idDlkActivitiesRoute], references: [idDlkActivitiesRoute], onDelete: Cascade, onUpdate: NoAction, map: "fk_OD_PROCEDURE_ACTIVITIES_OD_ACTIVITIES_ROUTE1")
+
+  @@index([idDlkActivitiesRoute], map: "fk_OD_PROCEDURE_ACTIVITIES_ROUTE_ACTIVITIES_idx")
+  @@index([codProcedureActivities], map: "idx_proc_act_code")
+  @@map("OD_PROCEDURE_ACTIVITIES_ROUTE")
+}
+
+model OdOutputActivitiesRoute {
+  idDlkOutputActivities     Int               @id @default(autoincrement()) @map("ID_DLK_OUTPUT_ACTIVITIES")
+  idDlkActivitiesRoute      Int               @map("ID_DLK_ACTIVITIES_ROUTE")
+  codOutputActivities       String            @map("COD_OUTPUT_ACTIVITIES") @db.VarChar(50)
+  nameOutputActivities      String            @map("NAME_OUTPUT_ACTIVITIES") @db.VarChar(150)
+  typeOutputActivities      String            @map("TYPE_OUTPUT_ACTIVITIES") @db.VarChar(50)
+  nextDestinationActivities String?           @map("NEXT_DESTINATION_ACTIVITIES") @db.VarChar(100)
+  qualityStandardActivities String?           @map("QUALITY_STANDARD_ACTIVITIES") @db.VarChar(255)
+  fileOutputActivities      String?           @map("FILE_OUTPUT_ACTIVITIES") @db.VarChar(255)
+  stateOutputActivities     Int               @default(1) @map("STATE_OUTPUT_ACTIVITIES") @db.UnsignedTinyInt
+  codUsuarioCargaDl         String            @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl         DateTime          @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl         DateTime          @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                 String            @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif            Int               @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  activitiesRoute           OdActivitiesRoute @relation(fields: [idDlkActivitiesRoute], references: [idDlkActivitiesRoute], onDelete: Cascade, onUpdate: NoAction, map: "fk_OD_OUTPUT_ACTIVITIES_OD_ACTIVITIES_ROUTE1")
+
+  @@index([idDlkActivitiesRoute], map: "fk_OD_OUTPUT_ACTIVITIES_ROUTE_ACTIVITIES_idx")
+  @@index([codOutputActivities], map: "idx_output_act_code")
+  @@map("OD_OUTPUT_ACTIVITIES_ROUTE")
+}
+
+// ---------- TRAZABILIDAD UNITARIA / IoT (la "prenda que nace") ----------
+
+/**
+ * Eventos por unidad serializada (SGTIN) desde el ensamble + etiqueta: IoT, acabados, QC, empaque.
+ */
+model OdUnitTrace {
+  idDlkUnitTrace        Int                @id @default(autoincrement()) @map("ID_DLK_UNIT_TRACE")
+  idDlkOrderLabelDetail Int                @map("ID_DLK_ORDER_LABEL_DETAIL")
+  idItemUnicoIot        String?            @map("ID_ITEM_UNICO_IOT") @db.VarChar(50)
+  idDlkActivitiesRoute  Int?               @map("ID_DLK_ACTIVITIES_ROUTE")
+  typeEvent             String             @map("TYPE_EVENT") @db.VarChar(50)
+  eventTime             DateTime           @default(now()) @map("EVENT_TIME") @db.DateTime(3)
+  stateUnitTrace        Int                @default(1) @map("STATE_UNIT_TRACE") @db.UnsignedTinyInt
+  observationUnitTrace  String?            @map("OBSERVATION_UNIT_TRACE") @db.VarChar(255)
+  codUsuarioCargaDl     String             @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl     DateTime           @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl     DateTime           @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion             String             @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
+  flgStatutActif        Int                @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
+  orderLabelDetail      OdOrderLabelDetail @relation(fields: [idDlkOrderLabelDetail], references: [idDlkOrderLabelDetail], onDelete: NoAction, onUpdate: NoAction, map: "fk_OD_UNIT_TRACE_OD_ORDER_LABEL_DETAIL1")
+  activitiesRoute       OdActivitiesRoute? @relation(fields: [idDlkActivitiesRoute], references: [idDlkActivitiesRoute], onDelete: SetNull, onUpdate: NoAction, map: "fk_OD_UNIT_TRACE_OD_ACTIVITIES_ROUTE1")
+
+  @@index([idDlkOrderLabelDetail], map: "idx_unit_trace_label")
+  @@index([idItemUnicoIot], map: "idx_unit_trace_iot")
+  @@index([idDlkActivitiesRoute], map: "idx_unit_trace_activity")
+  @@map("OD_UNIT_TRACE")
 }

@@ -3,7 +3,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { ORDER_HEAD_STAGES, ORDER_HEAD_STATUS } from "./constants";
 
-export type EtiquetaRow = {
+export type RutaRow = {
   idDlkOrderHead: number;
   idDlkBrand: number | null;
   codOrderHead: string | null;
@@ -12,6 +12,7 @@ export type EtiquetaRow = {
   dateProbableDespatch: string | null;
   stageOrderHead: number | null;
   statusStageOrderHead: number | null;
+  flgStatutActif: number | null;
   brand: { idDlkBrand: number; nameBrand: string; codBrand: string } | null;
 };
 
@@ -28,11 +29,11 @@ function formatQty(n: number | null | undefined) {
 }
 
 type ColProps = {
-  onOpen: (row: EtiquetaRow) => void;
-  onUpdateEstado: (row: EtiquetaRow) => void;
+  onOpen: (row: RutaRow) => void;
+  onUpdateEstado: (row: RutaRow) => void;
 };
 
-export function getEtiquetaColumns({ onOpen, onUpdateEstado }: ColProps): ColumnDef<EtiquetaRow>[] {
+export function getRutaColumns({ onOpen, onUpdateEstado }: ColProps): ColumnDef<RutaRow>[] {
   return [
     {
       accessorKey: "codOrderHead",
@@ -85,7 +86,7 @@ export function getEtiquetaColumns({ onOpen, onUpdateEstado }: ColProps): Column
             className="font-medium text-primary hover:underline"
             onClick={() => onOpen(row.original)}
           >
-            Abrir etiqueta
+            Abrir ruta
           </button>
           <button
             type="button"

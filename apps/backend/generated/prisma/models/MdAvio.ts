@@ -14,7 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model MdAvio
- * * Tabla física MD_AVIO. Overhaul 2026-04-19: tipo, color, peso/unidad, sostenibilidad, certificados.
+ * *
+ *  * Tabla física MD_AVIO. Overhaul 2026-04-19: tipo, color, peso/unidad, sostenibilidad, certificados.
  */
 export type MdAvioModel = runtime.Types.Result.DefaultSelection<Prisma.$MdAvioPayload>
 
@@ -1227,15 +1228,18 @@ export type $MdAvioPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     certificates: string | null
     observation: string | null
     /**
-     * * Orden de Pedido para el cual se requiere el avio
+     * *
+     *    * Orden de Pedido para el cual se requiere el avio
      */
     orderForm: string | null
     /**
-     * * Medidas del Avio
+     * *
+     *    * Medidas del Avio
      */
     measuresAvio: string | null
     /**
-     * * Factura del Avio
+     * *
+     *    * Factura del Avio
      */
     invoiceAvio: string | null
     stateAvios: number | null

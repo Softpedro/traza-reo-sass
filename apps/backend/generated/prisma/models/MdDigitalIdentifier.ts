@@ -14,7 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model MdDigitalIdentifier
- * * Maestro de identificadores digitales (QR/NFC/RFID) usados en etiquetas.
+ * *
+ *  * Maestro de identificadores digitales (QR/NFC/RFID) usados en etiquetas.
  */
 export type MdDigitalIdentifierModel = runtime.Types.Result.DefaultSelection<Prisma.$MdDigitalIdentifierPayload>
 

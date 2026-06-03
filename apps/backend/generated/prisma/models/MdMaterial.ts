@@ -14,7 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model MdMaterial
- * * Tabla física MD_MATERIAL. Overhaul 2026-04-19: composición, sostenibilidad, tintes y certificaciones.
+ * *
+ *  * Tabla física MD_MATERIAL. Overhaul 2026-04-19: composición, sostenibilidad, tintes y certificaciones.
  */
 export type MdMaterialModel = runtime.Types.Result.DefaultSelection<Prisma.$MdMaterialPayload>
 
@@ -1412,19 +1413,23 @@ export type $MdMaterialPayload<ExtArgs extends runtime.Types.Extensions.Internal
     recoveryMaterials: string | null
     certification: string | null
     /**
-     * * Orden del Pedido para el cual se requiere el material
+     * *
+     *    * Orden del Pedido para el cual se requiere el material
      */
     orderForm: string | null
     /**
-     * * Color del material
+     * *
+     *    * Color del material
      */
     colorMaterial: string | null
     /**
-     * * Rollo del material, ejemplo: Codigo del rollo de tela
+     * *
+     *    * Rollo del material, ejemplo: Codigo del rollo de tela
      */
     rollMaterial: string | null
     /**
-     * * Factura del material
+     * *
+     *    * Factura del material
      */
     invoiceMaterial: string | null
     stateMaterials: number | null

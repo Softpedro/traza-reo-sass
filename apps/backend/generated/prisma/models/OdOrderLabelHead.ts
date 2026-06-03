@@ -14,7 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model OdOrderLabelHead
- * * Cabecera de orden de etiquetas (DPP) — etapa 3 del flujo de orden de pedido.
+ * *
+ *  * Cabecera de orden de etiquetas (DPP) — etapa 3 del flujo de orden de pedido.
  */
 export type OdOrderLabelHeadModel = runtime.Types.Result.DefaultSelection<Prisma.$OdOrderLabelHeadPayload>
 

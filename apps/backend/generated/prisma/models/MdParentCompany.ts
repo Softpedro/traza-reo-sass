@@ -2123,11 +2123,13 @@ export type $MdParentCompanyPayload<ExtArgs extends runtime.Types.Extensions.Int
     idDlkParentCompany: number
     codParentCompany: string
     /**
-     * * Código REO SaaS (enlace con administración multi-tenant)
+     * *
+     *    * Código REO SaaS (enlace con administración multi-tenant)
      */
     idDlkAdmReo: string | null
     /**
-     * * 1=Marca Propia, 2=Maquila, 3=Híbrido, 4=Comercializadora
+     * *
+     *    * 1=Marca Propia, 2=Maquila, 3=Híbrido, 4=Comercializadora
      */
     typeParentCompany: number
     codGlnParentCompany: string

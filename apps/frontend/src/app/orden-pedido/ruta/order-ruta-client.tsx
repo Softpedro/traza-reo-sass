@@ -4,24 +4,24 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DataTable } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
-import { getEtiquetaColumns, type EtiquetaRow } from "./columns";
-import { STAGE_ETIQUETA } from "./constants";
-import { EtiquetaEstadoModal } from "./etiqueta-estado-modal";
+import { getRutaColumns, type RutaRow } from "./columns";
+import { STAGE_RUTA } from "./constants";
+import { RutaEstadoModal } from "./ruta-estado-modal";
 
-export type OrderEtiquetaClientProps = {
+export type OrderRutaClientProps = {
   kicker?: string;
   title?: string;
 };
 
-export function OrderEtiquetaClient({
+export function OrderRutaClient({
   kicker = "Orden de Pedido",
-  title = "Etiqueta",
-}: OrderEtiquetaClientProps) {
+  title = "Ruta",
+}: OrderRutaClientProps) {
   const router = useRouter();
-  const [rows, setRows] = useState<EtiquetaRow[]>([]);
+  const [rows, setRows] = useState<RutaRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [estadoOrder, setEstadoOrder] = useState<EtiquetaRow | null>(null);
+  const [estadoOrder, setEstadoOrder] = useState<RutaRow | null>(null);
   const [estadoOpen, setEstadoOpen] = useState(false);
 
   const fetchRows = useCallback(() => {
@@ -35,11 +35,11 @@ export function OrderEtiquetaClient({
         }
         return res.json();
       })
-      .then((data: EtiquetaRow[]) => {
-        // Solo se muestran órdenes actualmente en Etiqueta (stage===3).
-        // Las concluidas pasan a Ruta y dejan de aparecer aquí.
+      .then((data: RutaRow[]) => {
+        // Solo se muestran órdenes actualmente en Ruta (stage===4).
+        // Las concluidas pasan a Trazabilidad y dejan de aparecer aquí.
         const visible = Array.isArray(data)
-          ? data.filter((r) => (r.stageOrderHead ?? 1) === STAGE_ETIQUETA)
+          ? data.filter((r) => (r.stageOrderHead ?? 1) === STAGE_RUTA)
           : [];
         setRows(visible);
       })
@@ -48,7 +48,7 @@ export function OrderEtiquetaClient({
         setLoadError(
           err instanceof Error
             ? err.message
-            : "No se pudieron cargar las órdenes de etiqueta"
+            : "No se pudieron cargar las órdenes de ruta"
         );
         setRows([]);
       })
@@ -61,8 +61,8 @@ export function OrderEtiquetaClient({
 
   const columns = useMemo(
     () =>
-      getEtiquetaColumns({
-        onOpen: (row) => router.push(`/orden-pedido/etiqueta/${row.idDlkOrderHead}`),
+      getRutaColumns({
+        onOpen: (row) => router.push(`/orden-pedido/ruta/${row.idDlkOrderHead}`),
         onUpdateEstado: (row) => {
           setEstadoOrder(row);
           setEstadoOpen(true);
@@ -90,8 +90,8 @@ export function OrderEtiquetaClient({
         <p className="text-sm text-muted-foreground">Cargando órdenes…</p>
       ) : rows.length === 0 ? (
         <p className="text-sm text-muted-foreground">
-          No hay órdenes en Etiqueta. Una orden aparece aquí cuando se marca como
-          Concluida en Suministro.
+          No hay órdenes en Ruta. Una orden aparece aquí cuando se marca como
+          Concluida en Etiqueta.
         </p>
       ) : (
         <div className="[&_thead_tr]:bg-orange-100 [&_thead_th]:font-semibold [&_thead_th]:text-neutral-900">
@@ -100,11 +100,11 @@ export function OrderEtiquetaClient({
       )}
 
       <p className="text-xs text-muted-foreground leading-relaxed">
-        <span className="font-medium">OBS:</span> Abre una orden para gestionar sus etiquetas
-        por colorway. Cada cabecera genera N unidades serializadas con su sGTIN y URL DPP.
+        <span className="font-medium">OBS:</span> Abre una orden para gestionar su ruta de
+        producción (procesos, subprocesos y actividades por componente).
       </p>
 
-      <EtiquetaEstadoModal
+      <RutaEstadoModal
         open={estadoOpen}
         onOpenChange={setEstadoOpen}
         order={estadoOrder}

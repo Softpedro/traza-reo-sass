@@ -266,6 +266,181 @@ export function orderHeadRoutes(service: OrderHeadService): Router {
     }
   });
 
+  // Actualiza el sub-estado de la etapa Etiqueta (stage=3). Al Concluir avanza a Ruta.
+  router.put("/:id/etiqueta-estado", async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      if (!Number.isFinite(id)) {
+        return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+      }
+      const body = req.body as Record<string, unknown>;
+      const updated = await service.updateEtiquetaEstado(id, {
+        statusStageOrderHead:
+          body.statusStageOrderHead === undefined || body.statusStageOrderHead === ""
+            ? undefined
+            : body.statusStageOrderHead === null
+              ? null
+              : Number(body.statusStageOrderHead),
+        codUsuarioCargaDl:
+          body.codUsuarioCargaDl != null ? String(body.codUsuarioCargaDl) : undefined,
+      });
+      if (!updated) {
+        return res.status(404).json({ error: "Orden no encontrada", type: "NOT_FOUND" });
+      }
+      res.json(updated);
+    } catch (e) {
+      console.error("[order-heads:updateEtiquetaEstado]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  // Actualiza el sub-estado de la etapa Ruta (stage=4) + flag activo. Al Concluir avanza a Trazabilidad.
+  router.put("/:id/ruta-estado", async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      if (!Number.isFinite(id)) {
+        return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+      }
+      const body = req.body as Record<string, unknown>;
+      const updated = await service.updateRutaEstado(id, {
+        statusStageOrderHead:
+          body.statusStageOrderHead === undefined || body.statusStageOrderHead === ""
+            ? undefined
+            : body.statusStageOrderHead === null
+              ? null
+              : Number(body.statusStageOrderHead),
+        flgStatutActif:
+          body.flgStatutActif === undefined || body.flgStatutActif === ""
+            ? undefined
+            : body.flgStatutActif === null
+              ? null
+              : Number(body.flgStatutActif),
+        codUsuarioCargaDl:
+          body.codUsuarioCargaDl != null ? String(body.codUsuarioCargaDl) : undefined,
+      });
+      if (!updated) {
+        return res.status(404).json({ error: "Orden no encontrada", type: "NOT_FOUND" });
+      }
+      res.json(updated);
+    } catch (e) {
+      console.error("[order-heads:updateRutaEstado]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  // Lista los componentes (piezas) de la orden para la pantalla de Ruta (genera los faltantes).
+  router.get("/:id/components", async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      if (!Number.isFinite(id)) {
+        return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+      }
+      const result = await service.listComponents(id);
+      if (!result) {
+        return res.status(404).json({ error: "Orden no encontrada", type: "NOT_FOUND" });
+      }
+      res.json(result);
+    } catch (e) {
+      console.error("[order-heads:listComponents]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  // Actualiza el nombre de pieza (NAME_COMPONENT) de un grupo de componentes (mismo estilo×pieza).
+  router.put("/:id/components/name", async (req, res) => {
+    try {
+      const body = req.body as Record<string, unknown>;
+      const ids = Array.isArray(body.componentIds)
+        ? body.componentIds.map((v) => Number(v)).filter((n) => Number.isFinite(n))
+        : [];
+      if (!ids.length) {
+        return res.status(400).json({ error: "componentIds requerido", type: "VALIDATION" });
+      }
+      const name =
+        body.nameComponent === undefined || body.nameComponent === null
+          ? null
+          : String(body.nameComponent);
+      const ok = await service.updateComponentsName(ids, name);
+      if (!ok) {
+        return res.status(404).json({ error: "Componentes no encontrados", type: "NOT_FOUND" });
+      }
+      res.json({ ok: true });
+    } catch (e) {
+      console.error("[order-heads:updateComponentsName]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  // Árbol maestro (MD_PROCESS → MD_SUBPROCESS → MD_ACTIVITIES) para el modal "Crear ruta".
+  router.get("/:id/route-master-tree", async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      if (!Number.isFinite(id)) {
+        return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+      }
+      const tree = await service.getRouteMasterTree(id);
+      if (!tree) {
+        return res.status(404).json({ error: "Orden no encontrada", type: "NOT_FOUND" });
+      }
+      res.json(tree);
+    } catch (e) {
+      console.error("[order-heads:getRouteMasterTree]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  // Códigos de la ruta ya instanciada de un componente (para pre-marcar en Editar/Ver).
+  router.get("/:id/components/:componentId/route-selection", async (req, res) => {
+    try {
+      const componentId = Number(req.params.componentId);
+      if (!Number.isFinite(componentId)) {
+        return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+      }
+      const sel = await service.getRouteSelection(componentId);
+      res.json(sel);
+    } catch (e) {
+      console.error("[order-heads:getRouteSelection]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  // Crea la ruta de los componentes a partir de los nodos marcados del árbol maestro.
+  router.post("/:id/components/route", async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      if (!Number.isFinite(id)) {
+        return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+      }
+      const body = req.body as Record<string, unknown>;
+      const toIds = (v: unknown): number[] =>
+        Array.isArray(v) ? v.map((x) => Number(x)).filter((n) => Number.isFinite(n)) : [];
+      const componentIds = toIds(body.componentIds);
+      if (!componentIds.length) {
+        return res.status(400).json({ error: "componentIds requerido", type: "VALIDATION" });
+      }
+      const result = await service.createRouteFromMaster(id, {
+        componentIds,
+        processIds: toIds(body.processIds),
+        subprocessIds: toIds(body.subprocessIds),
+        activityIds: toIds(body.activityIds),
+      });
+      if (!result) {
+        return res.status(404).json({ error: "Componentes no encontrados", type: "NOT_FOUND" });
+      }
+      res.status(201).json(result);
+    } catch (e) {
+      console.error("[order-heads:createRouteFromMaster]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
   router.put("/:id", async (req, res) => {
     try {
       const id = Number(req.params.id);

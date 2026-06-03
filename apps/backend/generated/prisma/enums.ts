@@ -28,3 +28,12 @@ export const AccessStatus = {
 } as const
 
 export type AccessStatus = (typeof AccessStatus)[keyof typeof AccessStatus]
+
+
+export const Criticality = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH'
+} as const
+
+export type Criticality = (typeof Criticality)[keyof typeof Criticality]

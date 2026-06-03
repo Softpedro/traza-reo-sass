@@ -84,7 +84,21 @@ export const ModelName = {
   LgParentCompany: 'LgParentCompany',
   MdDigitalIdentifier: 'MdDigitalIdentifier',
   OdOrderLabelHead: 'OdOrderLabelHead',
-  OdOrderLabelDetail: 'OdOrderLabelDetail'
+  OdOrderLabelDetail: 'OdOrderLabelDetail',
+  OdOrderComponent: 'OdOrderComponent',
+  OdProcessRoute: 'OdProcessRoute',
+  OdInputProcessRoute: 'OdInputProcessRoute',
+  OdProcedureProcessRoute: 'OdProcedureProcessRoute',
+  OdOutputProcessRoute: 'OdOutputProcessRoute',
+  OdSubprocessRoute: 'OdSubprocessRoute',
+  OdInputSubprocessRoute: 'OdInputSubprocessRoute',
+  OdProcedureSubprocessRoute: 'OdProcedureSubprocessRoute',
+  OdOutputSubprocessRoute: 'OdOutputSubprocessRoute',
+  OdActivitiesRoute: 'OdActivitiesRoute',
+  OdInputActivitiesRoute: 'OdInputActivitiesRoute',
+  OdProcedureActivitiesRoute: 'OdProcedureActivitiesRoute',
+  OdOutputActivitiesRoute: 'OdOutputActivitiesRoute',
+  OdUnitTrace: 'OdUnitTrace'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -968,6 +982,294 @@ export const OdOrderLabelDetailScalarFieldEnum = {
 export type OdOrderLabelDetailScalarFieldEnum = (typeof OdOrderLabelDetailScalarFieldEnum)[keyof typeof OdOrderLabelDetailScalarFieldEnum]
 
 
+export const OdOrderComponentScalarFieldEnum = {
+  idDlkOrderComponent: 'idDlkOrderComponent',
+  idDlkOrderHead: 'idDlkOrderHead',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  codComponent: 'codComponent',
+  nameComponent: 'nameComponent',
+  stateOrderComponent: 'stateOrderComponent',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOrderComponentScalarFieldEnum = (typeof OdOrderComponentScalarFieldEnum)[keyof typeof OdOrderComponentScalarFieldEnum]
+
+
+export const OdProcessRouteScalarFieldEnum = {
+  idDlkProcessRoute: 'idDlkProcessRoute',
+  idDlkOrderComponent: 'idDlkOrderComponent',
+  ordenPrecedenciaProcess: 'ordenPrecedenciaProcess',
+  codProcess: 'codProcess',
+  nameProcess: 'nameProcess',
+  criticalityProcess: 'criticalityProcess',
+  outsourcedProcess: 'outsourcedProcess',
+  estimatedTimeProcess: 'estimatedTimeProcess',
+  responsibleUnit: 'responsibleUnit',
+  responsibleProcess: 'responsibleProcess',
+  inputTimeProcessRoute: 'inputTimeProcessRoute',
+  outputTimeProcessRoute: 'outputTimeProcessRoute',
+  stateProcessRoute: 'stateProcessRoute',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdProcessRouteScalarFieldEnum = (typeof OdProcessRouteScalarFieldEnum)[keyof typeof OdProcessRouteScalarFieldEnum]
+
+
+export const OdInputProcessRouteScalarFieldEnum = {
+  idDlkInputProcessRoute: 'idDlkInputProcessRoute',
+  idDlkProcessRoute: 'idDlkProcessRoute',
+  codInputProcess: 'codInputProcess',
+  nameInputProcess: 'nameInputProcess',
+  supplierInputProcess: 'supplierInputProcess',
+  fileInputProcessRoute: 'fileInputProcessRoute',
+  observationInputProcess: 'observationInputProcess',
+  stateInputProcess: 'stateInputProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdInputProcessRouteScalarFieldEnum = (typeof OdInputProcessRouteScalarFieldEnum)[keyof typeof OdInputProcessRouteScalarFieldEnum]
+
+
+export const OdProcedureProcessRouteScalarFieldEnum = {
+  idDlkProcedureProcess: 'idDlkProcedureProcess',
+  idDlkProcessRoute: 'idDlkProcessRoute',
+  codProcedureProcess: 'codProcedureProcess',
+  nameProcedureProcess: 'nameProcedureProcess',
+  criticalityProcedureProcess: 'criticalityProcedureProcess',
+  timeProcedureProcessRoute: 'timeProcedureProcessRoute',
+  validationProcedureProcess: 'validationProcedureProcess',
+  fileProcedureProcess: 'fileProcedureProcess',
+  stateProcedureProcess: 'stateProcedureProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdProcedureProcessRouteScalarFieldEnum = (typeof OdProcedureProcessRouteScalarFieldEnum)[keyof typeof OdProcedureProcessRouteScalarFieldEnum]
+
+
+export const OdOutputProcessRouteScalarFieldEnum = {
+  idDlkOutputProcess: 'idDlkOutputProcess',
+  idDlkProcessRoute: 'idDlkProcessRoute',
+  codOutputProcess: 'codOutputProcess',
+  nameOutputProcess: 'nameOutputProcess',
+  typeOutputProcess: 'typeOutputProcess',
+  destinationOutputProcess: 'destinationOutputProcess',
+  unitQuantity: 'unitQuantity',
+  stateOutputProcess: 'stateOutputProcess',
+  fileOutputProcessRoute: 'fileOutputProcessRoute',
+  observationOutputProcess: 'observationOutputProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOutputProcessRouteScalarFieldEnum = (typeof OdOutputProcessRouteScalarFieldEnum)[keyof typeof OdOutputProcessRouteScalarFieldEnum]
+
+
+export const OdSubprocessRouteScalarFieldEnum = {
+  idDlkSubprocessRoute: 'idDlkSubprocessRoute',
+  idDlkProcessRoute: 'idDlkProcessRoute',
+  ordenPrecedenciaSubprocess: 'ordenPrecedenciaSubprocess',
+  codSubprocess: 'codSubprocess',
+  nameSubprocess: 'nameSubprocess',
+  criticalitySubprocess: 'criticalitySubprocess',
+  outsourcedSubprocess: 'outsourcedSubprocess',
+  estimatedTimeSubprocess: 'estimatedTimeSubprocess',
+  responsibleUnit: 'responsibleUnit',
+  responsibleRole: 'responsibleRole',
+  inputTimeSubprocessRoute: 'inputTimeSubprocessRoute',
+  outputTimeSubprocessRoute: 'outputTimeSubprocessRoute',
+  stateSubprocess: 'stateSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdSubprocessRouteScalarFieldEnum = (typeof OdSubprocessRouteScalarFieldEnum)[keyof typeof OdSubprocessRouteScalarFieldEnum]
+
+
+export const OdInputSubprocessRouteScalarFieldEnum = {
+  idDlkInputSubprocessRoute: 'idDlkInputSubprocessRoute',
+  idDlkSubprocessRoute: 'idDlkSubprocessRoute',
+  codInputSubprocess: 'codInputSubprocess',
+  nameInputSubprocess: 'nameInputSubprocess',
+  typeInputSubprocess: 'typeInputSubprocess',
+  supplierInputSubprocess: 'supplierInputSubprocess',
+  fileInputSubprocess: 'fileInputSubprocess',
+  observationInputSubprocess: 'observationInputSubprocess',
+  stateInputSubprocess: 'stateInputSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdInputSubprocessRouteScalarFieldEnum = (typeof OdInputSubprocessRouteScalarFieldEnum)[keyof typeof OdInputSubprocessRouteScalarFieldEnum]
+
+
+export const OdProcedureSubprocessRouteScalarFieldEnum = {
+  idDlkProcedureSubprocessRoute: 'idDlkProcedureSubprocessRoute',
+  idDlkSubprocessRoute: 'idDlkSubprocessRoute',
+  codProcedureSubprocess: 'codProcedureSubprocess',
+  nameProcedureSubprocess: 'nameProcedureSubprocess',
+  responsibleProcedureSubprocess: 'responsibleProcedureSubprocess',
+  estimatedTimeProcedureSubprocess: 'estimatedTimeProcedureSubprocess',
+  criticalityProcedureSubprocess: 'criticalityProcedureSubprocess',
+  validationMethodSubprocess: 'validationMethodSubprocess',
+  fileProcedureSubprocess: 'fileProcedureSubprocess',
+  stateProcedureSubprocess: 'stateProcedureSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdProcedureSubprocessRouteScalarFieldEnum = (typeof OdProcedureSubprocessRouteScalarFieldEnum)[keyof typeof OdProcedureSubprocessRouteScalarFieldEnum]
+
+
+export const OdOutputSubprocessRouteScalarFieldEnum = {
+  idDlkOutputSubprocessRoute: 'idDlkOutputSubprocessRoute',
+  idDlkSubprocessRoute: 'idDlkSubprocessRoute',
+  codOutputSubprocess: 'codOutputSubprocess',
+  nameOutputSubprocess: 'nameOutputSubprocess',
+  destinationOutputSubprocess: 'destinationOutputSubprocess',
+  unitQuantity: 'unitQuantity',
+  fileOutputSubprocessRoute: 'fileOutputSubprocessRoute',
+  observationOutputSubprocess: 'observationOutputSubprocess',
+  stateOutputSubprocess: 'stateOutputSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOutputSubprocessRouteScalarFieldEnum = (typeof OdOutputSubprocessRouteScalarFieldEnum)[keyof typeof OdOutputSubprocessRouteScalarFieldEnum]
+
+
+export const OdActivitiesRouteScalarFieldEnum = {
+  idDlkActivitiesRoute: 'idDlkActivitiesRoute',
+  idDlkSubprocessRoute: 'idDlkSubprocessRoute',
+  codActivities: 'codActivities',
+  nameActivities: 'nameActivities',
+  typeActivities: 'typeActivities',
+  orderActivities: 'orderActivities',
+  estimatedTimeActivities: 'estimatedTimeActivities',
+  responsibleName: 'responsibleName',
+  inputTimeActivitiesRoute: 'inputTimeActivitiesRoute',
+  outputTimeActivitiesRoute: 'outputTimeActivitiesRoute',
+  stateActivities: 'stateActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdActivitiesRouteScalarFieldEnum = (typeof OdActivitiesRouteScalarFieldEnum)[keyof typeof OdActivitiesRouteScalarFieldEnum]
+
+
+export const OdInputActivitiesRouteScalarFieldEnum = {
+  idDlkInputActivitiesRoute: 'idDlkInputActivitiesRoute',
+  idDlkActivitiesRoute: 'idDlkActivitiesRoute',
+  codInputActivities: 'codInputActivities',
+  nameInputActivities: 'nameInputActivities',
+  typeInputActivities: 'typeInputActivities',
+  criticalCheckActivities: 'criticalCheckActivities',
+  fileInputActivities: 'fileInputActivities',
+  observationInputActivities: 'observationInputActivities',
+  stateInputActivities: 'stateInputActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdInputActivitiesRouteScalarFieldEnum = (typeof OdInputActivitiesRouteScalarFieldEnum)[keyof typeof OdInputActivitiesRouteScalarFieldEnum]
+
+
+export const OdProcedureActivitiesRouteScalarFieldEnum = {
+  idDlkProcedureActivitiesRoute: 'idDlkProcedureActivitiesRoute',
+  idDlkActivitiesRoute: 'idDlkActivitiesRoute',
+  codProcedureActivities: 'codProcedureActivities',
+  nameProcedureActivities: 'nameProcedureActivities',
+  responsibleExecution: 'responsibleExecution',
+  estimatedTimeProcedure: 'estimatedTimeProcedure',
+  criticalPointActivities: 'criticalPointActivities',
+  fileProcedureActivities: 'fileProcedureActivities',
+  observationActivities: 'observationActivities',
+  stateProcedureActivities: 'stateProcedureActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdProcedureActivitiesRouteScalarFieldEnum = (typeof OdProcedureActivitiesRouteScalarFieldEnum)[keyof typeof OdProcedureActivitiesRouteScalarFieldEnum]
+
+
+export const OdOutputActivitiesRouteScalarFieldEnum = {
+  idDlkOutputActivities: 'idDlkOutputActivities',
+  idDlkActivitiesRoute: 'idDlkActivitiesRoute',
+  codOutputActivities: 'codOutputActivities',
+  nameOutputActivities: 'nameOutputActivities',
+  typeOutputActivities: 'typeOutputActivities',
+  nextDestinationActivities: 'nextDestinationActivities',
+  qualityStandardActivities: 'qualityStandardActivities',
+  fileOutputActivities: 'fileOutputActivities',
+  stateOutputActivities: 'stateOutputActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOutputActivitiesRouteScalarFieldEnum = (typeof OdOutputActivitiesRouteScalarFieldEnum)[keyof typeof OdOutputActivitiesRouteScalarFieldEnum]
+
+
+export const OdUnitTraceScalarFieldEnum = {
+  idDlkUnitTrace: 'idDlkUnitTrace',
+  idDlkOrderLabelDetail: 'idDlkOrderLabelDetail',
+  idItemUnicoIot: 'idItemUnicoIot',
+  idDlkActivitiesRoute: 'idDlkActivitiesRoute',
+  typeEvent: 'typeEvent',
+  eventTime: 'eventTime',
+  stateUnitTrace: 'stateUnitTrace',
+  observationUnitTrace: 'observationUnitTrace',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdUnitTraceScalarFieldEnum = (typeof OdUnitTraceScalarFieldEnum)[keyof typeof OdUnitTraceScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1549,4 +1851,182 @@ export const OdOrderLabelDetailOrderByRelevanceFieldEnum = {
 } as const
 
 export type OdOrderLabelDetailOrderByRelevanceFieldEnum = (typeof OdOrderLabelDetailOrderByRelevanceFieldEnum)[keyof typeof OdOrderLabelDetailOrderByRelevanceFieldEnum]
+
+
+export const OdOrderComponentOrderByRelevanceFieldEnum = {
+  codComponent: 'codComponent',
+  nameComponent: 'nameComponent',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOrderComponentOrderByRelevanceFieldEnum = (typeof OdOrderComponentOrderByRelevanceFieldEnum)[keyof typeof OdOrderComponentOrderByRelevanceFieldEnum]
+
+
+export const OdProcessRouteOrderByRelevanceFieldEnum = {
+  codProcess: 'codProcess',
+  nameProcess: 'nameProcess',
+  responsibleUnit: 'responsibleUnit',
+  responsibleProcess: 'responsibleProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdProcessRouteOrderByRelevanceFieldEnum = (typeof OdProcessRouteOrderByRelevanceFieldEnum)[keyof typeof OdProcessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdInputProcessRouteOrderByRelevanceFieldEnum = {
+  codInputProcess: 'codInputProcess',
+  nameInputProcess: 'nameInputProcess',
+  supplierInputProcess: 'supplierInputProcess',
+  fileInputProcessRoute: 'fileInputProcessRoute',
+  observationInputProcess: 'observationInputProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdInputProcessRouteOrderByRelevanceFieldEnum = (typeof OdInputProcessRouteOrderByRelevanceFieldEnum)[keyof typeof OdInputProcessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdProcedureProcessRouteOrderByRelevanceFieldEnum = {
+  codProcedureProcess: 'codProcedureProcess',
+  nameProcedureProcess: 'nameProcedureProcess',
+  validationProcedureProcess: 'validationProcedureProcess',
+  fileProcedureProcess: 'fileProcedureProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdProcedureProcessRouteOrderByRelevanceFieldEnum = (typeof OdProcedureProcessRouteOrderByRelevanceFieldEnum)[keyof typeof OdProcedureProcessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdOutputProcessRouteOrderByRelevanceFieldEnum = {
+  codOutputProcess: 'codOutputProcess',
+  nameOutputProcess: 'nameOutputProcess',
+  typeOutputProcess: 'typeOutputProcess',
+  destinationOutputProcess: 'destinationOutputProcess',
+  fileOutputProcessRoute: 'fileOutputProcessRoute',
+  observationOutputProcess: 'observationOutputProcess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOutputProcessRouteOrderByRelevanceFieldEnum = (typeof OdOutputProcessRouteOrderByRelevanceFieldEnum)[keyof typeof OdOutputProcessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdSubprocessRouteOrderByRelevanceFieldEnum = {
+  codSubprocess: 'codSubprocess',
+  nameSubprocess: 'nameSubprocess',
+  responsibleUnit: 'responsibleUnit',
+  responsibleRole: 'responsibleRole',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdSubprocessRouteOrderByRelevanceFieldEnum = (typeof OdSubprocessRouteOrderByRelevanceFieldEnum)[keyof typeof OdSubprocessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdInputSubprocessRouteOrderByRelevanceFieldEnum = {
+  codInputSubprocess: 'codInputSubprocess',
+  nameInputSubprocess: 'nameInputSubprocess',
+  typeInputSubprocess: 'typeInputSubprocess',
+  supplierInputSubprocess: 'supplierInputSubprocess',
+  fileInputSubprocess: 'fileInputSubprocess',
+  observationInputSubprocess: 'observationInputSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdInputSubprocessRouteOrderByRelevanceFieldEnum = (typeof OdInputSubprocessRouteOrderByRelevanceFieldEnum)[keyof typeof OdInputSubprocessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdProcedureSubprocessRouteOrderByRelevanceFieldEnum = {
+  codProcedureSubprocess: 'codProcedureSubprocess',
+  nameProcedureSubprocess: 'nameProcedureSubprocess',
+  responsibleProcedureSubprocess: 'responsibleProcedureSubprocess',
+  validationMethodSubprocess: 'validationMethodSubprocess',
+  fileProcedureSubprocess: 'fileProcedureSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdProcedureSubprocessRouteOrderByRelevanceFieldEnum = (typeof OdProcedureSubprocessRouteOrderByRelevanceFieldEnum)[keyof typeof OdProcedureSubprocessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdOutputSubprocessRouteOrderByRelevanceFieldEnum = {
+  codOutputSubprocess: 'codOutputSubprocess',
+  nameOutputSubprocess: 'nameOutputSubprocess',
+  destinationOutputSubprocess: 'destinationOutputSubprocess',
+  fileOutputSubprocessRoute: 'fileOutputSubprocessRoute',
+  observationOutputSubprocess: 'observationOutputSubprocess',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOutputSubprocessRouteOrderByRelevanceFieldEnum = (typeof OdOutputSubprocessRouteOrderByRelevanceFieldEnum)[keyof typeof OdOutputSubprocessRouteOrderByRelevanceFieldEnum]
+
+
+export const OdActivitiesRouteOrderByRelevanceFieldEnum = {
+  codActivities: 'codActivities',
+  nameActivities: 'nameActivities',
+  typeActivities: 'typeActivities',
+  responsibleName: 'responsibleName',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdActivitiesRouteOrderByRelevanceFieldEnum = (typeof OdActivitiesRouteOrderByRelevanceFieldEnum)[keyof typeof OdActivitiesRouteOrderByRelevanceFieldEnum]
+
+
+export const OdInputActivitiesRouteOrderByRelevanceFieldEnum = {
+  codInputActivities: 'codInputActivities',
+  nameInputActivities: 'nameInputActivities',
+  typeInputActivities: 'typeInputActivities',
+  criticalCheckActivities: 'criticalCheckActivities',
+  fileInputActivities: 'fileInputActivities',
+  observationInputActivities: 'observationInputActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdInputActivitiesRouteOrderByRelevanceFieldEnum = (typeof OdInputActivitiesRouteOrderByRelevanceFieldEnum)[keyof typeof OdInputActivitiesRouteOrderByRelevanceFieldEnum]
+
+
+export const OdProcedureActivitiesRouteOrderByRelevanceFieldEnum = {
+  codProcedureActivities: 'codProcedureActivities',
+  nameProcedureActivities: 'nameProcedureActivities',
+  responsibleExecution: 'responsibleExecution',
+  criticalPointActivities: 'criticalPointActivities',
+  fileProcedureActivities: 'fileProcedureActivities',
+  observationActivities: 'observationActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdProcedureActivitiesRouteOrderByRelevanceFieldEnum = (typeof OdProcedureActivitiesRouteOrderByRelevanceFieldEnum)[keyof typeof OdProcedureActivitiesRouteOrderByRelevanceFieldEnum]
+
+
+export const OdOutputActivitiesRouteOrderByRelevanceFieldEnum = {
+  codOutputActivities: 'codOutputActivities',
+  nameOutputActivities: 'nameOutputActivities',
+  typeOutputActivities: 'typeOutputActivities',
+  nextDestinationActivities: 'nextDestinationActivities',
+  qualityStandardActivities: 'qualityStandardActivities',
+  fileOutputActivities: 'fileOutputActivities',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOutputActivitiesRouteOrderByRelevanceFieldEnum = (typeof OdOutputActivitiesRouteOrderByRelevanceFieldEnum)[keyof typeof OdOutputActivitiesRouteOrderByRelevanceFieldEnum]
+
+
+export const OdUnitTraceOrderByRelevanceFieldEnum = {
+  idItemUnicoIot: 'idItemUnicoIot',
+  typeEvent: 'typeEvent',
+  observationUnitTrace: 'observationUnitTrace',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdUnitTraceOrderByRelevanceFieldEnum = (typeof OdUnitTraceOrderByRelevanceFieldEnum)[keyof typeof OdUnitTraceOrderByRelevanceFieldEnum]
 

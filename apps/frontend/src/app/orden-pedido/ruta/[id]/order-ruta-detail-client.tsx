@@ -50,9 +50,12 @@ type GroupRow = {
   key: string;
   codEstilo: string | null;
   nomEstilo: string | null;
+  color: string | null;
+  fondoTela: string | null;
   esSet: boolean;
   ordinal: number | null;
   pieza: string | null;
+  tallas: string[];
   ordenesProduccion: string[];
   componentIds: number[];
 };
@@ -102,21 +105,6 @@ export function OrderRutaDetailClient({ orderHeadId }: Props) {
     fetchData();
   }, [fetchData]);
 
-  async function saveName(componentIds: number[], name: string) {
-    try {
-      const res = await apiFetch(`/api/order-heads/${orderHeadId}/components/name`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ componentIds, nameComponent: name }),
-      });
-      if (!res.ok) throw new Error("No se pudo guardar el nombre de la pieza");
-    } catch (err) {
-      console.error(err);
-      alert(err instanceof Error ? err.message : "Error");
-      fetchData();
-    }
-  }
-
   const rutaLabel =
     order?.statusStageOrderHead != null
       ? (ORDER_HEAD_STATUS[order.statusStageOrderHead] ?? String(order.statusStageOrderHead))
@@ -159,6 +147,9 @@ export function OrderRutaDetailClient({ orderHeadId }: Props) {
                 <th className="px-3 py-2 text-left font-semibold">Cod Estilo</th>
                 <th className="px-3 py-2 text-left font-semibold">Orden Producción</th>
                 <th className="px-3 py-2 text-left font-semibold">Estilo</th>
+                <th className="px-3 py-2 text-left font-semibold">Color</th>
+                <th className="px-3 py-2 text-left font-semibold">Fondo de Tela</th>
+                <th className="px-3 py-2 text-left font-semibold">Talla</th>
                 <th className="px-3 py-2 text-center font-semibold">Set</th>
                 <th className="px-3 py-2 text-left font-semibold">Pieza</th>
                 <th className="px-3 py-2 text-center font-semibold">Ruta</th>
@@ -171,23 +162,11 @@ export function OrderRutaDetailClient({ orderHeadId }: Props) {
                   <td className="px-3 py-2">{g.codEstilo ?? "—"}</td>
                   <td className="px-3 py-2">{g.ordenesProduccion.join(", ") || "—"}</td>
                   <td className="px-3 py-2">{g.nomEstilo ?? "—"}</td>
+                  <td className="px-3 py-2">{g.color ?? "—"}</td>
+                  <td className="px-3 py-2">{g.fondoTela ?? "—"}</td>
+                  <td className="px-3 py-2">{g.tallas.length ? g.tallas.join(", ") : "—"}</td>
                   <td className="px-3 py-2 text-center">{g.esSet ? "Sí" : "No"}</td>
-                  <td className="px-3 py-2">
-                    {g.esSet ? (
-                      <input
-                        type="text"
-                        defaultValue={g.pieza ?? ""}
-                        placeholder="Nombre de pieza"
-                        className="w-40 rounded border border-input bg-background px-2 py-1 text-sm"
-                        onBlur={(e) => {
-                          const v = e.target.value.trim();
-                          if (v !== (g.pieza ?? "")) saveName(g.componentIds, v);
-                        }}
-                      />
-                    ) : (
-                      "—"
-                    )}
-                  </td>
+                  <td className="px-3 py-2">{g.esSet ? (g.pieza ?? "—") : "—"}</td>
                   <td className="px-3 py-2 text-center font-medium">{rutaLabel}</td>
                   <td className="px-3 py-2">
                     <div className="flex items-center justify-center gap-3">
@@ -222,9 +201,9 @@ export function OrderRutaDetailClient({ orderHeadId }: Props) {
       )}
 
       <p className="text-xs text-muted-foreground leading-relaxed">
-        <span className="font-medium">OBS:</span> Cada fila agrupa los componentes del mismo
-        estilo (los Set se separan por pieza). La ruta se define una vez por grupo y al guardar
-        se aplica de forma independiente a cada orden de producción ({"{"}QWE-1, QWE-2…{"}"}).
+        <span className="font-medium">OBS:</span> Solo se listan las órdenes de producción
+        (modelo + color) que tienen GTIN. Los Set se separan en una ruta por pieza
+        (ej. chaqueta / pantalón). La ruta es compartida entre todas las tallas de esa pieza.
       </p>
 
       {modal && (

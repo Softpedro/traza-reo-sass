@@ -49,7 +49,8 @@ interface Props {
 const ESTAMPADO_OPTIONS = ["SIN ESTAMPADO", "CON ESTAMPADO"] as const;
 
 function defaultPieceNames(numPiezas: number): string[] {
-  if (numPiezas === 2) return ["PANTALON", "CAMISA"];
+  // Orden natural prenda superior → inferior: la camisa/chaqueta primero, luego el pantalón.
+  if (numPiezas === 2) return ["CAMISA", "PANTALON"];
   return Array.from({ length: numPiezas }, (_, i) => `PIEZA ${i + 1}`);
 }
 

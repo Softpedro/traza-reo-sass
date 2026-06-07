@@ -14,6 +14,19 @@ function toBytes(buf: Buffer | null): PrismaBytes | null {
   return Uint8Array.from(buf) as unknown as PrismaBytes;
 }
 
+/** Orden de presentación de tallas (para ordenar las tallas cubiertas en Ruta). */
+const SIZE_ORDER = [
+  "0-3", "3-6", "0-6", "6-12", "12-18",
+  "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "14", "16",
+  "XS", "S", "M", "L", "XL", "XXL",
+];
+function sizeOrder(s: string): number {
+  const i = SIZE_ORDER.indexOf(s.trim().toUpperCase());
+  const j = SIZE_ORDER.indexOf(s.trim());
+  const idx = i >= 0 ? i : j;
+  return idx < 0 ? 999 : idx;
+}
+
 /** COD_ORDER_DETAIL: `{codOrdenPedido}-{n}` p. ej. 135-24-1 (@db.VarChar(50)). */
 function buildCodOrderDetail(codOrderHead: string, sequence1Based: number): string {
   const base = codOrderHead.trim();
@@ -786,6 +799,14 @@ export class OrderHeadService {
    * Solo genera para detalles que aún no tienen ningún componente (idempotente).
    * El estado de Ruta se toma de OD_ORDER_HEAD.statusStageOrderHead.
    */
+  /**
+   * Lista las piezas (componentes) de una orden para la pantalla de Ruta, derivadas de la
+   * ETIQUETA: solo entran los colorways que tienen ≥1 etiqueta con GTIN; las piezas y su
+   * carácter de set salen de OD_ORDER_LABEL_COMPONENT, y las tallas de las cabeceras con GTIN.
+   *
+   * La unidad ruteable sigue siendo (colorway × pieza) = OD_ORDER_COMPONENT (ruta compartida
+   * entre tallas). Se sincroniza con las piezas de la etiqueta sin borrar rutas ya creadas.
+   */
   async listComponents(orderHeadId: number) {
     const head = await this.prisma.odOrderHead.findUnique({
       where: { idDlkOrderHead: orderHeadId },
@@ -800,114 +821,150 @@ export class OrderHeadService {
     });
     if (!head) return null;
 
-    const details = await this.prisma.odOrderDetail.findMany({
-      where: { idDlkOrderHead: orderHeadId },
+    // Etiquetas con GTIN: definen qué colorways entran a Ruta, sus tallas y sus piezas.
+    const labelHeads = await this.prisma.odOrderLabelHead.findMany({
+      where: { idDlkOrderHead: orderHeadId, flgStatutActif: 1, codGtin: { not: null } },
       select: {
-        idDlkOrderDetail: true,
-        codOrderDetail: true,
-        codEstilo: true,
-        nomEstilo: true,
-        esSet: true,
-        numPiezas: true,
-      },
-      orderBy: { idDlkOrderDetail: "asc" },
-    });
-
-    for (const d of details) {
-      const count = await this.prisma.odOrderComponent.count({
-        where: { idDlkOrderDetail: d.idDlkOrderDetail },
-      });
-      if (count > 0) continue;
-      const isSet = d.esSet === 1;
-      const pieces = isSet ? Math.max(d.numPiezas ?? 1, 1) : 1;
-      const rows = Array.from({ length: pieces }, (_, i) => ({
-        idDlkOrderHead: orderHeadId,
-        idDlkOrderDetail: d.idDlkOrderDetail,
-        nameComponent: isSet ? `Pieza ${i + 1}` : null,
-        codUsuarioCargaDl: head.codUsuarioCargaDl ?? "SYSTEM",
-      }));
-      await this.prisma.odOrderComponent.createMany({ data: rows });
-    }
-
-    const components = await this.prisma.odOrderComponent.findMany({
-      where: { idDlkOrderHead: orderHeadId },
-      select: {
-        idDlkOrderComponent: true,
-        idDlkOrderDetail: true,
-        codComponent: true,
-        nameComponent: true,
-        stateOrderComponent: true,
+        size: true,
+        codGtin: true,
         orderDetail: {
           select: {
+            idDlkOrderDetail: true,
             codOrderDetail: true,
             codEstilo: true,
             nomEstilo: true,
-            esSet: true,
-            numPiezas: true,
+            colorAway: true,
+            fondoTela: true,
           },
         },
+        components: {
+          select: { numPiece: true, nameComponent: true },
+          orderBy: { numPiece: "asc" },
+        },
       },
-      orderBy: [{ idDlkOrderDetail: "asc" }, { idDlkOrderComponent: "asc" }],
+      orderBy: { idDlkOrderLabelHead: "asc" },
     });
 
-    // Ordinal de pieza dentro de cada detalle (1..N), para alinear la misma pieza
-    // entre colorways del mismo estilo en los sets.
-    const ordinalOf = new Map<number, number>();
-    const byDetail = new Map<number, typeof components>();
-    for (const c of components) {
-      const arr = byDetail.get(c.idDlkOrderDetail) ?? [];
-      arr.push(c);
-      byDetail.set(c.idDlkOrderDetail, arr);
-    }
-    for (const arr of byDetail.values()) {
-      arr
-        .slice()
-        .sort((a, b) => a.idDlkOrderComponent - b.idDlkOrderComponent)
-        .forEach((c, i) => ordinalOf.set(c.idDlkOrderComponent, i + 1));
+    // Agrupa por colorway (OD_ORDER_DETAIL): tallas cubiertas + piezas (de la etiqueta).
+    type ColInfo = {
+      detailId: number;
+      codOrderDetail: string | null;
+      codEstilo: string | null;
+      nomEstilo: string | null;
+      colorAway: string | null;
+      fondoTela: string | null;
+      sizes: Set<string>;
+      isSet: boolean;
+      pieces: Map<number, string | null>;
+    };
+    const byColorway = new Map<number, ColInfo>();
+    for (const lh of labelHeads) {
+      if (!lh.codGtin || !lh.codGtin.trim()) continue;
+      const det = lh.orderDetail;
+      if (!det) continue;
+      let info = byColorway.get(det.idDlkOrderDetail);
+      if (!info) {
+        info = {
+          detailId: det.idDlkOrderDetail,
+          codOrderDetail: det.codOrderDetail,
+          codEstilo: det.codEstilo,
+          nomEstilo: det.nomEstilo,
+          colorAway: det.colorAway,
+          fondoTela: det.fondoTela,
+          sizes: new Set<string>(),
+          isSet: false,
+          pieces: new Map<number, string | null>(),
+        };
+        byColorway.set(det.idDlkOrderDetail, info);
+      }
+      if (lh.size) info.sizes.add(lh.size);
+      if (lh.components.length > 0) {
+        info.isSet = true;
+        for (const c of lh.components) {
+          if (!info.pieces.has(c.numPiece)) info.pieces.set(c.numPiece, c.nameComponent);
+        }
+      }
     }
 
-    // Agrupa por estilo (y por pieza en los sets). Cada grupo comparte una ruta;
-    // al guardar se persiste independiente a cada componentId del grupo.
+    // Sincroniza OD_ORDER_COMPONENT (unidad ruteable) con las piezas de la etiqueta.
+    // No borra: crea faltantes, renombra y desactiva sobrantes (preserva rutas existentes).
+    const codDl = head.codUsuarioCargaDl ?? "SYSTEM";
+    for (const info of byColorway.values()) {
+      const desired = info.isSet
+        ? [...info.pieces.entries()].sort((a, b) => a[0] - b[0]).map(([, name]) => name)
+        : [null];
+
+      const existing = await this.prisma.odOrderComponent.findMany({
+        where: { idDlkOrderDetail: info.detailId, flgStatutActif: 1 },
+        orderBy: { idDlkOrderComponent: "asc" },
+        select: { idDlkOrderComponent: true },
+      });
+
+      for (let i = existing.length; i < desired.length; i++) {
+        await this.prisma.odOrderComponent.create({
+          data: {
+            idDlkOrderHead: orderHeadId,
+            idDlkOrderDetail: info.detailId,
+            nameComponent: desired[i],
+            codUsuarioCargaDl: codDl,
+          },
+        });
+      }
+      for (let i = 0; i < Math.min(existing.length, desired.length); i++) {
+        await this.prisma.odOrderComponent.update({
+          where: { idDlkOrderComponent: existing[i].idDlkOrderComponent },
+          data: { nameComponent: desired[i], desAccion: "U", fecProcesoModifDl: new Date() },
+        });
+      }
+      for (let i = desired.length; i < existing.length; i++) {
+        await this.prisma.odOrderComponent.update({
+          where: { idDlkOrderComponent: existing[i].idDlkOrderComponent },
+          data: { flgStatutActif: 0, desAccion: "U", fecProcesoModifDl: new Date() },
+        });
+      }
+    }
+
+    // Grupos: una fila por colorway × pieza, con las tallas cubiertas.
     type Group = {
       key: string;
       codEstilo: string | null;
       nomEstilo: string | null;
+      color: string | null;
+      fondoTela: string | null;
       esSet: boolean;
       ordinal: number | null;
       pieza: string | null;
+      tallas: string[];
       ordenesProduccion: string[];
       componentIds: number[];
     };
-    const groups = new Map<string, Group>();
-    for (const c of components) {
-      const isSet = c.orderDetail?.esSet === 1;
-      const estiloKey =
-        c.orderDetail?.codEstilo ??
-        c.orderDetail?.nomEstilo ??
-        `det-${c.idDlkOrderDetail}`;
-      const ordinal = isSet ? (ordinalOf.get(c.idDlkOrderComponent) ?? 1) : null;
-      const key = isSet ? `${estiloKey}#${ordinal}` : `${estiloKey}#all`;
-      let g = groups.get(key);
-      if (!g) {
-        g = {
-          key,
-          codEstilo: c.orderDetail?.codEstilo ?? null,
-          nomEstilo: c.orderDetail?.nomEstilo ?? null,
-          esSet: isSet,
-          ordinal,
-          pieza: isSet ? (c.nameComponent ?? null) : null,
-          ordenesProduccion: [],
-          componentIds: [],
-        };
-        groups.set(key, g);
-      }
-      g.componentIds.push(c.idDlkOrderComponent);
-      if (isSet && !g.pieza && c.nameComponent) g.pieza = c.nameComponent;
-      const cod = c.orderDetail?.codOrderDetail;
-      if (cod && !g.ordenesProduccion.includes(cod)) g.ordenesProduccion.push(cod);
+    const groups: Group[] = [];
+    const colorways = [...byColorway.values()].sort((a, b) => a.detailId - b.detailId);
+    for (const info of colorways) {
+      const comps = await this.prisma.odOrderComponent.findMany({
+        where: { idDlkOrderDetail: info.detailId, flgStatutActif: 1 },
+        orderBy: { idDlkOrderComponent: "asc" },
+        select: { idDlkOrderComponent: true, nameComponent: true },
+      });
+      const tallas = [...info.sizes].sort((a, b) => sizeOrder(a) - sizeOrder(b));
+      comps.forEach((comp, idx) => {
+        groups.push({
+          key: `${info.detailId}#${idx + 1}`,
+          codEstilo: info.codEstilo,
+          nomEstilo: info.nomEstilo,
+          color: info.colorAway,
+          fondoTela: info.fondoTela,
+          esSet: info.isSet,
+          ordinal: info.isSet ? idx + 1 : null,
+          pieza: comp.nameComponent ?? (info.isSet ? `Pieza ${idx + 1}` : null),
+          tallas,
+          ordenesProduccion: info.codOrderDetail ? [info.codOrderDetail] : [],
+          componentIds: [comp.idDlkOrderComponent],
+        });
+      });
     }
 
-    return { order: head, groups: Array.from(groups.values()) };
+    return { order: head, groups };
   }
 
   /**

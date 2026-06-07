@@ -124,9 +124,9 @@ const SIZE_COLUMNS: { field: string; label: string }[] = [
   { field: "sizeXxl", label: "XXL" },
 ];
 
-/** Nombres de pieza por defecto cuando el colorway es un set. */
+/** Nombres de pieza por defecto cuando el colorway es un set (prenda superior primero). */
 function defaultPieceLabels(numPiezas: number): string[] {
-  if (numPiezas === 2) return ["PANTALON", "CAMISA"];
+  if (numPiezas === 2) return ["CAMISA", "PANTALON"];
   return Array.from({ length: numPiezas }, (_, i) => `PIEZA ${i + 1}`);
 }
 

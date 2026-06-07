@@ -418,6 +418,7 @@ export const ModelName = {
   MdDigitalIdentifier: 'MdDigitalIdentifier',
   OdOrderLabelHead: 'OdOrderLabelHead',
   OdOrderLabelDetail: 'OdOrderLabelDetail',
+  OdOrderLabelComponent: 'OdOrderLabelComponent',
   OdOrderComponent: 'OdOrderComponent',
   OdProcessRoute: 'OdProcessRoute',
   OdInputProcessRoute: 'OdInputProcessRoute',
@@ -447,7 +448,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace"
+    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderLabelComponent" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2695,6 +2696,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    OdOrderLabelComponent: {
+      payload: Prisma.$OdOrderLabelComponentPayload<ExtArgs>
+      fields: Prisma.OdOrderLabelComponentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdOrderLabelComponentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelComponentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdOrderLabelComponentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelComponentPayload>
+        }
+        findFirst: {
+          args: Prisma.OdOrderLabelComponentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelComponentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdOrderLabelComponentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelComponentPayload>
+        }
+        findMany: {
+          args: Prisma.OdOrderLabelComponentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelComponentPayload>[]
+        }
+        create: {
+          args: Prisma.OdOrderLabelComponentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelComponentPayload>
+        }
+        createMany: {
+          args: Prisma.OdOrderLabelComponentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdOrderLabelComponentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelComponentPayload>
+        }
+        update: {
+          args: Prisma.OdOrderLabelComponentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelComponentPayload>
+        }
+        deleteMany: {
+          args: Prisma.OdOrderLabelComponentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdOrderLabelComponentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdOrderLabelComponentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdOrderLabelComponentPayload>
+        }
+        aggregate: {
+          args: Prisma.OdOrderLabelComponentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdOrderLabelComponent>
+        }
+        groupBy: {
+          args: Prisma.OdOrderLabelComponentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOrderLabelComponentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdOrderLabelComponentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdOrderLabelComponentCountAggregateOutputType> | number
+        }
+      }
+    }
     OdOrderComponent: {
       payload: Prisma.$OdOrderComponentPayload<ExtArgs>
       fields: Prisma.OdOrderComponentFieldRefs
@@ -4502,6 +4569,8 @@ export type OdOrderLabelHeadScalarFieldEnum = (typeof OdOrderLabelHeadScalarFiel
 export const OdOrderLabelDetailScalarFieldEnum = {
   idDlkOrderLabelDetail: 'idDlkOrderLabelDetail',
   idDlkOrderLabelHead: 'idDlkOrderLabelHead',
+  idDlkOrderLabelComponent: 'idDlkOrderLabelComponent',
+  idDlkDigitalIdentifier: 'idDlkDigitalIdentifier',
   itemGlobal: 'itemGlobal',
   itemBySize: 'itemBySize',
   serialNumber: 'serialNumber',
@@ -4521,6 +4590,25 @@ export const OdOrderLabelDetailScalarFieldEnum = {
 } as const
 
 export type OdOrderLabelDetailScalarFieldEnum = (typeof OdOrderLabelDetailScalarFieldEnum)[keyof typeof OdOrderLabelDetailScalarFieldEnum]
+
+
+export const OdOrderLabelComponentScalarFieldEnum = {
+  idDlkOrderLabelComponent: 'idDlkOrderLabelComponent',
+  idDlkOrderLabelHead: 'idDlkOrderLabelHead',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  idDlkDigitalIdentifier: 'idDlkDigitalIdentifier',
+  numPiece: 'numPiece',
+  nameComponent: 'nameComponent',
+  codComponent: 'codComponent',
+  stateOrderLabelComponent: 'stateOrderLabelComponent',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOrderLabelComponentScalarFieldEnum = (typeof OdOrderLabelComponentScalarFieldEnum)[keyof typeof OdOrderLabelComponentScalarFieldEnum]
 
 
 export const OdOrderComponentScalarFieldEnum = {
@@ -5394,6 +5482,16 @@ export const OdOrderLabelDetailOrderByRelevanceFieldEnum = {
 export type OdOrderLabelDetailOrderByRelevanceFieldEnum = (typeof OdOrderLabelDetailOrderByRelevanceFieldEnum)[keyof typeof OdOrderLabelDetailOrderByRelevanceFieldEnum]
 
 
+export const OdOrderLabelComponentOrderByRelevanceFieldEnum = {
+  nameComponent: 'nameComponent',
+  codComponent: 'codComponent',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOrderLabelComponentOrderByRelevanceFieldEnum = (typeof OdOrderLabelComponentOrderByRelevanceFieldEnum)[keyof typeof OdOrderLabelComponentOrderByRelevanceFieldEnum]
+
+
 export const OdOrderComponentOrderByRelevanceFieldEnum = {
   codComponent: 'codComponent',
   nameComponent: 'nameComponent',
@@ -5791,6 +5889,7 @@ export type GlobalOmitConfig = {
   mdDigitalIdentifier?: Prisma.MdDigitalIdentifierOmit
   odOrderLabelHead?: Prisma.OdOrderLabelHeadOmit
   odOrderLabelDetail?: Prisma.OdOrderLabelDetailOmit
+  odOrderLabelComponent?: Prisma.OdOrderLabelComponentOmit
   odOrderComponent?: Prisma.OdOrderComponentOmit
   odProcessRoute?: Prisma.OdProcessRouteOmit
   odInputProcessRoute?: Prisma.OdInputProcessRouteOmit

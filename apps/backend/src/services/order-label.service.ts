@@ -48,6 +48,24 @@ const LABEL_HEAD_FOR_LIST = {
       numPiezas: true,
     },
   },
+  components: {
+    select: {
+      idDlkOrderLabelComponent: true,
+      idDlkOrderDetail: true,
+      idDlkDigitalIdentifier: true,
+      numPiece: true,
+      nameComponent: true,
+      codComponent: true,
+      digitalIdentifier: {
+        select: {
+          idDlkDigitalIdentifier: true,
+          codDigitalIdentifier: true,
+          typeDigitalIdentifier: true,
+        },
+      },
+    },
+    orderBy: { numPiece: "asc" },
+  },
 } satisfies Prisma.OdOrderLabelHeadSelect;
 
 export type OrderLabelHeadListRow = Prisma.OdOrderLabelHeadGetPayload<{
@@ -65,6 +83,17 @@ type SerialDraft = {
   print: string | null;
   pieceType: string | null;
   setGroupId: string | null;
+  /** Set → componente (pieza) al que pertenece este DPP. No-set → null. */
+  idDlkOrderLabelComponent: number | null;
+  /** No-set → identificador del DPP. Set → null (se resuelve vía el componente). */
+  idDlkDigitalIdentifier: number | null;
+};
+
+/** Pieza de un set al crear: nombre + identificador digital propio. */
+export type LabelPieceInput = {
+  numPiece?: number | null;
+  name?: string | null;
+  idDlkDigitalIdentifier: number;
 };
 
 /** Columnas de talla en OD_ORDER_DETAIL → etiqueta legible, en orden de presentación. */
@@ -131,6 +160,11 @@ export type CreateLabelHeadInput = {
   print?: string | null;
   /** Nombres de pieza para sets; si no llega y el colorway es set, se usan los por defecto. */
   pieceTypes?: string[] | null;
+  /**
+   * Piezas del set con su identificador digital por pieza (chaqueta → QR 1, pantalón → QR 2).
+   * Obligatorio cuando `esSet`. En no-set se ignora (se usa `idDlkDigitalIdentifier`).
+   */
+  pieces?: LabelPieceInput[] | null;
   /** Marca manual de set desde el formulario: si es true, cada unidad genera un DPP por pieza. */
   esSet?: boolean | number | null;
   /** Cantidad de piezas por unidad cuando `esSet`; mínimo 2, por defecto 2. */
@@ -162,6 +196,14 @@ export type UpdateLabelHeadInput = {
   flgStatutActif?: number | null;
   /** 1=Iniciado, 2=Concluido. status=2 promueve la orden a Ruta (stage=4). */
   statusStageOrderHead?: number | null;
+  /** No-set: nuevo identificador digital → cabecera (denormalizado) + todos los DPP. */
+  idDlkDigitalIdentifier?: number | null;
+  /** Set: edición por pieza (nombre + identificador). Update en sitio, no se tocan los seriales. */
+  pieces?: {
+    idDlkOrderLabelComponent: number;
+    name?: string | null;
+    idDlkDigitalIdentifier?: number | null;
+  }[] | null;
   codUsuarioCargaDl?: string;
 };
 
@@ -333,6 +375,11 @@ export class OrderLabelService {
         ? Number(input.finSerializacion)
         : null;
 
+    // Inicio de serialización SIEMPRE automático en el flujo normal: el cliente no
+    // puede fijarlo. Solo la vía legacy de rango explícito (sin colorway, con inicio+fin)
+    // conserva el inicio indicado, para no romper esa API.
+    let legacyRangeStart: number | null = null;
+
     // Unidades a generar. Con colorway + talla, una sola entrada por la talla seleccionada.
     let sizeUnits: { label: string | null; qty: number }[];
     // Desglose de producción enviado desde el modal (corte real: +15% merma o saldos).
@@ -375,6 +422,7 @@ export class OrderLabelService {
       if (inicio != null && fin != null) {
         if (fin < inicio) throw new Error("FIN_SERIALIZACION debe ser ≥ INICIO_SERIALIZACION");
         rangeStartLegacy = inicio;
+        legacyRangeStart = inicio;
         rangeEnd = fin;
       } else if (input.totalLabel != null && Number.isFinite(input.totalLabel)) {
         rangeEnd = Number(input.totalLabel);
@@ -393,12 +441,48 @@ export class OrderLabelService {
     // Cada unidad de un set genera `numPiezas` DPPs (uno por pieza).
     const esSet = input.esSet === true || input.esSet === 1;
     const numPiezas = esSet ? Math.max(Math.trunc(Number(input.numPiezas) || 2), 2) : 1;
-    const pieceLabels: (string | null)[] =
-      numPiezas > 1
-        ? input.pieceTypes && input.pieceTypes.length === numPiezas
-          ? input.pieceTypes
-          : defaultPieceLabels(numPiezas)
-        : [null];
+
+    // Piezas + identificador por pieza:
+    //  - Set: cada pieza trae nombre e identificador propio (van a OD_ORDER_LABEL_COMPONENT).
+    //  - No-set: una sola "pieza" (null) con el identificador de cabecera (va al detalle).
+    let pieceLabels: (string | null)[];
+    let pieceIdentifiers: number[];
+    if (esSet) {
+      if (!detail) {
+        throw new Error("Los sets requieren una orden de producción (colorway) para las piezas");
+      }
+      const pieces = Array.isArray(input.pieces) ? input.pieces : [];
+      if (pieces.length !== numPiezas) {
+        throw new Error(`Debes enviar ${numPiezas} piezas, cada una con su identificador digital`);
+      }
+      const defaults = defaultPieceLabels(numPiezas);
+      pieceLabels = pieces.map((p, i) => (p.name?.trim() ? p.name.trim() : defaults[i]));
+      pieceIdentifiers = pieces.map((p) => {
+        const id = Number(p.idDlkDigitalIdentifier);
+        if (!Number.isFinite(id) || id <= 0) {
+          throw new Error("Cada pieza del set debe tener un identificador digital");
+        }
+        return id;
+      });
+      // Cada pieza del set debe tener un identificador digital DISTINTO.
+      const uniqueIds = [...new Set(pieceIdentifiers)];
+      if (uniqueIds.length !== pieceIdentifiers.length) {
+        throw new Error("Cada pieza del set debe tener un identificador digital distinto");
+      }
+      // Validar que todos los identificadores de pieza existan.
+      const found = await this.prisma.mdDigitalIdentifier.count({
+        where: { idDlkDigitalIdentifier: { in: uniqueIds } },
+      });
+      if (found !== uniqueIds.length) {
+        throw new Error("Algún identificador digital de pieza no existe");
+      }
+    } else {
+      pieceLabels = [null];
+      pieceIdentifiers = [input.idDlkDigitalIdentifier];
+    }
+
+    // Identificador de cabecera (denormalizado): no-set = el único; set = el de la 1ª pieza.
+    const headIdentifierId = esSet ? pieceIdentifiers[0] : input.idDlkDigitalIdentifier;
 
     const totalDetails = totalUnits * numPiezas;
     if (totalDetails > MAX_LABEL_RANGE) {
@@ -409,16 +493,15 @@ export class OrderLabelService {
 
     const gtin = input.codGtin ?? null;
 
-    // inicioSerializacion: el indicado, o continuar tras el último rango del mismo GTIN.
+    // inicioSerializacion: siempre automático y secuencial a nivel de TODA la orden
+    // (continúa tras el último rango de cualquier etiqueta de la orden, sin importar el
+    // GTIN/talla). Solo la vía legacy de rango explícito usa el inicio indicado.
     let rangeStart: number;
-    if (inicio != null) {
-      rangeStart = inicio;
+    if (legacyRangeStart != null) {
+      rangeStart = legacyRangeStart;
     } else {
       const prev = await this.prisma.odOrderLabelHead.aggregate({
-        where: {
-          idDlkOrderHead: input.idDlkOrderHead,
-          ...(gtin ? { codGtin: gtin } : { codGtin: null }),
-        },
+        where: { idDlkOrderHead: input.idDlkOrderHead },
         _max: { finSerializacion: true },
       });
       rangeStart = (prev._max.finSerializacion ?? 0) + 1;
@@ -433,7 +516,7 @@ export class OrderLabelService {
       const labelHead = await tx.odOrderLabelHead.create({
         data: {
           idDlkOrderHead: input.idDlkOrderHead,
-          idDlkDigitalIdentifier: input.idDlkDigitalIdentifier,
+          idDlkDigitalIdentifier: headIdentifierId,
           idDlkOrderDetail: detail?.idDlkOrderDetail ?? null,
           codOrderLabel: input.codOrderLabel ?? null,
           codEstilo: input.codEstilo ?? detail?.codEstilo ?? null,
@@ -460,6 +543,30 @@ export class OrderLabelService {
         select: { idDlkOrderLabelHead: true },
       });
 
+      // Set: una fila por pieza en OD_ORDER_LABEL_COMPONENT (nombre + identificador).
+      // `componentIdByPiece[i]` enlaza cada pieza con su DPP; null en no-set.
+      const componentIdByPiece: (number | null)[] = pieceLabels.map(() => null);
+      if (esSet && detail) {
+        for (let i = 0; i < numPiezas; i++) {
+          const comp = await tx.odOrderLabelComponent.create({
+            data: {
+              idDlkOrderLabelHead: labelHead.idDlkOrderLabelHead,
+              idDlkOrderDetail: detail.idDlkOrderDetail,
+              idDlkDigitalIdentifier: pieceIdentifiers[i],
+              numPiece: i + 1,
+              nameComponent: pieceLabels[i],
+              codUsuarioCargaDl: codDl,
+              fecProcesoCargaDl: now,
+              fecProcesoModifDl: now,
+              desAccion: "INSERT",
+              flgStatutActif: 1,
+            },
+            select: { idDlkOrderLabelComponent: true },
+          });
+          componentIdByPiece[i] = comp.idDlkOrderLabelComponent;
+        }
+      }
+
       const drafts: SerialDraft[] = [];
       // Serial plano por prenda: cada pieza (incl. piezas de un set) consume su
       // propio número. `unitN` agrupa las piezas de un mismo set físico.
@@ -471,7 +578,8 @@ export class OrderLabelService {
           unitN++;
           const setGroupId =
             numPiezas > 1 ? `${labelHead.idDlkOrderLabelHead}-${unitN}` : null;
-          for (const piece of pieceLabels) {
+          for (let pi = 0; pi < pieceLabels.length; pi++) {
+            const piece = pieceLabels[pi];
             bySize++;
             const serial = buildSerialNumber(serialN);
             const sgtin = buildSgtin(gtin, serial, labelHead.idDlkOrderLabelHead);
@@ -486,6 +594,9 @@ export class OrderLabelService {
               size: sz.label,
               pieceType: piece,
               setGroupId,
+              // Set → su componente; no-set → identificador directo en el DPP.
+              idDlkOrderLabelComponent: esSet ? componentIdByPiece[pi] : null,
+              idDlkDigitalIdentifier: esSet ? null : pieceIdentifiers[0],
             });
             serialN++;
           }
@@ -506,6 +617,8 @@ export class OrderLabelService {
           size: d.size,
           pieceType: d.pieceType,
           setGroupId: d.setGroupId,
+          idDlkOrderLabelComponent: d.idDlkOrderLabelComponent,
+          idDlkDigitalIdentifier: d.idDlkDigitalIdentifier,
           isBlacklisted: 0,
           stateOrderLabelDetail: 1,
           fecProcesoCargaDl: now,
@@ -576,10 +689,60 @@ export class OrderLabelService {
       data.fehSignClose = input.signCloseResponsible ? now : null;
     }
 
+    // Identificador de cabecera (denormalizado):
+    //  - No-set: el nuevo identificador (también se propaga a los DPP, abajo).
+    //  - Set: sigue al identificador de la 1ª pieza editada.
+    let bulkDetailIdentifier: number | null = null;
+    if (input.idDlkDigitalIdentifier != null) {
+      const newId = Number(input.idDlkDigitalIdentifier);
+      if (Number.isFinite(newId) && newId > 0) {
+        data.idDlkDigitalIdentifier = newId;
+        bulkDetailIdentifier = newId;
+      }
+    }
+    const piecesEdit = Array.isArray(input.pieces) ? input.pieces : [];
+    // Cada pieza del set debe tener un identificador DISTINTO (valida antes de escribir).
+    const editIds = piecesEdit
+      .map((p) => p.idDlkDigitalIdentifier)
+      .filter((v): v is number => v != null && Number(v) > 0)
+      .map(Number);
+    if (new Set(editIds).size !== editIds.length) {
+      throw new Error("Cada pieza del set debe tener un identificador digital distinto");
+    }
+    const firstPieceId = piecesEdit.find(
+      (p) => p.idDlkDigitalIdentifier != null && Number(p.idDlkDigitalIdentifier) > 0
+    )?.idDlkDigitalIdentifier;
+    if (firstPieceId != null) {
+      data.idDlkDigitalIdentifier = Number(firstPieceId);
+    }
+
     await this.prisma.odOrderLabelHead.update({
       where: { idDlkOrderLabelHead: labelId },
       data,
     });
+
+    // No-set: propagar el identificador a todas las unidades (UPDATE en sitio, sin tocar seriales).
+    if (bulkDetailIdentifier != null) {
+      await this.prisma.odOrderLabelDetail.updateMany({
+        where: { idDlkOrderLabelHead: labelId },
+        data: { idDlkDigitalIdentifier: bulkDetailIdentifier, fecProcesoModifDl: now },
+      });
+    }
+
+    // Set: actualizar cada pieza (nombre + identificador) en sitio. Los DPP resuelven su
+    // identificador vía el componente, así que no se reescriben seriales ni se borra nada.
+    for (const p of piecesEdit) {
+      if (!p.idDlkOrderLabelComponent) continue;
+      const compData: Prisma.OdOrderLabelComponentUncheckedUpdateInput = { desAccion: "UPDATE" };
+      if (p.name !== undefined) compData.nameComponent = p.name?.trim() || null;
+      if (p.idDlkDigitalIdentifier != null && Number(p.idDlkDigitalIdentifier) > 0) {
+        compData.idDlkDigitalIdentifier = Number(p.idDlkDigitalIdentifier);
+      }
+      await this.prisma.odOrderLabelComponent.update({
+        where: { idDlkOrderLabelComponent: Number(p.idDlkOrderLabelComponent) },
+        data: compData,
+      });
+    }
 
     // Transición Etiqueta → Ruta. Misma convención que registro/suministro:
     // status=2 (Concluido) avanza a la siguiente etapa con status=1 (Iniciado).

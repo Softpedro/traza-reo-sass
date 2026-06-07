@@ -365,6 +365,7 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
         colorway={headModal.colorway}
         labelHead={headModal.labelHead}
         talla={headModal.talla}
+        labelHeads={labels}
         onSuccess={fetchAll}
       />
       <EtiquetaDetalleModal

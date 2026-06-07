@@ -58,6 +58,11 @@ export function getColumns(
       header: "Código",
     },
     {
+      id: "ordenPedido",
+      header: "Orden de Pedido",
+      cell: ({ row }) => row.original.orderForm ?? "—",
+    },
+    {
       id: "nombreComercial",
       header: "Nombre Comercial",
       cell: ({ row }) => (

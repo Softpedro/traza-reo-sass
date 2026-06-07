@@ -85,6 +85,7 @@ export const ModelName = {
   MdDigitalIdentifier: 'MdDigitalIdentifier',
   OdOrderLabelHead: 'OdOrderLabelHead',
   OdOrderLabelDetail: 'OdOrderLabelDetail',
+  OdOrderLabelComponent: 'OdOrderLabelComponent',
   OdOrderComponent: 'OdOrderComponent',
   OdProcessRoute: 'OdProcessRoute',
   OdInputProcessRoute: 'OdInputProcessRoute',
@@ -961,6 +962,8 @@ export type OdOrderLabelHeadScalarFieldEnum = (typeof OdOrderLabelHeadScalarFiel
 export const OdOrderLabelDetailScalarFieldEnum = {
   idDlkOrderLabelDetail: 'idDlkOrderLabelDetail',
   idDlkOrderLabelHead: 'idDlkOrderLabelHead',
+  idDlkOrderLabelComponent: 'idDlkOrderLabelComponent',
+  idDlkDigitalIdentifier: 'idDlkDigitalIdentifier',
   itemGlobal: 'itemGlobal',
   itemBySize: 'itemBySize',
   serialNumber: 'serialNumber',
@@ -980,6 +983,25 @@ export const OdOrderLabelDetailScalarFieldEnum = {
 } as const
 
 export type OdOrderLabelDetailScalarFieldEnum = (typeof OdOrderLabelDetailScalarFieldEnum)[keyof typeof OdOrderLabelDetailScalarFieldEnum]
+
+
+export const OdOrderLabelComponentScalarFieldEnum = {
+  idDlkOrderLabelComponent: 'idDlkOrderLabelComponent',
+  idDlkOrderLabelHead: 'idDlkOrderLabelHead',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  idDlkDigitalIdentifier: 'idDlkDigitalIdentifier',
+  numPiece: 'numPiece',
+  nameComponent: 'nameComponent',
+  codComponent: 'codComponent',
+  stateOrderLabelComponent: 'stateOrderLabelComponent',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdOrderLabelComponentScalarFieldEnum = (typeof OdOrderLabelComponentScalarFieldEnum)[keyof typeof OdOrderLabelComponentScalarFieldEnum]
 
 
 export const OdOrderComponentScalarFieldEnum = {
@@ -1851,6 +1873,16 @@ export const OdOrderLabelDetailOrderByRelevanceFieldEnum = {
 } as const
 
 export type OdOrderLabelDetailOrderByRelevanceFieldEnum = (typeof OdOrderLabelDetailOrderByRelevanceFieldEnum)[keyof typeof OdOrderLabelDetailOrderByRelevanceFieldEnum]
+
+
+export const OdOrderLabelComponentOrderByRelevanceFieldEnum = {
+  nameComponent: 'nameComponent',
+  codComponent: 'codComponent',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdOrderLabelComponentOrderByRelevanceFieldEnum = (typeof OdOrderLabelComponentOrderByRelevanceFieldEnum)[keyof typeof OdOrderLabelComponentOrderByRelevanceFieldEnum]
 
 
 export const OdOrderComponentOrderByRelevanceFieldEnum = {

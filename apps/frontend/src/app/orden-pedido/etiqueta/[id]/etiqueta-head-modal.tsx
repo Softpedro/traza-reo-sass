@@ -26,7 +26,11 @@ type DigitalIdentifierOption = {
   idDlkDigitalIdentifier: number;
   codDigitalIdentifier: string;
   typeDigitalIdentifier: string | null;
+  locationDigitalIdentifier: string | null;
 };
+
+/** Pieza en el formulario: nombre + identificador digital. `idComponent` solo en edición. */
+type PieceForm = { idComponent?: number; name: string; idDigital: number };
 
 interface Props {
   open: boolean;
@@ -37,6 +41,8 @@ interface Props {
   labelHead: LabelHead | null;
   /** Talla específica que esta etiqueta cubre (cada cabecera vive por (colorway × talla)). */
   talla: string | null;
+  /** Cabeceras ya existentes de la orden, para previsualizar el inicio automático. */
+  labelHeads: LabelHead[];
   onSuccess: () => void;
 }
 
@@ -64,22 +70,25 @@ export function EtiquetaHeadModal({
   colorway,
   labelHead,
   talla,
+  labelHeads,
   onSuccess,
 }: Props) {
   const [identifiers, setIdentifiers] = useState<DigitalIdentifierOption[]>([]);
   const [idDigital, setIdDigital] = useState<number>(0);
   const [gtin, setGtin] = useState("");
   const [estampado, setEstampado] = useState("");
-  const [inicio, setInicio] = useState("");
   const [estado, setEstado] = useState(1);
   const [esSet, setEsSet] = useState(false);
   const [numPiezas, setNumPiezas] = useState(2);
-  const [pieceNames, setPieceNames] = useState<string[]>([]);
+  const [pieces, setPieces] = useState<PieceForm[]>([]);
   const [cantidad, setCantidad] = useState("");
   const [saving, setSaving] = useState(false);
 
   /** Talla efectiva: la que llega por prop (create) o la guardada en labelHead (edit). */
   const tallaActual = talla ?? labelHead?.size ?? null;
+
+  /** ¿Esta etiqueta es un set? En create lo decide el toggle; en edit, si tiene componentes. */
+  const isSet = mode === "create" ? esSet : (labelHead?.components?.length ?? 0) > 0;
 
   /** Cantidad por defecto = lo que el pedido trae para esta talla. */
   const defaultQtyForTalla = useMemo(() => {
@@ -92,12 +101,30 @@ export function EtiquetaHeadModal({
   const totalUnidades = Number(cantidad) || 0;
   const totalDetails = totalUnidades * (esSet ? numPiezas : 1);
 
-  const inicioNum = inicio.trim() === "" ? null : Number(inicio);
+  // Unidades / DPPs a mostrar (en edit se derivan del total guardado).
+  const piezasCount = isSet ? Math.max(pieces.length, 1) : 1;
+  const unidadesShown =
+    mode === "create"
+      ? totalUnidades
+      : labelHead?.totalLabel != null
+        ? Math.round(labelHead.totalLabel / piezasCount)
+        : 0;
+  const dppsShown = mode === "create" ? totalDetails : (labelHead?.totalLabel ?? 0);
+
+  // Inicio SIEMPRE automático: secuencia continua a nivel de toda la orden (tras el último
+  // rango de cualquier etiqueta, sin importar GTIN/talla). Misma regla que el backend, que
+  // es la autoridad al guardar. El usuario solo lo visualiza.
+  const inicioPreview = useMemo(() => {
+    if (mode === "edit") return labelHead?.inicioSerializacion ?? null;
+    const maxFin = labelHeads.reduce((m, l) => Math.max(m, l.finSerializacion ?? 0), 0);
+    return maxFin + 1;
+  }, [mode, labelHead, labelHeads]);
+
   const finaliza =
     mode === "edit"
       ? (labelHead?.finSerializacion ?? null)
-      : inicioNum != null && Number.isFinite(inicioNum) && totalDetails > 0
-        ? inicioNum + totalDetails - 1
+      : inicioPreview != null && totalDetails > 0
+        ? inicioPreview + totalDetails - 1
         : null;
 
   useEffect(() => {
@@ -112,42 +139,83 @@ export function EtiquetaHeadModal({
 
   useEffect(() => {
     if (!open) return;
-    setEsSet(false);
-    setNumPiezas(2);
     if (mode === "edit" && labelHead) {
-      setIdDigital(labelHead.idDlkDigitalIdentifier);
+      setIdDigital(labelHead.idDlkDigitalIdentifier ?? 0);
       setGtin(labelHead.codGtin ?? "");
       setEstampado(labelHead.estampado ?? "");
-      setInicio(labelHead.inicioSerializacion != null ? String(labelHead.inicioSerializacion) : "");
       setEstado(labelHead.stateOrderLabelHead === 0 ? 0 : 1);
       setCantidad(labelHead.totalLabel != null ? String(labelHead.totalLabel) : "");
+      const comps = (labelHead.components ?? [])
+        .slice()
+        .sort((a, b) => a.numPiece - b.numPiece);
+      setPieces(
+        comps.map((c) => ({
+          idComponent: c.idDlkOrderLabelComponent,
+          name: c.nameComponent ?? "",
+          idDigital: c.idDlkDigitalIdentifier ?? 0,
+        }))
+      );
+      setEsSet(comps.length > 0);
+      setNumPiezas(comps.length > 0 ? comps.length : 2);
     } else {
       setIdDigital(0);
       setGtin("");
       setEstampado("");
-      setInicio("");
       setEstado(1);
+      setEsSet(false);
+      setNumPiezas(2);
+      setPieces([]);
       setCantidad(defaultQtyForTalla > 0 ? String(defaultQtyForTalla) : "");
     }
   }, [open, mode, labelHead, defaultQtyForTalla]);
 
+  // Create: sincroniza la lista de piezas con el nº de piezas elegido.
   useEffect(() => {
+    if (mode !== "create") return;
     if (!esSet) {
-      setPieceNames([]);
+      setPieces([]);
       return;
     }
-    setPieceNames((prev) => defaultPieceNames(numPiezas).map((def, i) => prev[i] ?? def));
-  }, [esSet, numPiezas]);
+    setPieces((prev) => {
+      const defaults = defaultPieceNames(numPiezas);
+      return Array.from({ length: numPiezas }, (_, i) =>
+        prev[i] ?? { name: defaults[i], idDigital: 0 }
+      );
+    });
+  }, [mode, esSet, numPiezas]);
+
+  function setPiece(i: number, patch: Partial<PieceForm>) {
+    setPieces((prev) => prev.map((p, idx) => (idx === i ? { ...p, ...patch } : p)));
+  }
+
+  /**
+   * Asigna un identificador a la pieza i. Si otra pieza ya lo tenía, se INTERCAMBIAN
+   * (esa pieza recibe el anterior de la pieza i). Así nunca hay duplicados y siempre se
+   * puede corregir/revertir una selección, incluso con solo 2 identificadores.
+   */
+  function selectPieceIdentifier(i: number, newId: number) {
+    setPieces((prev) => {
+      const prevId = prev[i]?.idDigital ?? 0;
+      if (prevId === newId) return prev;
+      return prev.map((p, idx) => {
+        if (idx === i) return { ...p, idDigital: newId };
+        if (p.idDigital === newId) return { ...p, idDigital: prevId };
+        return p;
+      });
+    });
+  }
+
+  /** Ubicación del identificador digital seleccionado (ayuda visual para el usuario). */
+  function locationOf(id: number): string | null {
+    return identifiers.find((it) => it.idDlkDigitalIdentifier === id)?.locationDigitalIdentifier ?? null;
+  }
 
   async function handleSubmit() {
     if (!order || !colorway) return;
+
     if (mode === "create") {
       if (!tallaActual) {
         alert("Falta la talla — recargá la página");
-        return;
-      }
-      if (!idDigital || idDigital <= 0) {
-        alert("Debes seleccionar un identificador digital");
         return;
       }
       if (!gtin.trim()) {
@@ -158,15 +226,32 @@ export function EtiquetaHeadModal({
         alert("Ingresa la cantidad de producción para esta talla");
         return;
       }
-      if (esSet && numPiezas < 2) {
+    }
+
+    // Validación de identificadores: set → por pieza; no-set → uno solo.
+    if (isSet) {
+      if (mode === "create" && numPiezas < 2) {
         alert("Un set debe tener al menos 2 piezas");
         return;
       }
-      if (esSet && pieceNames.some((p) => !p.trim())) {
+      if (pieces.some((p) => !p.name.trim())) {
         alert("Asigna un nombre a cada pieza del set");
         return;
       }
+      if (pieces.some((p) => !p.idDigital || p.idDigital <= 0)) {
+        alert("Selecciona el identificador digital de cada pieza");
+        return;
+      }
+      const chosen = pieces.map((p) => p.idDigital);
+      if (new Set(chosen).size !== chosen.length) {
+        alert("Cada pieza debe tener un identificador digital distinto");
+        return;
+      }
+    } else if (!idDigital || idDigital <= 0) {
+      alert("Debes seleccionar un identificador digital");
+      return;
     }
+
     setSaving(true);
     try {
       let url: string;
@@ -178,17 +263,22 @@ export function EtiquetaHeadModal({
         method = "POST";
         payload = {
           idDlkOrderDetail: colorway.idDlkOrderDetail,
-          idDlkDigitalIdentifier: idDigital,
+          // Identificador de cabecera (denormalizado): set → 1ª pieza; no-set → el único.
+          idDlkDigitalIdentifier: esSet ? pieces[0]?.idDigital : idDigital,
           codGtin: gtin.trim() || null,
           size: tallaActual,
           totalLabel: totalUnidades,
           estampado: estampado.trim() || null,
-          ...(inicioNum != null && Number.isFinite(inicioNum)
-            ? { inicioSerializacion: inicioNum }
-            : {}),
           esSet: esSet ? 1 : 0,
           ...(esSet
-            ? { numPiezas, pieceTypes: pieceNames.map((p) => p.trim()) }
+            ? {
+                numPiezas,
+                pieces: pieces.map((p, i) => ({
+                  numPiece: i + 1,
+                  name: p.name.trim(),
+                  idDlkDigitalIdentifier: p.idDigital,
+                })),
+              }
             : {}),
         };
       } else {
@@ -200,6 +290,15 @@ export function EtiquetaHeadModal({
           codGtin: gtin.trim() || null,
           estampado: estampado.trim() || null,
           stateOrderLabelHead: estado,
+          ...(isSet
+            ? {
+                pieces: pieces.map((p) => ({
+                  idDlkOrderLabelComponent: p.idComponent,
+                  name: p.name.trim(),
+                  idDlkDigitalIdentifier: p.idDigital,
+                })),
+              }
+            : { idDlkDigitalIdentifier: idDigital }),
         };
       }
 
@@ -224,9 +323,24 @@ export function EtiquetaHeadModal({
 
   if (!open) return null;
 
+  const renderIdentifierItem = (it: DigitalIdentifierOption) => (
+    <SelectItem key={it.idDlkDigitalIdentifier} value={String(it.idDlkDigitalIdentifier)}>
+      <span className="block">
+        {it.codDigitalIdentifier}
+        {it.typeDigitalIdentifier ? ` — ${it.typeDigitalIdentifier}` : ""}
+      </span>
+      {it.locationDigitalIdentifier && (
+        <span className="block text-xs text-muted-foreground">
+          📍 {it.locationDigitalIdentifier}
+        </span>
+      )}
+    </SelectItem>
+  );
+  const identifierItems = identifiers.map(renderIdentifierItem);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {mode === "create" ? "Crear etiqueta" : "Actualizar etiqueta"}
@@ -269,17 +383,10 @@ export function EtiquetaHeadModal({
               placeholder="GTIN-14 de esta talla"
             />
           </Row>
-          <Row label="Identificador Digital">
-            {mode === "edit" ? (
-              <Input
-                readOnly
-                value={
-                  labelHead?.digitalIdentifier?.codDigitalIdentifier ??
-                  labelHead?.identifierType ??
-                  "—"
-                }
-              />
-            ) : (
+
+          {/* Identificador a nivel cabecera: SOLO para etiquetas no-set. En sets va por pieza. */}
+          {!isSet && (
+            <Row label="Identificador Digital">
               <Select
                 value={idDigital ? String(idDigital) : ""}
                 onValueChange={(v) => setIdDigital(Number(v))}
@@ -287,20 +394,16 @@ export function EtiquetaHeadModal({
                 <SelectTrigger>
                   <SelectValue placeholder="Seleccionar identificador" />
                 </SelectTrigger>
-                <SelectContent>
-                  {identifiers.map((it) => (
-                    <SelectItem
-                      key={it.idDlkDigitalIdentifier}
-                      value={String(it.idDlkDigitalIdentifier)}
-                    >
-                      {it.codDigitalIdentifier}
-                      {it.typeDigitalIdentifier ? ` — ${it.typeDigitalIdentifier}` : ""}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
+                <SelectContent>{identifierItems}</SelectContent>
               </Select>
-            )}
-          </Row>
+              {idDigital > 0 && locationOf(idDigital) && (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  📍 Ubicación: {locationOf(idDigital)}
+                </p>
+              )}
+            </Row>
+          )}
+
           <Row label="Estampado">
             <Select value={estampado} onValueChange={setEstampado}>
               <SelectTrigger>
@@ -316,7 +419,8 @@ export function EtiquetaHeadModal({
             </Select>
           </Row>
 
-          {mode === "create" && (
+          {/* ¿Es set? / Cantidad de piezas — editable en create, solo lectura en edit. */}
+          {mode === "create" ? (
             <>
               <Row label="¿Es set?">
                 <Select value={esSet ? "1" : "0"} onValueChange={(v) => setEsSet(v === "1")}>
@@ -342,15 +446,23 @@ export function EtiquetaHeadModal({
                 </Row>
               )}
             </>
+          ) : (
+            <>
+              <Row label="¿Es set?">
+                <Input readOnly value={isSet ? "Sí — un DPP por pieza" : "No"} />
+              </Row>
+              {isSet && (
+                <Row label="Cantidad de piezas">
+                  <Input readOnly value={String(pieces.length)} />
+                </Row>
+              )}
+            </>
           )}
 
-          {mode === "edit" ? (
-            <Row label="Total">
-              <Input readOnly value={labelHead?.totalLabel != null ? String(labelHead.totalLabel) : "—"} />
-            </Row>
-          ) : (
-            <div className="flex flex-col gap-2 rounded-md border bg-muted/30 px-3 py-2">
-              <Row label="Cantidad">
+          {/* Cantidad de producción — editable en create, solo lectura en edit. */}
+          <div className="flex flex-col gap-2 rounded-md border bg-muted/30 px-3 py-2">
+            <Row label="Cantidad">
+              {mode === "create" ? (
                 <Input
                   type="number"
                   min="0"
@@ -358,27 +470,68 @@ export function EtiquetaHeadModal({
                   onChange={(e) => setCantidad(e.target.value)}
                   placeholder={`Unidades para talla ${tallaActual ?? ""}`}
                 />
-              </Row>
-              <p className="text-xs text-muted-foreground">
-                Producción: <strong>{totalUnidades}</strong>
-                {esSet ? ` · ${totalDetails} DPPs` : ""}
-                {defaultQtyForTalla > 0 ? ` · pedido: ${defaultQtyForTalla}` : ""}
-              </p>
-            </div>
-          )}
+              ) : (
+                <Input readOnly value={String(unidadesShown)} />
+              )}
+            </Row>
+            <p className="text-xs text-muted-foreground">
+              Producción: <strong>{unidadesShown}</strong>
+              {isSet ? ` · ${dppsShown} DPPs` : ""}
+              {defaultQtyForTalla > 0 ? ` · pedido: ${defaultQtyForTalla}` : ""}
+            </p>
+          </div>
 
           <Row label="Inicia">
-            <Input
-              type="number"
-              value={inicio}
-              onChange={(e) => setInicio(e.target.value)}
-              readOnly={mode === "edit"}
-              placeholder={mode === "create" ? "Automático si se deja vacío" : ""}
-            />
+            <Input readOnly value={inicioPreview != null ? String(inicioPreview) : "—"} />
           </Row>
           <Row label="Finaliza">
             <Input readOnly value={finaliza != null ? String(finaliza) : "—"} />
           </Row>
+          <p className="text-center text-xs text-muted-foreground">
+            El rango de serialización es automático y secuencial; no se puede editar.
+          </p>
+
+          {/* Piezas del set: nombre + identificador digital por pieza. */}
+          {isSet && pieces.length > 0 && (
+            <div className="flex flex-col gap-3 rounded-md border border-amber-300 bg-amber-50 px-3 py-3">
+              <p className="text-xs text-amber-800">
+                Set de <strong>{pieces.length} piezas</strong>: se genera un DPP por pieza (
+                <strong>{dppsShown}</strong> en total).
+              </p>
+              {pieces.map((p, i) => (
+                <div key={p.idComponent ?? i} className="grid gap-2 sm:grid-cols-2">
+                  <div className="flex flex-col gap-1">
+                    <Label className="text-xs font-semibold text-amber-800">Pieza {i + 1}</Label>
+                    <Input
+                      value={p.name}
+                      placeholder={`Pieza ${i + 1}`}
+                      onChange={(e) => setPiece(i, { name: e.target.value })}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <Label className="text-xs font-semibold text-amber-800">
+                      Identificador Digital
+                    </Label>
+                    <Select
+                      value={p.idDigital ? String(p.idDigital) : ""}
+                      onValueChange={(v) => selectPieceIdentifier(i, Number(v))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Seleccionar" />
+                      </SelectTrigger>
+                      {/* Todas las opciones: si eliges una que otra pieza tiene, se intercambian. */}
+                      <SelectContent>{identifiers.map(renderIdentifierItem)}</SelectContent>
+                    </Select>
+                    {p.idDigital > 0 && locationOf(p.idDigital) && (
+                      <p className="text-xs text-amber-700">
+                        📍 Ubicación: {locationOf(p.idDigital)}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           {mode === "edit" && (
             <Row label="Estado">
@@ -392,32 +545,6 @@ export function EtiquetaHeadModal({
                 </SelectContent>
               </Select>
             </Row>
-          )}
-
-          {mode === "create" && esSet && (
-            <div className="flex flex-col gap-2 rounded-md border border-amber-300 bg-amber-50 px-3 py-2">
-              <p className="text-xs text-amber-800">
-                Etiqueta marcada como <strong>set de {numPiezas} piezas</strong>: se generarán{" "}
-                <strong>{totalDetails > 0 ? totalDetails : numPiezas}</strong> DPPs (
-                {numPiezas} por unidad), uno por pieza.
-              </p>
-              {pieceNames.map((name, i) => (
-                <div key={i} className="grid grid-cols-3 items-center gap-3">
-                  <Label className="text-right text-xs font-semibold text-amber-800">
-                    Pieza {i + 1}
-                  </Label>
-                  <Input
-                    className="col-span-2"
-                    value={name}
-                    onChange={(e) =>
-                      setPieceNames((prev) =>
-                        prev.map((p, idx) => (idx === i ? e.target.value : p))
-                      )
-                    }
-                  />
-                </div>
-              ))}
-            </div>
           )}
         </div>
 

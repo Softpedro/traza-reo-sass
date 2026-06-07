@@ -196,6 +196,14 @@ export type OdOrderLabelHead = Prisma.OdOrderLabelHeadModel
  */
 export type OdOrderLabelDetail = Prisma.OdOrderLabelDetailModel
 /**
+ * Model OdOrderLabelComponent
+ * *
+ *  * Pieza de un set dentro de una etiqueta (DPP). Una fila por (cabecera × pieza).
+ *  * Aquí vive el identificador digital POR PIEZA en los sets (chaqueta → QR 1, pantalón → QR 2).
+ *  * En etiquetas no-set no se usa: el identificador va en OD_ORDER_LABEL_DETAIL.
+ */
+export type OdOrderLabelComponent = Prisma.OdOrderLabelComponentModel
+/**
  * Model OdOrderComponent
  * *
  *  * Componente de una orden (explota un OD_ORDER_DETAIL set en sus piezas: chaqueta, pantalón…).

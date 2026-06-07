@@ -36,6 +36,11 @@ type SupplierOption = {
   nameSupplier: string;
 };
 
+type OrderHeadOption = {
+  idDlkOrderHead: number;
+  codOrderHead: string | null;
+};
+
 type FormState = {
   idDlkSupplier: number;
   typeAvio: string;
@@ -234,6 +239,7 @@ export function AviosModal({ open, onOpenChange, mode, avios, onSuccess }: Avios
   const [saving, setSaving] = useState(false);
   const [detailAvios, setDetailAvios] = useState<Avios | null>(null);
   const [proveedores, setProveedores] = useState<SupplierOption[]>([]);
+  const [ordenes, setOrdenes] = useState<OrderHeadOption[]>([]);
   const readOnly = mode === "view";
 
   useEffect(() => {
@@ -257,6 +263,25 @@ export function AviosModal({ open, onOpenChange, mode, avios, onSuccess }: Avios
       .catch((err) => {
         console.error("Error al cargar proveedores:", err);
         setProveedores([]);
+      });
+
+    apiFetch("/api/order-heads")
+      .then(async (res) => {
+        const data: unknown = await res.json();
+        if (!res.ok || !Array.isArray(data)) {
+          if (!res.ok) console.error("Error al cargar órdenes de pedido:", data);
+          setOrdenes([]);
+          return;
+        }
+        setOrdenes(
+          (data as OrderHeadOption[])
+            .filter((o) => o.codOrderHead)
+            .map((o) => ({ idDlkOrderHead: o.idDlkOrderHead, codOrderHead: o.codOrderHead }))
+        );
+      })
+      .catch((err) => {
+        console.error("Error al cargar órdenes de pedido:", err);
+        setOrdenes([]);
       });
   }, [open]);
 
@@ -372,6 +397,15 @@ export function AviosModal({ open, onOpenChange, mode, avios, onSuccess }: Avios
         : `Detalle — ${avios?.codAvio ?? ""}`;
 
   const selectedProv = proveedores.find((p) => p.idDlkSupplier === form.idDlkSupplier);
+
+  // Opciones de orden de pedido (OD_ORDER_HEAD). Si el valor guardado no está en la
+  // lista (dato legacy), se antepone para no perderlo en edición.
+  const ordenOptions = (() => {
+    const codes = ordenes.map((o) => o.codOrderHead!).filter(Boolean);
+    return form.orderForm && !codes.includes(form.orderForm)
+      ? [form.orderForm, ...codes]
+      : codes;
+  })();
 
   const codigoDisplay =
     mode === "create"
@@ -539,13 +573,28 @@ export function AviosModal({ open, onOpenChange, mode, avios, onSuccess }: Avios
           />
 
           <SectionTitle>Pedido</SectionTitle>
-          <FieldText
-            label="Orden de pedido"
-            value={form.orderForm}
-            onChange={(v) => set("orderForm", v)}
-            readOnly={readOnly}
-            placeholder="Orden para la que se requiere el avío"
-          />
+          <div className="flex flex-col gap-1">
+            <Label className="text-xs text-muted-foreground">Orden de pedido</Label>
+            {readOnly ? (
+              <Input readOnly value={form.orderForm || "—"} />
+            ) : (
+              <Select
+                value={form.orderForm || ""}
+                onValueChange={(v) => set("orderForm", v)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccionar orden de pedido" />
+                </SelectTrigger>
+                <SelectContent>
+                  {ordenOptions.map((cod) => (
+                    <SelectItem key={cod} value={cod}>
+                      {cod}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          </div>
           <FieldText
             label="Medidas"
             value={form.measuresAvio}

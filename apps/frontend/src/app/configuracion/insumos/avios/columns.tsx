@@ -51,6 +51,11 @@ export function getColumns(
   return [
     { accessorKey: "codAvio", header: "Código" },
     {
+      id: "ordenPedido",
+      header: "Orden de Pedido",
+      cell: ({ row }) => row.original.orderForm ?? "—",
+    },
+    {
       id: "nameAvio",
       header: "Nombre",
       cell: ({ row }) => (

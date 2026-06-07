@@ -200,9 +200,13 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
   let y = h - topMargin; // cursor descendente desde el borde superior
 
   // Logo de marca (o nombre de la marca si no hay logo).
-  const logoMaxH = 9 * MM_TO_PT;
+  // El logo ocupa todo el ancho de la etiqueta (de inicio a fin). La altura se
+  // limita para no invadir el contenido inferior, pero para logos anchos manda
+  // el ancho, así que queda lo más grande posible.
+  const logoMaxW = w;
+  const logoMaxH = 16 * MM_TO_PT;
   if (logo) {
-    const s = Math.min(innerW / logo.width, logoMaxH / logo.height);
+    const s = Math.min(logoMaxW / logo.width, logoMaxH / logo.height);
     const lw = logo.width * s;
     const lh = logo.height * s;
     page.drawImage(logo, { x: (w - lw) / 2, y: y - lh, width: lw, height: lh });

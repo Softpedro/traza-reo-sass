@@ -75,6 +75,21 @@ export const SIZE_FIELDS: { field: keyof Colorway; label: string }[] = [
   { field: "sizeXxl", label: "XXL" },
 ];
 
+/** Pieza de un set en una etiqueta (OD_ORDER_LABEL_COMPONENT) con su identificador digital. */
+export type LabelComponent = {
+  idDlkOrderLabelComponent: number;
+  idDlkOrderDetail: number;
+  idDlkDigitalIdentifier: number;
+  numPiece: number;
+  nameComponent: string | null;
+  codComponent: string | null;
+  digitalIdentifier?: {
+    idDlkDigitalIdentifier: number;
+    codDigitalIdentifier: string;
+    typeDigitalIdentifier: string | null;
+  } | null;
+};
+
 /** Cabecera de etiqueta (OD_ORDER_LABEL_HEAD) de un colorway. */
 export type LabelHead = {
   idDlkOrderLabelHead: number;
@@ -97,6 +112,8 @@ export type LabelHead = {
     codDigitalIdentifier: string;
     typeDigitalIdentifier: string | null;
   } | null;
+  /** Piezas del set con su identificador (vacío en etiquetas no-set). */
+  components?: LabelComponent[];
   /** Colorway de origen (OD_ORDER_DETAIL); fondoTela es constante para toda la etiqueta. */
   orderDetail?: {
     idDlkOrderDetail: number;

@@ -30,6 +30,8 @@ export type AggregateOdOrderLabelDetail = {
 export type OdOrderLabelDetailAvgAggregateOutputType = {
   idDlkOrderLabelDetail: number | null
   idDlkOrderLabelHead: number | null
+  idDlkOrderLabelComponent: number | null
+  idDlkDigitalIdentifier: number | null
   itemGlobal: number | null
   itemBySize: number | null
   isBlacklisted: number | null
@@ -39,6 +41,8 @@ export type OdOrderLabelDetailAvgAggregateOutputType = {
 export type OdOrderLabelDetailSumAggregateOutputType = {
   idDlkOrderLabelDetail: number | null
   idDlkOrderLabelHead: number | null
+  idDlkOrderLabelComponent: number | null
+  idDlkDigitalIdentifier: number | null
   itemGlobal: number | null
   itemBySize: number | null
   isBlacklisted: number | null
@@ -48,6 +52,8 @@ export type OdOrderLabelDetailSumAggregateOutputType = {
 export type OdOrderLabelDetailMinAggregateOutputType = {
   idDlkOrderLabelDetail: number | null
   idDlkOrderLabelHead: number | null
+  idDlkOrderLabelComponent: number | null
+  idDlkDigitalIdentifier: number | null
   itemGlobal: number | null
   itemBySize: number | null
   serialNumber: string | null
@@ -69,6 +75,8 @@ export type OdOrderLabelDetailMinAggregateOutputType = {
 export type OdOrderLabelDetailMaxAggregateOutputType = {
   idDlkOrderLabelDetail: number | null
   idDlkOrderLabelHead: number | null
+  idDlkOrderLabelComponent: number | null
+  idDlkDigitalIdentifier: number | null
   itemGlobal: number | null
   itemBySize: number | null
   serialNumber: string | null
@@ -90,6 +98,8 @@ export type OdOrderLabelDetailMaxAggregateOutputType = {
 export type OdOrderLabelDetailCountAggregateOutputType = {
   idDlkOrderLabelDetail: number
   idDlkOrderLabelHead: number
+  idDlkOrderLabelComponent: number
+  idDlkDigitalIdentifier: number
   itemGlobal: number
   itemBySize: number
   serialNumber: number
@@ -113,6 +123,8 @@ export type OdOrderLabelDetailCountAggregateOutputType = {
 export type OdOrderLabelDetailAvgAggregateInputType = {
   idDlkOrderLabelDetail?: true
   idDlkOrderLabelHead?: true
+  idDlkOrderLabelComponent?: true
+  idDlkDigitalIdentifier?: true
   itemGlobal?: true
   itemBySize?: true
   isBlacklisted?: true
@@ -122,6 +134,8 @@ export type OdOrderLabelDetailAvgAggregateInputType = {
 export type OdOrderLabelDetailSumAggregateInputType = {
   idDlkOrderLabelDetail?: true
   idDlkOrderLabelHead?: true
+  idDlkOrderLabelComponent?: true
+  idDlkDigitalIdentifier?: true
   itemGlobal?: true
   itemBySize?: true
   isBlacklisted?: true
@@ -131,6 +145,8 @@ export type OdOrderLabelDetailSumAggregateInputType = {
 export type OdOrderLabelDetailMinAggregateInputType = {
   idDlkOrderLabelDetail?: true
   idDlkOrderLabelHead?: true
+  idDlkOrderLabelComponent?: true
+  idDlkDigitalIdentifier?: true
   itemGlobal?: true
   itemBySize?: true
   serialNumber?: true
@@ -152,6 +168,8 @@ export type OdOrderLabelDetailMinAggregateInputType = {
 export type OdOrderLabelDetailMaxAggregateInputType = {
   idDlkOrderLabelDetail?: true
   idDlkOrderLabelHead?: true
+  idDlkOrderLabelComponent?: true
+  idDlkDigitalIdentifier?: true
   itemGlobal?: true
   itemBySize?: true
   serialNumber?: true
@@ -173,6 +191,8 @@ export type OdOrderLabelDetailMaxAggregateInputType = {
 export type OdOrderLabelDetailCountAggregateInputType = {
   idDlkOrderLabelDetail?: true
   idDlkOrderLabelHead?: true
+  idDlkOrderLabelComponent?: true
+  idDlkDigitalIdentifier?: true
   itemGlobal?: true
   itemBySize?: true
   serialNumber?: true
@@ -281,6 +301,8 @@ export type OdOrderLabelDetailGroupByArgs<ExtArgs extends runtime.Types.Extensio
 export type OdOrderLabelDetailGroupByOutputType = {
   idDlkOrderLabelDetail: number
   idDlkOrderLabelHead: number
+  idDlkOrderLabelComponent: number | null
+  idDlkDigitalIdentifier: number | null
   itemGlobal: number
   itemBySize: number
   serialNumber: string
@@ -325,6 +347,8 @@ export type OdOrderLabelDetailWhereInput = {
   NOT?: Prisma.OdOrderLabelDetailWhereInput | Prisma.OdOrderLabelDetailWhereInput[]
   idDlkOrderLabelDetail?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
   idDlkOrderLabelHead?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
+  idDlkOrderLabelComponent?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
+  idDlkDigitalIdentifier?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
   itemGlobal?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
   itemBySize?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
   serialNumber?: Prisma.StringFilter<"OdOrderLabelDetail"> | string
@@ -342,12 +366,16 @@ export type OdOrderLabelDetailWhereInput = {
   fecProcesoModifDl?: Prisma.DateTimeNullableFilter<"OdOrderLabelDetail"> | Date | string | null
   codUsuarioAuditor?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   labelHead?: Prisma.XOR<Prisma.OdOrderLabelHeadScalarRelationFilter, Prisma.OdOrderLabelHeadWhereInput>
+  labelComponent?: Prisma.XOR<Prisma.OdOrderLabelComponentNullableScalarRelationFilter, Prisma.OdOrderLabelComponentWhereInput> | null
+  digitalIdentifier?: Prisma.XOR<Prisma.MdDigitalIdentifierNullableScalarRelationFilter, Prisma.MdDigitalIdentifierWhereInput> | null
   unitTraces?: Prisma.OdUnitTraceListRelationFilter
 }
 
 export type OdOrderLabelDetailOrderByWithRelationInput = {
   idDlkOrderLabelDetail?: Prisma.SortOrder
   idDlkOrderLabelHead?: Prisma.SortOrder
+  idDlkOrderLabelComponent?: Prisma.SortOrderInput | Prisma.SortOrder
+  idDlkDigitalIdentifier?: Prisma.SortOrderInput | Prisma.SortOrder
   itemGlobal?: Prisma.SortOrder
   itemBySize?: Prisma.SortOrder
   serialNumber?: Prisma.SortOrder
@@ -365,6 +393,8 @@ export type OdOrderLabelDetailOrderByWithRelationInput = {
   fecProcesoModifDl?: Prisma.SortOrderInput | Prisma.SortOrder
   codUsuarioAuditor?: Prisma.SortOrderInput | Prisma.SortOrder
   labelHead?: Prisma.OdOrderLabelHeadOrderByWithRelationInput
+  labelComponent?: Prisma.OdOrderLabelComponentOrderByWithRelationInput
+  digitalIdentifier?: Prisma.MdDigitalIdentifierOrderByWithRelationInput
   unitTraces?: Prisma.OdUnitTraceOrderByRelationAggregateInput
   _relevance?: Prisma.OdOrderLabelDetailOrderByRelevanceInput
 }
@@ -376,6 +406,8 @@ export type OdOrderLabelDetailWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.OdOrderLabelDetailWhereInput[]
   NOT?: Prisma.OdOrderLabelDetailWhereInput | Prisma.OdOrderLabelDetailWhereInput[]
   idDlkOrderLabelHead?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
+  idDlkOrderLabelComponent?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
+  idDlkDigitalIdentifier?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
   itemGlobal?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
   itemBySize?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
   serialNumber?: Prisma.StringFilter<"OdOrderLabelDetail"> | string
@@ -392,12 +424,16 @@ export type OdOrderLabelDetailWhereUniqueInput = Prisma.AtLeast<{
   fecProcesoModifDl?: Prisma.DateTimeNullableFilter<"OdOrderLabelDetail"> | Date | string | null
   codUsuarioAuditor?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
   labelHead?: Prisma.XOR<Prisma.OdOrderLabelHeadScalarRelationFilter, Prisma.OdOrderLabelHeadWhereInput>
+  labelComponent?: Prisma.XOR<Prisma.OdOrderLabelComponentNullableScalarRelationFilter, Prisma.OdOrderLabelComponentWhereInput> | null
+  digitalIdentifier?: Prisma.XOR<Prisma.MdDigitalIdentifierNullableScalarRelationFilter, Prisma.MdDigitalIdentifierWhereInput> | null
   unitTraces?: Prisma.OdUnitTraceListRelationFilter
 }, "idDlkOrderLabelDetail" | "sgtinFull">
 
 export type OdOrderLabelDetailOrderByWithAggregationInput = {
   idDlkOrderLabelDetail?: Prisma.SortOrder
   idDlkOrderLabelHead?: Prisma.SortOrder
+  idDlkOrderLabelComponent?: Prisma.SortOrderInput | Prisma.SortOrder
+  idDlkDigitalIdentifier?: Prisma.SortOrderInput | Prisma.SortOrder
   itemGlobal?: Prisma.SortOrder
   itemBySize?: Prisma.SortOrder
   serialNumber?: Prisma.SortOrder
@@ -427,6 +463,8 @@ export type OdOrderLabelDetailScalarWhereWithAggregatesInput = {
   NOT?: Prisma.OdOrderLabelDetailScalarWhereWithAggregatesInput | Prisma.OdOrderLabelDetailScalarWhereWithAggregatesInput[]
   idDlkOrderLabelDetail?: Prisma.IntWithAggregatesFilter<"OdOrderLabelDetail"> | number
   idDlkOrderLabelHead?: Prisma.IntWithAggregatesFilter<"OdOrderLabelDetail"> | number
+  idDlkOrderLabelComponent?: Prisma.IntNullableWithAggregatesFilter<"OdOrderLabelDetail"> | number | null
+  idDlkDigitalIdentifier?: Prisma.IntNullableWithAggregatesFilter<"OdOrderLabelDetail"> | number | null
   itemGlobal?: Prisma.IntWithAggregatesFilter<"OdOrderLabelDetail"> | number
   itemBySize?: Prisma.IntWithAggregatesFilter<"OdOrderLabelDetail"> | number
   serialNumber?: Prisma.StringWithAggregatesFilter<"OdOrderLabelDetail"> | string
@@ -463,12 +501,16 @@ export type OdOrderLabelDetailCreateInput = {
   fecProcesoModifDl?: Date | string | null
   codUsuarioAuditor?: string | null
   labelHead: Prisma.OdOrderLabelHeadCreateNestedOneWithoutDetailsInput
+  labelComponent?: Prisma.OdOrderLabelComponentCreateNestedOneWithoutDetailsInput
+  digitalIdentifier?: Prisma.MdDigitalIdentifierCreateNestedOneWithoutLabelDetailsInput
   unitTraces?: Prisma.OdUnitTraceCreateNestedManyWithoutOrderLabelDetailInput
 }
 
 export type OdOrderLabelDetailUncheckedCreateInput = {
   idDlkOrderLabelDetail?: number
   idDlkOrderLabelHead: number
+  idDlkOrderLabelComponent?: number | null
+  idDlkDigitalIdentifier?: number | null
   itemGlobal: number
   itemBySize: number
   serialNumber: string
@@ -506,12 +548,16 @@ export type OdOrderLabelDetailUpdateInput = {
   fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   codUsuarioAuditor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   labelHead?: Prisma.OdOrderLabelHeadUpdateOneRequiredWithoutDetailsNestedInput
+  labelComponent?: Prisma.OdOrderLabelComponentUpdateOneWithoutDetailsNestedInput
+  digitalIdentifier?: Prisma.MdDigitalIdentifierUpdateOneWithoutLabelDetailsNestedInput
   unitTraces?: Prisma.OdUnitTraceUpdateManyWithoutOrderLabelDetailNestedInput
 }
 
 export type OdOrderLabelDetailUncheckedUpdateInput = {
   idDlkOrderLabelDetail?: Prisma.IntFieldUpdateOperationsInput | number
   idDlkOrderLabelHead?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderLabelComponent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  idDlkDigitalIdentifier?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   itemGlobal?: Prisma.IntFieldUpdateOperationsInput | number
   itemBySize?: Prisma.IntFieldUpdateOperationsInput | number
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -534,6 +580,8 @@ export type OdOrderLabelDetailUncheckedUpdateInput = {
 export type OdOrderLabelDetailCreateManyInput = {
   idDlkOrderLabelDetail?: number
   idDlkOrderLabelHead: number
+  idDlkOrderLabelComponent?: number | null
+  idDlkDigitalIdentifier?: number | null
   itemGlobal: number
   itemBySize: number
   serialNumber: string
@@ -574,6 +622,8 @@ export type OdOrderLabelDetailUpdateManyMutationInput = {
 export type OdOrderLabelDetailUncheckedUpdateManyInput = {
   idDlkOrderLabelDetail?: Prisma.IntFieldUpdateOperationsInput | number
   idDlkOrderLabelHead?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderLabelComponent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  idDlkDigitalIdentifier?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   itemGlobal?: Prisma.IntFieldUpdateOperationsInput | number
   itemBySize?: Prisma.IntFieldUpdateOperationsInput | number
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -611,6 +661,8 @@ export type OdOrderLabelDetailOrderByRelevanceInput = {
 export type OdOrderLabelDetailCountOrderByAggregateInput = {
   idDlkOrderLabelDetail?: Prisma.SortOrder
   idDlkOrderLabelHead?: Prisma.SortOrder
+  idDlkOrderLabelComponent?: Prisma.SortOrder
+  idDlkDigitalIdentifier?: Prisma.SortOrder
   itemGlobal?: Prisma.SortOrder
   itemBySize?: Prisma.SortOrder
   serialNumber?: Prisma.SortOrder
@@ -632,6 +684,8 @@ export type OdOrderLabelDetailCountOrderByAggregateInput = {
 export type OdOrderLabelDetailAvgOrderByAggregateInput = {
   idDlkOrderLabelDetail?: Prisma.SortOrder
   idDlkOrderLabelHead?: Prisma.SortOrder
+  idDlkOrderLabelComponent?: Prisma.SortOrder
+  idDlkDigitalIdentifier?: Prisma.SortOrder
   itemGlobal?: Prisma.SortOrder
   itemBySize?: Prisma.SortOrder
   isBlacklisted?: Prisma.SortOrder
@@ -641,6 +695,8 @@ export type OdOrderLabelDetailAvgOrderByAggregateInput = {
 export type OdOrderLabelDetailMaxOrderByAggregateInput = {
   idDlkOrderLabelDetail?: Prisma.SortOrder
   idDlkOrderLabelHead?: Prisma.SortOrder
+  idDlkOrderLabelComponent?: Prisma.SortOrder
+  idDlkDigitalIdentifier?: Prisma.SortOrder
   itemGlobal?: Prisma.SortOrder
   itemBySize?: Prisma.SortOrder
   serialNumber?: Prisma.SortOrder
@@ -662,6 +718,8 @@ export type OdOrderLabelDetailMaxOrderByAggregateInput = {
 export type OdOrderLabelDetailMinOrderByAggregateInput = {
   idDlkOrderLabelDetail?: Prisma.SortOrder
   idDlkOrderLabelHead?: Prisma.SortOrder
+  idDlkOrderLabelComponent?: Prisma.SortOrder
+  idDlkDigitalIdentifier?: Prisma.SortOrder
   itemGlobal?: Prisma.SortOrder
   itemBySize?: Prisma.SortOrder
   serialNumber?: Prisma.SortOrder
@@ -683,6 +741,8 @@ export type OdOrderLabelDetailMinOrderByAggregateInput = {
 export type OdOrderLabelDetailSumOrderByAggregateInput = {
   idDlkOrderLabelDetail?: Prisma.SortOrder
   idDlkOrderLabelHead?: Prisma.SortOrder
+  idDlkOrderLabelComponent?: Prisma.SortOrder
+  idDlkDigitalIdentifier?: Prisma.SortOrder
   itemGlobal?: Prisma.SortOrder
   itemBySize?: Prisma.SortOrder
   isBlacklisted?: Prisma.SortOrder
@@ -692,6 +752,48 @@ export type OdOrderLabelDetailSumOrderByAggregateInput = {
 export type OdOrderLabelDetailScalarRelationFilter = {
   is?: Prisma.OdOrderLabelDetailWhereInput
   isNot?: Prisma.OdOrderLabelDetailWhereInput
+}
+
+export type OdOrderLabelDetailCreateNestedManyWithoutDigitalIdentifierInput = {
+  create?: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutDigitalIdentifierInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutDigitalIdentifierInput> | Prisma.OdOrderLabelDetailCreateWithoutDigitalIdentifierInput[] | Prisma.OdOrderLabelDetailUncheckedCreateWithoutDigitalIdentifierInput[]
+  connectOrCreate?: Prisma.OdOrderLabelDetailCreateOrConnectWithoutDigitalIdentifierInput | Prisma.OdOrderLabelDetailCreateOrConnectWithoutDigitalIdentifierInput[]
+  createMany?: Prisma.OdOrderLabelDetailCreateManyDigitalIdentifierInputEnvelope
+  connect?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+}
+
+export type OdOrderLabelDetailUncheckedCreateNestedManyWithoutDigitalIdentifierInput = {
+  create?: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutDigitalIdentifierInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutDigitalIdentifierInput> | Prisma.OdOrderLabelDetailCreateWithoutDigitalIdentifierInput[] | Prisma.OdOrderLabelDetailUncheckedCreateWithoutDigitalIdentifierInput[]
+  connectOrCreate?: Prisma.OdOrderLabelDetailCreateOrConnectWithoutDigitalIdentifierInput | Prisma.OdOrderLabelDetailCreateOrConnectWithoutDigitalIdentifierInput[]
+  createMany?: Prisma.OdOrderLabelDetailCreateManyDigitalIdentifierInputEnvelope
+  connect?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+}
+
+export type OdOrderLabelDetailUpdateManyWithoutDigitalIdentifierNestedInput = {
+  create?: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutDigitalIdentifierInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutDigitalIdentifierInput> | Prisma.OdOrderLabelDetailCreateWithoutDigitalIdentifierInput[] | Prisma.OdOrderLabelDetailUncheckedCreateWithoutDigitalIdentifierInput[]
+  connectOrCreate?: Prisma.OdOrderLabelDetailCreateOrConnectWithoutDigitalIdentifierInput | Prisma.OdOrderLabelDetailCreateOrConnectWithoutDigitalIdentifierInput[]
+  upsert?: Prisma.OdOrderLabelDetailUpsertWithWhereUniqueWithoutDigitalIdentifierInput | Prisma.OdOrderLabelDetailUpsertWithWhereUniqueWithoutDigitalIdentifierInput[]
+  createMany?: Prisma.OdOrderLabelDetailCreateManyDigitalIdentifierInputEnvelope
+  set?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  disconnect?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  delete?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  connect?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  update?: Prisma.OdOrderLabelDetailUpdateWithWhereUniqueWithoutDigitalIdentifierInput | Prisma.OdOrderLabelDetailUpdateWithWhereUniqueWithoutDigitalIdentifierInput[]
+  updateMany?: Prisma.OdOrderLabelDetailUpdateManyWithWhereWithoutDigitalIdentifierInput | Prisma.OdOrderLabelDetailUpdateManyWithWhereWithoutDigitalIdentifierInput[]
+  deleteMany?: Prisma.OdOrderLabelDetailScalarWhereInput | Prisma.OdOrderLabelDetailScalarWhereInput[]
+}
+
+export type OdOrderLabelDetailUncheckedUpdateManyWithoutDigitalIdentifierNestedInput = {
+  create?: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutDigitalIdentifierInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutDigitalIdentifierInput> | Prisma.OdOrderLabelDetailCreateWithoutDigitalIdentifierInput[] | Prisma.OdOrderLabelDetailUncheckedCreateWithoutDigitalIdentifierInput[]
+  connectOrCreate?: Prisma.OdOrderLabelDetailCreateOrConnectWithoutDigitalIdentifierInput | Prisma.OdOrderLabelDetailCreateOrConnectWithoutDigitalIdentifierInput[]
+  upsert?: Prisma.OdOrderLabelDetailUpsertWithWhereUniqueWithoutDigitalIdentifierInput | Prisma.OdOrderLabelDetailUpsertWithWhereUniqueWithoutDigitalIdentifierInput[]
+  createMany?: Prisma.OdOrderLabelDetailCreateManyDigitalIdentifierInputEnvelope
+  set?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  disconnect?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  delete?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  connect?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  update?: Prisma.OdOrderLabelDetailUpdateWithWhereUniqueWithoutDigitalIdentifierInput | Prisma.OdOrderLabelDetailUpdateWithWhereUniqueWithoutDigitalIdentifierInput[]
+  updateMany?: Prisma.OdOrderLabelDetailUpdateManyWithWhereWithoutDigitalIdentifierInput | Prisma.OdOrderLabelDetailUpdateManyWithWhereWithoutDigitalIdentifierInput[]
+  deleteMany?: Prisma.OdOrderLabelDetailScalarWhereInput | Prisma.OdOrderLabelDetailScalarWhereInput[]
 }
 
 export type OdOrderLabelDetailCreateNestedManyWithoutLabelHeadInput = {
@@ -736,6 +838,48 @@ export type OdOrderLabelDetailUncheckedUpdateManyWithoutLabelHeadNestedInput = {
   deleteMany?: Prisma.OdOrderLabelDetailScalarWhereInput | Prisma.OdOrderLabelDetailScalarWhereInput[]
 }
 
+export type OdOrderLabelDetailCreateNestedManyWithoutLabelComponentInput = {
+  create?: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutLabelComponentInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutLabelComponentInput> | Prisma.OdOrderLabelDetailCreateWithoutLabelComponentInput[] | Prisma.OdOrderLabelDetailUncheckedCreateWithoutLabelComponentInput[]
+  connectOrCreate?: Prisma.OdOrderLabelDetailCreateOrConnectWithoutLabelComponentInput | Prisma.OdOrderLabelDetailCreateOrConnectWithoutLabelComponentInput[]
+  createMany?: Prisma.OdOrderLabelDetailCreateManyLabelComponentInputEnvelope
+  connect?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+}
+
+export type OdOrderLabelDetailUncheckedCreateNestedManyWithoutLabelComponentInput = {
+  create?: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutLabelComponentInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutLabelComponentInput> | Prisma.OdOrderLabelDetailCreateWithoutLabelComponentInput[] | Prisma.OdOrderLabelDetailUncheckedCreateWithoutLabelComponentInput[]
+  connectOrCreate?: Prisma.OdOrderLabelDetailCreateOrConnectWithoutLabelComponentInput | Prisma.OdOrderLabelDetailCreateOrConnectWithoutLabelComponentInput[]
+  createMany?: Prisma.OdOrderLabelDetailCreateManyLabelComponentInputEnvelope
+  connect?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+}
+
+export type OdOrderLabelDetailUpdateManyWithoutLabelComponentNestedInput = {
+  create?: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutLabelComponentInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutLabelComponentInput> | Prisma.OdOrderLabelDetailCreateWithoutLabelComponentInput[] | Prisma.OdOrderLabelDetailUncheckedCreateWithoutLabelComponentInput[]
+  connectOrCreate?: Prisma.OdOrderLabelDetailCreateOrConnectWithoutLabelComponentInput | Prisma.OdOrderLabelDetailCreateOrConnectWithoutLabelComponentInput[]
+  upsert?: Prisma.OdOrderLabelDetailUpsertWithWhereUniqueWithoutLabelComponentInput | Prisma.OdOrderLabelDetailUpsertWithWhereUniqueWithoutLabelComponentInput[]
+  createMany?: Prisma.OdOrderLabelDetailCreateManyLabelComponentInputEnvelope
+  set?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  disconnect?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  delete?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  connect?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  update?: Prisma.OdOrderLabelDetailUpdateWithWhereUniqueWithoutLabelComponentInput | Prisma.OdOrderLabelDetailUpdateWithWhereUniqueWithoutLabelComponentInput[]
+  updateMany?: Prisma.OdOrderLabelDetailUpdateManyWithWhereWithoutLabelComponentInput | Prisma.OdOrderLabelDetailUpdateManyWithWhereWithoutLabelComponentInput[]
+  deleteMany?: Prisma.OdOrderLabelDetailScalarWhereInput | Prisma.OdOrderLabelDetailScalarWhereInput[]
+}
+
+export type OdOrderLabelDetailUncheckedUpdateManyWithoutLabelComponentNestedInput = {
+  create?: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutLabelComponentInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutLabelComponentInput> | Prisma.OdOrderLabelDetailCreateWithoutLabelComponentInput[] | Prisma.OdOrderLabelDetailUncheckedCreateWithoutLabelComponentInput[]
+  connectOrCreate?: Prisma.OdOrderLabelDetailCreateOrConnectWithoutLabelComponentInput | Prisma.OdOrderLabelDetailCreateOrConnectWithoutLabelComponentInput[]
+  upsert?: Prisma.OdOrderLabelDetailUpsertWithWhereUniqueWithoutLabelComponentInput | Prisma.OdOrderLabelDetailUpsertWithWhereUniqueWithoutLabelComponentInput[]
+  createMany?: Prisma.OdOrderLabelDetailCreateManyLabelComponentInputEnvelope
+  set?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  disconnect?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  delete?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  connect?: Prisma.OdOrderLabelDetailWhereUniqueInput | Prisma.OdOrderLabelDetailWhereUniqueInput[]
+  update?: Prisma.OdOrderLabelDetailUpdateWithWhereUniqueWithoutLabelComponentInput | Prisma.OdOrderLabelDetailUpdateWithWhereUniqueWithoutLabelComponentInput[]
+  updateMany?: Prisma.OdOrderLabelDetailUpdateManyWithWhereWithoutLabelComponentInput | Prisma.OdOrderLabelDetailUpdateManyWithWhereWithoutLabelComponentInput[]
+  deleteMany?: Prisma.OdOrderLabelDetailScalarWhereInput | Prisma.OdOrderLabelDetailScalarWhereInput[]
+}
+
 export type OdOrderLabelDetailCreateNestedOneWithoutUnitTracesInput = {
   create?: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutUnitTracesInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutUnitTracesInput>
   connectOrCreate?: Prisma.OdOrderLabelDetailCreateOrConnectWithoutUnitTracesInput
@@ -748,6 +892,103 @@ export type OdOrderLabelDetailUpdateOneRequiredWithoutUnitTracesNestedInput = {
   upsert?: Prisma.OdOrderLabelDetailUpsertWithoutUnitTracesInput
   connect?: Prisma.OdOrderLabelDetailWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.OdOrderLabelDetailUpdateToOneWithWhereWithoutUnitTracesInput, Prisma.OdOrderLabelDetailUpdateWithoutUnitTracesInput>, Prisma.OdOrderLabelDetailUncheckedUpdateWithoutUnitTracesInput>
+}
+
+export type OdOrderLabelDetailCreateWithoutDigitalIdentifierInput = {
+  itemGlobal: number
+  itemBySize: number
+  serialNumber: string
+  sgtinFull: string
+  urlDppFull: string
+  color?: string | null
+  print?: string | null
+  size?: string | null
+  pieceType?: string | null
+  setGroupId?: string | null
+  isBlacklisted?: number | null
+  reasonBlacklist?: string | null
+  stateOrderLabelDetail?: number | null
+  fecProcesoCargaDl?: Date | string | null
+  fecProcesoModifDl?: Date | string | null
+  codUsuarioAuditor?: string | null
+  labelHead: Prisma.OdOrderLabelHeadCreateNestedOneWithoutDetailsInput
+  labelComponent?: Prisma.OdOrderLabelComponentCreateNestedOneWithoutDetailsInput
+  unitTraces?: Prisma.OdUnitTraceCreateNestedManyWithoutOrderLabelDetailInput
+}
+
+export type OdOrderLabelDetailUncheckedCreateWithoutDigitalIdentifierInput = {
+  idDlkOrderLabelDetail?: number
+  idDlkOrderLabelHead: number
+  idDlkOrderLabelComponent?: number | null
+  itemGlobal: number
+  itemBySize: number
+  serialNumber: string
+  sgtinFull: string
+  urlDppFull: string
+  color?: string | null
+  print?: string | null
+  size?: string | null
+  pieceType?: string | null
+  setGroupId?: string | null
+  isBlacklisted?: number | null
+  reasonBlacklist?: string | null
+  stateOrderLabelDetail?: number | null
+  fecProcesoCargaDl?: Date | string | null
+  fecProcesoModifDl?: Date | string | null
+  codUsuarioAuditor?: string | null
+  unitTraces?: Prisma.OdUnitTraceUncheckedCreateNestedManyWithoutOrderLabelDetailInput
+}
+
+export type OdOrderLabelDetailCreateOrConnectWithoutDigitalIdentifierInput = {
+  where: Prisma.OdOrderLabelDetailWhereUniqueInput
+  create: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutDigitalIdentifierInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutDigitalIdentifierInput>
+}
+
+export type OdOrderLabelDetailCreateManyDigitalIdentifierInputEnvelope = {
+  data: Prisma.OdOrderLabelDetailCreateManyDigitalIdentifierInput | Prisma.OdOrderLabelDetailCreateManyDigitalIdentifierInput[]
+  skipDuplicates?: boolean
+}
+
+export type OdOrderLabelDetailUpsertWithWhereUniqueWithoutDigitalIdentifierInput = {
+  where: Prisma.OdOrderLabelDetailWhereUniqueInput
+  update: Prisma.XOR<Prisma.OdOrderLabelDetailUpdateWithoutDigitalIdentifierInput, Prisma.OdOrderLabelDetailUncheckedUpdateWithoutDigitalIdentifierInput>
+  create: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutDigitalIdentifierInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutDigitalIdentifierInput>
+}
+
+export type OdOrderLabelDetailUpdateWithWhereUniqueWithoutDigitalIdentifierInput = {
+  where: Prisma.OdOrderLabelDetailWhereUniqueInput
+  data: Prisma.XOR<Prisma.OdOrderLabelDetailUpdateWithoutDigitalIdentifierInput, Prisma.OdOrderLabelDetailUncheckedUpdateWithoutDigitalIdentifierInput>
+}
+
+export type OdOrderLabelDetailUpdateManyWithWhereWithoutDigitalIdentifierInput = {
+  where: Prisma.OdOrderLabelDetailScalarWhereInput
+  data: Prisma.XOR<Prisma.OdOrderLabelDetailUpdateManyMutationInput, Prisma.OdOrderLabelDetailUncheckedUpdateManyWithoutDigitalIdentifierInput>
+}
+
+export type OdOrderLabelDetailScalarWhereInput = {
+  AND?: Prisma.OdOrderLabelDetailScalarWhereInput | Prisma.OdOrderLabelDetailScalarWhereInput[]
+  OR?: Prisma.OdOrderLabelDetailScalarWhereInput[]
+  NOT?: Prisma.OdOrderLabelDetailScalarWhereInput | Prisma.OdOrderLabelDetailScalarWhereInput[]
+  idDlkOrderLabelDetail?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
+  idDlkOrderLabelHead?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
+  idDlkOrderLabelComponent?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
+  idDlkDigitalIdentifier?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
+  itemGlobal?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
+  itemBySize?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
+  serialNumber?: Prisma.StringFilter<"OdOrderLabelDetail"> | string
+  sgtinFull?: Prisma.StringFilter<"OdOrderLabelDetail"> | string
+  urlDppFull?: Prisma.StringFilter<"OdOrderLabelDetail"> | string
+  color?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+  print?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+  size?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+  pieceType?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+  setGroupId?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+  isBlacklisted?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
+  reasonBlacklist?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+  stateOrderLabelDetail?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
+  fecProcesoCargaDl?: Prisma.DateTimeNullableFilter<"OdOrderLabelDetail"> | Date | string | null
+  fecProcesoModifDl?: Prisma.DateTimeNullableFilter<"OdOrderLabelDetail"> | Date | string | null
+  codUsuarioAuditor?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
 }
 
 export type OdOrderLabelDetailCreateWithoutLabelHeadInput = {
@@ -767,11 +1008,15 @@ export type OdOrderLabelDetailCreateWithoutLabelHeadInput = {
   fecProcesoCargaDl?: Date | string | null
   fecProcesoModifDl?: Date | string | null
   codUsuarioAuditor?: string | null
+  labelComponent?: Prisma.OdOrderLabelComponentCreateNestedOneWithoutDetailsInput
+  digitalIdentifier?: Prisma.MdDigitalIdentifierCreateNestedOneWithoutLabelDetailsInput
   unitTraces?: Prisma.OdUnitTraceCreateNestedManyWithoutOrderLabelDetailInput
 }
 
 export type OdOrderLabelDetailUncheckedCreateWithoutLabelHeadInput = {
   idDlkOrderLabelDetail?: number
+  idDlkOrderLabelComponent?: number | null
+  idDlkDigitalIdentifier?: number | null
   itemGlobal: number
   itemBySize: number
   serialNumber: string
@@ -817,28 +1062,75 @@ export type OdOrderLabelDetailUpdateManyWithWhereWithoutLabelHeadInput = {
   data: Prisma.XOR<Prisma.OdOrderLabelDetailUpdateManyMutationInput, Prisma.OdOrderLabelDetailUncheckedUpdateManyWithoutLabelHeadInput>
 }
 
-export type OdOrderLabelDetailScalarWhereInput = {
-  AND?: Prisma.OdOrderLabelDetailScalarWhereInput | Prisma.OdOrderLabelDetailScalarWhereInput[]
-  OR?: Prisma.OdOrderLabelDetailScalarWhereInput[]
-  NOT?: Prisma.OdOrderLabelDetailScalarWhereInput | Prisma.OdOrderLabelDetailScalarWhereInput[]
-  idDlkOrderLabelDetail?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
-  idDlkOrderLabelHead?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
-  itemGlobal?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
-  itemBySize?: Prisma.IntFilter<"OdOrderLabelDetail"> | number
-  serialNumber?: Prisma.StringFilter<"OdOrderLabelDetail"> | string
-  sgtinFull?: Prisma.StringFilter<"OdOrderLabelDetail"> | string
-  urlDppFull?: Prisma.StringFilter<"OdOrderLabelDetail"> | string
-  color?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
-  print?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
-  size?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
-  pieceType?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
-  setGroupId?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
-  isBlacklisted?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
-  reasonBlacklist?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
-  stateOrderLabelDetail?: Prisma.IntNullableFilter<"OdOrderLabelDetail"> | number | null
-  fecProcesoCargaDl?: Prisma.DateTimeNullableFilter<"OdOrderLabelDetail"> | Date | string | null
-  fecProcesoModifDl?: Prisma.DateTimeNullableFilter<"OdOrderLabelDetail"> | Date | string | null
-  codUsuarioAuditor?: Prisma.StringNullableFilter<"OdOrderLabelDetail"> | string | null
+export type OdOrderLabelDetailCreateWithoutLabelComponentInput = {
+  itemGlobal: number
+  itemBySize: number
+  serialNumber: string
+  sgtinFull: string
+  urlDppFull: string
+  color?: string | null
+  print?: string | null
+  size?: string | null
+  pieceType?: string | null
+  setGroupId?: string | null
+  isBlacklisted?: number | null
+  reasonBlacklist?: string | null
+  stateOrderLabelDetail?: number | null
+  fecProcesoCargaDl?: Date | string | null
+  fecProcesoModifDl?: Date | string | null
+  codUsuarioAuditor?: string | null
+  labelHead: Prisma.OdOrderLabelHeadCreateNestedOneWithoutDetailsInput
+  digitalIdentifier?: Prisma.MdDigitalIdentifierCreateNestedOneWithoutLabelDetailsInput
+  unitTraces?: Prisma.OdUnitTraceCreateNestedManyWithoutOrderLabelDetailInput
+}
+
+export type OdOrderLabelDetailUncheckedCreateWithoutLabelComponentInput = {
+  idDlkOrderLabelDetail?: number
+  idDlkOrderLabelHead: number
+  idDlkDigitalIdentifier?: number | null
+  itemGlobal: number
+  itemBySize: number
+  serialNumber: string
+  sgtinFull: string
+  urlDppFull: string
+  color?: string | null
+  print?: string | null
+  size?: string | null
+  pieceType?: string | null
+  setGroupId?: string | null
+  isBlacklisted?: number | null
+  reasonBlacklist?: string | null
+  stateOrderLabelDetail?: number | null
+  fecProcesoCargaDl?: Date | string | null
+  fecProcesoModifDl?: Date | string | null
+  codUsuarioAuditor?: string | null
+  unitTraces?: Prisma.OdUnitTraceUncheckedCreateNestedManyWithoutOrderLabelDetailInput
+}
+
+export type OdOrderLabelDetailCreateOrConnectWithoutLabelComponentInput = {
+  where: Prisma.OdOrderLabelDetailWhereUniqueInput
+  create: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutLabelComponentInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutLabelComponentInput>
+}
+
+export type OdOrderLabelDetailCreateManyLabelComponentInputEnvelope = {
+  data: Prisma.OdOrderLabelDetailCreateManyLabelComponentInput | Prisma.OdOrderLabelDetailCreateManyLabelComponentInput[]
+  skipDuplicates?: boolean
+}
+
+export type OdOrderLabelDetailUpsertWithWhereUniqueWithoutLabelComponentInput = {
+  where: Prisma.OdOrderLabelDetailWhereUniqueInput
+  update: Prisma.XOR<Prisma.OdOrderLabelDetailUpdateWithoutLabelComponentInput, Prisma.OdOrderLabelDetailUncheckedUpdateWithoutLabelComponentInput>
+  create: Prisma.XOR<Prisma.OdOrderLabelDetailCreateWithoutLabelComponentInput, Prisma.OdOrderLabelDetailUncheckedCreateWithoutLabelComponentInput>
+}
+
+export type OdOrderLabelDetailUpdateWithWhereUniqueWithoutLabelComponentInput = {
+  where: Prisma.OdOrderLabelDetailWhereUniqueInput
+  data: Prisma.XOR<Prisma.OdOrderLabelDetailUpdateWithoutLabelComponentInput, Prisma.OdOrderLabelDetailUncheckedUpdateWithoutLabelComponentInput>
+}
+
+export type OdOrderLabelDetailUpdateManyWithWhereWithoutLabelComponentInput = {
+  where: Prisma.OdOrderLabelDetailScalarWhereInput
+  data: Prisma.XOR<Prisma.OdOrderLabelDetailUpdateManyMutationInput, Prisma.OdOrderLabelDetailUncheckedUpdateManyWithoutLabelComponentInput>
 }
 
 export type OdOrderLabelDetailCreateWithoutUnitTracesInput = {
@@ -859,11 +1151,15 @@ export type OdOrderLabelDetailCreateWithoutUnitTracesInput = {
   fecProcesoModifDl?: Date | string | null
   codUsuarioAuditor?: string | null
   labelHead: Prisma.OdOrderLabelHeadCreateNestedOneWithoutDetailsInput
+  labelComponent?: Prisma.OdOrderLabelComponentCreateNestedOneWithoutDetailsInput
+  digitalIdentifier?: Prisma.MdDigitalIdentifierCreateNestedOneWithoutLabelDetailsInput
 }
 
 export type OdOrderLabelDetailUncheckedCreateWithoutUnitTracesInput = {
   idDlkOrderLabelDetail?: number
   idDlkOrderLabelHead: number
+  idDlkOrderLabelComponent?: number | null
+  idDlkDigitalIdentifier?: number | null
   itemGlobal: number
   itemBySize: number
   serialNumber: string
@@ -916,11 +1212,104 @@ export type OdOrderLabelDetailUpdateWithoutUnitTracesInput = {
   fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   codUsuarioAuditor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   labelHead?: Prisma.OdOrderLabelHeadUpdateOneRequiredWithoutDetailsNestedInput
+  labelComponent?: Prisma.OdOrderLabelComponentUpdateOneWithoutDetailsNestedInput
+  digitalIdentifier?: Prisma.MdDigitalIdentifierUpdateOneWithoutLabelDetailsNestedInput
 }
 
 export type OdOrderLabelDetailUncheckedUpdateWithoutUnitTracesInput = {
   idDlkOrderLabelDetail?: Prisma.IntFieldUpdateOperationsInput | number
   idDlkOrderLabelHead?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderLabelComponent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  idDlkDigitalIdentifier?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  itemGlobal?: Prisma.IntFieldUpdateOperationsInput | number
+  itemBySize?: Prisma.IntFieldUpdateOperationsInput | number
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  sgtinFull?: Prisma.StringFieldUpdateOperationsInput | string
+  urlDppFull?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  codUsuarioAuditor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type OdOrderLabelDetailCreateManyDigitalIdentifierInput = {
+  idDlkOrderLabelDetail?: number
+  idDlkOrderLabelHead: number
+  idDlkOrderLabelComponent?: number | null
+  itemGlobal: number
+  itemBySize: number
+  serialNumber: string
+  sgtinFull: string
+  urlDppFull: string
+  color?: string | null
+  print?: string | null
+  size?: string | null
+  pieceType?: string | null
+  setGroupId?: string | null
+  isBlacklisted?: number | null
+  reasonBlacklist?: string | null
+  stateOrderLabelDetail?: number | null
+  fecProcesoCargaDl?: Date | string | null
+  fecProcesoModifDl?: Date | string | null
+  codUsuarioAuditor?: string | null
+}
+
+export type OdOrderLabelDetailUpdateWithoutDigitalIdentifierInput = {
+  itemGlobal?: Prisma.IntFieldUpdateOperationsInput | number
+  itemBySize?: Prisma.IntFieldUpdateOperationsInput | number
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  sgtinFull?: Prisma.StringFieldUpdateOperationsInput | string
+  urlDppFull?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  codUsuarioAuditor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  labelHead?: Prisma.OdOrderLabelHeadUpdateOneRequiredWithoutDetailsNestedInput
+  labelComponent?: Prisma.OdOrderLabelComponentUpdateOneWithoutDetailsNestedInput
+  unitTraces?: Prisma.OdUnitTraceUpdateManyWithoutOrderLabelDetailNestedInput
+}
+
+export type OdOrderLabelDetailUncheckedUpdateWithoutDigitalIdentifierInput = {
+  idDlkOrderLabelDetail?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderLabelHead?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderLabelComponent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  itemGlobal?: Prisma.IntFieldUpdateOperationsInput | number
+  itemBySize?: Prisma.IntFieldUpdateOperationsInput | number
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  sgtinFull?: Prisma.StringFieldUpdateOperationsInput | string
+  urlDppFull?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  codUsuarioAuditor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitTraces?: Prisma.OdUnitTraceUncheckedUpdateManyWithoutOrderLabelDetailNestedInput
+}
+
+export type OdOrderLabelDetailUncheckedUpdateManyWithoutDigitalIdentifierInput = {
+  idDlkOrderLabelDetail?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderLabelHead?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderLabelComponent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   itemGlobal?: Prisma.IntFieldUpdateOperationsInput | number
   itemBySize?: Prisma.IntFieldUpdateOperationsInput | number
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -941,6 +1330,8 @@ export type OdOrderLabelDetailUncheckedUpdateWithoutUnitTracesInput = {
 
 export type OdOrderLabelDetailCreateManyLabelHeadInput = {
   idDlkOrderLabelDetail?: number
+  idDlkOrderLabelComponent?: number | null
+  idDlkDigitalIdentifier?: number | null
   itemGlobal: number
   itemBySize: number
   serialNumber: string
@@ -976,11 +1367,15 @@ export type OdOrderLabelDetailUpdateWithoutLabelHeadInput = {
   fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   codUsuarioAuditor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  labelComponent?: Prisma.OdOrderLabelComponentUpdateOneWithoutDetailsNestedInput
+  digitalIdentifier?: Prisma.MdDigitalIdentifierUpdateOneWithoutLabelDetailsNestedInput
   unitTraces?: Prisma.OdUnitTraceUpdateManyWithoutOrderLabelDetailNestedInput
 }
 
 export type OdOrderLabelDetailUncheckedUpdateWithoutLabelHeadInput = {
   idDlkOrderLabelDetail?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderLabelComponent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  idDlkDigitalIdentifier?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   itemGlobal?: Prisma.IntFieldUpdateOperationsInput | number
   itemBySize?: Prisma.IntFieldUpdateOperationsInput | number
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1002,6 +1397,97 @@ export type OdOrderLabelDetailUncheckedUpdateWithoutLabelHeadInput = {
 
 export type OdOrderLabelDetailUncheckedUpdateManyWithoutLabelHeadInput = {
   idDlkOrderLabelDetail?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderLabelComponent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  idDlkDigitalIdentifier?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  itemGlobal?: Prisma.IntFieldUpdateOperationsInput | number
+  itemBySize?: Prisma.IntFieldUpdateOperationsInput | number
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  sgtinFull?: Prisma.StringFieldUpdateOperationsInput | string
+  urlDppFull?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  codUsuarioAuditor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type OdOrderLabelDetailCreateManyLabelComponentInput = {
+  idDlkOrderLabelDetail?: number
+  idDlkOrderLabelHead: number
+  idDlkDigitalIdentifier?: number | null
+  itemGlobal: number
+  itemBySize: number
+  serialNumber: string
+  sgtinFull: string
+  urlDppFull: string
+  color?: string | null
+  print?: string | null
+  size?: string | null
+  pieceType?: string | null
+  setGroupId?: string | null
+  isBlacklisted?: number | null
+  reasonBlacklist?: string | null
+  stateOrderLabelDetail?: number | null
+  fecProcesoCargaDl?: Date | string | null
+  fecProcesoModifDl?: Date | string | null
+  codUsuarioAuditor?: string | null
+}
+
+export type OdOrderLabelDetailUpdateWithoutLabelComponentInput = {
+  itemGlobal?: Prisma.IntFieldUpdateOperationsInput | number
+  itemBySize?: Prisma.IntFieldUpdateOperationsInput | number
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  sgtinFull?: Prisma.StringFieldUpdateOperationsInput | string
+  urlDppFull?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  codUsuarioAuditor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  labelHead?: Prisma.OdOrderLabelHeadUpdateOneRequiredWithoutDetailsNestedInput
+  digitalIdentifier?: Prisma.MdDigitalIdentifierUpdateOneWithoutLabelDetailsNestedInput
+  unitTraces?: Prisma.OdUnitTraceUpdateManyWithoutOrderLabelDetailNestedInput
+}
+
+export type OdOrderLabelDetailUncheckedUpdateWithoutLabelComponentInput = {
+  idDlkOrderLabelDetail?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderLabelHead?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkDigitalIdentifier?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  itemGlobal?: Prisma.IntFieldUpdateOperationsInput | number
+  itemBySize?: Prisma.IntFieldUpdateOperationsInput | number
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  sgtinFull?: Prisma.StringFieldUpdateOperationsInput | string
+  urlDppFull?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pieceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBlacklisted?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reasonBlacklist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateOrderLabelDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  codUsuarioAuditor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitTraces?: Prisma.OdUnitTraceUncheckedUpdateManyWithoutOrderLabelDetailNestedInput
+}
+
+export type OdOrderLabelDetailUncheckedUpdateManyWithoutLabelComponentInput = {
+  idDlkOrderLabelDetail?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderLabelHead?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkDigitalIdentifier?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   itemGlobal?: Prisma.IntFieldUpdateOperationsInput | number
   itemBySize?: Prisma.IntFieldUpdateOperationsInput | number
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1054,6 +1540,8 @@ export type OdOrderLabelDetailCountOutputTypeCountUnitTracesArgs<ExtArgs extends
 export type OdOrderLabelDetailSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idDlkOrderLabelDetail?: boolean
   idDlkOrderLabelHead?: boolean
+  idDlkOrderLabelComponent?: boolean
+  idDlkDigitalIdentifier?: boolean
   itemGlobal?: boolean
   itemBySize?: boolean
   serialNumber?: boolean
@@ -1071,6 +1559,8 @@ export type OdOrderLabelDetailSelect<ExtArgs extends runtime.Types.Extensions.In
   fecProcesoModifDl?: boolean
   codUsuarioAuditor?: boolean
   labelHead?: boolean | Prisma.OdOrderLabelHeadDefaultArgs<ExtArgs>
+  labelComponent?: boolean | Prisma.OdOrderLabelDetail$labelComponentArgs<ExtArgs>
+  digitalIdentifier?: boolean | Prisma.OdOrderLabelDetail$digitalIdentifierArgs<ExtArgs>
   unitTraces?: boolean | Prisma.OdOrderLabelDetail$unitTracesArgs<ExtArgs>
   _count?: boolean | Prisma.OdOrderLabelDetailCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["odOrderLabelDetail"]>
@@ -1080,6 +1570,8 @@ export type OdOrderLabelDetailSelect<ExtArgs extends runtime.Types.Extensions.In
 export type OdOrderLabelDetailSelectScalar = {
   idDlkOrderLabelDetail?: boolean
   idDlkOrderLabelHead?: boolean
+  idDlkOrderLabelComponent?: boolean
+  idDlkDigitalIdentifier?: boolean
   itemGlobal?: boolean
   itemBySize?: boolean
   serialNumber?: boolean
@@ -1098,9 +1590,11 @@ export type OdOrderLabelDetailSelectScalar = {
   codUsuarioAuditor?: boolean
 }
 
-export type OdOrderLabelDetailOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkOrderLabelDetail" | "idDlkOrderLabelHead" | "itemGlobal" | "itemBySize" | "serialNumber" | "sgtinFull" | "urlDppFull" | "color" | "print" | "size" | "pieceType" | "setGroupId" | "isBlacklisted" | "reasonBlacklist" | "stateOrderLabelDetail" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "codUsuarioAuditor", ExtArgs["result"]["odOrderLabelDetail"]>
+export type OdOrderLabelDetailOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkOrderLabelDetail" | "idDlkOrderLabelHead" | "idDlkOrderLabelComponent" | "idDlkDigitalIdentifier" | "itemGlobal" | "itemBySize" | "serialNumber" | "sgtinFull" | "urlDppFull" | "color" | "print" | "size" | "pieceType" | "setGroupId" | "isBlacklisted" | "reasonBlacklist" | "stateOrderLabelDetail" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "codUsuarioAuditor", ExtArgs["result"]["odOrderLabelDetail"]>
 export type OdOrderLabelDetailInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labelHead?: boolean | Prisma.OdOrderLabelHeadDefaultArgs<ExtArgs>
+  labelComponent?: boolean | Prisma.OdOrderLabelDetail$labelComponentArgs<ExtArgs>
+  digitalIdentifier?: boolean | Prisma.OdOrderLabelDetail$digitalIdentifierArgs<ExtArgs>
   unitTraces?: boolean | Prisma.OdOrderLabelDetail$unitTracesArgs<ExtArgs>
   _count?: boolean | Prisma.OdOrderLabelDetailCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1109,11 +1603,21 @@ export type $OdOrderLabelDetailPayload<ExtArgs extends runtime.Types.Extensions.
   name: "OdOrderLabelDetail"
   objects: {
     labelHead: Prisma.$OdOrderLabelHeadPayload<ExtArgs>
+    labelComponent: Prisma.$OdOrderLabelComponentPayload<ExtArgs> | null
+    digitalIdentifier: Prisma.$MdDigitalIdentifierPayload<ExtArgs> | null
     unitTraces: Prisma.$OdUnitTracePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkOrderLabelDetail: number
     idDlkOrderLabelHead: number
+    /**
+     * * Pieza del set a la que pertenece este DPP (sets). Null en etiquetas no-set.
+     */
+    idDlkOrderLabelComponent: number | null
+    /**
+     * * Identificador digital del DPP en etiquetas NO-set. En sets se resuelve vía el componente.
+     */
+    idDlkDigitalIdentifier: number | null
     itemGlobal: number
     itemBySize: number
     serialNumber: string
@@ -1471,6 +1975,8 @@ readonly fields: OdOrderLabelDetailFieldRefs;
 export interface Prisma__OdOrderLabelDetailClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   labelHead<T extends Prisma.OdOrderLabelHeadDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderLabelHeadDefaultArgs<ExtArgs>>): Prisma.Prisma__OdOrderLabelHeadClient<runtime.Types.Result.GetResult<Prisma.$OdOrderLabelHeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  labelComponent<T extends Prisma.OdOrderLabelDetail$labelComponentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderLabelDetail$labelComponentArgs<ExtArgs>>): Prisma.Prisma__OdOrderLabelComponentClient<runtime.Types.Result.GetResult<Prisma.$OdOrderLabelComponentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  digitalIdentifier<T extends Prisma.OdOrderLabelDetail$digitalIdentifierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderLabelDetail$digitalIdentifierArgs<ExtArgs>>): Prisma.Prisma__MdDigitalIdentifierClient<runtime.Types.Result.GetResult<Prisma.$MdDigitalIdentifierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   unitTraces<T extends Prisma.OdOrderLabelDetail$unitTracesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderLabelDetail$unitTracesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdUnitTracePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1503,6 +2009,8 @@ export interface Prisma__OdOrderLabelDetailClient<T, Null = never, ExtArgs exten
 export interface OdOrderLabelDetailFieldRefs {
   readonly idDlkOrderLabelDetail: Prisma.FieldRef<"OdOrderLabelDetail", 'Int'>
   readonly idDlkOrderLabelHead: Prisma.FieldRef<"OdOrderLabelDetail", 'Int'>
+  readonly idDlkOrderLabelComponent: Prisma.FieldRef<"OdOrderLabelDetail", 'Int'>
+  readonly idDlkDigitalIdentifier: Prisma.FieldRef<"OdOrderLabelDetail", 'Int'>
   readonly itemGlobal: Prisma.FieldRef<"OdOrderLabelDetail", 'Int'>
   readonly itemBySize: Prisma.FieldRef<"OdOrderLabelDetail", 'Int'>
   readonly serialNumber: Prisma.FieldRef<"OdOrderLabelDetail", 'String'>
@@ -1864,6 +2372,44 @@ export type OdOrderLabelDetailDeleteManyArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many OdOrderLabelDetails to delete.
    */
   limit?: number
+}
+
+/**
+ * OdOrderLabelDetail.labelComponent
+ */
+export type OdOrderLabelDetail$labelComponentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OdOrderLabelComponent
+   */
+  select?: Prisma.OdOrderLabelComponentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OdOrderLabelComponent
+   */
+  omit?: Prisma.OdOrderLabelComponentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OdOrderLabelComponentInclude<ExtArgs> | null
+  where?: Prisma.OdOrderLabelComponentWhereInput
+}
+
+/**
+ * OdOrderLabelDetail.digitalIdentifier
+ */
+export type OdOrderLabelDetail$digitalIdentifierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MdDigitalIdentifier
+   */
+  select?: Prisma.MdDigitalIdentifierSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MdDigitalIdentifier
+   */
+  omit?: Prisma.MdDigitalIdentifierOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MdDigitalIdentifierInclude<ExtArgs> | null
+  where?: Prisma.MdDigitalIdentifierWhereInput
 }
 
 /**

@@ -356,6 +356,7 @@ model OdOrderDetail {
   orderHead         OdOrderHead        @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: Cascade, onUpdate: Cascade, map: "fk_detail_order_head")
   labelHeads        OdOrderLabelHead[]
   components        OdOrderComponent[]
+  labelComponents   OdOrderLabelComponent[]
 
   @@index([idDlkOrderHead], map: "idx_order_detail_head")
   @@map("OD_ORDER_DETAIL")
@@ -959,6 +960,8 @@ model MdDigitalIdentifier {
   desAccion                      String?            @map("DES_ACCION") @db.VarChar(20)
   flgStatutActif                 Int?               @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
   labelHeads                     OdOrderLabelHead[]
+  labelComponents                OdOrderLabelComponent[]
+  labelDetails                   OdOrderLabelDetail[]
 
   @@map("MD_DIGITAL_IDENTIFIER")
 }
@@ -1001,6 +1004,7 @@ model OdOrderLabelHead {
   digitalIdentifier      MdDigitalIdentifier  @relation(fields: [idDlkDigitalIdentifier], references: [idDlkDigitalIdentifier], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_digital_master")
   orderDetail            OdOrderDetail?       @relation(fields: [idDlkOrderDetail], references: [idDlkOrderDetail], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_head_order_detail")
   details                OdOrderLabelDetail[]
+  components             OdOrderLabelComponent[]
 
   @@unique([idDlkOrderDetail, size], map: "uq_label_head_detail_size")
   @@index([idDlkOrderHead], map: "idx_label_head_order")
@@ -1015,6 +1019,10 @@ model OdOrderLabelHead {
 model OdOrderLabelDetail {
   idDlkOrderLabelDetail Int              @id @default(autoincrement()) @map("ID_DLK_ORDER_LABEL_DETAIL")
   idDlkOrderLabelHead   Int              @map("ID_DLK_ORDER_LABEL_HEAD")
+  /** Pieza del set a la que pertenece este DPP (sets). Null en etiquetas no-set. */
+  idDlkOrderLabelComponent Int?          @map("ID_DLK_ORDER_LABEL_COMPONENT")
+  /** Identificador digital del DPP en etiquetas NO-set. En sets se resuelve vía el componente. */
+  idDlkDigitalIdentifier Int?            @map("ID_DLK_DIGITAL_IDENTIFIER")
   itemGlobal            Int              @map("ITEM_GLOBAL")
   itemBySize            Int              @map("ITEM_BY_SIZE")
   serialNumber          String           @map("SERIAL_NUMBER") @db.VarChar(20)
@@ -1032,11 +1040,46 @@ model OdOrderLabelDetail {
   fecProcesoModifDl     DateTime?        @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
   codUsuarioAuditor     String?          @map("COD_USUARIO_AUDITOR") @db.VarChar(20)
   labelHead             OdOrderLabelHead @relation(fields: [idDlkOrderLabelHead], references: [idDlkOrderLabelHead], onDelete: Cascade, onUpdate: Cascade, map: "fk_label_detail_to_head")
+  labelComponent        OdOrderLabelComponent? @relation(fields: [idDlkOrderLabelComponent], references: [idDlkOrderLabelComponent], onDelete: SetNull, onUpdate: Cascade, map: "fk_label_detail_component")
+  digitalIdentifier     MdDigitalIdentifier?   @relation(fields: [idDlkDigitalIdentifier], references: [idDlkDigitalIdentifier], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_detail_digital")
   unitTraces            OdUnitTrace[]
 
   @@index([idDlkOrderLabelHead], map: "idx_label_detail_head")
+  @@index([idDlkOrderLabelComponent], map: "idx_label_detail_component")
+  @@index([idDlkDigitalIdentifier], map: "idx_label_detail_digital")
   @@index([isBlacklisted], map: "idx_quality_control")
   @@map("OD_ORDER_LABEL_DETAIL")
+}
+
+/**
+ * Pieza de un set dentro de una etiqueta (DPP). Una fila por (cabecera × pieza).
+ * Aquí vive el identificador digital POR PIEZA en los sets (chaqueta → QR 1, pantalón → QR 2).
+ * En etiquetas no-set no se usa: el identificador va en OD_ORDER_LABEL_DETAIL.
+ */
+model OdOrderLabelComponent {
+  idDlkOrderLabelComponent Int                  @id @default(autoincrement()) @map("ID_DLK_ORDER_LABEL_COMPONENT")
+  idDlkOrderLabelHead      Int                  @map("ID_DLK_ORDER_LABEL_HEAD")
+  idDlkOrderDetail         Int                  @map("ID_DLK_ORDER_DETAIL")
+  idDlkDigitalIdentifier   Int                  @map("ID_DLK_DIGITAL_IDENTIFIER")
+  numPiece                 Int                  @map("NUM_PIECE")
+  nameComponent            String?              @map("NAME_COMPONENT") @db.VarChar(200)
+  codComponent             String?              @map("COD_COMPONENT") @db.VarChar(50)
+  stateOrderLabelComponent Int?                 @default(1) @map("STATE_ORDER_LABEL_COMPONENT") @db.TinyInt
+  codUsuarioCargaDl        String?              @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl        DateTime?            @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl        DateTime?            @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                String?              @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif           Int?                 @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  labelHead                OdOrderLabelHead     @relation(fields: [idDlkOrderLabelHead], references: [idDlkOrderLabelHead], onDelete: Cascade, onUpdate: Cascade, map: "fk_label_component_head")
+  orderDetail              OdOrderDetail        @relation(fields: [idDlkOrderDetail], references: [idDlkOrderDetail], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_component_order_detail")
+  digitalIdentifier        MdDigitalIdentifier  @relation(fields: [idDlkDigitalIdentifier], references: [idDlkDigitalIdentifier], onDelete: Restrict, onUpdate: Cascade, map: "fk_label_component_digital")
+  details                  OdOrderLabelDetail[]
+
+  @@unique([idDlkOrderLabelHead, numPiece], map: "uq_label_component_head_piece")
+  @@index([idDlkOrderLabelHead], map: "idx_label_component_head")
+  @@index([idDlkOrderDetail], map: "idx_label_component_order_detail")
+  @@index([idDlkDigitalIdentifier], map: "idx_label_component_digital")
+  @@map("OD_ORDER_LABEL_COMPONENT")
 }
 
 // =====================================================================

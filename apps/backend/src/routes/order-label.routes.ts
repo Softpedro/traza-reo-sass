@@ -88,6 +88,16 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
         pieceTypes: Array.isArray(body.pieceTypes)
           ? (body.pieceTypes as unknown[]).map((p) => String(p))
           : null,
+        pieces: Array.isArray(body.pieces)
+          ? (body.pieces as unknown[]).map((p, i) => {
+              const o = (p ?? {}) as Record<string, unknown>;
+              return {
+                numPiece: o.numPiece == null ? i + 1 : Number(o.numPiece),
+                name: o.name == null ? null : String(o.name),
+                idDlkDigitalIdentifier: Number(o.idDlkDigitalIdentifier),
+              };
+            })
+          : null,
         esSet:
           body.esSet == null || body.esSet === ""
             ? null
@@ -277,6 +287,23 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
             body.statusStageOrderHead === "" || body.statusStageOrderHead == null
               ? null
               : Number(body.statusStageOrderHead),
+        }),
+        ...(body.idDlkDigitalIdentifier !== undefined && {
+          idDlkDigitalIdentifier:
+            body.idDlkDigitalIdentifier === "" || body.idDlkDigitalIdentifier == null
+              ? null
+              : Number(body.idDlkDigitalIdentifier),
+        }),
+        ...(Array.isArray(body.pieces) && {
+          pieces: (body.pieces as unknown[]).map((p) => {
+            const o = (p ?? {}) as Record<string, unknown>;
+            return {
+              idDlkOrderLabelComponent: Number(o.idDlkOrderLabelComponent),
+              name: o.name === undefined ? undefined : o.name == null ? null : String(o.name),
+              idDlkDigitalIdentifier:
+                o.idDlkDigitalIdentifier == null ? null : Number(o.idDlkDigitalIdentifier),
+            };
+          }),
         }),
         ...(body.codUsuarioCargaDl !== undefined && {
           codUsuarioCargaDl: String(body.codUsuarioCargaDl),

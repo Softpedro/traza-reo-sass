@@ -314,6 +314,8 @@ export type MdDigitalIdentifierWhereInput = {
   desAccion?: Prisma.StringNullableFilter<"MdDigitalIdentifier"> | string | null
   flgStatutActif?: Prisma.IntNullableFilter<"MdDigitalIdentifier"> | number | null
   labelHeads?: Prisma.OdOrderLabelHeadListRelationFilter
+  labelComponents?: Prisma.OdOrderLabelComponentListRelationFilter
+  labelDetails?: Prisma.OdOrderLabelDetailListRelationFilter
 }
 
 export type MdDigitalIdentifierOrderByWithRelationInput = {
@@ -334,6 +336,8 @@ export type MdDigitalIdentifierOrderByWithRelationInput = {
   desAccion?: Prisma.SortOrderInput | Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrderInput | Prisma.SortOrder
   labelHeads?: Prisma.OdOrderLabelHeadOrderByRelationAggregateInput
+  labelComponents?: Prisma.OdOrderLabelComponentOrderByRelationAggregateInput
+  labelDetails?: Prisma.OdOrderLabelDetailOrderByRelationAggregateInput
   _relevance?: Prisma.MdDigitalIdentifierOrderByRelevanceInput
 }
 
@@ -358,6 +362,8 @@ export type MdDigitalIdentifierWhereUniqueInput = Prisma.AtLeast<{
   desAccion?: Prisma.StringNullableFilter<"MdDigitalIdentifier"> | string | null
   flgStatutActif?: Prisma.IntNullableFilter<"MdDigitalIdentifier"> | number | null
   labelHeads?: Prisma.OdOrderLabelHeadListRelationFilter
+  labelComponents?: Prisma.OdOrderLabelComponentListRelationFilter
+  labelDetails?: Prisma.OdOrderLabelDetailListRelationFilter
 }, "idDlkDigitalIdentifier" | "codDigitalIdentifier">
 
 export type MdDigitalIdentifierOrderByWithAggregationInput = {
@@ -423,6 +429,8 @@ export type MdDigitalIdentifierCreateInput = {
   desAccion?: string | null
   flgStatutActif?: number | null
   labelHeads?: Prisma.OdOrderLabelHeadCreateNestedManyWithoutDigitalIdentifierInput
+  labelComponents?: Prisma.OdOrderLabelComponentCreateNestedManyWithoutDigitalIdentifierInput
+  labelDetails?: Prisma.OdOrderLabelDetailCreateNestedManyWithoutDigitalIdentifierInput
 }
 
 export type MdDigitalIdentifierUncheckedCreateInput = {
@@ -443,6 +451,8 @@ export type MdDigitalIdentifierUncheckedCreateInput = {
   desAccion?: string | null
   flgStatutActif?: number | null
   labelHeads?: Prisma.OdOrderLabelHeadUncheckedCreateNestedManyWithoutDigitalIdentifierInput
+  labelComponents?: Prisma.OdOrderLabelComponentUncheckedCreateNestedManyWithoutDigitalIdentifierInput
+  labelDetails?: Prisma.OdOrderLabelDetailUncheckedCreateNestedManyWithoutDigitalIdentifierInput
 }
 
 export type MdDigitalIdentifierUpdateInput = {
@@ -462,6 +472,8 @@ export type MdDigitalIdentifierUpdateInput = {
   desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   labelHeads?: Prisma.OdOrderLabelHeadUpdateManyWithoutDigitalIdentifierNestedInput
+  labelComponents?: Prisma.OdOrderLabelComponentUpdateManyWithoutDigitalIdentifierNestedInput
+  labelDetails?: Prisma.OdOrderLabelDetailUpdateManyWithoutDigitalIdentifierNestedInput
 }
 
 export type MdDigitalIdentifierUncheckedUpdateInput = {
@@ -482,6 +494,8 @@ export type MdDigitalIdentifierUncheckedUpdateInput = {
   desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   labelHeads?: Prisma.OdOrderLabelHeadUncheckedUpdateManyWithoutDigitalIdentifierNestedInput
+  labelComponents?: Prisma.OdOrderLabelComponentUncheckedUpdateManyWithoutDigitalIdentifierNestedInput
+  labelDetails?: Prisma.OdOrderLabelDetailUncheckedUpdateManyWithoutDigitalIdentifierNestedInput
 }
 
 export type MdDigitalIdentifierCreateManyInput = {
@@ -620,6 +634,11 @@ export type MdDigitalIdentifierScalarRelationFilter = {
   isNot?: Prisma.MdDigitalIdentifierWhereInput
 }
 
+export type MdDigitalIdentifierNullableScalarRelationFilter = {
+  is?: Prisma.MdDigitalIdentifierWhereInput | null
+  isNot?: Prisma.MdDigitalIdentifierWhereInput | null
+}
+
 export type MdDigitalIdentifierCreateNestedOneWithoutLabelHeadsInput = {
   create?: Prisma.XOR<Prisma.MdDigitalIdentifierCreateWithoutLabelHeadsInput, Prisma.MdDigitalIdentifierUncheckedCreateWithoutLabelHeadsInput>
   connectOrCreate?: Prisma.MdDigitalIdentifierCreateOrConnectWithoutLabelHeadsInput
@@ -632,6 +651,36 @@ export type MdDigitalIdentifierUpdateOneRequiredWithoutLabelHeadsNestedInput = {
   upsert?: Prisma.MdDigitalIdentifierUpsertWithoutLabelHeadsInput
   connect?: Prisma.MdDigitalIdentifierWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.MdDigitalIdentifierUpdateToOneWithWhereWithoutLabelHeadsInput, Prisma.MdDigitalIdentifierUpdateWithoutLabelHeadsInput>, Prisma.MdDigitalIdentifierUncheckedUpdateWithoutLabelHeadsInput>
+}
+
+export type MdDigitalIdentifierCreateNestedOneWithoutLabelDetailsInput = {
+  create?: Prisma.XOR<Prisma.MdDigitalIdentifierCreateWithoutLabelDetailsInput, Prisma.MdDigitalIdentifierUncheckedCreateWithoutLabelDetailsInput>
+  connectOrCreate?: Prisma.MdDigitalIdentifierCreateOrConnectWithoutLabelDetailsInput
+  connect?: Prisma.MdDigitalIdentifierWhereUniqueInput
+}
+
+export type MdDigitalIdentifierUpdateOneWithoutLabelDetailsNestedInput = {
+  create?: Prisma.XOR<Prisma.MdDigitalIdentifierCreateWithoutLabelDetailsInput, Prisma.MdDigitalIdentifierUncheckedCreateWithoutLabelDetailsInput>
+  connectOrCreate?: Prisma.MdDigitalIdentifierCreateOrConnectWithoutLabelDetailsInput
+  upsert?: Prisma.MdDigitalIdentifierUpsertWithoutLabelDetailsInput
+  disconnect?: Prisma.MdDigitalIdentifierWhereInput | boolean
+  delete?: Prisma.MdDigitalIdentifierWhereInput | boolean
+  connect?: Prisma.MdDigitalIdentifierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MdDigitalIdentifierUpdateToOneWithWhereWithoutLabelDetailsInput, Prisma.MdDigitalIdentifierUpdateWithoutLabelDetailsInput>, Prisma.MdDigitalIdentifierUncheckedUpdateWithoutLabelDetailsInput>
+}
+
+export type MdDigitalIdentifierCreateNestedOneWithoutLabelComponentsInput = {
+  create?: Prisma.XOR<Prisma.MdDigitalIdentifierCreateWithoutLabelComponentsInput, Prisma.MdDigitalIdentifierUncheckedCreateWithoutLabelComponentsInput>
+  connectOrCreate?: Prisma.MdDigitalIdentifierCreateOrConnectWithoutLabelComponentsInput
+  connect?: Prisma.MdDigitalIdentifierWhereUniqueInput
+}
+
+export type MdDigitalIdentifierUpdateOneRequiredWithoutLabelComponentsNestedInput = {
+  create?: Prisma.XOR<Prisma.MdDigitalIdentifierCreateWithoutLabelComponentsInput, Prisma.MdDigitalIdentifierUncheckedCreateWithoutLabelComponentsInput>
+  connectOrCreate?: Prisma.MdDigitalIdentifierCreateOrConnectWithoutLabelComponentsInput
+  upsert?: Prisma.MdDigitalIdentifierUpsertWithoutLabelComponentsInput
+  connect?: Prisma.MdDigitalIdentifierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MdDigitalIdentifierUpdateToOneWithWhereWithoutLabelComponentsInput, Prisma.MdDigitalIdentifierUpdateWithoutLabelComponentsInput>, Prisma.MdDigitalIdentifierUncheckedUpdateWithoutLabelComponentsInput>
 }
 
 export type MdDigitalIdentifierCreateWithoutLabelHeadsInput = {
@@ -650,6 +699,8 @@ export type MdDigitalIdentifierCreateWithoutLabelHeadsInput = {
   fecProcesoModifDl?: Date | string | null
   desAccion?: string | null
   flgStatutActif?: number | null
+  labelComponents?: Prisma.OdOrderLabelComponentCreateNestedManyWithoutDigitalIdentifierInput
+  labelDetails?: Prisma.OdOrderLabelDetailCreateNestedManyWithoutDigitalIdentifierInput
 }
 
 export type MdDigitalIdentifierUncheckedCreateWithoutLabelHeadsInput = {
@@ -669,6 +720,8 @@ export type MdDigitalIdentifierUncheckedCreateWithoutLabelHeadsInput = {
   fecProcesoModifDl?: Date | string | null
   desAccion?: string | null
   flgStatutActif?: number | null
+  labelComponents?: Prisma.OdOrderLabelComponentUncheckedCreateNestedManyWithoutDigitalIdentifierInput
+  labelDetails?: Prisma.OdOrderLabelDetailUncheckedCreateNestedManyWithoutDigitalIdentifierInput
 }
 
 export type MdDigitalIdentifierCreateOrConnectWithoutLabelHeadsInput = {
@@ -703,6 +756,8 @@ export type MdDigitalIdentifierUpdateWithoutLabelHeadsInput = {
   fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  labelComponents?: Prisma.OdOrderLabelComponentUpdateManyWithoutDigitalIdentifierNestedInput
+  labelDetails?: Prisma.OdOrderLabelDetailUpdateManyWithoutDigitalIdentifierNestedInput
 }
 
 export type MdDigitalIdentifierUncheckedUpdateWithoutLabelHeadsInput = {
@@ -722,6 +777,204 @@ export type MdDigitalIdentifierUncheckedUpdateWithoutLabelHeadsInput = {
   fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  labelComponents?: Prisma.OdOrderLabelComponentUncheckedUpdateManyWithoutDigitalIdentifierNestedInput
+  labelDetails?: Prisma.OdOrderLabelDetailUncheckedUpdateManyWithoutDigitalIdentifierNestedInput
+}
+
+export type MdDigitalIdentifierCreateWithoutLabelDetailsInput = {
+  codDigitalIdentifier: string
+  typeDigitalIdentifier?: string | null
+  materialDigitalIdentifier?: string | null
+  locationDigitalIdentifier?: string | null
+  standardIsoDigitalIdentifier?: string | null
+  supplierDigitalIdentifier?: string | null
+  modelDigitalIdentifier?: string | null
+  specificationDigitalIdentifier?: runtime.Bytes | null
+  observationDigitalIdentifier?: string | null
+  stateDigitalIdentifier?: number | null
+  codUsuarioCargaDl?: string | null
+  fecProcesoCargaDl?: Date | string | null
+  fecProcesoModifDl?: Date | string | null
+  desAccion?: string | null
+  flgStatutActif?: number | null
+  labelHeads?: Prisma.OdOrderLabelHeadCreateNestedManyWithoutDigitalIdentifierInput
+  labelComponents?: Prisma.OdOrderLabelComponentCreateNestedManyWithoutDigitalIdentifierInput
+}
+
+export type MdDigitalIdentifierUncheckedCreateWithoutLabelDetailsInput = {
+  idDlkDigitalIdentifier?: number
+  codDigitalIdentifier: string
+  typeDigitalIdentifier?: string | null
+  materialDigitalIdentifier?: string | null
+  locationDigitalIdentifier?: string | null
+  standardIsoDigitalIdentifier?: string | null
+  supplierDigitalIdentifier?: string | null
+  modelDigitalIdentifier?: string | null
+  specificationDigitalIdentifier?: runtime.Bytes | null
+  observationDigitalIdentifier?: string | null
+  stateDigitalIdentifier?: number | null
+  codUsuarioCargaDl?: string | null
+  fecProcesoCargaDl?: Date | string | null
+  fecProcesoModifDl?: Date | string | null
+  desAccion?: string | null
+  flgStatutActif?: number | null
+  labelHeads?: Prisma.OdOrderLabelHeadUncheckedCreateNestedManyWithoutDigitalIdentifierInput
+  labelComponents?: Prisma.OdOrderLabelComponentUncheckedCreateNestedManyWithoutDigitalIdentifierInput
+}
+
+export type MdDigitalIdentifierCreateOrConnectWithoutLabelDetailsInput = {
+  where: Prisma.MdDigitalIdentifierWhereUniqueInput
+  create: Prisma.XOR<Prisma.MdDigitalIdentifierCreateWithoutLabelDetailsInput, Prisma.MdDigitalIdentifierUncheckedCreateWithoutLabelDetailsInput>
+}
+
+export type MdDigitalIdentifierUpsertWithoutLabelDetailsInput = {
+  update: Prisma.XOR<Prisma.MdDigitalIdentifierUpdateWithoutLabelDetailsInput, Prisma.MdDigitalIdentifierUncheckedUpdateWithoutLabelDetailsInput>
+  create: Prisma.XOR<Prisma.MdDigitalIdentifierCreateWithoutLabelDetailsInput, Prisma.MdDigitalIdentifierUncheckedCreateWithoutLabelDetailsInput>
+  where?: Prisma.MdDigitalIdentifierWhereInput
+}
+
+export type MdDigitalIdentifierUpdateToOneWithWhereWithoutLabelDetailsInput = {
+  where?: Prisma.MdDigitalIdentifierWhereInput
+  data: Prisma.XOR<Prisma.MdDigitalIdentifierUpdateWithoutLabelDetailsInput, Prisma.MdDigitalIdentifierUncheckedUpdateWithoutLabelDetailsInput>
+}
+
+export type MdDigitalIdentifierUpdateWithoutLabelDetailsInput = {
+  codDigitalIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
+  typeDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locationDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  standardIsoDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modelDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specificationDigitalIdentifier?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  observationDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateDigitalIdentifier?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  labelHeads?: Prisma.OdOrderLabelHeadUpdateManyWithoutDigitalIdentifierNestedInput
+  labelComponents?: Prisma.OdOrderLabelComponentUpdateManyWithoutDigitalIdentifierNestedInput
+}
+
+export type MdDigitalIdentifierUncheckedUpdateWithoutLabelDetailsInput = {
+  idDlkDigitalIdentifier?: Prisma.IntFieldUpdateOperationsInput | number
+  codDigitalIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
+  typeDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locationDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  standardIsoDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modelDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specificationDigitalIdentifier?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  observationDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateDigitalIdentifier?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  labelHeads?: Prisma.OdOrderLabelHeadUncheckedUpdateManyWithoutDigitalIdentifierNestedInput
+  labelComponents?: Prisma.OdOrderLabelComponentUncheckedUpdateManyWithoutDigitalIdentifierNestedInput
+}
+
+export type MdDigitalIdentifierCreateWithoutLabelComponentsInput = {
+  codDigitalIdentifier: string
+  typeDigitalIdentifier?: string | null
+  materialDigitalIdentifier?: string | null
+  locationDigitalIdentifier?: string | null
+  standardIsoDigitalIdentifier?: string | null
+  supplierDigitalIdentifier?: string | null
+  modelDigitalIdentifier?: string | null
+  specificationDigitalIdentifier?: runtime.Bytes | null
+  observationDigitalIdentifier?: string | null
+  stateDigitalIdentifier?: number | null
+  codUsuarioCargaDl?: string | null
+  fecProcesoCargaDl?: Date | string | null
+  fecProcesoModifDl?: Date | string | null
+  desAccion?: string | null
+  flgStatutActif?: number | null
+  labelHeads?: Prisma.OdOrderLabelHeadCreateNestedManyWithoutDigitalIdentifierInput
+  labelDetails?: Prisma.OdOrderLabelDetailCreateNestedManyWithoutDigitalIdentifierInput
+}
+
+export type MdDigitalIdentifierUncheckedCreateWithoutLabelComponentsInput = {
+  idDlkDigitalIdentifier?: number
+  codDigitalIdentifier: string
+  typeDigitalIdentifier?: string | null
+  materialDigitalIdentifier?: string | null
+  locationDigitalIdentifier?: string | null
+  standardIsoDigitalIdentifier?: string | null
+  supplierDigitalIdentifier?: string | null
+  modelDigitalIdentifier?: string | null
+  specificationDigitalIdentifier?: runtime.Bytes | null
+  observationDigitalIdentifier?: string | null
+  stateDigitalIdentifier?: number | null
+  codUsuarioCargaDl?: string | null
+  fecProcesoCargaDl?: Date | string | null
+  fecProcesoModifDl?: Date | string | null
+  desAccion?: string | null
+  flgStatutActif?: number | null
+  labelHeads?: Prisma.OdOrderLabelHeadUncheckedCreateNestedManyWithoutDigitalIdentifierInput
+  labelDetails?: Prisma.OdOrderLabelDetailUncheckedCreateNestedManyWithoutDigitalIdentifierInput
+}
+
+export type MdDigitalIdentifierCreateOrConnectWithoutLabelComponentsInput = {
+  where: Prisma.MdDigitalIdentifierWhereUniqueInput
+  create: Prisma.XOR<Prisma.MdDigitalIdentifierCreateWithoutLabelComponentsInput, Prisma.MdDigitalIdentifierUncheckedCreateWithoutLabelComponentsInput>
+}
+
+export type MdDigitalIdentifierUpsertWithoutLabelComponentsInput = {
+  update: Prisma.XOR<Prisma.MdDigitalIdentifierUpdateWithoutLabelComponentsInput, Prisma.MdDigitalIdentifierUncheckedUpdateWithoutLabelComponentsInput>
+  create: Prisma.XOR<Prisma.MdDigitalIdentifierCreateWithoutLabelComponentsInput, Prisma.MdDigitalIdentifierUncheckedCreateWithoutLabelComponentsInput>
+  where?: Prisma.MdDigitalIdentifierWhereInput
+}
+
+export type MdDigitalIdentifierUpdateToOneWithWhereWithoutLabelComponentsInput = {
+  where?: Prisma.MdDigitalIdentifierWhereInput
+  data: Prisma.XOR<Prisma.MdDigitalIdentifierUpdateWithoutLabelComponentsInput, Prisma.MdDigitalIdentifierUncheckedUpdateWithoutLabelComponentsInput>
+}
+
+export type MdDigitalIdentifierUpdateWithoutLabelComponentsInput = {
+  codDigitalIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
+  typeDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locationDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  standardIsoDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modelDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specificationDigitalIdentifier?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  observationDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateDigitalIdentifier?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  labelHeads?: Prisma.OdOrderLabelHeadUpdateManyWithoutDigitalIdentifierNestedInput
+  labelDetails?: Prisma.OdOrderLabelDetailUpdateManyWithoutDigitalIdentifierNestedInput
+}
+
+export type MdDigitalIdentifierUncheckedUpdateWithoutLabelComponentsInput = {
+  idDlkDigitalIdentifier?: Prisma.IntFieldUpdateOperationsInput | number
+  codDigitalIdentifier?: Prisma.StringFieldUpdateOperationsInput | string
+  typeDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locationDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  standardIsoDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modelDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specificationDigitalIdentifier?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  observationDigitalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stateDigitalIdentifier?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  labelHeads?: Prisma.OdOrderLabelHeadUncheckedUpdateManyWithoutDigitalIdentifierNestedInput
+  labelDetails?: Prisma.OdOrderLabelDetailUncheckedUpdateManyWithoutDigitalIdentifierNestedInput
 }
 
 
@@ -731,10 +984,14 @@ export type MdDigitalIdentifierUncheckedUpdateWithoutLabelHeadsInput = {
 
 export type MdDigitalIdentifierCountOutputType = {
   labelHeads: number
+  labelComponents: number
+  labelDetails: number
 }
 
 export type MdDigitalIdentifierCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labelHeads?: boolean | MdDigitalIdentifierCountOutputTypeCountLabelHeadsArgs
+  labelComponents?: boolean | MdDigitalIdentifierCountOutputTypeCountLabelComponentsArgs
+  labelDetails?: boolean | MdDigitalIdentifierCountOutputTypeCountLabelDetailsArgs
 }
 
 /**
@@ -752,6 +1009,20 @@ export type MdDigitalIdentifierCountOutputTypeDefaultArgs<ExtArgs extends runtim
  */
 export type MdDigitalIdentifierCountOutputTypeCountLabelHeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OdOrderLabelHeadWhereInput
+}
+
+/**
+ * MdDigitalIdentifierCountOutputType without action
+ */
+export type MdDigitalIdentifierCountOutputTypeCountLabelComponentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OdOrderLabelComponentWhereInput
+}
+
+/**
+ * MdDigitalIdentifierCountOutputType without action
+ */
+export type MdDigitalIdentifierCountOutputTypeCountLabelDetailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OdOrderLabelDetailWhereInput
 }
 
 
@@ -773,6 +1044,8 @@ export type MdDigitalIdentifierSelect<ExtArgs extends runtime.Types.Extensions.I
   desAccion?: boolean
   flgStatutActif?: boolean
   labelHeads?: boolean | Prisma.MdDigitalIdentifier$labelHeadsArgs<ExtArgs>
+  labelComponents?: boolean | Prisma.MdDigitalIdentifier$labelComponentsArgs<ExtArgs>
+  labelDetails?: boolean | Prisma.MdDigitalIdentifier$labelDetailsArgs<ExtArgs>
   _count?: boolean | Prisma.MdDigitalIdentifierCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mdDigitalIdentifier"]>
 
@@ -800,6 +1073,8 @@ export type MdDigitalIdentifierSelectScalar = {
 export type MdDigitalIdentifierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkDigitalIdentifier" | "codDigitalIdentifier" | "typeDigitalIdentifier" | "materialDigitalIdentifier" | "locationDigitalIdentifier" | "standardIsoDigitalIdentifier" | "supplierDigitalIdentifier" | "modelDigitalIdentifier" | "specificationDigitalIdentifier" | "observationDigitalIdentifier" | "stateDigitalIdentifier" | "codUsuarioCargaDl" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdDigitalIdentifier"]>
 export type MdDigitalIdentifierInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labelHeads?: boolean | Prisma.MdDigitalIdentifier$labelHeadsArgs<ExtArgs>
+  labelComponents?: boolean | Prisma.MdDigitalIdentifier$labelComponentsArgs<ExtArgs>
+  labelDetails?: boolean | Prisma.MdDigitalIdentifier$labelDetailsArgs<ExtArgs>
   _count?: boolean | Prisma.MdDigitalIdentifierCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -807,6 +1082,8 @@ export type $MdDigitalIdentifierPayload<ExtArgs extends runtime.Types.Extensions
   name: "MdDigitalIdentifier"
   objects: {
     labelHeads: Prisma.$OdOrderLabelHeadPayload<ExtArgs>[]
+    labelComponents: Prisma.$OdOrderLabelComponentPayload<ExtArgs>[]
+    labelDetails: Prisma.$OdOrderLabelDetailPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkDigitalIdentifier: number
@@ -1166,6 +1443,8 @@ readonly fields: MdDigitalIdentifierFieldRefs;
 export interface Prisma__MdDigitalIdentifierClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   labelHeads<T extends Prisma.MdDigitalIdentifier$labelHeadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdDigitalIdentifier$labelHeadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdOrderLabelHeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  labelComponents<T extends Prisma.MdDigitalIdentifier$labelComponentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdDigitalIdentifier$labelComponentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdOrderLabelComponentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  labelDetails<T extends Prisma.MdDigitalIdentifier$labelDetailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdDigitalIdentifier$labelDetailsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdOrderLabelDetailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1580,6 +1859,54 @@ export type MdDigitalIdentifier$labelHeadsArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.OdOrderLabelHeadScalarFieldEnum | Prisma.OdOrderLabelHeadScalarFieldEnum[]
+}
+
+/**
+ * MdDigitalIdentifier.labelComponents
+ */
+export type MdDigitalIdentifier$labelComponentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OdOrderLabelComponent
+   */
+  select?: Prisma.OdOrderLabelComponentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OdOrderLabelComponent
+   */
+  omit?: Prisma.OdOrderLabelComponentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OdOrderLabelComponentInclude<ExtArgs> | null
+  where?: Prisma.OdOrderLabelComponentWhereInput
+  orderBy?: Prisma.OdOrderLabelComponentOrderByWithRelationInput | Prisma.OdOrderLabelComponentOrderByWithRelationInput[]
+  cursor?: Prisma.OdOrderLabelComponentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OdOrderLabelComponentScalarFieldEnum | Prisma.OdOrderLabelComponentScalarFieldEnum[]
+}
+
+/**
+ * MdDigitalIdentifier.labelDetails
+ */
+export type MdDigitalIdentifier$labelDetailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OdOrderLabelDetail
+   */
+  select?: Prisma.OdOrderLabelDetailSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OdOrderLabelDetail
+   */
+  omit?: Prisma.OdOrderLabelDetailOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OdOrderLabelDetailInclude<ExtArgs> | null
+  where?: Prisma.OdOrderLabelDetailWhereInput
+  orderBy?: Prisma.OdOrderLabelDetailOrderByWithRelationInput | Prisma.OdOrderLabelDetailOrderByWithRelationInput[]
+  cursor?: Prisma.OdOrderLabelDetailWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OdOrderLabelDetailScalarFieldEnum | Prisma.OdOrderLabelDetailScalarFieldEnum[]
 }
 
 /**

@@ -1129,13 +1129,13 @@ model OdProcessRoute {
   idDlkProcessRoute       Int                       @id @default(autoincrement()) @map("ID_DLK_PROCESS_ROUTE")
   idDlkOrderComponent     Int                       @map("ID_DLK_ORDER_COMPONENT")
   ordenPrecedenciaProcess Int                       @map("ORDEN_PRECEDENCIA_PROCESS") @db.UnsignedSmallInt
-  codProcess              String                    @map("COD_PROCESS") @db.VarChar(50)
+  codProcess              String                    @map("COD_PROCESS") @db.VarChar(100)
   nameProcess             String                    @map("NAME_PROCESS") @db.VarChar(100)
   criticalityProcess      Criticality               @default(MEDIUM) @map("CRITICALITY_PROCESS")
   outsourcedProcess       Int                       @default(0) @map("OUTSOURCED_PROCESS") @db.UnsignedTinyInt
   estimatedTimeProcess    Int                       @default(0) @map("ESTIMATED_TIME_PROCESS") @db.UnsignedInt
-  responsibleUnit         String                    @map("RESPONSIBLE_UNIT") @db.VarChar(50)
-  responsibleProcess      String                    @map("RESPONSIBLE_PROCESS") @db.VarChar(50)
+  responsibleUnit         String                    @map("RESPONSIBLE_UNIT") @db.VarChar(100)
+  responsibleProcess      String                    @map("RESPONSIBLE_PROCESS") @db.VarChar(100)
   inputTimeProcessRoute   DateTime?                 @map("INPUT_TIME_PROCESS_ROUTE") @db.DateTime(3)
   outputTimeProcessRoute  DateTime?                 @map("OUTPUT_TIME_PROCESS_ROUTE") @db.DateTime(3)
   stateProcessRoute       Int                       @default(1) @map("STATE_PROCESS_ROUTE") @db.UnsignedTinyInt
@@ -1226,13 +1226,13 @@ model OdSubprocessRoute {
   idDlkSubprocessRoute       Int                          @id @default(autoincrement()) @map("ID_DLK_SUBPROCESS_ROUTE")
   idDlkProcessRoute          Int                          @map("ID_DLK_PROCESS_ROUTE")
   ordenPrecedenciaSubprocess Int                          @map("ORDEN_PRECEDENCIA_SUBPROCESS") @db.UnsignedSmallInt
-  codSubprocess              String                       @map("COD_SUBPROCESS") @db.VarChar(20)
+  codSubprocess              String                       @map("COD_SUBPROCESS") @db.VarChar(100)
   nameSubprocess             String                       @map("NAME_SUBPROCESS") @db.VarChar(100)
   criticalitySubprocess      Criticality                  @default(MEDIUM) @map("CRITICALITY_SUBPROCESS")
   outsourcedSubprocess       Int                          @default(0) @map("OUTSOURCED_SUBPROCESS") @db.UnsignedTinyInt
   estimatedTimeSubprocess    Int                          @default(0) @map("ESTIMATED_TIME_SUBPROCESS") @db.UnsignedInt
-  responsibleUnit            String?                      @map("RESPONSIBLE_UNIT") @db.VarChar(50)
-  responsibleRole            String?                      @map("RESPONSIBLE_ROLE") @db.VarChar(50)
+  responsibleUnit            String?                      @map("RESPONSIBLE_UNIT") @db.VarChar(100)
+  responsibleRole            String?                      @map("RESPONSIBLE_ROLE") @db.VarChar(100)
   inputTimeSubprocessRoute   DateTime?                    @map("INPUT_TIME_SUBPROCESS_ROUTE") @db.DateTime(3)
   outputTimeSubprocessRoute  DateTime?                    @map("OUTPUT_TIME_SUBPROCESS_ROUTE") @db.DateTime(3)
   stateSubprocess            Int                          @default(1) @map("STATE_SUBPROCESS") @db.UnsignedTinyInt
@@ -1325,9 +1325,9 @@ model OdOutputSubprocessRoute {
 model OdActivitiesRoute {
   idDlkActivitiesRoute      Int                          @id @default(autoincrement()) @map("ID_DLK_ACTIVITIES_ROUTE")
   idDlkSubprocessRoute      Int                          @map("ID_DLK_SUBPROCESS_ROUTE")
-  codActivities             String                       @map("COD_ACTIVITIES") @db.VarChar(20)
-  nameActivities            String                       @map("NAME_ACTIVITIES") @db.VarChar(150)
-  typeActivities            String                       @map("TYPE_ACTIVITIES") @db.VarChar(50)
+  codActivities             String                       @map("COD_ACTIVITIES") @db.VarChar(100)
+  nameActivities            String                       @map("NAME_ACTIVITIES") @db.VarChar(200)
+  typeActivities            String                       @map("TYPE_ACTIVITIES") @db.VarChar(200)
   orderActivities           Int                          @map("ORDER_ACTIVITIES") @db.UnsignedSmallInt
   estimatedTimeActivities   Int                          @default(0) @map("ESTIMATED_TIME_ACTIVITIES") @db.UnsignedInt
   responsibleName           String?                      @map("RESPONSIBLE_NAME") @db.VarChar(100)

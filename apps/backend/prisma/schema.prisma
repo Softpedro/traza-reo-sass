@@ -709,6 +709,7 @@ model MdFacility {
   desAccion           String          @map("DES_ACCION") @db.VarChar(20)
   flgStatutActif      Int             @default(1) @map("FLG_STATUT_ACTIF")
   parentCompany       MdParentCompany @relation(fields: [idDlkParentCompany], references: [idDlkParentCompany])
+  processRoutes       OdProcessRoute[]
 
   @@index([idDlkParentCompany], map: "FK_FACILITY_PARENT_COMPANY")
   @@index([codUbigeo], map: "FK_FACILITY_UBIGEO")
@@ -1136,6 +1137,7 @@ model OdProcessRoute {
   estimatedTimeProcess    Int                       @default(0) @map("ESTIMATED_TIME_PROCESS") @db.UnsignedInt
   responsibleUnit         String                    @map("RESPONSIBLE_UNIT") @db.VarChar(100)
   responsibleProcess      String                    @map("RESPONSIBLE_PROCESS") @db.VarChar(100)
+  idDlkFacility           Int?                      @map("ID_DLK_FACILITY")
   inputTimeProcessRoute   DateTime?                 @map("INPUT_TIME_PROCESS_ROUTE") @db.DateTime(3)
   outputTimeProcessRoute  DateTime?                 @map("OUTPUT_TIME_PROCESS_ROUTE") @db.DateTime(3)
   stateProcessRoute       Int                       @default(1) @map("STATE_PROCESS_ROUTE") @db.UnsignedTinyInt
@@ -1145,12 +1147,14 @@ model OdProcessRoute {
   desAccion               String                    @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
   flgStatutActif          Int                       @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
   orderComponent          OdOrderComponent          @relation(fields: [idDlkOrderComponent], references: [idDlkOrderComponent], onDelete: NoAction, onUpdate: NoAction, map: "fk_OD_PROCESS_ROUTE_OD_ORDER_COMPONENT1")
+  facility                MdFacility?               @relation(fields: [idDlkFacility], references: [idDlkFacility], onDelete: SetNull, onUpdate: NoAction, map: "fk_OD_PROCESS_ROUTE_MD_FACILITY1")
   inputs                  OdInputProcessRoute[]
   procedures              OdProcedureProcessRoute[]
   outputs                 OdOutputProcessRoute[]
   subprocesses            OdSubprocessRoute[]
 
   @@unique([idDlkOrderComponent, ordenPrecedenciaProcess], map: "uq_process_route_precedence")
+  @@index([idDlkFacility], map: "idx_process_route_facility")
   @@map("OD_PROCESS_ROUTE")
 }
 

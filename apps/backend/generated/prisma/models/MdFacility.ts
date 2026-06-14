@@ -337,6 +337,7 @@ export type MdFacilityWhereInput = {
   desAccion?: Prisma.StringFilter<"MdFacility"> | string
   flgStatutActif?: Prisma.IntFilter<"MdFacility"> | number
   parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
+  processRoutes?: Prisma.OdProcessRouteListRelationFilter
 }
 
 export type MdFacilityOrderByWithRelationInput = {
@@ -359,6 +360,7 @@ export type MdFacilityOrderByWithRelationInput = {
   desAccion?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
   parentCompany?: Prisma.MdParentCompanyOrderByWithRelationInput
+  processRoutes?: Prisma.OdProcessRouteOrderByRelationAggregateInput
   _relevance?: Prisma.MdFacilityOrderByRelevanceInput
 }
 
@@ -385,6 +387,7 @@ export type MdFacilityWhereUniqueInput = Prisma.AtLeast<{
   desAccion?: Prisma.StringFilter<"MdFacility"> | string
   flgStatutActif?: Prisma.IntFilter<"MdFacility"> | number
   parentCompany?: Prisma.XOR<Prisma.MdParentCompanyScalarRelationFilter, Prisma.MdParentCompanyWhereInput>
+  processRoutes?: Prisma.OdProcessRouteListRelationFilter
 }, "idDlkFacility" | "codFacility">
 
 export type MdFacilityOrderByWithAggregationInput = {
@@ -455,6 +458,7 @@ export type MdFacilityCreateInput = {
   desAccion: string
   flgStatutActif?: number
   parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutFacilitiesInput
+  processRoutes?: Prisma.OdProcessRouteCreateNestedManyWithoutFacilityInput
 }
 
 export type MdFacilityUncheckedCreateInput = {
@@ -476,6 +480,7 @@ export type MdFacilityUncheckedCreateInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  processRoutes?: Prisma.OdProcessRouteUncheckedCreateNestedManyWithoutFacilityInput
 }
 
 export type MdFacilityUpdateInput = {
@@ -496,6 +501,7 @@ export type MdFacilityUpdateInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutFacilitiesNestedInput
+  processRoutes?: Prisma.OdProcessRouteUpdateManyWithoutFacilityNestedInput
 }
 
 export type MdFacilityUncheckedUpdateInput = {
@@ -517,6 +523,7 @@ export type MdFacilityUncheckedUpdateInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  processRoutes?: Prisma.OdProcessRouteUncheckedUpdateManyWithoutFacilityNestedInput
 }
 
 export type MdFacilityCreateManyInput = {
@@ -675,6 +682,11 @@ export type MdFacilitySumOrderByAggregateInput = {
   flgStatutActif?: Prisma.SortOrder
 }
 
+export type MdFacilityNullableScalarRelationFilter = {
+  is?: Prisma.MdFacilityWhereInput | null
+  isNot?: Prisma.MdFacilityWhereInput | null
+}
+
 export type MdFacilityCreateNestedManyWithoutParentCompanyInput = {
   create?: Prisma.XOR<Prisma.MdFacilityCreateWithoutParentCompanyInput, Prisma.MdFacilityUncheckedCreateWithoutParentCompanyInput> | Prisma.MdFacilityCreateWithoutParentCompanyInput[] | Prisma.MdFacilityUncheckedCreateWithoutParentCompanyInput[]
   connectOrCreate?: Prisma.MdFacilityCreateOrConnectWithoutParentCompanyInput | Prisma.MdFacilityCreateOrConnectWithoutParentCompanyInput[]
@@ -717,6 +729,22 @@ export type MdFacilityUncheckedUpdateManyWithoutParentCompanyNestedInput = {
   deleteMany?: Prisma.MdFacilityScalarWhereInput | Prisma.MdFacilityScalarWhereInput[]
 }
 
+export type MdFacilityCreateNestedOneWithoutProcessRoutesInput = {
+  create?: Prisma.XOR<Prisma.MdFacilityCreateWithoutProcessRoutesInput, Prisma.MdFacilityUncheckedCreateWithoutProcessRoutesInput>
+  connectOrCreate?: Prisma.MdFacilityCreateOrConnectWithoutProcessRoutesInput
+  connect?: Prisma.MdFacilityWhereUniqueInput
+}
+
+export type MdFacilityUpdateOneWithoutProcessRoutesNestedInput = {
+  create?: Prisma.XOR<Prisma.MdFacilityCreateWithoutProcessRoutesInput, Prisma.MdFacilityUncheckedCreateWithoutProcessRoutesInput>
+  connectOrCreate?: Prisma.MdFacilityCreateOrConnectWithoutProcessRoutesInput
+  upsert?: Prisma.MdFacilityUpsertWithoutProcessRoutesInput
+  disconnect?: Prisma.MdFacilityWhereInput | boolean
+  delete?: Prisma.MdFacilityWhereInput | boolean
+  connect?: Prisma.MdFacilityWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MdFacilityUpdateToOneWithWhereWithoutProcessRoutesInput, Prisma.MdFacilityUpdateWithoutProcessRoutesInput>, Prisma.MdFacilityUncheckedUpdateWithoutProcessRoutesInput>
+}
+
 export type MdFacilityCreateWithoutParentCompanyInput = {
   codFacility: string
   codUbigeo: number
@@ -734,6 +762,7 @@ export type MdFacilityCreateWithoutParentCompanyInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  processRoutes?: Prisma.OdProcessRouteCreateNestedManyWithoutFacilityInput
 }
 
 export type MdFacilityUncheckedCreateWithoutParentCompanyInput = {
@@ -754,6 +783,7 @@ export type MdFacilityUncheckedCreateWithoutParentCompanyInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  processRoutes?: Prisma.OdProcessRouteUncheckedCreateNestedManyWithoutFacilityInput
 }
 
 export type MdFacilityCreateOrConnectWithoutParentCompanyInput = {
@@ -806,6 +836,104 @@ export type MdFacilityScalarWhereInput = {
   flgStatutActif?: Prisma.IntFilter<"MdFacility"> | number
 }
 
+export type MdFacilityCreateWithoutProcessRoutesInput = {
+  codFacility: string
+  codUbigeo: number
+  codGlnFacility: string
+  registryFacility: string
+  identifierFacility: string
+  nameFacility: string
+  addressFacility: string
+  gpsLocationFacility?: string | null
+  emailFacility: string
+  cellularFacility: string
+  stateFacility?: number
+  codUsuarioCargaDl: string
+  fehProcesoCargaDl?: Date | string
+  fehProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
+  parentCompany: Prisma.MdParentCompanyCreateNestedOneWithoutFacilitiesInput
+}
+
+export type MdFacilityUncheckedCreateWithoutProcessRoutesInput = {
+  idDlkFacility?: number
+  codFacility: string
+  idDlkParentCompany: number
+  codUbigeo: number
+  codGlnFacility: string
+  registryFacility: string
+  identifierFacility: string
+  nameFacility: string
+  addressFacility: string
+  gpsLocationFacility?: string | null
+  emailFacility: string
+  cellularFacility: string
+  stateFacility?: number
+  codUsuarioCargaDl: string
+  fehProcesoCargaDl?: Date | string
+  fehProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
+}
+
+export type MdFacilityCreateOrConnectWithoutProcessRoutesInput = {
+  where: Prisma.MdFacilityWhereUniqueInput
+  create: Prisma.XOR<Prisma.MdFacilityCreateWithoutProcessRoutesInput, Prisma.MdFacilityUncheckedCreateWithoutProcessRoutesInput>
+}
+
+export type MdFacilityUpsertWithoutProcessRoutesInput = {
+  update: Prisma.XOR<Prisma.MdFacilityUpdateWithoutProcessRoutesInput, Prisma.MdFacilityUncheckedUpdateWithoutProcessRoutesInput>
+  create: Prisma.XOR<Prisma.MdFacilityCreateWithoutProcessRoutesInput, Prisma.MdFacilityUncheckedCreateWithoutProcessRoutesInput>
+  where?: Prisma.MdFacilityWhereInput
+}
+
+export type MdFacilityUpdateToOneWithWhereWithoutProcessRoutesInput = {
+  where?: Prisma.MdFacilityWhereInput
+  data: Prisma.XOR<Prisma.MdFacilityUpdateWithoutProcessRoutesInput, Prisma.MdFacilityUncheckedUpdateWithoutProcessRoutesInput>
+}
+
+export type MdFacilityUpdateWithoutProcessRoutesInput = {
+  codFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  codUbigeo?: Prisma.IntFieldUpdateOperationsInput | number
+  codGlnFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  registryFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  identifierFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  addressFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  gpsLocationFacility?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  cellularFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  stateFacility?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  parentCompany?: Prisma.MdParentCompanyUpdateOneRequiredWithoutFacilitiesNestedInput
+}
+
+export type MdFacilityUncheckedUpdateWithoutProcessRoutesInput = {
+  idDlkFacility?: Prisma.IntFieldUpdateOperationsInput | number
+  codFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkParentCompany?: Prisma.IntFieldUpdateOperationsInput | number
+  codUbigeo?: Prisma.IntFieldUpdateOperationsInput | number
+  codGlnFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  registryFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  identifierFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  addressFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  gpsLocationFacility?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  cellularFacility?: Prisma.StringFieldUpdateOperationsInput | string
+  stateFacility?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
 export type MdFacilityCreateManyParentCompanyInput = {
   idDlkFacility?: number
   codFacility: string
@@ -843,6 +971,7 @@ export type MdFacilityUpdateWithoutParentCompanyInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  processRoutes?: Prisma.OdProcessRouteUpdateManyWithoutFacilityNestedInput
 }
 
 export type MdFacilityUncheckedUpdateWithoutParentCompanyInput = {
@@ -863,6 +992,7 @@ export type MdFacilityUncheckedUpdateWithoutParentCompanyInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  processRoutes?: Prisma.OdProcessRouteUncheckedUpdateManyWithoutFacilityNestedInput
 }
 
 export type MdFacilityUncheckedUpdateManyWithoutParentCompanyInput = {
@@ -886,6 +1016,35 @@ export type MdFacilityUncheckedUpdateManyWithoutParentCompanyInput = {
 }
 
 
+/**
+ * Count Type MdFacilityCountOutputType
+ */
+
+export type MdFacilityCountOutputType = {
+  processRoutes: number
+}
+
+export type MdFacilityCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  processRoutes?: boolean | MdFacilityCountOutputTypeCountProcessRoutesArgs
+}
+
+/**
+ * MdFacilityCountOutputType without action
+ */
+export type MdFacilityCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MdFacilityCountOutputType
+   */
+  select?: Prisma.MdFacilityCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MdFacilityCountOutputType without action
+ */
+export type MdFacilityCountOutputTypeCountProcessRoutesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OdProcessRouteWhereInput
+}
+
 
 export type MdFacilitySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idDlkFacility?: boolean
@@ -907,6 +1066,8 @@ export type MdFacilitySelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   desAccion?: boolean
   flgStatutActif?: boolean
   parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
+  processRoutes?: boolean | Prisma.MdFacility$processRoutesArgs<ExtArgs>
+  _count?: boolean | Prisma.MdFacilityCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mdFacility"]>
 
 
@@ -935,12 +1096,15 @@ export type MdFacilitySelectScalar = {
 export type MdFacilityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkFacility" | "codFacility" | "idDlkParentCompany" | "codUbigeo" | "codGlnFacility" | "registryFacility" | "identifierFacility" | "nameFacility" | "addressFacility" | "gpsLocationFacility" | "emailFacility" | "cellularFacility" | "stateFacility" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdFacility"]>
 export type MdFacilityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
+  processRoutes?: boolean | Prisma.MdFacility$processRoutesArgs<ExtArgs>
+  _count?: boolean | Prisma.MdFacilityCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $MdFacilityPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MdFacility"
   objects: {
     parentCompany: Prisma.$MdParentCompanyPayload<ExtArgs>
+    processRoutes: Prisma.$OdProcessRoutePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkFacility: number
@@ -1302,6 +1466,7 @@ readonly fields: MdFacilityFieldRefs;
 export interface Prisma__MdFacilityClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   parentCompany<T extends Prisma.MdParentCompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdParentCompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__MdParentCompanyClient<runtime.Types.Result.GetResult<Prisma.$MdParentCompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  processRoutes<T extends Prisma.MdFacility$processRoutesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdFacility$processRoutesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdProcessRoutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1694,6 +1859,30 @@ export type MdFacilityDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many MdFacilities to delete.
    */
   limit?: number
+}
+
+/**
+ * MdFacility.processRoutes
+ */
+export type MdFacility$processRoutesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OdProcessRoute
+   */
+  select?: Prisma.OdProcessRouteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OdProcessRoute
+   */
+  omit?: Prisma.OdProcessRouteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OdProcessRouteInclude<ExtArgs> | null
+  where?: Prisma.OdProcessRouteWhereInput
+  orderBy?: Prisma.OdProcessRouteOrderByWithRelationInput | Prisma.OdProcessRouteOrderByWithRelationInput[]
+  cursor?: Prisma.OdProcessRouteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OdProcessRouteScalarFieldEnum | Prisma.OdProcessRouteScalarFieldEnum[]
 }
 
 /**

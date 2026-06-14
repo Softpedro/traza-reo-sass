@@ -33,6 +33,7 @@ export type OdProcessRouteAvgAggregateOutputType = {
   ordenPrecedenciaProcess: number | null
   outsourcedProcess: number | null
   estimatedTimeProcess: number | null
+  idDlkFacility: number | null
   stateProcessRoute: number | null
   flgStatutActif: number | null
 }
@@ -43,6 +44,7 @@ export type OdProcessRouteSumAggregateOutputType = {
   ordenPrecedenciaProcess: number | null
   outsourcedProcess: number | null
   estimatedTimeProcess: number | null
+  idDlkFacility: number | null
   stateProcessRoute: number | null
   flgStatutActif: number | null
 }
@@ -58,6 +60,7 @@ export type OdProcessRouteMinAggregateOutputType = {
   estimatedTimeProcess: number | null
   responsibleUnit: string | null
   responsibleProcess: string | null
+  idDlkFacility: number | null
   inputTimeProcessRoute: Date | null
   outputTimeProcessRoute: Date | null
   stateProcessRoute: number | null
@@ -79,6 +82,7 @@ export type OdProcessRouteMaxAggregateOutputType = {
   estimatedTimeProcess: number | null
   responsibleUnit: string | null
   responsibleProcess: string | null
+  idDlkFacility: number | null
   inputTimeProcessRoute: Date | null
   outputTimeProcessRoute: Date | null
   stateProcessRoute: number | null
@@ -100,6 +104,7 @@ export type OdProcessRouteCountAggregateOutputType = {
   estimatedTimeProcess: number
   responsibleUnit: number
   responsibleProcess: number
+  idDlkFacility: number
   inputTimeProcessRoute: number
   outputTimeProcessRoute: number
   stateProcessRoute: number
@@ -118,6 +123,7 @@ export type OdProcessRouteAvgAggregateInputType = {
   ordenPrecedenciaProcess?: true
   outsourcedProcess?: true
   estimatedTimeProcess?: true
+  idDlkFacility?: true
   stateProcessRoute?: true
   flgStatutActif?: true
 }
@@ -128,6 +134,7 @@ export type OdProcessRouteSumAggregateInputType = {
   ordenPrecedenciaProcess?: true
   outsourcedProcess?: true
   estimatedTimeProcess?: true
+  idDlkFacility?: true
   stateProcessRoute?: true
   flgStatutActif?: true
 }
@@ -143,6 +150,7 @@ export type OdProcessRouteMinAggregateInputType = {
   estimatedTimeProcess?: true
   responsibleUnit?: true
   responsibleProcess?: true
+  idDlkFacility?: true
   inputTimeProcessRoute?: true
   outputTimeProcessRoute?: true
   stateProcessRoute?: true
@@ -164,6 +172,7 @@ export type OdProcessRouteMaxAggregateInputType = {
   estimatedTimeProcess?: true
   responsibleUnit?: true
   responsibleProcess?: true
+  idDlkFacility?: true
   inputTimeProcessRoute?: true
   outputTimeProcessRoute?: true
   stateProcessRoute?: true
@@ -185,6 +194,7 @@ export type OdProcessRouteCountAggregateInputType = {
   estimatedTimeProcess?: true
   responsibleUnit?: true
   responsibleProcess?: true
+  idDlkFacility?: true
   inputTimeProcessRoute?: true
   outputTimeProcessRoute?: true
   stateProcessRoute?: true
@@ -293,6 +303,7 @@ export type OdProcessRouteGroupByOutputType = {
   estimatedTimeProcess: number
   responsibleUnit: string
   responsibleProcess: string
+  idDlkFacility: number | null
   inputTimeProcessRoute: Date | null
   outputTimeProcessRoute: Date | null
   stateProcessRoute: number
@@ -337,6 +348,7 @@ export type OdProcessRouteWhereInput = {
   estimatedTimeProcess?: Prisma.IntFilter<"OdProcessRoute"> | number
   responsibleUnit?: Prisma.StringFilter<"OdProcessRoute"> | string
   responsibleProcess?: Prisma.StringFilter<"OdProcessRoute"> | string
+  idDlkFacility?: Prisma.IntNullableFilter<"OdProcessRoute"> | number | null
   inputTimeProcessRoute?: Prisma.DateTimeNullableFilter<"OdProcessRoute"> | Date | string | null
   outputTimeProcessRoute?: Prisma.DateTimeNullableFilter<"OdProcessRoute"> | Date | string | null
   stateProcessRoute?: Prisma.IntFilter<"OdProcessRoute"> | number
@@ -346,6 +358,7 @@ export type OdProcessRouteWhereInput = {
   desAccion?: Prisma.StringFilter<"OdProcessRoute"> | string
   flgStatutActif?: Prisma.IntFilter<"OdProcessRoute"> | number
   orderComponent?: Prisma.XOR<Prisma.OdOrderComponentScalarRelationFilter, Prisma.OdOrderComponentWhereInput>
+  facility?: Prisma.XOR<Prisma.MdFacilityNullableScalarRelationFilter, Prisma.MdFacilityWhereInput> | null
   inputs?: Prisma.OdInputProcessRouteListRelationFilter
   procedures?: Prisma.OdProcedureProcessRouteListRelationFilter
   outputs?: Prisma.OdOutputProcessRouteListRelationFilter
@@ -363,6 +376,7 @@ export type OdProcessRouteOrderByWithRelationInput = {
   estimatedTimeProcess?: Prisma.SortOrder
   responsibleUnit?: Prisma.SortOrder
   responsibleProcess?: Prisma.SortOrder
+  idDlkFacility?: Prisma.SortOrderInput | Prisma.SortOrder
   inputTimeProcessRoute?: Prisma.SortOrderInput | Prisma.SortOrder
   outputTimeProcessRoute?: Prisma.SortOrderInput | Prisma.SortOrder
   stateProcessRoute?: Prisma.SortOrder
@@ -372,6 +386,7 @@ export type OdProcessRouteOrderByWithRelationInput = {
   desAccion?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
   orderComponent?: Prisma.OdOrderComponentOrderByWithRelationInput
+  facility?: Prisma.MdFacilityOrderByWithRelationInput
   inputs?: Prisma.OdInputProcessRouteOrderByRelationAggregateInput
   procedures?: Prisma.OdProcedureProcessRouteOrderByRelationAggregateInput
   outputs?: Prisma.OdOutputProcessRouteOrderByRelationAggregateInput
@@ -394,6 +409,7 @@ export type OdProcessRouteWhereUniqueInput = Prisma.AtLeast<{
   estimatedTimeProcess?: Prisma.IntFilter<"OdProcessRoute"> | number
   responsibleUnit?: Prisma.StringFilter<"OdProcessRoute"> | string
   responsibleProcess?: Prisma.StringFilter<"OdProcessRoute"> | string
+  idDlkFacility?: Prisma.IntNullableFilter<"OdProcessRoute"> | number | null
   inputTimeProcessRoute?: Prisma.DateTimeNullableFilter<"OdProcessRoute"> | Date | string | null
   outputTimeProcessRoute?: Prisma.DateTimeNullableFilter<"OdProcessRoute"> | Date | string | null
   stateProcessRoute?: Prisma.IntFilter<"OdProcessRoute"> | number
@@ -403,6 +419,7 @@ export type OdProcessRouteWhereUniqueInput = Prisma.AtLeast<{
   desAccion?: Prisma.StringFilter<"OdProcessRoute"> | string
   flgStatutActif?: Prisma.IntFilter<"OdProcessRoute"> | number
   orderComponent?: Prisma.XOR<Prisma.OdOrderComponentScalarRelationFilter, Prisma.OdOrderComponentWhereInput>
+  facility?: Prisma.XOR<Prisma.MdFacilityNullableScalarRelationFilter, Prisma.MdFacilityWhereInput> | null
   inputs?: Prisma.OdInputProcessRouteListRelationFilter
   procedures?: Prisma.OdProcedureProcessRouteListRelationFilter
   outputs?: Prisma.OdOutputProcessRouteListRelationFilter
@@ -420,6 +437,7 @@ export type OdProcessRouteOrderByWithAggregationInput = {
   estimatedTimeProcess?: Prisma.SortOrder
   responsibleUnit?: Prisma.SortOrder
   responsibleProcess?: Prisma.SortOrder
+  idDlkFacility?: Prisma.SortOrderInput | Prisma.SortOrder
   inputTimeProcessRoute?: Prisma.SortOrderInput | Prisma.SortOrder
   outputTimeProcessRoute?: Prisma.SortOrderInput | Prisma.SortOrder
   stateProcessRoute?: Prisma.SortOrder
@@ -449,6 +467,7 @@ export type OdProcessRouteScalarWhereWithAggregatesInput = {
   estimatedTimeProcess?: Prisma.IntWithAggregatesFilter<"OdProcessRoute"> | number
   responsibleUnit?: Prisma.StringWithAggregatesFilter<"OdProcessRoute"> | string
   responsibleProcess?: Prisma.StringWithAggregatesFilter<"OdProcessRoute"> | string
+  idDlkFacility?: Prisma.IntNullableWithAggregatesFilter<"OdProcessRoute"> | number | null
   inputTimeProcessRoute?: Prisma.DateTimeNullableWithAggregatesFilter<"OdProcessRoute"> | Date | string | null
   outputTimeProcessRoute?: Prisma.DateTimeNullableWithAggregatesFilter<"OdProcessRoute"> | Date | string | null
   stateProcessRoute?: Prisma.IntWithAggregatesFilter<"OdProcessRoute"> | number
@@ -477,6 +496,7 @@ export type OdProcessRouteCreateInput = {
   desAccion?: string
   flgStatutActif?: number
   orderComponent: Prisma.OdOrderComponentCreateNestedOneWithoutProcessRoutesInput
+  facility?: Prisma.MdFacilityCreateNestedOneWithoutProcessRoutesInput
   inputs?: Prisma.OdInputProcessRouteCreateNestedManyWithoutProcessRouteInput
   procedures?: Prisma.OdProcedureProcessRouteCreateNestedManyWithoutProcessRouteInput
   outputs?: Prisma.OdOutputProcessRouteCreateNestedManyWithoutProcessRouteInput
@@ -494,6 +514,7 @@ export type OdProcessRouteUncheckedCreateInput = {
   estimatedTimeProcess?: number
   responsibleUnit: string
   responsibleProcess: string
+  idDlkFacility?: number | null
   inputTimeProcessRoute?: Date | string | null
   outputTimeProcessRoute?: Date | string | null
   stateProcessRoute?: number
@@ -526,6 +547,7 @@ export type OdProcessRouteUpdateInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   orderComponent?: Prisma.OdOrderComponentUpdateOneRequiredWithoutProcessRoutesNestedInput
+  facility?: Prisma.MdFacilityUpdateOneWithoutProcessRoutesNestedInput
   inputs?: Prisma.OdInputProcessRouteUpdateManyWithoutProcessRouteNestedInput
   procedures?: Prisma.OdProcedureProcessRouteUpdateManyWithoutProcessRouteNestedInput
   outputs?: Prisma.OdOutputProcessRouteUpdateManyWithoutProcessRouteNestedInput
@@ -543,6 +565,7 @@ export type OdProcessRouteUncheckedUpdateInput = {
   estimatedTimeProcess?: Prisma.IntFieldUpdateOperationsInput | number
   responsibleUnit?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkFacility?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   inputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   outputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stateProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
@@ -568,6 +591,7 @@ export type OdProcessRouteCreateManyInput = {
   estimatedTimeProcess?: number
   responsibleUnit: string
   responsibleProcess: string
+  idDlkFacility?: number | null
   inputTimeProcessRoute?: Date | string | null
   outputTimeProcessRoute?: Date | string | null
   stateProcessRoute?: number
@@ -608,6 +632,7 @@ export type OdProcessRouteUncheckedUpdateManyInput = {
   estimatedTimeProcess?: Prisma.IntFieldUpdateOperationsInput | number
   responsibleUnit?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkFacility?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   inputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   outputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stateProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
@@ -650,6 +675,7 @@ export type OdProcessRouteCountOrderByAggregateInput = {
   estimatedTimeProcess?: Prisma.SortOrder
   responsibleUnit?: Prisma.SortOrder
   responsibleProcess?: Prisma.SortOrder
+  idDlkFacility?: Prisma.SortOrder
   inputTimeProcessRoute?: Prisma.SortOrder
   outputTimeProcessRoute?: Prisma.SortOrder
   stateProcessRoute?: Prisma.SortOrder
@@ -666,6 +692,7 @@ export type OdProcessRouteAvgOrderByAggregateInput = {
   ordenPrecedenciaProcess?: Prisma.SortOrder
   outsourcedProcess?: Prisma.SortOrder
   estimatedTimeProcess?: Prisma.SortOrder
+  idDlkFacility?: Prisma.SortOrder
   stateProcessRoute?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
 }
@@ -681,6 +708,7 @@ export type OdProcessRouteMaxOrderByAggregateInput = {
   estimatedTimeProcess?: Prisma.SortOrder
   responsibleUnit?: Prisma.SortOrder
   responsibleProcess?: Prisma.SortOrder
+  idDlkFacility?: Prisma.SortOrder
   inputTimeProcessRoute?: Prisma.SortOrder
   outputTimeProcessRoute?: Prisma.SortOrder
   stateProcessRoute?: Prisma.SortOrder
@@ -702,6 +730,7 @@ export type OdProcessRouteMinOrderByAggregateInput = {
   estimatedTimeProcess?: Prisma.SortOrder
   responsibleUnit?: Prisma.SortOrder
   responsibleProcess?: Prisma.SortOrder
+  idDlkFacility?: Prisma.SortOrder
   inputTimeProcessRoute?: Prisma.SortOrder
   outputTimeProcessRoute?: Prisma.SortOrder
   stateProcessRoute?: Prisma.SortOrder
@@ -718,6 +747,7 @@ export type OdProcessRouteSumOrderByAggregateInput = {
   ordenPrecedenciaProcess?: Prisma.SortOrder
   outsourcedProcess?: Prisma.SortOrder
   estimatedTimeProcess?: Prisma.SortOrder
+  idDlkFacility?: Prisma.SortOrder
   stateProcessRoute?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
 }
@@ -725,6 +755,48 @@ export type OdProcessRouteSumOrderByAggregateInput = {
 export type OdProcessRouteScalarRelationFilter = {
   is?: Prisma.OdProcessRouteWhereInput
   isNot?: Prisma.OdProcessRouteWhereInput
+}
+
+export type OdProcessRouteCreateNestedManyWithoutFacilityInput = {
+  create?: Prisma.XOR<Prisma.OdProcessRouteCreateWithoutFacilityInput, Prisma.OdProcessRouteUncheckedCreateWithoutFacilityInput> | Prisma.OdProcessRouteCreateWithoutFacilityInput[] | Prisma.OdProcessRouteUncheckedCreateWithoutFacilityInput[]
+  connectOrCreate?: Prisma.OdProcessRouteCreateOrConnectWithoutFacilityInput | Prisma.OdProcessRouteCreateOrConnectWithoutFacilityInput[]
+  createMany?: Prisma.OdProcessRouteCreateManyFacilityInputEnvelope
+  connect?: Prisma.OdProcessRouteWhereUniqueInput | Prisma.OdProcessRouteWhereUniqueInput[]
+}
+
+export type OdProcessRouteUncheckedCreateNestedManyWithoutFacilityInput = {
+  create?: Prisma.XOR<Prisma.OdProcessRouteCreateWithoutFacilityInput, Prisma.OdProcessRouteUncheckedCreateWithoutFacilityInput> | Prisma.OdProcessRouteCreateWithoutFacilityInput[] | Prisma.OdProcessRouteUncheckedCreateWithoutFacilityInput[]
+  connectOrCreate?: Prisma.OdProcessRouteCreateOrConnectWithoutFacilityInput | Prisma.OdProcessRouteCreateOrConnectWithoutFacilityInput[]
+  createMany?: Prisma.OdProcessRouteCreateManyFacilityInputEnvelope
+  connect?: Prisma.OdProcessRouteWhereUniqueInput | Prisma.OdProcessRouteWhereUniqueInput[]
+}
+
+export type OdProcessRouteUpdateManyWithoutFacilityNestedInput = {
+  create?: Prisma.XOR<Prisma.OdProcessRouteCreateWithoutFacilityInput, Prisma.OdProcessRouteUncheckedCreateWithoutFacilityInput> | Prisma.OdProcessRouteCreateWithoutFacilityInput[] | Prisma.OdProcessRouteUncheckedCreateWithoutFacilityInput[]
+  connectOrCreate?: Prisma.OdProcessRouteCreateOrConnectWithoutFacilityInput | Prisma.OdProcessRouteCreateOrConnectWithoutFacilityInput[]
+  upsert?: Prisma.OdProcessRouteUpsertWithWhereUniqueWithoutFacilityInput | Prisma.OdProcessRouteUpsertWithWhereUniqueWithoutFacilityInput[]
+  createMany?: Prisma.OdProcessRouteCreateManyFacilityInputEnvelope
+  set?: Prisma.OdProcessRouteWhereUniqueInput | Prisma.OdProcessRouteWhereUniqueInput[]
+  disconnect?: Prisma.OdProcessRouteWhereUniqueInput | Prisma.OdProcessRouteWhereUniqueInput[]
+  delete?: Prisma.OdProcessRouteWhereUniqueInput | Prisma.OdProcessRouteWhereUniqueInput[]
+  connect?: Prisma.OdProcessRouteWhereUniqueInput | Prisma.OdProcessRouteWhereUniqueInput[]
+  update?: Prisma.OdProcessRouteUpdateWithWhereUniqueWithoutFacilityInput | Prisma.OdProcessRouteUpdateWithWhereUniqueWithoutFacilityInput[]
+  updateMany?: Prisma.OdProcessRouteUpdateManyWithWhereWithoutFacilityInput | Prisma.OdProcessRouteUpdateManyWithWhereWithoutFacilityInput[]
+  deleteMany?: Prisma.OdProcessRouteScalarWhereInput | Prisma.OdProcessRouteScalarWhereInput[]
+}
+
+export type OdProcessRouteUncheckedUpdateManyWithoutFacilityNestedInput = {
+  create?: Prisma.XOR<Prisma.OdProcessRouteCreateWithoutFacilityInput, Prisma.OdProcessRouteUncheckedCreateWithoutFacilityInput> | Prisma.OdProcessRouteCreateWithoutFacilityInput[] | Prisma.OdProcessRouteUncheckedCreateWithoutFacilityInput[]
+  connectOrCreate?: Prisma.OdProcessRouteCreateOrConnectWithoutFacilityInput | Prisma.OdProcessRouteCreateOrConnectWithoutFacilityInput[]
+  upsert?: Prisma.OdProcessRouteUpsertWithWhereUniqueWithoutFacilityInput | Prisma.OdProcessRouteUpsertWithWhereUniqueWithoutFacilityInput[]
+  createMany?: Prisma.OdProcessRouteCreateManyFacilityInputEnvelope
+  set?: Prisma.OdProcessRouteWhereUniqueInput | Prisma.OdProcessRouteWhereUniqueInput[]
+  disconnect?: Prisma.OdProcessRouteWhereUniqueInput | Prisma.OdProcessRouteWhereUniqueInput[]
+  delete?: Prisma.OdProcessRouteWhereUniqueInput | Prisma.OdProcessRouteWhereUniqueInput[]
+  connect?: Prisma.OdProcessRouteWhereUniqueInput | Prisma.OdProcessRouteWhereUniqueInput[]
+  update?: Prisma.OdProcessRouteUpdateWithWhereUniqueWithoutFacilityInput | Prisma.OdProcessRouteUpdateWithWhereUniqueWithoutFacilityInput[]
+  updateMany?: Prisma.OdProcessRouteUpdateManyWithWhereWithoutFacilityInput | Prisma.OdProcessRouteUpdateManyWithWhereWithoutFacilityInput[]
+  deleteMany?: Prisma.OdProcessRouteScalarWhereInput | Prisma.OdProcessRouteScalarWhereInput[]
 }
 
 export type OdProcessRouteCreateNestedManyWithoutOrderComponentInput = {
@@ -829,6 +901,106 @@ export type OdProcessRouteUpdateOneRequiredWithoutSubprocessesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OdProcessRouteUpdateToOneWithWhereWithoutSubprocessesInput, Prisma.OdProcessRouteUpdateWithoutSubprocessesInput>, Prisma.OdProcessRouteUncheckedUpdateWithoutSubprocessesInput>
 }
 
+export type OdProcessRouteCreateWithoutFacilityInput = {
+  ordenPrecedenciaProcess: number
+  codProcess: string
+  nameProcess: string
+  criticalityProcess?: $Enums.Criticality
+  outsourcedProcess?: number
+  estimatedTimeProcess?: number
+  responsibleUnit: string
+  responsibleProcess: string
+  inputTimeProcessRoute?: Date | string | null
+  outputTimeProcessRoute?: Date | string | null
+  stateProcessRoute?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion?: string
+  flgStatutActif?: number
+  orderComponent: Prisma.OdOrderComponentCreateNestedOneWithoutProcessRoutesInput
+  inputs?: Prisma.OdInputProcessRouteCreateNestedManyWithoutProcessRouteInput
+  procedures?: Prisma.OdProcedureProcessRouteCreateNestedManyWithoutProcessRouteInput
+  outputs?: Prisma.OdOutputProcessRouteCreateNestedManyWithoutProcessRouteInput
+  subprocesses?: Prisma.OdSubprocessRouteCreateNestedManyWithoutProcessRouteInput
+}
+
+export type OdProcessRouteUncheckedCreateWithoutFacilityInput = {
+  idDlkProcessRoute?: number
+  idDlkOrderComponent: number
+  ordenPrecedenciaProcess: number
+  codProcess: string
+  nameProcess: string
+  criticalityProcess?: $Enums.Criticality
+  outsourcedProcess?: number
+  estimatedTimeProcess?: number
+  responsibleUnit: string
+  responsibleProcess: string
+  inputTimeProcessRoute?: Date | string | null
+  outputTimeProcessRoute?: Date | string | null
+  stateProcessRoute?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion?: string
+  flgStatutActif?: number
+  inputs?: Prisma.OdInputProcessRouteUncheckedCreateNestedManyWithoutProcessRouteInput
+  procedures?: Prisma.OdProcedureProcessRouteUncheckedCreateNestedManyWithoutProcessRouteInput
+  outputs?: Prisma.OdOutputProcessRouteUncheckedCreateNestedManyWithoutProcessRouteInput
+  subprocesses?: Prisma.OdSubprocessRouteUncheckedCreateNestedManyWithoutProcessRouteInput
+}
+
+export type OdProcessRouteCreateOrConnectWithoutFacilityInput = {
+  where: Prisma.OdProcessRouteWhereUniqueInput
+  create: Prisma.XOR<Prisma.OdProcessRouteCreateWithoutFacilityInput, Prisma.OdProcessRouteUncheckedCreateWithoutFacilityInput>
+}
+
+export type OdProcessRouteCreateManyFacilityInputEnvelope = {
+  data: Prisma.OdProcessRouteCreateManyFacilityInput | Prisma.OdProcessRouteCreateManyFacilityInput[]
+  skipDuplicates?: boolean
+}
+
+export type OdProcessRouteUpsertWithWhereUniqueWithoutFacilityInput = {
+  where: Prisma.OdProcessRouteWhereUniqueInput
+  update: Prisma.XOR<Prisma.OdProcessRouteUpdateWithoutFacilityInput, Prisma.OdProcessRouteUncheckedUpdateWithoutFacilityInput>
+  create: Prisma.XOR<Prisma.OdProcessRouteCreateWithoutFacilityInput, Prisma.OdProcessRouteUncheckedCreateWithoutFacilityInput>
+}
+
+export type OdProcessRouteUpdateWithWhereUniqueWithoutFacilityInput = {
+  where: Prisma.OdProcessRouteWhereUniqueInput
+  data: Prisma.XOR<Prisma.OdProcessRouteUpdateWithoutFacilityInput, Prisma.OdProcessRouteUncheckedUpdateWithoutFacilityInput>
+}
+
+export type OdProcessRouteUpdateManyWithWhereWithoutFacilityInput = {
+  where: Prisma.OdProcessRouteScalarWhereInput
+  data: Prisma.XOR<Prisma.OdProcessRouteUpdateManyMutationInput, Prisma.OdProcessRouteUncheckedUpdateManyWithoutFacilityInput>
+}
+
+export type OdProcessRouteScalarWhereInput = {
+  AND?: Prisma.OdProcessRouteScalarWhereInput | Prisma.OdProcessRouteScalarWhereInput[]
+  OR?: Prisma.OdProcessRouteScalarWhereInput[]
+  NOT?: Prisma.OdProcessRouteScalarWhereInput | Prisma.OdProcessRouteScalarWhereInput[]
+  idDlkProcessRoute?: Prisma.IntFilter<"OdProcessRoute"> | number
+  idDlkOrderComponent?: Prisma.IntFilter<"OdProcessRoute"> | number
+  ordenPrecedenciaProcess?: Prisma.IntFilter<"OdProcessRoute"> | number
+  codProcess?: Prisma.StringFilter<"OdProcessRoute"> | string
+  nameProcess?: Prisma.StringFilter<"OdProcessRoute"> | string
+  criticalityProcess?: Prisma.EnumCriticalityFilter<"OdProcessRoute"> | $Enums.Criticality
+  outsourcedProcess?: Prisma.IntFilter<"OdProcessRoute"> | number
+  estimatedTimeProcess?: Prisma.IntFilter<"OdProcessRoute"> | number
+  responsibleUnit?: Prisma.StringFilter<"OdProcessRoute"> | string
+  responsibleProcess?: Prisma.StringFilter<"OdProcessRoute"> | string
+  idDlkFacility?: Prisma.IntNullableFilter<"OdProcessRoute"> | number | null
+  inputTimeProcessRoute?: Prisma.DateTimeNullableFilter<"OdProcessRoute"> | Date | string | null
+  outputTimeProcessRoute?: Prisma.DateTimeNullableFilter<"OdProcessRoute"> | Date | string | null
+  stateProcessRoute?: Prisma.IntFilter<"OdProcessRoute"> | number
+  codUsuarioCargaDl?: Prisma.StringFilter<"OdProcessRoute"> | string
+  fecProcesoCargaDl?: Prisma.DateTimeFilter<"OdProcessRoute"> | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFilter<"OdProcessRoute"> | Date | string
+  desAccion?: Prisma.StringFilter<"OdProcessRoute"> | string
+  flgStatutActif?: Prisma.IntFilter<"OdProcessRoute"> | number
+}
+
 export type OdProcessRouteCreateWithoutOrderComponentInput = {
   ordenPrecedenciaProcess: number
   codProcess: string
@@ -846,6 +1018,7 @@ export type OdProcessRouteCreateWithoutOrderComponentInput = {
   fecProcesoModifDl?: Date | string
   desAccion?: string
   flgStatutActif?: number
+  facility?: Prisma.MdFacilityCreateNestedOneWithoutProcessRoutesInput
   inputs?: Prisma.OdInputProcessRouteCreateNestedManyWithoutProcessRouteInput
   procedures?: Prisma.OdProcedureProcessRouteCreateNestedManyWithoutProcessRouteInput
   outputs?: Prisma.OdOutputProcessRouteCreateNestedManyWithoutProcessRouteInput
@@ -862,6 +1035,7 @@ export type OdProcessRouteUncheckedCreateWithoutOrderComponentInput = {
   estimatedTimeProcess?: number
   responsibleUnit: string
   responsibleProcess: string
+  idDlkFacility?: number | null
   inputTimeProcessRoute?: Date | string | null
   outputTimeProcessRoute?: Date | string | null
   stateProcessRoute?: number
@@ -902,30 +1076,6 @@ export type OdProcessRouteUpdateManyWithWhereWithoutOrderComponentInput = {
   data: Prisma.XOR<Prisma.OdProcessRouteUpdateManyMutationInput, Prisma.OdProcessRouteUncheckedUpdateManyWithoutOrderComponentInput>
 }
 
-export type OdProcessRouteScalarWhereInput = {
-  AND?: Prisma.OdProcessRouteScalarWhereInput | Prisma.OdProcessRouteScalarWhereInput[]
-  OR?: Prisma.OdProcessRouteScalarWhereInput[]
-  NOT?: Prisma.OdProcessRouteScalarWhereInput | Prisma.OdProcessRouteScalarWhereInput[]
-  idDlkProcessRoute?: Prisma.IntFilter<"OdProcessRoute"> | number
-  idDlkOrderComponent?: Prisma.IntFilter<"OdProcessRoute"> | number
-  ordenPrecedenciaProcess?: Prisma.IntFilter<"OdProcessRoute"> | number
-  codProcess?: Prisma.StringFilter<"OdProcessRoute"> | string
-  nameProcess?: Prisma.StringFilter<"OdProcessRoute"> | string
-  criticalityProcess?: Prisma.EnumCriticalityFilter<"OdProcessRoute"> | $Enums.Criticality
-  outsourcedProcess?: Prisma.IntFilter<"OdProcessRoute"> | number
-  estimatedTimeProcess?: Prisma.IntFilter<"OdProcessRoute"> | number
-  responsibleUnit?: Prisma.StringFilter<"OdProcessRoute"> | string
-  responsibleProcess?: Prisma.StringFilter<"OdProcessRoute"> | string
-  inputTimeProcessRoute?: Prisma.DateTimeNullableFilter<"OdProcessRoute"> | Date | string | null
-  outputTimeProcessRoute?: Prisma.DateTimeNullableFilter<"OdProcessRoute"> | Date | string | null
-  stateProcessRoute?: Prisma.IntFilter<"OdProcessRoute"> | number
-  codUsuarioCargaDl?: Prisma.StringFilter<"OdProcessRoute"> | string
-  fecProcesoCargaDl?: Prisma.DateTimeFilter<"OdProcessRoute"> | Date | string
-  fecProcesoModifDl?: Prisma.DateTimeFilter<"OdProcessRoute"> | Date | string
-  desAccion?: Prisma.StringFilter<"OdProcessRoute"> | string
-  flgStatutActif?: Prisma.IntFilter<"OdProcessRoute"> | number
-}
-
 export type OdProcessRouteCreateWithoutInputsInput = {
   ordenPrecedenciaProcess: number
   codProcess: string
@@ -944,6 +1094,7 @@ export type OdProcessRouteCreateWithoutInputsInput = {
   desAccion?: string
   flgStatutActif?: number
   orderComponent: Prisma.OdOrderComponentCreateNestedOneWithoutProcessRoutesInput
+  facility?: Prisma.MdFacilityCreateNestedOneWithoutProcessRoutesInput
   procedures?: Prisma.OdProcedureProcessRouteCreateNestedManyWithoutProcessRouteInput
   outputs?: Prisma.OdOutputProcessRouteCreateNestedManyWithoutProcessRouteInput
   subprocesses?: Prisma.OdSubprocessRouteCreateNestedManyWithoutProcessRouteInput
@@ -960,6 +1111,7 @@ export type OdProcessRouteUncheckedCreateWithoutInputsInput = {
   estimatedTimeProcess?: number
   responsibleUnit: string
   responsibleProcess: string
+  idDlkFacility?: number | null
   inputTimeProcessRoute?: Date | string | null
   outputTimeProcessRoute?: Date | string | null
   stateProcessRoute?: number
@@ -1007,6 +1159,7 @@ export type OdProcessRouteUpdateWithoutInputsInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   orderComponent?: Prisma.OdOrderComponentUpdateOneRequiredWithoutProcessRoutesNestedInput
+  facility?: Prisma.MdFacilityUpdateOneWithoutProcessRoutesNestedInput
   procedures?: Prisma.OdProcedureProcessRouteUpdateManyWithoutProcessRouteNestedInput
   outputs?: Prisma.OdOutputProcessRouteUpdateManyWithoutProcessRouteNestedInput
   subprocesses?: Prisma.OdSubprocessRouteUpdateManyWithoutProcessRouteNestedInput
@@ -1023,6 +1176,7 @@ export type OdProcessRouteUncheckedUpdateWithoutInputsInput = {
   estimatedTimeProcess?: Prisma.IntFieldUpdateOperationsInput | number
   responsibleUnit?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkFacility?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   inputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   outputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stateProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1054,6 +1208,7 @@ export type OdProcessRouteCreateWithoutProceduresInput = {
   desAccion?: string
   flgStatutActif?: number
   orderComponent: Prisma.OdOrderComponentCreateNestedOneWithoutProcessRoutesInput
+  facility?: Prisma.MdFacilityCreateNestedOneWithoutProcessRoutesInput
   inputs?: Prisma.OdInputProcessRouteCreateNestedManyWithoutProcessRouteInput
   outputs?: Prisma.OdOutputProcessRouteCreateNestedManyWithoutProcessRouteInput
   subprocesses?: Prisma.OdSubprocessRouteCreateNestedManyWithoutProcessRouteInput
@@ -1070,6 +1225,7 @@ export type OdProcessRouteUncheckedCreateWithoutProceduresInput = {
   estimatedTimeProcess?: number
   responsibleUnit: string
   responsibleProcess: string
+  idDlkFacility?: number | null
   inputTimeProcessRoute?: Date | string | null
   outputTimeProcessRoute?: Date | string | null
   stateProcessRoute?: number
@@ -1117,6 +1273,7 @@ export type OdProcessRouteUpdateWithoutProceduresInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   orderComponent?: Prisma.OdOrderComponentUpdateOneRequiredWithoutProcessRoutesNestedInput
+  facility?: Prisma.MdFacilityUpdateOneWithoutProcessRoutesNestedInput
   inputs?: Prisma.OdInputProcessRouteUpdateManyWithoutProcessRouteNestedInput
   outputs?: Prisma.OdOutputProcessRouteUpdateManyWithoutProcessRouteNestedInput
   subprocesses?: Prisma.OdSubprocessRouteUpdateManyWithoutProcessRouteNestedInput
@@ -1133,6 +1290,7 @@ export type OdProcessRouteUncheckedUpdateWithoutProceduresInput = {
   estimatedTimeProcess?: Prisma.IntFieldUpdateOperationsInput | number
   responsibleUnit?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkFacility?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   inputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   outputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stateProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1164,6 +1322,7 @@ export type OdProcessRouteCreateWithoutOutputsInput = {
   desAccion?: string
   flgStatutActif?: number
   orderComponent: Prisma.OdOrderComponentCreateNestedOneWithoutProcessRoutesInput
+  facility?: Prisma.MdFacilityCreateNestedOneWithoutProcessRoutesInput
   inputs?: Prisma.OdInputProcessRouteCreateNestedManyWithoutProcessRouteInput
   procedures?: Prisma.OdProcedureProcessRouteCreateNestedManyWithoutProcessRouteInput
   subprocesses?: Prisma.OdSubprocessRouteCreateNestedManyWithoutProcessRouteInput
@@ -1180,6 +1339,7 @@ export type OdProcessRouteUncheckedCreateWithoutOutputsInput = {
   estimatedTimeProcess?: number
   responsibleUnit: string
   responsibleProcess: string
+  idDlkFacility?: number | null
   inputTimeProcessRoute?: Date | string | null
   outputTimeProcessRoute?: Date | string | null
   stateProcessRoute?: number
@@ -1227,6 +1387,7 @@ export type OdProcessRouteUpdateWithoutOutputsInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   orderComponent?: Prisma.OdOrderComponentUpdateOneRequiredWithoutProcessRoutesNestedInput
+  facility?: Prisma.MdFacilityUpdateOneWithoutProcessRoutesNestedInput
   inputs?: Prisma.OdInputProcessRouteUpdateManyWithoutProcessRouteNestedInput
   procedures?: Prisma.OdProcedureProcessRouteUpdateManyWithoutProcessRouteNestedInput
   subprocesses?: Prisma.OdSubprocessRouteUpdateManyWithoutProcessRouteNestedInput
@@ -1243,6 +1404,7 @@ export type OdProcessRouteUncheckedUpdateWithoutOutputsInput = {
   estimatedTimeProcess?: Prisma.IntFieldUpdateOperationsInput | number
   responsibleUnit?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkFacility?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   inputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   outputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stateProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1274,6 +1436,7 @@ export type OdProcessRouteCreateWithoutSubprocessesInput = {
   desAccion?: string
   flgStatutActif?: number
   orderComponent: Prisma.OdOrderComponentCreateNestedOneWithoutProcessRoutesInput
+  facility?: Prisma.MdFacilityCreateNestedOneWithoutProcessRoutesInput
   inputs?: Prisma.OdInputProcessRouteCreateNestedManyWithoutProcessRouteInput
   procedures?: Prisma.OdProcedureProcessRouteCreateNestedManyWithoutProcessRouteInput
   outputs?: Prisma.OdOutputProcessRouteCreateNestedManyWithoutProcessRouteInput
@@ -1290,6 +1453,7 @@ export type OdProcessRouteUncheckedCreateWithoutSubprocessesInput = {
   estimatedTimeProcess?: number
   responsibleUnit: string
   responsibleProcess: string
+  idDlkFacility?: number | null
   inputTimeProcessRoute?: Date | string | null
   outputTimeProcessRoute?: Date | string | null
   stateProcessRoute?: number
@@ -1337,12 +1501,83 @@ export type OdProcessRouteUpdateWithoutSubprocessesInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   orderComponent?: Prisma.OdOrderComponentUpdateOneRequiredWithoutProcessRoutesNestedInput
+  facility?: Prisma.MdFacilityUpdateOneWithoutProcessRoutesNestedInput
   inputs?: Prisma.OdInputProcessRouteUpdateManyWithoutProcessRouteNestedInput
   procedures?: Prisma.OdProcedureProcessRouteUpdateManyWithoutProcessRouteNestedInput
   outputs?: Prisma.OdOutputProcessRouteUpdateManyWithoutProcessRouteNestedInput
 }
 
 export type OdProcessRouteUncheckedUpdateWithoutSubprocessesInput = {
+  idDlkProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderComponent?: Prisma.IntFieldUpdateOperationsInput | number
+  ordenPrecedenciaProcess?: Prisma.IntFieldUpdateOperationsInput | number
+  codProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  nameProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  criticalityProcess?: Prisma.EnumCriticalityFieldUpdateOperationsInput | $Enums.Criticality
+  outsourcedProcess?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedTimeProcess?: Prisma.IntFieldUpdateOperationsInput | number
+  responsibleUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  responsibleProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkFacility?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  outputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  inputs?: Prisma.OdInputProcessRouteUncheckedUpdateManyWithoutProcessRouteNestedInput
+  procedures?: Prisma.OdProcedureProcessRouteUncheckedUpdateManyWithoutProcessRouteNestedInput
+  outputs?: Prisma.OdOutputProcessRouteUncheckedUpdateManyWithoutProcessRouteNestedInput
+}
+
+export type OdProcessRouteCreateManyFacilityInput = {
+  idDlkProcessRoute?: number
+  idDlkOrderComponent: number
+  ordenPrecedenciaProcess: number
+  codProcess: string
+  nameProcess: string
+  criticalityProcess?: $Enums.Criticality
+  outsourcedProcess?: number
+  estimatedTimeProcess?: number
+  responsibleUnit: string
+  responsibleProcess: string
+  inputTimeProcessRoute?: Date | string | null
+  outputTimeProcessRoute?: Date | string | null
+  stateProcessRoute?: number
+  codUsuarioCargaDl: string
+  fecProcesoCargaDl?: Date | string
+  fecProcesoModifDl?: Date | string
+  desAccion?: string
+  flgStatutActif?: number
+}
+
+export type OdProcessRouteUpdateWithoutFacilityInput = {
+  ordenPrecedenciaProcess?: Prisma.IntFieldUpdateOperationsInput | number
+  codProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  nameProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  criticalityProcess?: Prisma.EnumCriticalityFieldUpdateOperationsInput | $Enums.Criticality
+  outsourcedProcess?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedTimeProcess?: Prisma.IntFieldUpdateOperationsInput | number
+  responsibleUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  responsibleProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  inputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  outputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  orderComponent?: Prisma.OdOrderComponentUpdateOneRequiredWithoutProcessRoutesNestedInput
+  inputs?: Prisma.OdInputProcessRouteUpdateManyWithoutProcessRouteNestedInput
+  procedures?: Prisma.OdProcedureProcessRouteUpdateManyWithoutProcessRouteNestedInput
+  outputs?: Prisma.OdOutputProcessRouteUpdateManyWithoutProcessRouteNestedInput
+  subprocesses?: Prisma.OdSubprocessRouteUpdateManyWithoutProcessRouteNestedInput
+}
+
+export type OdProcessRouteUncheckedUpdateWithoutFacilityInput = {
   idDlkProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
   idDlkOrderComponent?: Prisma.IntFieldUpdateOperationsInput | number
   ordenPrecedenciaProcess?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1364,6 +1599,28 @@ export type OdProcessRouteUncheckedUpdateWithoutSubprocessesInput = {
   inputs?: Prisma.OdInputProcessRouteUncheckedUpdateManyWithoutProcessRouteNestedInput
   procedures?: Prisma.OdProcedureProcessRouteUncheckedUpdateManyWithoutProcessRouteNestedInput
   outputs?: Prisma.OdOutputProcessRouteUncheckedUpdateManyWithoutProcessRouteNestedInput
+  subprocesses?: Prisma.OdSubprocessRouteUncheckedUpdateManyWithoutProcessRouteNestedInput
+}
+
+export type OdProcessRouteUncheckedUpdateManyWithoutFacilityInput = {
+  idDlkProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderComponent?: Prisma.IntFieldUpdateOperationsInput | number
+  ordenPrecedenciaProcess?: Prisma.IntFieldUpdateOperationsInput | number
+  codProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  nameProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  criticalityProcess?: Prisma.EnumCriticalityFieldUpdateOperationsInput | $Enums.Criticality
+  outsourcedProcess?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedTimeProcess?: Prisma.IntFieldUpdateOperationsInput | number
+  responsibleUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  responsibleProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  inputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  outputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stateProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type OdProcessRouteCreateManyOrderComponentInput = {
@@ -1376,6 +1633,7 @@ export type OdProcessRouteCreateManyOrderComponentInput = {
   estimatedTimeProcess?: number
   responsibleUnit: string
   responsibleProcess: string
+  idDlkFacility?: number | null
   inputTimeProcessRoute?: Date | string | null
   outputTimeProcessRoute?: Date | string | null
   stateProcessRoute?: number
@@ -1403,6 +1661,7 @@ export type OdProcessRouteUpdateWithoutOrderComponentInput = {
   fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  facility?: Prisma.MdFacilityUpdateOneWithoutProcessRoutesNestedInput
   inputs?: Prisma.OdInputProcessRouteUpdateManyWithoutProcessRouteNestedInput
   procedures?: Prisma.OdProcedureProcessRouteUpdateManyWithoutProcessRouteNestedInput
   outputs?: Prisma.OdOutputProcessRouteUpdateManyWithoutProcessRouteNestedInput
@@ -1419,6 +1678,7 @@ export type OdProcessRouteUncheckedUpdateWithoutOrderComponentInput = {
   estimatedTimeProcess?: Prisma.IntFieldUpdateOperationsInput | number
   responsibleUnit?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkFacility?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   inputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   outputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stateProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1443,6 +1703,7 @@ export type OdProcessRouteUncheckedUpdateManyWithoutOrderComponentInput = {
   estimatedTimeProcess?: Prisma.IntFieldUpdateOperationsInput | number
   responsibleUnit?: Prisma.StringFieldUpdateOperationsInput | string
   responsibleProcess?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkFacility?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   inputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   outputTimeProcessRoute?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stateProcessRoute?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1522,6 +1783,7 @@ export type OdProcessRouteSelect<ExtArgs extends runtime.Types.Extensions.Intern
   estimatedTimeProcess?: boolean
   responsibleUnit?: boolean
   responsibleProcess?: boolean
+  idDlkFacility?: boolean
   inputTimeProcessRoute?: boolean
   outputTimeProcessRoute?: boolean
   stateProcessRoute?: boolean
@@ -1531,6 +1793,7 @@ export type OdProcessRouteSelect<ExtArgs extends runtime.Types.Extensions.Intern
   desAccion?: boolean
   flgStatutActif?: boolean
   orderComponent?: boolean | Prisma.OdOrderComponentDefaultArgs<ExtArgs>
+  facility?: boolean | Prisma.OdProcessRoute$facilityArgs<ExtArgs>
   inputs?: boolean | Prisma.OdProcessRoute$inputsArgs<ExtArgs>
   procedures?: boolean | Prisma.OdProcessRoute$proceduresArgs<ExtArgs>
   outputs?: boolean | Prisma.OdProcessRoute$outputsArgs<ExtArgs>
@@ -1551,6 +1814,7 @@ export type OdProcessRouteSelectScalar = {
   estimatedTimeProcess?: boolean
   responsibleUnit?: boolean
   responsibleProcess?: boolean
+  idDlkFacility?: boolean
   inputTimeProcessRoute?: boolean
   outputTimeProcessRoute?: boolean
   stateProcessRoute?: boolean
@@ -1561,9 +1825,10 @@ export type OdProcessRouteSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type OdProcessRouteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkProcessRoute" | "idDlkOrderComponent" | "ordenPrecedenciaProcess" | "codProcess" | "nameProcess" | "criticalityProcess" | "outsourcedProcess" | "estimatedTimeProcess" | "responsibleUnit" | "responsibleProcess" | "inputTimeProcessRoute" | "outputTimeProcessRoute" | "stateProcessRoute" | "codUsuarioCargaDl" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["odProcessRoute"]>
+export type OdProcessRouteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkProcessRoute" | "idDlkOrderComponent" | "ordenPrecedenciaProcess" | "codProcess" | "nameProcess" | "criticalityProcess" | "outsourcedProcess" | "estimatedTimeProcess" | "responsibleUnit" | "responsibleProcess" | "idDlkFacility" | "inputTimeProcessRoute" | "outputTimeProcessRoute" | "stateProcessRoute" | "codUsuarioCargaDl" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["odProcessRoute"]>
 export type OdProcessRouteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderComponent?: boolean | Prisma.OdOrderComponentDefaultArgs<ExtArgs>
+  facility?: boolean | Prisma.OdProcessRoute$facilityArgs<ExtArgs>
   inputs?: boolean | Prisma.OdProcessRoute$inputsArgs<ExtArgs>
   procedures?: boolean | Prisma.OdProcessRoute$proceduresArgs<ExtArgs>
   outputs?: boolean | Prisma.OdProcessRoute$outputsArgs<ExtArgs>
@@ -1575,6 +1840,7 @@ export type $OdProcessRoutePayload<ExtArgs extends runtime.Types.Extensions.Inte
   name: "OdProcessRoute"
   objects: {
     orderComponent: Prisma.$OdOrderComponentPayload<ExtArgs>
+    facility: Prisma.$MdFacilityPayload<ExtArgs> | null
     inputs: Prisma.$OdInputProcessRoutePayload<ExtArgs>[]
     procedures: Prisma.$OdProcedureProcessRoutePayload<ExtArgs>[]
     outputs: Prisma.$OdOutputProcessRoutePayload<ExtArgs>[]
@@ -1591,6 +1857,7 @@ export type $OdProcessRoutePayload<ExtArgs extends runtime.Types.Extensions.Inte
     estimatedTimeProcess: number
     responsibleUnit: string
     responsibleProcess: string
+    idDlkFacility: number | null
     inputTimeProcessRoute: Date | null
     outputTimeProcessRoute: Date | null
     stateProcessRoute: number
@@ -1940,6 +2207,7 @@ readonly fields: OdProcessRouteFieldRefs;
 export interface Prisma__OdProcessRouteClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   orderComponent<T extends Prisma.OdOrderComponentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderComponentDefaultArgs<ExtArgs>>): Prisma.Prisma__OdOrderComponentClient<runtime.Types.Result.GetResult<Prisma.$OdOrderComponentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  facility<T extends Prisma.OdProcessRoute$facilityArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdProcessRoute$facilityArgs<ExtArgs>>): Prisma.Prisma__MdFacilityClient<runtime.Types.Result.GetResult<Prisma.$MdFacilityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   inputs<T extends Prisma.OdProcessRoute$inputsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdProcessRoute$inputsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdInputProcessRoutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   procedures<T extends Prisma.OdProcessRoute$proceduresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdProcessRoute$proceduresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdProcedureProcessRoutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   outputs<T extends Prisma.OdProcessRoute$outputsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdProcessRoute$outputsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdOutputProcessRoutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1983,6 +2251,7 @@ export interface OdProcessRouteFieldRefs {
   readonly estimatedTimeProcess: Prisma.FieldRef<"OdProcessRoute", 'Int'>
   readonly responsibleUnit: Prisma.FieldRef<"OdProcessRoute", 'String'>
   readonly responsibleProcess: Prisma.FieldRef<"OdProcessRoute", 'String'>
+  readonly idDlkFacility: Prisma.FieldRef<"OdProcessRoute", 'Int'>
   readonly inputTimeProcessRoute: Prisma.FieldRef<"OdProcessRoute", 'DateTime'>
   readonly outputTimeProcessRoute: Prisma.FieldRef<"OdProcessRoute", 'DateTime'>
   readonly stateProcessRoute: Prisma.FieldRef<"OdProcessRoute", 'Int'>
@@ -2336,6 +2605,25 @@ export type OdProcessRouteDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many OdProcessRoutes to delete.
    */
   limit?: number
+}
+
+/**
+ * OdProcessRoute.facility
+ */
+export type OdProcessRoute$facilityArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MdFacility
+   */
+  select?: Prisma.MdFacilitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MdFacility
+   */
+  omit?: Prisma.MdFacilityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MdFacilityInclude<ExtArgs> | null
+  where?: Prisma.MdFacilityWhereInput
 }
 
 /**

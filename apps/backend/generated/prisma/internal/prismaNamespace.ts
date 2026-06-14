@@ -4639,6 +4639,7 @@ export const OdProcessRouteScalarFieldEnum = {
   estimatedTimeProcess: 'estimatedTimeProcess',
   responsibleUnit: 'responsibleUnit',
   responsibleProcess: 'responsibleProcess',
+  idDlkFacility: 'idDlkFacility',
   inputTimeProcessRoute: 'inputTimeProcessRoute',
   outputTimeProcessRoute: 'outputTimeProcessRoute',
   stateProcessRoute: 'stateProcessRoute',

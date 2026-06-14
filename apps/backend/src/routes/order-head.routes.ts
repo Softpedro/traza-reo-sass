@@ -476,6 +476,138 @@ export function orderHeadRoutes(service: OrderHeadService): Router {
     }
   });
 
+  // Trazabilidad · Procesos instanciados de la ruta de un componente.
+  router.get("/:id/components/:componentId/process-routes", async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      const componentId = Number(req.params.componentId);
+      if (!Number.isFinite(id) || !Number.isFinite(componentId)) {
+        return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+      }
+      const rows = await service.listComponentProcessRoutes(id, componentId);
+      if (rows === null) {
+        return res.status(404).json({ error: "Componente no encontrado", type: "NOT_FOUND" });
+      }
+      res.json(rows);
+    } catch (e) {
+      console.error("[order-heads:listComponentProcessRoutes]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
+  // Trazabilidad · Detalle de un proceso de la ruta (campos + inputs/procedimientos/outputs).
+  router.get(
+    "/:id/components/:componentId/process-routes/:processRouteId",
+    async (req, res) => {
+      try {
+        const id = Number(req.params.id);
+        const componentId = Number(req.params.componentId);
+        const processRouteId = Number(req.params.processRouteId);
+        if (![id, componentId, processRouteId].every((n) => Number.isFinite(n))) {
+          return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+        }
+        const row = await service.getProcessRouteDetail(id, componentId, processRouteId);
+        if (!row) {
+          return res.status(404).json({ error: "Proceso de ruta no encontrado", type: "NOT_FOUND" });
+        }
+        res.json(row);
+      } catch (e) {
+        console.error("[order-heads:getProcessRouteDetail]", e);
+        const err = errorResponse(e);
+        res.status(err.status).json(err.body);
+      }
+    }
+  );
+
+  // Trazabilidad · Guarda en sitio los campos del proceso de la ruta.
+  router.put(
+    "/:id/components/:componentId/process-routes/:processRouteId",
+    async (req, res) => {
+      try {
+        const id = Number(req.params.id);
+        const componentId = Number(req.params.componentId);
+        const processRouteId = Number(req.params.processRouteId);
+        if (![id, componentId, processRouteId].every((n) => Number.isFinite(n))) {
+          return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+        }
+        const body = req.body as Record<string, unknown>;
+        const numOrNull = (v: unknown) =>
+          v === undefined || v === "" ? undefined : v === null ? null : Number(v);
+        const updated = await service.updateProcessRoute(id, componentId, processRouteId, {
+          outsourcedProcess: numOrNull(body.outsourcedProcess),
+          estimatedTimeProcess: numOrNull(body.estimatedTimeProcess),
+          responsibleProcess:
+            body.responsibleProcess === undefined
+              ? undefined
+              : body.responsibleProcess === null
+                ? null
+                : String(body.responsibleProcess),
+          idDlkFacility: numOrNull(body.idDlkFacility),
+          inputTimeProcessRoute:
+            body.inputTimeProcessRoute === undefined
+              ? undefined
+              : (body.inputTimeProcessRoute as string | null),
+          outputTimeProcessRoute:
+            body.outputTimeProcessRoute === undefined
+              ? undefined
+              : (body.outputTimeProcessRoute as string | null),
+        });
+        if (!updated) {
+          return res.status(404).json({ error: "Proceso de ruta no encontrado", type: "NOT_FOUND" });
+        }
+        res.json(updated);
+      } catch (e) {
+        console.error("[order-heads:updateProcessRoute]", e);
+        const err = errorResponse(e);
+        res.status(err.status).json(err.body);
+      }
+    }
+  );
+
+  // Trazabilidad · Guarda el nombre de archivo de un input/procedimiento/output del proceso.
+  router.put(
+    "/:id/components/:componentId/process-routes/:processRouteId/file",
+    async (req, res) => {
+      try {
+        const id = Number(req.params.id);
+        const componentId = Number(req.params.componentId);
+        const processRouteId = Number(req.params.processRouteId);
+        if (![id, componentId, processRouteId].every((n) => Number.isFinite(n))) {
+          return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+        }
+        const body = req.body as Record<string, unknown>;
+        const kind = String(body.kind);
+        const rowId = Number(body.rowId);
+        if (!["input", "procedure", "output"].includes(kind) || !Number.isFinite(rowId)) {
+          return res
+            .status(400)
+            .json({ error: "kind (input|procedure|output) y rowId son obligatorios", type: "VALIDATION" });
+        }
+        const fileName =
+          body.fileName === undefined || body.fileName === null
+            ? null
+            : String(body.fileName);
+        const ok = await service.setProcessRouteFileName(
+          id,
+          componentId,
+          processRouteId,
+          kind as "input" | "procedure" | "output",
+          rowId,
+          fileName
+        );
+        if (!ok) {
+          return res.status(404).json({ error: "Fila no encontrada", type: "NOT_FOUND" });
+        }
+        res.json({ ok: true });
+      } catch (e) {
+        console.error("[order-heads:setProcessRouteFileName]", e);
+        const err = errorResponse(e);
+        res.status(err.status).json(err.body);
+      }
+    }
+  );
+
   router.put("/:id", async (req, res) => {
     try {
       const id = Number(req.params.id);

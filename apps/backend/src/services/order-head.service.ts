@@ -1303,4 +1303,182 @@ export class OrderHeadService {
     const filename = `suministro_${base}_${fields.label}.xlsx`;
     return { buffer, filename };
   }
+
+  // ---------- Trazabilidad · nivel Proceso ----------
+
+  /** Lista los procesos instanciados de la ruta de un componente (para Trazabilidad). */
+  async listComponentProcessRoutes(orderHeadId: number, componentId: number) {
+    const comp = await this.prisma.odOrderComponent.findFirst({
+      where: { idDlkOrderComponent: componentId, idDlkOrderHead: orderHeadId },
+      select: { idDlkOrderComponent: true },
+    });
+    if (!comp) return null;
+    return this.prisma.odProcessRoute.findMany({
+      where: { idDlkOrderComponent: componentId },
+      orderBy: { ordenPrecedenciaProcess: "asc" },
+      select: {
+        idDlkProcessRoute: true,
+        codProcess: true,
+        nameProcess: true,
+        ordenPrecedenciaProcess: true,
+      },
+    });
+  }
+
+  /** Detalle de un proceso de la ruta: campos + inputs/procedimientos/outputs (con nombre de archivo). */
+  async getProcessRouteDetail(
+    orderHeadId: number,
+    componentId: number,
+    processRouteId: number
+  ) {
+    return this.prisma.odProcessRoute.findFirst({
+      where: {
+        idDlkProcessRoute: processRouteId,
+        idDlkOrderComponent: componentId,
+        orderComponent: { idDlkOrderHead: orderHeadId },
+      },
+      select: {
+        idDlkProcessRoute: true,
+        codProcess: true,
+        nameProcess: true,
+        criticalityProcess: true,
+        outsourcedProcess: true,
+        estimatedTimeProcess: true,
+        responsibleUnit: true,
+        responsibleProcess: true,
+        idDlkFacility: true,
+        inputTimeProcessRoute: true,
+        outputTimeProcessRoute: true,
+        inputs: {
+          where: { flgStatutActif: 1 },
+          orderBy: { idDlkInputProcessRoute: "asc" },
+          select: {
+            idDlkInputProcessRoute: true,
+            codInputProcess: true,
+            nameInputProcess: true,
+            fileInputProcessRoute: true,
+          },
+        },
+        procedures: {
+          where: { flgStatutActif: 1 },
+          orderBy: { idDlkProcedureProcess: "asc" },
+          select: {
+            idDlkProcedureProcess: true,
+            codProcedureProcess: true,
+            nameProcedureProcess: true,
+            fileProcedureProcess: true,
+          },
+        },
+        outputs: {
+          where: { flgStatutActif: 1 },
+          orderBy: { idDlkOutputProcess: "asc" },
+          select: {
+            idDlkOutputProcess: true,
+            codOutputProcess: true,
+            nameOutputProcess: true,
+            fileOutputProcessRoute: true,
+          },
+        },
+      },
+    });
+  }
+
+  /**
+   * Guarda en sitio los campos editables del proceso de la ruta (Trazabilidad):
+   * Fábrica, Tercerizado, Duración, Responsable e Inicio/Fin.
+   */
+  async updateProcessRoute(
+    orderHeadId: number,
+    componentId: number,
+    processRouteId: number,
+    body: {
+      outsourcedProcess?: number | null;
+      estimatedTimeProcess?: number | null;
+      responsibleProcess?: string | null;
+      idDlkFacility?: number | null;
+      inputTimeProcessRoute?: string | null;
+      outputTimeProcessRoute?: string | null;
+    }
+  ): Promise<{ idDlkProcessRoute: number } | null> {
+    const existing = await this.prisma.odProcessRoute.findFirst({
+      where: {
+        idDlkProcessRoute: processRouteId,
+        idDlkOrderComponent: componentId,
+        orderComponent: { idDlkOrderHead: orderHeadId },
+      },
+      select: { idDlkProcessRoute: true },
+    });
+    if (!existing) return null;
+
+    const data: Prisma.OdProcessRouteUncheckedUpdateInput = {};
+    if (body.outsourcedProcess !== undefined && body.outsourcedProcess !== null) {
+      data.outsourcedProcess = Number(body.outsourcedProcess) ? 1 : 0;
+    }
+    if (body.estimatedTimeProcess !== undefined && body.estimatedTimeProcess !== null) {
+      const n = Number(body.estimatedTimeProcess);
+      data.estimatedTimeProcess = Number.isFinite(n) && n >= 0 ? Math.floor(n) : 0;
+    }
+    if (body.responsibleProcess !== undefined) {
+      data.responsibleProcess = body.responsibleProcess ?? "";
+    }
+    if (body.idDlkFacility !== undefined) {
+      data.idDlkFacility = body.idDlkFacility == null ? null : Number(body.idDlkFacility);
+    }
+    if (body.inputTimeProcessRoute !== undefined) {
+      data.inputTimeProcessRoute = body.inputTimeProcessRoute
+        ? new Date(body.inputTimeProcessRoute)
+        : null;
+    }
+    if (body.outputTimeProcessRoute !== undefined) {
+      data.outputTimeProcessRoute = body.outputTimeProcessRoute
+        ? new Date(body.outputTimeProcessRoute)
+        : null;
+    }
+
+    return this.prisma.odProcessRoute.update({
+      where: { idDlkProcessRoute: processRouteId },
+      data,
+      select: { idDlkProcessRoute: true },
+    });
+  }
+
+  /** Guarda el NOMBRE de archivo de un input/procedimiento/output del proceso (sin binario). */
+  async setProcessRouteFileName(
+    orderHeadId: number,
+    componentId: number,
+    processRouteId: number,
+    kind: "input" | "procedure" | "output",
+    rowId: number,
+    fileName: string | null
+  ): Promise<boolean> {
+    const pr = await this.prisma.odProcessRoute.findFirst({
+      where: {
+        idDlkProcessRoute: processRouteId,
+        idDlkOrderComponent: componentId,
+        orderComponent: { idDlkOrderHead: orderHeadId },
+      },
+      select: { idDlkProcessRoute: true },
+    });
+    if (!pr) return false;
+    const name = fileName && fileName.trim() ? fileName.trim().slice(0, 255) : null;
+    if (kind === "input") {
+      const r = await this.prisma.odInputProcessRoute.updateMany({
+        where: { idDlkInputProcessRoute: rowId, idDlkProcessRoute: processRouteId },
+        data: { fileInputProcessRoute: name },
+      });
+      return r.count > 0;
+    }
+    if (kind === "procedure") {
+      const r = await this.prisma.odProcedureProcessRoute.updateMany({
+        where: { idDlkProcedureProcess: rowId, idDlkProcessRoute: processRouteId },
+        data: { fileProcedureProcess: name },
+      });
+      return r.count > 0;
+    }
+    const r = await this.prisma.odOutputProcessRoute.updateMany({
+      where: { idDlkOutputProcess: rowId, idDlkProcessRoute: processRouteId },
+      data: { fileOutputProcessRoute: name },
+    });
+    return r.count > 0;
+  }
 }

@@ -330,6 +330,41 @@ export function orderHeadRoutes(service: OrderHeadService): Router {
     }
   });
 
+  // Actualiza el sub-estado de la etapa Trazabilidad (stage=5) + flag activo. Al Concluir avanza a Lista Negra.
+  router.put("/:id/trazabilidad-estado", async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      if (!Number.isFinite(id)) {
+        return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+      }
+      const body = req.body as Record<string, unknown>;
+      const updated = await service.updateTrazabilidadEstado(id, {
+        statusStageOrderHead:
+          body.statusStageOrderHead === undefined || body.statusStageOrderHead === ""
+            ? undefined
+            : body.statusStageOrderHead === null
+              ? null
+              : Number(body.statusStageOrderHead),
+        flgStatutActif:
+          body.flgStatutActif === undefined || body.flgStatutActif === ""
+            ? undefined
+            : body.flgStatutActif === null
+              ? null
+              : Number(body.flgStatutActif),
+        codUsuarioCargaDl:
+          body.codUsuarioCargaDl != null ? String(body.codUsuarioCargaDl) : undefined,
+      });
+      if (!updated) {
+        return res.status(404).json({ error: "Orden no encontrada", type: "NOT_FOUND" });
+      }
+      res.json(updated);
+    } catch (e) {
+      console.error("[order-heads:updateTrazabilidadEstado]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
   // Lista los componentes (piezas) de la orden para la pantalla de Ruta (genera los faltantes).
   router.get("/:id/components", async (req, res) => {
     try {

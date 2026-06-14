@@ -793,6 +793,56 @@ export class OrderHeadService {
   }
 
   /**
+   * Actualiza el sub-estado de la etapa Trazabilidad (stage=5) y el flag activo en OD_ORDER_HEAD.
+   * Modelo de 3 estados: 1=Sin Iniciar, 2=Iniciado, 3=Concluido.
+   * Regla de transición: al Concluir Trazabilidad (status=3) la orden pasa a
+   * Lista Negra (stage=6 + status=1 "Sin Iniciar") y deja de listarse en Trazabilidad.
+   */
+  async updateTrazabilidadEstado(
+    id: number,
+    body: {
+      statusStageOrderHead?: number | null;
+      flgStatutActif?: number | null;
+      codUsuarioCargaDl?: string;
+    }
+  ): Promise<OrderHeadListRow | null> {
+    const existing = await this.prisma.odOrderHead.findUnique({
+      where: { idDlkOrderHead: id },
+      select: { idDlkOrderHead: true },
+    });
+    if (!existing) return null;
+
+    const status =
+      body.statusStageOrderHead == null ? 1 : Number(body.statusStageOrderHead);
+
+    const data: Prisma.OdOrderHeadUncheckedUpdateInput = {
+      stageOrderHead: 5,
+      statusStageOrderHead: status,
+      fecProcesoModifDl: new Date(),
+      desAccion: "U",
+    };
+    if (body.flgStatutActif != null) {
+      data.flgStatutActif = Number(body.flgStatutActif);
+    }
+    if (body.codUsuarioCargaDl !== undefined) {
+      data.codUsuarioCargaDl = body.codUsuarioCargaDl;
+    }
+
+    // Al Concluir Trazabilidad, la orden avanza a Lista Negra (stage=6) en estado Sin Iniciar.
+    if (status === 3) {
+      data.stageOrderHead = 6;
+      data.statusStageOrderHead = 1;
+    }
+
+    const updated = await this.prisma.odOrderHead.update({
+      where: { idDlkOrderHead: id },
+      data,
+      select: listSelect,
+    });
+    return updated as unknown as OrderHeadListRow;
+  }
+
+  /**
    * Lista los componentes (piezas) de una orden para la pantalla de Ruta.
    * Genera los faltantes desde OD_ORDER_DETAIL: no-set = 1 componente;
    * set = numPiezas componentes (NAME_COMPONENT = "Pieza N", editable luego).
@@ -815,6 +865,7 @@ export class OrderHeadService {
         codOrderHead: true,
         statusStageOrderHead: true,
         stageOrderHead: true,
+        flgStatutActif: true,
         codUsuarioCargaDl: true,
         brand: { select: { idDlkBrand: true, nameBrand: true, codBrand: true } },
       },

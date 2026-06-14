@@ -6,6 +6,7 @@ import {
   isProbablyExcelBuffer,
   parseOrderExcelDetails,
 } from "./order-excel-parser.js";
+import { seedRouteIoFromMaster } from "./route-io-seed.js";
 
 type PrismaBytes = Uint8Array<ArrayBuffer>;
 
@@ -1240,6 +1241,23 @@ export class OrderHeadService {
         }
       }
     });
+
+    // Sembrar Inputs/Procedimientos/Outputs desde el maestro (proceso/subproceso/actividad)
+    // para todas las rutas recién creadas. Idempotente.
+    const createdRoutes = await this.prisma.odProcessRoute.findMany({
+      where: { idDlkOrderComponent: { in: comps.map((c) => c.idDlkOrderComponent) } },
+      select: {
+        idDlkProcessRoute: true,
+        orderComponent: { select: { codUsuarioCargaDl: true } },
+      },
+    });
+    for (const pr of createdRoutes) {
+      await seedRouteIoFromMaster(
+        this.prisma,
+        pr.idDlkProcessRoute,
+        pr.orderComponent?.codUsuarioCargaDl ?? "SYSTEM"
+      );
+    }
 
     return { components: comps.length, processes: sortedProcs.length };
   }

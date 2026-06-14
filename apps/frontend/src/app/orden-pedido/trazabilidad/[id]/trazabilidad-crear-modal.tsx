@@ -195,6 +195,8 @@ export function TrazabilidadCrearModal({
           ) : (
             <div className="space-y-1 py-2 text-sm">
               {processes.map((p, pi) => {
+                // Solo se muestran los nodos con check activo (los que están en la ruta).
+                if (!checkP.has(p.idDlkProcess)) return null;
                 const processRouteId = procRouteByCod.get(p.codProcess);
                 const clickable = processRouteId != null;
                 return (
@@ -217,28 +219,35 @@ export function TrazabilidadCrearModal({
                       </button>
                     </div>
 
-                    {p.subprocesses.map((s, si) => (
-                      <div key={s.idDlkSubprocess} className="ml-6">
-                        <div className="flex items-center gap-2">
-                          <ReadonlyCheck checked={checkS.has(s.idDlkSubprocess)} />
-                          <span className="font-medium text-primary">
-                            {pi + 1}.{si + 1}.- {s.codSubprocess}-{s.nameSubprocess}
-                          </span>
-                        </div>
-
-                        {s.activities.map((a, ai) => (
-                          <div
-                            key={a.idDlkActivities}
-                            className="ml-12 flex items-center gap-2"
-                          >
-                            <ReadonlyCheck checked={checkA.has(a.idDlkActivities)} />
-                            <span className="text-primary">
-                              {pi + 1}.{si + 1}.{ai + 1}.- {a.codActivities}-{a.nameActivities}
+                    {p.subprocesses.map((s, si) => {
+                      if (!checkS.has(s.idDlkSubprocess)) return null;
+                      return (
+                        <div key={s.idDlkSubprocess} className="ml-6">
+                          <div className="flex items-center gap-2">
+                            <ReadonlyCheck checked={checkS.has(s.idDlkSubprocess)} />
+                            <span className="font-medium text-primary">
+                              {pi + 1}.{si + 1}.- {s.codSubprocess}-{s.nameSubprocess}
                             </span>
                           </div>
-                        ))}
-                      </div>
-                    ))}
+
+                          {s.activities.map((a, ai) => {
+                            if (!checkA.has(a.idDlkActivities)) return null;
+                            return (
+                              <div
+                                key={a.idDlkActivities}
+                                className="ml-12 flex items-center gap-2"
+                              >
+                                <ReadonlyCheck checked={checkA.has(a.idDlkActivities)} />
+                                <span className="text-primary">
+                                  {pi + 1}.{si + 1}.{ai + 1}.- {a.codActivities}-
+                                  {a.nameActivities}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      );
+                    })}
                   </div>
                 );
               })}

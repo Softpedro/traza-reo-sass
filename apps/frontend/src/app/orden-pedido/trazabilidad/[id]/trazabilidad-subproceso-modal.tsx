@@ -18,35 +18,36 @@ import {
 import { apiFetch } from "@/lib/api-fetch";
 import { TrazabilidadIoModal, type IoKind, type IoRow } from "./trazabilidad-io-modal";
 
-type ProcessDetail = {
-  idDlkProcessRoute: number;
-  codProcess: string;
-  nameProcess: string;
-  criticalityProcess: string | null;
-  outsourcedProcess: number | null;
-  estimatedTimeProcess: number | null;
+type SubprocessDetail = {
+  idDlkSubprocessRoute: number;
+  codSubprocess: string;
+  nameSubprocess: string;
+  criticalitySubprocess: string | null;
+  outsourcedSubprocess: number | null;
+  estimatedTimeSubprocess: number | null;
   responsibleUnit: string | null;
-  responsibleProcess: string | null;
+  responsibleRole: string | null;
   idDlkFacility: number | null;
-  inputTimeProcessRoute: string | null;
-  outputTimeProcessRoute: string | null;
+  inputTimeSubprocessRoute: string | null;
+  outputTimeSubprocessRoute: string | null;
+  processRoute: { codProcess: string; nameProcess: string } | null;
   inputs: {
-    idDlkInputProcessRoute: number;
-    codInputProcess: string;
-    nameInputProcess: string;
-    fileInputProcessRoute: string | null;
+    idDlkInputSubprocessRoute: number;
+    codInputSubprocess: string;
+    nameInputSubprocess: string;
+    fileInputSubprocess: string | null;
   }[];
   procedures: {
-    idDlkProcedureProcess: number;
-    codProcedureProcess: string;
-    nameProcedureProcess: string;
-    fileProcedureProcess: string | null;
+    idDlkProcedureSubprocessRoute: number;
+    codProcedureSubprocess: string;
+    nameProcedureSubprocess: string;
+    fileProcedureSubprocess: string | null;
   }[];
   outputs: {
-    idDlkOutputProcess: number;
-    codOutputProcess: string;
-    nameOutputProcess: string;
-    fileOutputProcessRoute: string | null;
+    idDlkOutputSubprocessRoute: number;
+    codOutputSubprocess: string;
+    nameOutputSubprocess: string;
+    fileOutputSubprocessRoute: string | null;
   }[];
 };
 
@@ -63,7 +64,7 @@ const TERCERIZADO_OPTIONS = [
   { value: 1, label: "2 - Sí" },
 ];
 
-/** ISO → valor para <input type="datetime-local"> en hora local (YYYY-MM-DDTHH:mm). */
+/** ISO → valor para <input type="datetime-local"> en hora local. */
 function toLocalInput(iso: string | null): string {
   if (!iso) return "";
   const d = new Date(iso);
@@ -73,8 +74,6 @@ function toLocalInput(iso: string | null): string {
     d.getHours()
   )}:${pad(d.getMinutes())}`;
 }
-
-/** Valor del input local → ISO (instante UTC) o null si vacío. */
 function localInputToIso(v: string): string | null {
   if (!v) return null;
   const d = new Date(v);
@@ -86,32 +85,31 @@ type Props = {
   onOpenChange: (open: boolean) => void;
   orderHeadId: number;
   componentId: number;
-  processRouteId: number;
+  subprocessRouteId: number;
   ordenProduccion: string;
   marca: string;
   pieza: string | null;
   onSuccess?: () => void;
 };
 
-export function TrazabilidadProcesoModal({
+export function TrazabilidadSubprocesoModal({
   open,
   onOpenChange,
   orderHeadId,
   componentId,
-  processRouteId,
+  subprocessRouteId,
   ordenProduccion,
   marca,
   pieza,
   onSuccess,
 }: Props) {
-  const [detail, setDetail] = useState<ProcessDetail | null>(null);
+  const [detail, setDetail] = useState<SubprocessDetail | null>(null);
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [io, setIo] = useState<IoKind | null>(null);
 
-  // Campos editables
   const [idDlkFacility, setIdDlkFacility] = useState<number | null>(null);
   const [outsourced, setOutsourced] = useState<number>(0);
   const [duracion, setDuracion] = useState<string>("");
@@ -119,25 +117,25 @@ export function TrazabilidadProcesoModal({
   const [inicio, setInicio] = useState<string>("");
   const [fin, setFin] = useState<string>("");
 
-  function hydrate(d: ProcessDetail) {
+  function hydrate(d: SubprocessDetail) {
     setIdDlkFacility(d.idDlkFacility ?? null);
-    setOutsourced(d.outsourcedProcess ? 1 : 0);
-    setDuracion(d.estimatedTimeProcess != null ? String(d.estimatedTimeProcess) : "");
-    setResponsable(d.responsibleProcess ?? "");
-    setInicio(toLocalInput(d.inputTimeProcessRoute));
-    setFin(toLocalInput(d.outputTimeProcessRoute));
+    setOutsourced(d.outsourcedSubprocess ? 1 : 0);
+    setDuracion(d.estimatedTimeSubprocess != null ? String(d.estimatedTimeSubprocess) : "");
+    setResponsable(d.responsibleRole ?? "");
+    setInicio(toLocalInput(d.inputTimeSubprocessRoute));
+    setFin(toLocalInput(d.outputTimeSubprocessRoute));
   }
 
   const fetchDetail = () =>
     apiFetch(
-      `/api/order-heads/${orderHeadId}/components/${componentId}/process-routes/${processRouteId}`
+      `/api/order-heads/${orderHeadId}/components/${componentId}/subprocess-routes/${subprocessRouteId}`
     )
       .then(async (res) => {
         if (!res.ok) {
           const j = await res.json().catch(() => ({}));
           throw new Error(j.error || `Error ${res.status}`);
         }
-        return res.json() as Promise<ProcessDetail>;
+        return res.json() as Promise<SubprocessDetail>;
       })
       .then((d) => {
         setDetail(d);
@@ -160,11 +158,11 @@ export function TrazabilidadProcesoModal({
       })
       .catch((err) => {
         console.error(err);
-        setError(err instanceof Error ? err.message : "No se pudo cargar el proceso");
+        setError(err instanceof Error ? err.message : "No se pudo cargar el subproceso");
       })
       .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, orderHeadId, componentId, processRouteId]);
+  }, [open, orderHeadId, componentId, subprocessRouteId]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -173,23 +171,23 @@ export function TrazabilidadProcesoModal({
     setError(null);
     try {
       const res = await apiFetch(
-        `/api/order-heads/${orderHeadId}/components/${componentId}/process-routes/${processRouteId}`,
+        `/api/order-heads/${orderHeadId}/components/${componentId}/subprocess-routes/${subprocessRouteId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             idDlkFacility,
-            outsourcedProcess: outsourced,
-            estimatedTimeProcess: duracion === "" ? 0 : Number(duracion),
-            responsibleProcess: responsable,
-            inputTimeProcessRoute: localInputToIso(inicio),
-            outputTimeProcessRoute: localInputToIso(fin),
+            outsourcedSubprocess: outsourced,
+            estimatedTimeSubprocess: duracion === "" ? 0 : Number(duracion),
+            responsibleRole: responsable,
+            inputTimeSubprocessRoute: localInputToIso(inicio),
+            outputTimeSubprocessRoute: localInputToIso(fin),
           }),
         }
       );
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || "No se pudo guardar el proceso");
+        throw new Error(err.error || "No se pudo guardar el subproceso");
       }
       onSuccess?.();
       onOpenChange(false);
@@ -203,28 +201,27 @@ export function TrazabilidadProcesoModal({
 
   const titulo = `Orden de Produccion: ${ordenProduccion || `Orden ${orderHeadId}`}, ${marca}${
     pieza ? ` (${pieza})` : ""
-  } > Trazabilidad, Crear (Proceso)`;
+  } > Trazabilidad, Crear (Sub Proceso)`;
 
-  // Filas normalizadas para el modal lateral según el tipo abierto.
   const ioRows: IoRow[] = !detail
     ? []
     : io === "input"
       ? detail.inputs.map((r) => ({
-          rowId: r.idDlkInputProcessRoute,
-          label: `${r.codInputProcess} - ${r.nameInputProcess}`,
-          fileName: r.fileInputProcessRoute,
+          rowId: r.idDlkInputSubprocessRoute,
+          label: `${r.codInputSubprocess} - ${r.nameInputSubprocess}`,
+          fileName: r.fileInputSubprocess,
         }))
       : io === "procedure"
         ? detail.procedures.map((r) => ({
-            rowId: r.idDlkProcedureProcess,
-            label: `${r.codProcedureProcess} - ${r.nameProcedureProcess}`,
-            fileName: r.fileProcedureProcess,
+            rowId: r.idDlkProcedureSubprocessRoute,
+            label: `${r.codProcedureSubprocess} - ${r.nameProcedureSubprocess}`,
+            fileName: r.fileProcedureSubprocess,
           }))
         : io === "output"
           ? detail.outputs.map((r) => ({
-              rowId: r.idDlkOutputProcess,
-              label: `${r.codOutputProcess} - ${r.nameOutputProcess}`,
-              fileName: r.fileOutputProcessRoute,
+              rowId: r.idDlkOutputSubprocessRoute,
+              label: `${r.codOutputSubprocess} - ${r.nameOutputSubprocess}`,
+              fileName: r.fileOutputSubprocessRoute,
             }))
           : [];
 
@@ -243,7 +240,7 @@ export function TrazabilidadProcesoModal({
           )}
 
           {loading || !detail ? (
-            <p className="py-4 text-sm text-muted-foreground">Cargando proceso…</p>
+            <p className="py-4 text-sm text-muted-foreground">Cargando subproceso…</p>
           ) : (
             <form onSubmit={onSubmit} className="space-y-3 pt-1 text-sm">
               <div className="grid grid-cols-[7rem,1fr] items-start gap-x-3 gap-y-1">
@@ -252,7 +249,9 @@ export function TrazabilidadProcesoModal({
                 <span className="text-right text-muted-foreground">Marca:</span>
                 <span className="font-medium">{marca || "—"}</span>
                 <span className="text-right text-muted-foreground">Proceso:</span>
-                <span className="font-medium">{detail.nameProcess}</span>
+                <span className="font-medium">{detail.processRoute?.nameProcess ?? "—"}</span>
+                <span className="text-right text-muted-foreground">Sub Proceso:</span>
+                <span className="font-medium">{detail.nameSubprocess}</span>
               </div>
 
               <div className="grid grid-cols-[7rem,1fr] items-center gap-x-3 gap-y-2">
@@ -275,8 +274,8 @@ export function TrazabilidadProcesoModal({
 
                 <span className="text-right text-muted-foreground">Criticidad:</span>
                 <span className="font-medium">
-                  {CRITICIDAD_LABEL[detail.criticalityProcess ?? ""] ??
-                    detail.criticalityProcess ??
+                  {CRITICIDAD_LABEL[detail.criticalitySubprocess ?? ""] ??
+                    detail.criticalitySubprocess ??
                     "—"}
                 </span>
 
@@ -309,13 +308,9 @@ export function TrazabilidadProcesoModal({
                 <span className="font-medium">{detail.responsibleUnit || "—"}</span>
 
                 <Label className="text-right">Responsable:</Label>
-                <Input
-                  value={responsable}
-                  onChange={(e) => setResponsable(e.target.value)}
-                />
+                <Input value={responsable} onChange={(e) => setResponsable(e.target.value)} />
               </div>
 
-              {/* Links a los modales laterales */}
               <div className="grid grid-cols-[7rem,1fr] items-center gap-x-3 gap-y-2">
                 <span className="text-right text-muted-foreground">Input:</span>
                 <button
@@ -372,8 +367,8 @@ export function TrazabilidadProcesoModal({
           open
           onOpenChange={(o) => !o && setIo(null)}
           kind={io}
-          fileEndpoint={`/api/order-heads/${orderHeadId}/components/${componentId}/process-routes/${processRouteId}/file`}
-          procesoNombre={detail.nameProcess}
+          fileEndpoint={`/api/order-heads/${orderHeadId}/components/${componentId}/subprocess-routes/${subprocessRouteId}/file`}
+          procesoNombre={detail.nameSubprocess}
           ordenProduccion={ordenProduccion}
           marca={marca}
           rows={ioRows}

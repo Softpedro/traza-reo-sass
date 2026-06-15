@@ -608,6 +608,118 @@ export function orderHeadRoutes(service: OrderHeadService): Router {
     }
   );
 
+  // Trazabilidad · Detalle de un subproceso de la ruta (campos + proceso padre + inputs/procedimientos/outputs).
+  router.get(
+    "/:id/components/:componentId/subprocess-routes/:subprocessRouteId",
+    async (req, res) => {
+      try {
+        const id = Number(req.params.id);
+        const componentId = Number(req.params.componentId);
+        const subprocessRouteId = Number(req.params.subprocessRouteId);
+        if (![id, componentId, subprocessRouteId].every((n) => Number.isFinite(n))) {
+          return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+        }
+        const row = await service.getSubprocessRouteDetail(id, componentId, subprocessRouteId);
+        if (!row) {
+          return res.status(404).json({ error: "Subproceso de ruta no encontrado", type: "NOT_FOUND" });
+        }
+        res.json(row);
+      } catch (e) {
+        console.error("[order-heads:getSubprocessRouteDetail]", e);
+        const err = errorResponse(e);
+        res.status(err.status).json(err.body);
+      }
+    }
+  );
+
+  // Trazabilidad · Guarda en sitio los campos del subproceso de la ruta.
+  router.put(
+    "/:id/components/:componentId/subprocess-routes/:subprocessRouteId",
+    async (req, res) => {
+      try {
+        const id = Number(req.params.id);
+        const componentId = Number(req.params.componentId);
+        const subprocessRouteId = Number(req.params.subprocessRouteId);
+        if (![id, componentId, subprocessRouteId].every((n) => Number.isFinite(n))) {
+          return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+        }
+        const body = req.body as Record<string, unknown>;
+        const numOrNull = (v: unknown) =>
+          v === undefined || v === "" ? undefined : v === null ? null : Number(v);
+        const updated = await service.updateSubprocessRoute(id, componentId, subprocessRouteId, {
+          outsourcedSubprocess: numOrNull(body.outsourcedSubprocess),
+          estimatedTimeSubprocess: numOrNull(body.estimatedTimeSubprocess),
+          responsibleRole:
+            body.responsibleRole === undefined
+              ? undefined
+              : body.responsibleRole === null
+                ? null
+                : String(body.responsibleRole),
+          idDlkFacility: numOrNull(body.idDlkFacility),
+          inputTimeSubprocessRoute:
+            body.inputTimeSubprocessRoute === undefined
+              ? undefined
+              : (body.inputTimeSubprocessRoute as string | null),
+          outputTimeSubprocessRoute:
+            body.outputTimeSubprocessRoute === undefined
+              ? undefined
+              : (body.outputTimeSubprocessRoute as string | null),
+        });
+        if (!updated) {
+          return res.status(404).json({ error: "Subproceso de ruta no encontrado", type: "NOT_FOUND" });
+        }
+        res.json(updated);
+      } catch (e) {
+        console.error("[order-heads:updateSubprocessRoute]", e);
+        const err = errorResponse(e);
+        res.status(err.status).json(err.body);
+      }
+    }
+  );
+
+  // Trazabilidad · Guarda el nombre de archivo de un input/procedimiento/output del subproceso.
+  router.put(
+    "/:id/components/:componentId/subprocess-routes/:subprocessRouteId/file",
+    async (req, res) => {
+      try {
+        const id = Number(req.params.id);
+        const componentId = Number(req.params.componentId);
+        const subprocessRouteId = Number(req.params.subprocessRouteId);
+        if (![id, componentId, subprocessRouteId].every((n) => Number.isFinite(n))) {
+          return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+        }
+        const body = req.body as Record<string, unknown>;
+        const kind = String(body.kind);
+        const rowId = Number(body.rowId);
+        if (!["input", "procedure", "output"].includes(kind) || !Number.isFinite(rowId)) {
+          return res
+            .status(400)
+            .json({ error: "kind (input|procedure|output) y rowId son obligatorios", type: "VALIDATION" });
+        }
+        const fileName =
+          body.fileName === undefined || body.fileName === null
+            ? null
+            : String(body.fileName);
+        const ok = await service.setSubprocessRouteFileName(
+          id,
+          componentId,
+          subprocessRouteId,
+          kind as "input" | "procedure" | "output",
+          rowId,
+          fileName
+        );
+        if (!ok) {
+          return res.status(404).json({ error: "Fila no encontrada", type: "NOT_FOUND" });
+        }
+        res.json({ ok: true });
+      } catch (e) {
+        console.error("[order-heads:setSubprocessRouteFileName]", e);
+        const err = errorResponse(e);
+        res.status(err.status).json(err.body);
+      }
+    }
+  );
+
   router.put("/:id", async (req, res) => {
     try {
       const id = Number(req.params.id);

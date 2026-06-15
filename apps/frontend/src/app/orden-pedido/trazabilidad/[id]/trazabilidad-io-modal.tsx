@@ -28,9 +28,8 @@ type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   kind: IoKind;
-  orderHeadId: number;
-  componentId: number;
-  processRouteId: number;
+  /** URL del endpoint que guarda el nombre de archivo (proceso o subproceso). */
+  fileEndpoint: string;
   procesoNombre: string;
   ordenProduccion: string;
   marca: string;
@@ -43,9 +42,7 @@ export function TrazabilidadIoModal({
   open,
   onOpenChange,
   kind,
-  orderHeadId,
-  componentId,
-  processRouteId,
+  fileEndpoint,
   procesoNombre,
   ordenProduccion,
   marca,
@@ -69,14 +66,11 @@ export function TrazabilidadIoModal({
     setSavingId(rowId);
     setError(null);
     try {
-      const res = await apiFetch(
-        `/api/order-heads/${orderHeadId}/components/${componentId}/process-routes/${processRouteId}/file`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ kind, rowId, fileName: file.name }),
-        }
-      );
+      const res = await apiFetch(fileEndpoint, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind, rowId, fileName: file.name }),
+      });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.error || "No se pudo guardar el archivo");

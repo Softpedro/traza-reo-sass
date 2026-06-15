@@ -9,6 +9,7 @@ import {
 } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
 import { TrazabilidadProcesoModal } from "./trazabilidad-proceso-modal";
+import { TrazabilidadSubprocesoModal } from "./trazabilidad-subproceso-modal";
 
 type Activity = {
   idDlkActivities: number;
@@ -42,6 +43,11 @@ type ProcessRouteRow = {
   codProcess: string;
   nameProcess: string;
   ordenPrecedenciaProcess: number | null;
+  subprocesses: {
+    idDlkSubprocessRoute: number;
+    codSubprocess: string;
+    nameSubprocess: string;
+  }[];
 };
 
 type Props = {
@@ -93,6 +99,11 @@ export function TrazabilidadCrearModal({
   /** codProcess -> idDlkProcessRoute (proceso instanciado del componente). */
   const [procRouteByCod, setProcRouteByCod] = useState<Map<string, number>>(new Map());
   const [procesoSel, setProcesoSel] = useState<{ processRouteId: number } | null>(null);
+  /** codSubprocess -> idDlkSubprocessRoute (subproceso instanciado del componente). */
+  const [subprocRouteByCod, setSubprocRouteByCod] = useState<Map<string, number>>(new Map());
+  const [subprocesoSel, setSubprocesoSel] = useState<{ subprocessRouteId: number } | null>(
+    null
+  );
 
   useEffect(() => {
     if (!open) return;
@@ -101,6 +112,7 @@ export function TrazabilidadCrearModal({
     setCheckS(new Set());
     setCheckA(new Set());
     setProcRouteByCod(new Map());
+    setSubprocRouteByCod(new Map());
     setLoading(true);
 
     const treeReq = apiFetch(
@@ -134,10 +146,15 @@ export function TrazabilidadCrearModal({
           setProcesses(procs);
           if (sel) precheck(procs, sel);
           const map = new Map<string, number>();
-          (Array.isArray(prRows) ? prRows : []).forEach((r) =>
-            map.set(r.codProcess, r.idDlkProcessRoute)
-          );
+          const smap = new Map<string, number>();
+          (Array.isArray(prRows) ? prRows : []).forEach((r) => {
+            map.set(r.codProcess, r.idDlkProcessRoute);
+            (r.subprocesses ?? []).forEach((s) =>
+              smap.set(s.codSubprocess, s.idDlkSubprocessRoute)
+            );
+          });
           setProcRouteByCod(map);
+          setSubprocRouteByCod(smap);
         }
       )
       .catch((err) => {
@@ -221,13 +238,27 @@ export function TrazabilidadCrearModal({
 
                     {p.subprocesses.map((s, si) => {
                       if (!checkS.has(s.idDlkSubprocess)) return null;
+                      const subRouteId = subprocRouteByCod.get(s.codSubprocess);
+                      const sClickable = subRouteId != null;
                       return (
                         <div key={s.idDlkSubprocess} className="ml-6">
                           <div className="flex items-center gap-2">
                             <ReadonlyCheck checked={checkS.has(s.idDlkSubprocess)} />
-                            <span className="font-medium text-primary">
+                            <button
+                              type="button"
+                              disabled={!sClickable}
+                              onClick={() =>
+                                subRouteId != null &&
+                                setSubprocesoSel({ subprocessRouteId: subRouteId })
+                              }
+                              className={`text-left font-medium ${
+                                sClickable
+                                  ? "text-primary hover:underline"
+                                  : "cursor-default text-muted-foreground"
+                              }`}
+                            >
                               {pi + 1}.{si + 1}.- {s.codSubprocess}-{s.nameSubprocess}
-                            </span>
+                            </button>
                           </div>
 
                           {s.activities.map((a, ai) => {
@@ -263,6 +294,20 @@ export function TrazabilidadCrearModal({
           orderHeadId={orderHeadId}
           componentId={componentId}
           processRouteId={procesoSel.processRouteId}
+          ordenProduccion={ordenProduccion}
+          marca={marca}
+          pieza={pieza}
+          onSuccess={onSuccess}
+        />
+      )}
+
+      {subprocesoSel && componentId != null && (
+        <TrazabilidadSubprocesoModal
+          open
+          onOpenChange={(o) => !o && setSubprocesoSel(null)}
+          orderHeadId={orderHeadId}
+          componentId={componentId}
+          subprocessRouteId={subprocesoSel.subprocessRouteId}
           ordenProduccion={ordenProduccion}
           marca={marca}
           pieza={pieza}

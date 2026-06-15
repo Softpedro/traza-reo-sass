@@ -710,6 +710,7 @@ model MdFacility {
   flgStatutActif      Int             @default(1) @map("FLG_STATUT_ACTIF")
   parentCompany       MdParentCompany @relation(fields: [idDlkParentCompany], references: [idDlkParentCompany])
   processRoutes       OdProcessRoute[]
+  subprocessRoutes    OdSubprocessRoute[]
 
   @@index([idDlkParentCompany], map: "FK_FACILITY_PARENT_COMPANY")
   @@index([codUbigeo], map: "FK_FACILITY_UBIGEO")
@@ -1237,6 +1238,7 @@ model OdSubprocessRoute {
   estimatedTimeSubprocess    Int                          @default(0) @map("ESTIMATED_TIME_SUBPROCESS") @db.UnsignedInt
   responsibleUnit            String?                      @map("RESPONSIBLE_UNIT") @db.VarChar(100)
   responsibleRole            String?                      @map("RESPONSIBLE_ROLE") @db.VarChar(100)
+  idDlkFacility              Int?                         @map("ID_DLK_FACILITY")
   inputTimeSubprocessRoute   DateTime?                    @map("INPUT_TIME_SUBPROCESS_ROUTE") @db.DateTime(3)
   outputTimeSubprocessRoute  DateTime?                    @map("OUTPUT_TIME_SUBPROCESS_ROUTE") @db.DateTime(3)
   stateSubprocess            Int                          @default(1) @map("STATE_SUBPROCESS") @db.UnsignedTinyInt
@@ -1246,12 +1248,14 @@ model OdSubprocessRoute {
   desAccion                  String                       @default("INSERT") @map("DES_ACCION") @db.VarChar(10)
   flgStatutActif             Int                          @default(1) @map("FLG_STATUT_ACTIF") @db.UnsignedTinyInt
   processRoute               OdProcessRoute               @relation(fields: [idDlkProcessRoute], references: [idDlkProcessRoute], onDelete: Cascade, onUpdate: NoAction, map: "fk_OD_SUBPROCESS_ROUTE_OD_PROCESS_ROUTE1")
+  facility                   MdFacility?                  @relation(fields: [idDlkFacility], references: [idDlkFacility], onDelete: SetNull, onUpdate: NoAction, map: "fk_OD_SUBPROCESS_ROUTE_MD_FACILITY1")
   inputs                     OdInputSubprocessRoute[]
   procedures                 OdProcedureSubprocessRoute[]
   outputs                    OdOutputSubprocessRoute[]
   activities                 OdActivitiesRoute[]
 
   @@unique([idDlkProcessRoute, ordenPrecedenciaSubprocess], map: "uq_subprocess_route_precedence")
+  @@index([idDlkFacility], map: "idx_subprocess_route_facility")
   @@index([idDlkProcessRoute, ordenPrecedenciaSubprocess], map: "fk_OD_SUBPROCESS_ROUTE_OD_PROCESS_ROUTE1_idx")
   @@index([codSubprocess], map: "idx_subprocess_code")
   @@map("OD_SUBPROCESS_ROUTE")

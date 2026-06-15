@@ -1117,6 +1117,7 @@ export const OdSubprocessRouteScalarFieldEnum = {
   estimatedTimeSubprocess: 'estimatedTimeSubprocess',
   responsibleUnit: 'responsibleUnit',
   responsibleRole: 'responsibleRole',
+  idDlkFacility: 'idDlkFacility',
   inputTimeSubprocessRoute: 'inputTimeSubprocessRoute',
   outputTimeSubprocessRoute: 'outputTimeSubprocessRoute',
   stateSubprocess: 'stateSubprocess',

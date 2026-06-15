@@ -63,11 +63,22 @@ const TERCERIZADO_OPTIONS = [
   { value: 1, label: "2 - Sí" },
 ];
 
-function fmtDateTime(iso: string | null) {
+/** ISO → valor para <input type="datetime-local"> en hora local (YYYY-MM-DDTHH:mm). */
+function toLocalInput(iso: string | null): string {
   if (!iso) return "";
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "";
-  return d.toLocaleString("es-PE");
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(
+    d.getHours()
+  )}:${pad(d.getMinutes())}`;
+}
+
+/** Valor del input local → ISO (instante UTC) o null si vacío. */
+function localInputToIso(v: string): string | null {
+  if (!v) return null;
+  const d = new Date(v);
+  return Number.isNaN(d.getTime()) ? null : d.toISOString();
 }
 
 type Props = {
@@ -105,12 +116,16 @@ export function TrazabilidadProcesoModal({
   const [outsourced, setOutsourced] = useState<number>(0);
   const [duracion, setDuracion] = useState<string>("");
   const [responsable, setResponsable] = useState<string>("");
+  const [inicio, setInicio] = useState<string>("");
+  const [fin, setFin] = useState<string>("");
 
   function hydrate(d: ProcessDetail) {
     setIdDlkFacility(d.idDlkFacility ?? null);
     setOutsourced(d.outsourcedProcess ? 1 : 0);
     setDuracion(d.estimatedTimeProcess != null ? String(d.estimatedTimeProcess) : "");
     setResponsable(d.responsibleProcess ?? "");
+    setInicio(toLocalInput(d.inputTimeProcessRoute));
+    setFin(toLocalInput(d.outputTimeProcessRoute));
   }
 
   const fetchDetail = () =>
@@ -167,6 +182,8 @@ export function TrazabilidadProcesoModal({
             outsourcedProcess: outsourced,
             estimatedTimeProcess: duracion === "" ? 0 : Number(duracion),
             responsibleProcess: responsable,
+            inputTimeProcessRoute: localInputToIso(inicio),
+            outputTimeProcessRoute: localInputToIso(fin),
           }),
         }
       );
@@ -325,10 +342,19 @@ export function TrazabilidadProcesoModal({
                   ↗ Ver outputs ({detail.outputs.length})
                 </button>
 
-                <span className="text-right text-muted-foreground">Inicio:</span>
-                <Input value={fmtDateTime(detail.inputTimeProcessRoute)} disabled readOnly />
-                <span className="text-right text-muted-foreground">Fin:</span>
-                <Input value={fmtDateTime(detail.outputTimeProcessRoute)} disabled readOnly />
+                <Label className="text-right">Inicio:</Label>
+                <Input
+                  type="datetime-local"
+                  value={inicio}
+                  onChange={(e) => setInicio(e.target.value)}
+                />
+                <Label className="text-right">Fin:</Label>
+                <Input
+                  type="datetime-local"
+                  value={fin}
+                  min={inicio || undefined}
+                  onChange={(e) => setFin(e.target.value)}
+                />
               </div>
 
               <div className="flex justify-center pt-1">

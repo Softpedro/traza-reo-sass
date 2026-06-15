@@ -59,6 +59,7 @@ import { OrderLabelService } from "./services/order-label.service.js";
 import { orderLabelRoutes } from "./routes/order-label.routes.js";
 import { UnitTraceService } from "./services/unit-trace.service.js";
 import { dppRoutes } from "./routes/dpp.routes.js";
+import { unitTraceRoutes } from "./routes/unit-trace.routes.js";
 import { jsonBigIntMiddleware } from "./middleware/json-bigint.js";
 import { authMiddleware } from "./middleware/auth.middleware.js";
 
@@ -223,6 +224,8 @@ app.use("/api/output-activities", outputActivitiesRoutes(outputActivitiesService
 app.use("/api/order-heads", orderHeadRoutes(orderHeadService));
 // Etiquetas (Etapa 3) anidadas bajo la orden de pedido para reflejar la dependencia 1:N.
 app.use("/api/order-heads/:id/labels", orderLabelRoutes(orderLabelService));
+// Trazabilidad unitaria: historial de eventos por prenda (lectura, JWT).
+app.use("/api/unit-traces", unitTraceRoutes(unitTraceService));
 
 // ── Ubigeo ───────────────────────────────────────────────────────────
 

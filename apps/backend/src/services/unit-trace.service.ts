@@ -49,4 +49,52 @@ export class UnitTraceService {
     });
     return created;
   }
+
+  /**
+   * Devuelve una prenda (OD_ORDER_LABEL_DETAIL) con su historial de eventos OD_UNIT_TRACE,
+   * ordenados por hora del evento. La prenda se identifica por id, SGTIN o URL. null si no existe.
+   */
+  async getUnitWithTraces(by: { labelDetailId?: number; sgtin?: string; url?: string }) {
+    const where =
+      by.labelDetailId != null
+        ? { idDlkOrderLabelDetail: by.labelDetailId }
+        : by.sgtin
+          ? { sgtinFull: by.sgtin }
+          : by.url
+            ? { urlDppFull: by.url }
+            : null;
+    if (!where) return null;
+
+    return this.prisma.odOrderLabelDetail.findFirst({
+      where,
+      select: {
+        idDlkOrderLabelDetail: true,
+        serialNumber: true,
+        sgtinFull: true,
+        urlDppFull: true,
+        color: true,
+        size: true,
+        print: true,
+        isBlacklisted: true,
+        unitTraces: {
+          where: { flgStatutActif: 1 },
+          orderBy: { eventTime: "asc" },
+          select: {
+            idDlkUnitTrace: true,
+            typeEvent: true,
+            eventTime: true,
+            urlDppTrace: true,
+            idItemUnicoIot: true,
+            observationUnitTrace: true,
+            idDlkActivitiesRoute: true,
+            codUsuarioCargaDl: true,
+            fecProcesoCargaDl: true,
+            activitiesRoute: {
+              select: { codActivities: true, nameActivities: true },
+            },
+          },
+        },
+      },
+    });
+  }
 }

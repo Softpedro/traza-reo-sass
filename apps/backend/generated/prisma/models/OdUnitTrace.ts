@@ -52,6 +52,7 @@ export type OdUnitTraceMinAggregateOutputType = {
   eventTime: Date | null
   stateUnitTrace: number | null
   observationUnitTrace: string | null
+  urlDppTrace: string | null
   codUsuarioCargaDl: string | null
   fecProcesoCargaDl: Date | null
   fecProcesoModifDl: Date | null
@@ -68,6 +69,7 @@ export type OdUnitTraceMaxAggregateOutputType = {
   eventTime: Date | null
   stateUnitTrace: number | null
   observationUnitTrace: string | null
+  urlDppTrace: string | null
   codUsuarioCargaDl: string | null
   fecProcesoCargaDl: Date | null
   fecProcesoModifDl: Date | null
@@ -84,6 +86,7 @@ export type OdUnitTraceCountAggregateOutputType = {
   eventTime: number
   stateUnitTrace: number
   observationUnitTrace: number
+  urlDppTrace: number
   codUsuarioCargaDl: number
   fecProcesoCargaDl: number
   fecProcesoModifDl: number
@@ -118,6 +121,7 @@ export type OdUnitTraceMinAggregateInputType = {
   eventTime?: true
   stateUnitTrace?: true
   observationUnitTrace?: true
+  urlDppTrace?: true
   codUsuarioCargaDl?: true
   fecProcesoCargaDl?: true
   fecProcesoModifDl?: true
@@ -134,6 +138,7 @@ export type OdUnitTraceMaxAggregateInputType = {
   eventTime?: true
   stateUnitTrace?: true
   observationUnitTrace?: true
+  urlDppTrace?: true
   codUsuarioCargaDl?: true
   fecProcesoCargaDl?: true
   fecProcesoModifDl?: true
@@ -150,6 +155,7 @@ export type OdUnitTraceCountAggregateInputType = {
   eventTime?: true
   stateUnitTrace?: true
   observationUnitTrace?: true
+  urlDppTrace?: true
   codUsuarioCargaDl?: true
   fecProcesoCargaDl?: true
   fecProcesoModifDl?: true
@@ -253,6 +259,7 @@ export type OdUnitTraceGroupByOutputType = {
   eventTime: Date
   stateUnitTrace: number
   observationUnitTrace: string | null
+  urlDppTrace: string | null
   codUsuarioCargaDl: string
   fecProcesoCargaDl: Date
   fecProcesoModifDl: Date
@@ -292,6 +299,7 @@ export type OdUnitTraceWhereInput = {
   eventTime?: Prisma.DateTimeFilter<"OdUnitTrace"> | Date | string
   stateUnitTrace?: Prisma.IntFilter<"OdUnitTrace"> | number
   observationUnitTrace?: Prisma.StringNullableFilter<"OdUnitTrace"> | string | null
+  urlDppTrace?: Prisma.StringNullableFilter<"OdUnitTrace"> | string | null
   codUsuarioCargaDl?: Prisma.StringFilter<"OdUnitTrace"> | string
   fecProcesoCargaDl?: Prisma.DateTimeFilter<"OdUnitTrace"> | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFilter<"OdUnitTrace"> | Date | string
@@ -310,6 +318,7 @@ export type OdUnitTraceOrderByWithRelationInput = {
   eventTime?: Prisma.SortOrder
   stateUnitTrace?: Prisma.SortOrder
   observationUnitTrace?: Prisma.SortOrderInput | Prisma.SortOrder
+  urlDppTrace?: Prisma.SortOrderInput | Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fecProcesoCargaDl?: Prisma.SortOrder
   fecProcesoModifDl?: Prisma.SortOrder
@@ -332,6 +341,7 @@ export type OdUnitTraceWhereUniqueInput = Prisma.AtLeast<{
   eventTime?: Prisma.DateTimeFilter<"OdUnitTrace"> | Date | string
   stateUnitTrace?: Prisma.IntFilter<"OdUnitTrace"> | number
   observationUnitTrace?: Prisma.StringNullableFilter<"OdUnitTrace"> | string | null
+  urlDppTrace?: Prisma.StringNullableFilter<"OdUnitTrace"> | string | null
   codUsuarioCargaDl?: Prisma.StringFilter<"OdUnitTrace"> | string
   fecProcesoCargaDl?: Prisma.DateTimeFilter<"OdUnitTrace"> | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFilter<"OdUnitTrace"> | Date | string
@@ -350,6 +360,7 @@ export type OdUnitTraceOrderByWithAggregationInput = {
   eventTime?: Prisma.SortOrder
   stateUnitTrace?: Prisma.SortOrder
   observationUnitTrace?: Prisma.SortOrderInput | Prisma.SortOrder
+  urlDppTrace?: Prisma.SortOrderInput | Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fecProcesoCargaDl?: Prisma.SortOrder
   fecProcesoModifDl?: Prisma.SortOrder
@@ -374,6 +385,7 @@ export type OdUnitTraceScalarWhereWithAggregatesInput = {
   eventTime?: Prisma.DateTimeWithAggregatesFilter<"OdUnitTrace"> | Date | string
   stateUnitTrace?: Prisma.IntWithAggregatesFilter<"OdUnitTrace"> | number
   observationUnitTrace?: Prisma.StringNullableWithAggregatesFilter<"OdUnitTrace"> | string | null
+  urlDppTrace?: Prisma.StringNullableWithAggregatesFilter<"OdUnitTrace"> | string | null
   codUsuarioCargaDl?: Prisma.StringWithAggregatesFilter<"OdUnitTrace"> | string
   fecProcesoCargaDl?: Prisma.DateTimeWithAggregatesFilter<"OdUnitTrace"> | Date | string
   fecProcesoModifDl?: Prisma.DateTimeWithAggregatesFilter<"OdUnitTrace"> | Date | string
@@ -387,6 +399,7 @@ export type OdUnitTraceCreateInput = {
   eventTime?: Date | string
   stateUnitTrace?: number
   observationUnitTrace?: string | null
+  urlDppTrace?: string | null
   codUsuarioCargaDl: string
   fecProcesoCargaDl?: Date | string
   fecProcesoModifDl?: Date | string
@@ -405,6 +418,7 @@ export type OdUnitTraceUncheckedCreateInput = {
   eventTime?: Date | string
   stateUnitTrace?: number
   observationUnitTrace?: string | null
+  urlDppTrace?: string | null
   codUsuarioCargaDl: string
   fecProcesoCargaDl?: Date | string
   fecProcesoModifDl?: Date | string
@@ -418,6 +432,7 @@ export type OdUnitTraceUpdateInput = {
   eventTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stateUnitTrace?: Prisma.IntFieldUpdateOperationsInput | number
   observationUnitTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urlDppTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -436,6 +451,7 @@ export type OdUnitTraceUncheckedUpdateInput = {
   eventTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stateUnitTrace?: Prisma.IntFieldUpdateOperationsInput | number
   observationUnitTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urlDppTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -452,6 +468,7 @@ export type OdUnitTraceCreateManyInput = {
   eventTime?: Date | string
   stateUnitTrace?: number
   observationUnitTrace?: string | null
+  urlDppTrace?: string | null
   codUsuarioCargaDl: string
   fecProcesoCargaDl?: Date | string
   fecProcesoModifDl?: Date | string
@@ -465,6 +482,7 @@ export type OdUnitTraceUpdateManyMutationInput = {
   eventTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stateUnitTrace?: Prisma.IntFieldUpdateOperationsInput | number
   observationUnitTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urlDppTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -481,6 +499,7 @@ export type OdUnitTraceUncheckedUpdateManyInput = {
   eventTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stateUnitTrace?: Prisma.IntFieldUpdateOperationsInput | number
   observationUnitTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urlDppTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -513,6 +532,7 @@ export type OdUnitTraceCountOrderByAggregateInput = {
   eventTime?: Prisma.SortOrder
   stateUnitTrace?: Prisma.SortOrder
   observationUnitTrace?: Prisma.SortOrder
+  urlDppTrace?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fecProcesoCargaDl?: Prisma.SortOrder
   fecProcesoModifDl?: Prisma.SortOrder
@@ -537,6 +557,7 @@ export type OdUnitTraceMaxOrderByAggregateInput = {
   eventTime?: Prisma.SortOrder
   stateUnitTrace?: Prisma.SortOrder
   observationUnitTrace?: Prisma.SortOrder
+  urlDppTrace?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fecProcesoCargaDl?: Prisma.SortOrder
   fecProcesoModifDl?: Prisma.SortOrder
@@ -553,6 +574,7 @@ export type OdUnitTraceMinOrderByAggregateInput = {
   eventTime?: Prisma.SortOrder
   stateUnitTrace?: Prisma.SortOrder
   observationUnitTrace?: Prisma.SortOrder
+  urlDppTrace?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fecProcesoCargaDl?: Prisma.SortOrder
   fecProcesoModifDl?: Prisma.SortOrder
@@ -658,6 +680,7 @@ export type OdUnitTraceCreateWithoutOrderLabelDetailInput = {
   eventTime?: Date | string
   stateUnitTrace?: number
   observationUnitTrace?: string | null
+  urlDppTrace?: string | null
   codUsuarioCargaDl: string
   fecProcesoCargaDl?: Date | string
   fecProcesoModifDl?: Date | string
@@ -674,6 +697,7 @@ export type OdUnitTraceUncheckedCreateWithoutOrderLabelDetailInput = {
   eventTime?: Date | string
   stateUnitTrace?: number
   observationUnitTrace?: string | null
+  urlDppTrace?: string | null
   codUsuarioCargaDl: string
   fecProcesoCargaDl?: Date | string
   fecProcesoModifDl?: Date | string
@@ -719,6 +743,7 @@ export type OdUnitTraceScalarWhereInput = {
   eventTime?: Prisma.DateTimeFilter<"OdUnitTrace"> | Date | string
   stateUnitTrace?: Prisma.IntFilter<"OdUnitTrace"> | number
   observationUnitTrace?: Prisma.StringNullableFilter<"OdUnitTrace"> | string | null
+  urlDppTrace?: Prisma.StringNullableFilter<"OdUnitTrace"> | string | null
   codUsuarioCargaDl?: Prisma.StringFilter<"OdUnitTrace"> | string
   fecProcesoCargaDl?: Prisma.DateTimeFilter<"OdUnitTrace"> | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFilter<"OdUnitTrace"> | Date | string
@@ -732,6 +757,7 @@ export type OdUnitTraceCreateWithoutActivitiesRouteInput = {
   eventTime?: Date | string
   stateUnitTrace?: number
   observationUnitTrace?: string | null
+  urlDppTrace?: string | null
   codUsuarioCargaDl: string
   fecProcesoCargaDl?: Date | string
   fecProcesoModifDl?: Date | string
@@ -748,6 +774,7 @@ export type OdUnitTraceUncheckedCreateWithoutActivitiesRouteInput = {
   eventTime?: Date | string
   stateUnitTrace?: number
   observationUnitTrace?: string | null
+  urlDppTrace?: string | null
   codUsuarioCargaDl: string
   fecProcesoCargaDl?: Date | string
   fecProcesoModifDl?: Date | string
@@ -789,6 +816,7 @@ export type OdUnitTraceCreateManyOrderLabelDetailInput = {
   eventTime?: Date | string
   stateUnitTrace?: number
   observationUnitTrace?: string | null
+  urlDppTrace?: string | null
   codUsuarioCargaDl: string
   fecProcesoCargaDl?: Date | string
   fecProcesoModifDl?: Date | string
@@ -802,6 +830,7 @@ export type OdUnitTraceUpdateWithoutOrderLabelDetailInput = {
   eventTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stateUnitTrace?: Prisma.IntFieldUpdateOperationsInput | number
   observationUnitTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urlDppTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -818,6 +847,7 @@ export type OdUnitTraceUncheckedUpdateWithoutOrderLabelDetailInput = {
   eventTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stateUnitTrace?: Prisma.IntFieldUpdateOperationsInput | number
   observationUnitTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urlDppTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -833,6 +863,7 @@ export type OdUnitTraceUncheckedUpdateManyWithoutOrderLabelDetailInput = {
   eventTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stateUnitTrace?: Prisma.IntFieldUpdateOperationsInput | number
   observationUnitTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urlDppTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -848,6 +879,7 @@ export type OdUnitTraceCreateManyActivitiesRouteInput = {
   eventTime?: Date | string
   stateUnitTrace?: number
   observationUnitTrace?: string | null
+  urlDppTrace?: string | null
   codUsuarioCargaDl: string
   fecProcesoCargaDl?: Date | string
   fecProcesoModifDl?: Date | string
@@ -861,6 +893,7 @@ export type OdUnitTraceUpdateWithoutActivitiesRouteInput = {
   eventTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stateUnitTrace?: Prisma.IntFieldUpdateOperationsInput | number
   observationUnitTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urlDppTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -877,6 +910,7 @@ export type OdUnitTraceUncheckedUpdateWithoutActivitiesRouteInput = {
   eventTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stateUnitTrace?: Prisma.IntFieldUpdateOperationsInput | number
   observationUnitTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urlDppTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -892,6 +926,7 @@ export type OdUnitTraceUncheckedUpdateManyWithoutActivitiesRouteInput = {
   eventTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stateUnitTrace?: Prisma.IntFieldUpdateOperationsInput | number
   observationUnitTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urlDppTrace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fecProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -910,6 +945,7 @@ export type OdUnitTraceSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   eventTime?: boolean
   stateUnitTrace?: boolean
   observationUnitTrace?: boolean
+  urlDppTrace?: boolean
   codUsuarioCargaDl?: boolean
   fecProcesoCargaDl?: boolean
   fecProcesoModifDl?: boolean
@@ -930,6 +966,7 @@ export type OdUnitTraceSelectScalar = {
   eventTime?: boolean
   stateUnitTrace?: boolean
   observationUnitTrace?: boolean
+  urlDppTrace?: boolean
   codUsuarioCargaDl?: boolean
   fecProcesoCargaDl?: boolean
   fecProcesoModifDl?: boolean
@@ -937,7 +974,7 @@ export type OdUnitTraceSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type OdUnitTraceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkUnitTrace" | "idDlkOrderLabelDetail" | "idItemUnicoIot" | "idDlkActivitiesRoute" | "typeEvent" | "eventTime" | "stateUnitTrace" | "observationUnitTrace" | "codUsuarioCargaDl" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["odUnitTrace"]>
+export type OdUnitTraceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkUnitTrace" | "idDlkOrderLabelDetail" | "idItemUnicoIot" | "idDlkActivitiesRoute" | "typeEvent" | "eventTime" | "stateUnitTrace" | "observationUnitTrace" | "urlDppTrace" | "codUsuarioCargaDl" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["odUnitTrace"]>
 export type OdUnitTraceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderLabelDetail?: boolean | Prisma.OdOrderLabelDetailDefaultArgs<ExtArgs>
   activitiesRoute?: boolean | Prisma.OdUnitTrace$activitiesRouteArgs<ExtArgs>
@@ -958,6 +995,10 @@ export type $OdUnitTracePayload<ExtArgs extends runtime.Types.Extensions.Interna
     eventTime: Date
     stateUnitTrace: number
     observationUnitTrace: string | null
+    /**
+     * * URL DPP cruda recibida desde la API externa (GS1 Digital Link). La unidad se resuelve a idDlkOrderLabelDetail.
+     */
+    urlDppTrace: string | null
     codUsuarioCargaDl: string
     fecProcesoCargaDl: Date
     fecProcesoModifDl: Date
@@ -1342,6 +1383,7 @@ export interface OdUnitTraceFieldRefs {
   readonly eventTime: Prisma.FieldRef<"OdUnitTrace", 'DateTime'>
   readonly stateUnitTrace: Prisma.FieldRef<"OdUnitTrace", 'Int'>
   readonly observationUnitTrace: Prisma.FieldRef<"OdUnitTrace", 'String'>
+  readonly urlDppTrace: Prisma.FieldRef<"OdUnitTrace", 'String'>
   readonly codUsuarioCargaDl: Prisma.FieldRef<"OdUnitTrace", 'String'>
   readonly fecProcesoCargaDl: Prisma.FieldRef<"OdUnitTrace", 'DateTime'>
   readonly fecProcesoModifDl: Prisma.FieldRef<"OdUnitTrace", 'DateTime'>

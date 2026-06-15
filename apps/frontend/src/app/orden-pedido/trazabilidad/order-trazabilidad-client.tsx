@@ -79,6 +79,13 @@ export function OrderTrazabilidadClient({
           <p className="text-xs text-muted-foreground">{kicker}</p>
           <h1 className="text-xl font-semibold">{title}</h1>
         </div>
+        <button
+          type="button"
+          className="self-start text-sm font-medium text-primary hover:underline sm:self-auto"
+          onClick={() => router.push("/orden-pedido/trazabilidad/historial")}
+        >
+          Historial por SGTIN →
+        </button>
       </div>
 
       {loadError && (

@@ -717,6 +717,26 @@ model MdFacility {
   @@map("MD_FACILITY")
 }
 
+/**
+ * Cliente externo (socio) con API Key para consumir endpoints máquina-a-máquina (ej. ingesta DPP).
+ * Se guarda el hash SHA-256 de la clave, nunca la clave en claro.
+ */
+model MdApiClient {
+  idDlkApiClient    Int       @id @default(autoincrement()) @map("ID_DLK_API_CLIENT")
+  nameApiClient     String    @map("NAME_API_CLIENT") @db.VarChar(150)
+  keyHash           String    @unique(map: "uk_api_client_key_hash") @map("KEY_HASH") @db.VarChar(64)
+  keyPrefix         String    @map("KEY_PREFIX") @db.VarChar(20)
+  scopeApiClient    String?   @map("SCOPE_API_CLIENT") @db.VarChar(100)
+  stateApiClient    Int       @default(1) @map("STATE_API_CLIENT") @db.TinyInt
+  codUsuarioCargaDl String    @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl DateTime  @default(now()) @map("FEH_PROCESO_CARGA_DL")
+  fehProcesoModifDl DateTime? @updatedAt @map("FEH_PROCESO_MODIF_DL")
+  desAccion         String?   @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif    Int       @default(1) @map("FLG_STATUT_ACTIF")
+
+  @@map("MD_API_CLIENT")
+}
+
 model MdMaquila {
   idDlkMaquila          Int                      @id @default(autoincrement()) @map("ID_DLK_MAQUILA")
   codMaquila            String                   @unique(map: "UK_COD_MAQUILA") @map("COD_MAQUILA") @db.VarChar(10)

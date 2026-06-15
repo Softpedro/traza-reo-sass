@@ -57,6 +57,8 @@ import { OrderHeadService } from "./services/order-head.service.js";
 import { orderHeadRoutes } from "./routes/order-head.routes.js";
 import { OrderLabelService } from "./services/order-label.service.js";
 import { orderLabelRoutes } from "./routes/order-label.routes.js";
+import { UnitTraceService } from "./services/unit-trace.service.js";
+import { dppRoutes } from "./routes/dpp.routes.js";
 import { jsonBigIntMiddleware } from "./middleware/json-bigint.js";
 import { authMiddleware } from "./middleware/auth.middleware.js";
 
@@ -174,10 +176,14 @@ const inputActivitiesService = new InputActivitiesService(prisma);
 const outputActivitiesService = new OutputActivitiesService(prisma);
 const orderHeadService = new OrderHeadService(prisma);
 const orderLabelService = new OrderLabelService(prisma);
+const unitTraceService = new UnitTraceService(prisma);
 
 // ── Rutas públicas (sin token) ──────────────────────────────────────
 // /api/auth incluye POST /login (público) y GET /me (protegido a nivel de ruta).
 app.use("/api/auth", authRoutes(authService));
+
+// Ingesta DPP máquina-a-máquina: protegida por API Key (X-API-Key), no por JWT.
+app.use("/api/dpp", dppRoutes(unitTraceService, prisma));
 
 // ── Guard global: requiere JWT para todo /api/* salvo lo público listado ─
 // Se exceptúa la ruta de imagen de detalles porque se consume desde <img src>

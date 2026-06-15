@@ -138,6 +138,13 @@ export type MdProcedureActivities = Prisma.MdProcedureActivitiesModel
  */
 export type MdFacility = Prisma.MdFacilityModel
 /**
+ * Model MdApiClient
+ * *
+ *  * Cliente externo (socio) con API Key para consumir endpoints máquina-a-máquina (ej. ingesta DPP).
+ *  * Se guarda el hash SHA-256 de la clave, nunca la clave en claro.
+ */
+export type MdApiClient = Prisma.MdApiClientModel
+/**
  * Model MdMaquila
  * 
  */

@@ -407,6 +407,7 @@ export const ModelName = {
   MdProcedureSubprocess: 'MdProcedureSubprocess',
   MdProcedureActivities: 'MdProcedureActivities',
   MdFacility: 'MdFacility',
+  MdApiClient: 'MdApiClient',
   MdMaquila: 'MdMaquila',
   MdFacilityMaquila: 'MdFacilityMaquila',
   MdParentCompanyMaquila: 'MdParentCompanyMaquila',
@@ -448,7 +449,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderLabelComponent" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace"
+    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdApiClient" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderLabelComponent" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1967,6 +1968,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MdFacilityCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MdFacilityCountAggregateOutputType> | number
+        }
+      }
+    }
+    MdApiClient: {
+      payload: Prisma.$MdApiClientPayload<ExtArgs>
+      fields: Prisma.MdApiClientFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MdApiClientFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdApiClientPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MdApiClientFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdApiClientPayload>
+        }
+        findFirst: {
+          args: Prisma.MdApiClientFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdApiClientPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MdApiClientFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdApiClientPayload>
+        }
+        findMany: {
+          args: Prisma.MdApiClientFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdApiClientPayload>[]
+        }
+        create: {
+          args: Prisma.MdApiClientCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdApiClientPayload>
+        }
+        createMany: {
+          args: Prisma.MdApiClientCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MdApiClientDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdApiClientPayload>
+        }
+        update: {
+          args: Prisma.MdApiClientUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdApiClientPayload>
+        }
+        deleteMany: {
+          args: Prisma.MdApiClientDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MdApiClientUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MdApiClientUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdApiClientPayload>
+        }
+        aggregate: {
+          args: Prisma.MdApiClientAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMdApiClient>
+        }
+        groupBy: {
+          args: Prisma.MdApiClientGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdApiClientGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MdApiClientCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdApiClientCountAggregateOutputType> | number
         }
       }
     }
@@ -4319,6 +4386,23 @@ export const MdFacilityScalarFieldEnum = {
 export type MdFacilityScalarFieldEnum = (typeof MdFacilityScalarFieldEnum)[keyof typeof MdFacilityScalarFieldEnum]
 
 
+export const MdApiClientScalarFieldEnum = {
+  idDlkApiClient: 'idDlkApiClient',
+  nameApiClient: 'nameApiClient',
+  keyHash: 'keyHash',
+  keyPrefix: 'keyPrefix',
+  scopeApiClient: 'scopeApiClient',
+  stateApiClient: 'stateApiClient',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdApiClientScalarFieldEnum = (typeof MdApiClientScalarFieldEnum)[keyof typeof MdApiClientScalarFieldEnum]
+
+
 export const MdMaquilaScalarFieldEnum = {
   idDlkMaquila: 'idDlkMaquila',
   codMaquila: 'codMaquila',
@@ -5303,6 +5387,18 @@ export const MdFacilityOrderByRelevanceFieldEnum = {
 export type MdFacilityOrderByRelevanceFieldEnum = (typeof MdFacilityOrderByRelevanceFieldEnum)[keyof typeof MdFacilityOrderByRelevanceFieldEnum]
 
 
+export const MdApiClientOrderByRelevanceFieldEnum = {
+  nameApiClient: 'nameApiClient',
+  keyHash: 'keyHash',
+  keyPrefix: 'keyPrefix',
+  scopeApiClient: 'scopeApiClient',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdApiClientOrderByRelevanceFieldEnum = (typeof MdApiClientOrderByRelevanceFieldEnum)[keyof typeof MdApiClientOrderByRelevanceFieldEnum]
+
+
 export const MdMaquilaOrderByRelevanceFieldEnum = {
   codMaquila: 'codMaquila',
   codGlnMaquila: 'codGlnMaquila',
@@ -5882,6 +5978,7 @@ export type GlobalOmitConfig = {
   mdProcedureSubprocess?: Prisma.MdProcedureSubprocessOmit
   mdProcedureActivities?: Prisma.MdProcedureActivitiesOmit
   mdFacility?: Prisma.MdFacilityOmit
+  mdApiClient?: Prisma.MdApiClientOmit
   mdMaquila?: Prisma.MdMaquilaOmit
   mdFacilityMaquila?: Prisma.MdFacilityMaquilaOmit
   mdParentCompanyMaquila?: Prisma.MdParentCompanyMaquilaOmit

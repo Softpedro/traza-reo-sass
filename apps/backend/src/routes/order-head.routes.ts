@@ -720,6 +720,26 @@ export function orderHeadRoutes(service: OrderHeadService): Router {
     }
   );
 
+  // Trazabilidad · DPP: escaneos (OD_UNIT_TRACE) de las prendas de una pieza/componente.
+  router.get("/:id/components/:componentId/dpp-scans", async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      const componentId = Number(req.params.componentId);
+      if (![id, componentId].every((n) => Number.isFinite(n))) {
+        return res.status(400).json({ error: "ID inválido", type: "VALIDATION" });
+      }
+      const result = await service.listDppScansByComponent(id, componentId);
+      if (!result) {
+        return res.status(404).json({ error: "Pieza no encontrada", type: "NOT_FOUND" });
+      }
+      res.json(result);
+    } catch (e) {
+      console.error("[order-heads:listDppScansByComponent]", e);
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
+    }
+  });
+
   router.put("/:id", async (req, res) => {
     try {
       const id = Number(req.params.id);

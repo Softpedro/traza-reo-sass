@@ -1676,4 +1676,95 @@ export class OrderHeadService {
     });
     return r.count > 0;
   }
+
+  /**
+   * Trazabilidad · DPP: lista los escaneos (OD_UNIT_TRACE) de las prendas de una pieza.
+   * La pieza se identifica por su componente de ruta (OD_ORDER_COMPONENT): se resuelve al
+   * colorway (OD_ORDER_DETAIL) y, en sets, al nombre de pieza, para acotar las prendas
+   * (OD_ORDER_LABEL_DETAIL) de esa orden. Devuelve un evento por fila, más nuevo primero.
+   * La actividad/subproceso/proceso del escaneo va si el evento la trae (hoy llega null en
+   * la ingesta DPP); el modal completa proceso/subproceso desde su propio contexto.
+   */
+  async listDppScansByComponent(orderHeadId: number, componentId: number) {
+    const comp = await this.prisma.odOrderComponent.findFirst({
+      where: { idDlkOrderComponent: componentId, idDlkOrderHead: orderHeadId },
+      select: { idDlkOrderDetail: true, nameComponent: true },
+    });
+    if (!comp) return null;
+
+    const units = await this.prisma.odOrderLabelDetail.findMany({
+      where: {
+        labelHead: { idDlkOrderHead: orderHeadId, idDlkOrderDetail: comp.idDlkOrderDetail },
+        ...(comp.nameComponent
+          ? { labelComponent: { nameComponent: comp.nameComponent } }
+          : {}),
+      },
+      select: {
+        sgtinFull: true,
+        urlDppFull: true,
+        color: true,
+        size: true,
+        print: true,
+        unitTraces: {
+          where: { flgStatutActif: 1 },
+          orderBy: { eventTime: "desc" },
+          select: {
+            idDlkUnitTrace: true,
+            typeEvent: true,
+            eventTime: true,
+            urlDppTrace: true,
+            idItemUnicoIot: true,
+            observationUnitTrace: true,
+            codUsuarioCargaDl: true,
+            fecProcesoCargaDl: true,
+            activitiesRoute: {
+              select: {
+                codActivities: true,
+                nameActivities: true,
+                subprocessRoute: {
+                  select: {
+                    codSubprocess: true,
+                    nameSubprocess: true,
+                    processRoute: { select: { codProcess: true, nameProcess: true } },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const scans = units.flatMap((u) =>
+      u.unitTraces.map((t) => {
+        const act = t.activitiesRoute;
+        const sub = act?.subprocessRoute ?? null;
+        const proc = sub?.processRoute ?? null;
+        return {
+          idDlkUnitTrace: t.idDlkUnitTrace,
+          sgtinFull: u.sgtinFull,
+          urlDppFull: u.urlDppFull,
+          urlDppTrace: t.urlDppTrace,
+          color: u.color,
+          size: u.size,
+          print: u.print,
+          typeEvent: t.typeEvent,
+          eventTime: t.eventTime,
+          idItemUnicoIot: t.idItemUnicoIot,
+          observationUnitTrace: t.observationUnitTrace,
+          codUsuarioCargaDl: t.codUsuarioCargaDl,
+          fecProcesoCargaDl: t.fecProcesoCargaDl,
+          codActivities: act?.codActivities ?? null,
+          nameActivities: act?.nameActivities ?? null,
+          codSubprocess: sub?.codSubprocess ?? null,
+          nameSubprocess: sub?.nameSubprocess ?? null,
+          codProcess: proc?.codProcess ?? null,
+          nameProcess: proc?.nameProcess ?? null,
+        };
+      })
+    );
+    scans.sort((a, b) => (b.eventTime?.getTime() ?? 0) - (a.eventTime?.getTime() ?? 0));
+
+    return { pieza: comp.nameComponent, totalUnits: units.length, scans };
+  }
 }

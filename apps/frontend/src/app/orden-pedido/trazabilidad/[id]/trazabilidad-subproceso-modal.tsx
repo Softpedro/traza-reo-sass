@@ -17,6 +17,7 @@ import {
 } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
 import { TrazabilidadIoModal, type IoKind, type IoRow } from "./trazabilidad-io-modal";
+import { TrazabilidadDppModal } from "./trazabilidad-dpp-modal";
 
 type SubprocessDetail = {
   idDlkSubprocessRoute: number;
@@ -109,6 +110,7 @@ export function TrazabilidadSubprocesoModal({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [io, setIo] = useState<IoKind | null>(null);
+  const [dppOpen, setDppOpen] = useState(false);
 
   const [idDlkFacility, setIdDlkFacility] = useState<number | null>(null);
   const [outsourced, setOutsourced] = useState<number>(0);
@@ -336,6 +338,14 @@ export function TrazabilidadSubprocesoModal({
                 >
                   ↗ Ver outputs ({detail.outputs.length})
                 </button>
+                <span className="text-right text-muted-foreground">DPP:</span>
+                <button
+                  type="button"
+                  className="justify-self-start font-medium text-primary hover:underline"
+                  onClick={() => setDppOpen(true)}
+                >
+                  ↗ Ver DPPs
+                </button>
 
                 <Label className="text-right">Inicio:</Label>
                 <Input
@@ -373,6 +383,23 @@ export function TrazabilidadSubprocesoModal({
           marca={marca}
           rows={ioRows}
           onUpdated={fetchDetail}
+        />
+      )}
+
+      {detail && (
+        <TrazabilidadDppModal
+          open={dppOpen}
+          onOpenChange={setDppOpen}
+          orderHeadId={orderHeadId}
+          componentId={componentId}
+          ctxCodProcess={detail.processRoute?.codProcess ?? null}
+          ctxNameProcess={detail.processRoute?.nameProcess ?? null}
+          ctxCodSubprocess={detail.codSubprocess}
+          ctxNameSubprocess={detail.nameSubprocess}
+          ctxInicio={detail.inputTimeSubprocessRoute}
+          pieza={pieza}
+          ordenProduccion={ordenProduccion}
+          marca={marca}
         />
       )}
     </>

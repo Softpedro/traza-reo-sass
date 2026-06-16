@@ -32,6 +32,9 @@ apps/backend/prisma/migrations/**/migration_lock.toml
 docker-compose.yml
 .env.development
 
+# Backups / DB dumps (contienen datos de producción — nunca commitear)
+backups/
+
 # Misc
 *.tsbuildinfo
 .turbo

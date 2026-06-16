@@ -55,7 +55,6 @@ type Props = {
   ctxNameProcess: string | null;
   ctxCodSubprocess: string | null;
   ctxNameSubprocess: string | null;
-  ctxInicio: string | null;
   pieza: string | null;
   ordenProduccion: string;
   marca: string;
@@ -70,7 +69,6 @@ export function TrazabilidadDppModal({
   ctxNameProcess,
   ctxCodSubprocess,
   ctxNameSubprocess,
-  ctxInicio,
   pieza,
   ordenProduccion,
   marca,
@@ -151,7 +149,6 @@ export function TrazabilidadDppModal({
                   <th className="px-2 py-2 text-left font-semibold">Subproceso</th>
                   <th className="px-2 py-2 text-left font-semibold">Actividad</th>
                   <th className="px-2 py-2 text-left font-semibold">Fase</th>
-                  <th className="px-2 py-2 text-left font-semibold">Inicio</th>
                   <th className="px-2 py-2 text-left font-semibold">SGTIN</th>
                   <th className="px-2 py-2 text-left font-semibold">URL</th>
                   <th className="px-2 py-2 text-left font-semibold">Timestamp</th>
@@ -173,7 +170,6 @@ export function TrazabilidadDppModal({
                       </td>
                       <td className="px-2 py-2">{pair(s.codActivities, s.nameActivities)}</td>
                       <td className="px-2 py-2 capitalize">{s.scanPhase ?? "—"}</td>
-                      <td className="px-2 py-2 whitespace-nowrap">{fmt(ctxInicio)}</td>
                       <td className="px-2 py-2 font-medium">{s.sgtinFull ?? "—"}</td>
                       <td className="px-2 py-2 max-w-[18rem]">
                         {url ? (

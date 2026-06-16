@@ -396,7 +396,6 @@ export function TrazabilidadSubprocesoModal({
           ctxNameProcess={detail.processRoute?.nameProcess ?? null}
           ctxCodSubprocess={detail.codSubprocess}
           ctxNameSubprocess={detail.nameSubprocess}
-          ctxInicio={detail.inputTimeSubprocessRoute}
           pieza={pieza}
           ordenProduccion={ordenProduccion}
           marca={marca}

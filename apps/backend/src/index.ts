@@ -86,7 +86,9 @@ const adapter = new PrismaMariaDb({
   user: dbConfig.user,
   password: dbConfig.password,
   database: dbConfig.database,
-  connectionLimit: 5,
+  // Cupo del MySQL administrado: max_user_connections=15 (compartido con deploys y
+  // sesiones admin). Con 3 por instancia hay margen aun con solapamiento de deploy.
+  connectionLimit: 3,
   acquireTimeout: 60000,
   connectTimeout: 15000,
 });

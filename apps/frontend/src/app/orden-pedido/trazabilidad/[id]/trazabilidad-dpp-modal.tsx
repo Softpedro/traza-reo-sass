@@ -18,6 +18,7 @@ type Scan = {
   size: string | null;
   print: string | null;
   typeEvent: string;
+  scanPhase: string | null;
   eventTime: string | null;
   idItemUnicoIot: string | null;
   observationUnitTrace: string | null;
@@ -149,6 +150,7 @@ export function TrazabilidadDppModal({
                   <th className="px-2 py-2 text-left font-semibold">Proceso</th>
                   <th className="px-2 py-2 text-left font-semibold">Subproceso</th>
                   <th className="px-2 py-2 text-left font-semibold">Actividad</th>
+                  <th className="px-2 py-2 text-left font-semibold">Fase</th>
                   <th className="px-2 py-2 text-left font-semibold">Inicio</th>
                   <th className="px-2 py-2 text-left font-semibold">SGTIN</th>
                   <th className="px-2 py-2 text-left font-semibold">URL</th>
@@ -170,6 +172,7 @@ export function TrazabilidadDppModal({
                         )}
                       </td>
                       <td className="px-2 py-2">{pair(s.codActivities, s.nameActivities)}</td>
+                      <td className="px-2 py-2 capitalize">{s.scanPhase ?? "—"}</td>
                       <td className="px-2 py-2 whitespace-nowrap">{fmt(ctxInicio)}</td>
                       <td className="px-2 py-2 font-medium">{s.sgtinFull ?? "—"}</td>
                       <td className="px-2 py-2 max-w-[18rem]">

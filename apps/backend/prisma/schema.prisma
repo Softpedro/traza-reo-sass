@@ -1462,6 +1462,8 @@ model OdUnitTrace {
   observationUnitTrace  String?            @map("OBSERVATION_UNIT_TRACE") @db.VarChar(255)
   /** URL DPP cruda recibida desde la API externa (GS1 Digital Link). La unidad se resuelve a idDlkOrderLabelDetail. */
   urlDppTrace           String?            @map("URL_DPP_TRACE") @db.VarChar(1000)
+  /** Fase del escaneo reportada por el socio: "inicio" o "fin". Obligatoria en el API; nullable en BD por filas previas. */
+  scanPhase             String?            @map("SCAN_PHASE") @db.VarChar(10)
   codUsuarioCargaDl     String             @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
   fecProcesoCargaDl     DateTime           @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
   fecProcesoModifDl     DateTime           @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)

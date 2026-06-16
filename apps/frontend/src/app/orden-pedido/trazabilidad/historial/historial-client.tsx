@@ -8,6 +8,7 @@ import { apiFetch } from "@/lib/api-fetch";
 type TraceEvent = {
   idDlkUnitTrace: number;
   typeEvent: string;
+  scanPhase: string | null;
   eventTime: string | null;
   urlDppTrace: string | null;
   idItemUnicoIot: string | null;
@@ -170,6 +171,7 @@ export function HistorialClient() {
                   <tr>
                     <th className="px-3 py-2 text-left font-semibold">#</th>
                     <th className="px-3 py-2 text-left font-semibold">Evento</th>
+                    <th className="px-3 py-2 text-left font-semibold">Fase</th>
                     <th className="px-3 py-2 text-left font-semibold">Fecha del evento</th>
                     <th className="px-3 py-2 text-left font-semibold">Actividad</th>
                     <th className="px-3 py-2 text-left font-semibold">IoT</th>
@@ -183,6 +185,7 @@ export function HistorialClient() {
                     <tr key={t.idDlkUnitTrace} className="border-t border-border">
                       <td className="px-3 py-2">{i + 1}</td>
                       <td className="px-3 py-2 font-medium">{t.typeEvent}</td>
+                      <td className="px-3 py-2 capitalize">{t.scanPhase ?? "—"}</td>
                       <td className="px-3 py-2">{fmt(t.eventTime)}</td>
                       <td className="px-3 py-2">
                         {t.activitiesRoute

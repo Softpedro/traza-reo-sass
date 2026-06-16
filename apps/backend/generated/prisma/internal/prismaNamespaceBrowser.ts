@@ -1303,6 +1303,7 @@ export const OdUnitTraceScalarFieldEnum = {
   stateUnitTrace: 'stateUnitTrace',
   observationUnitTrace: 'observationUnitTrace',
   urlDppTrace: 'urlDppTrace',
+  scanPhase: 'scanPhase',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fecProcesoCargaDl: 'fecProcesoCargaDl',
   fecProcesoModifDl: 'fecProcesoModifDl',
@@ -2090,6 +2091,7 @@ export const OdUnitTraceOrderByRelevanceFieldEnum = {
   typeEvent: 'typeEvent',
   observationUnitTrace: 'observationUnitTrace',
   urlDppTrace: 'urlDppTrace',
+  scanPhase: 'scanPhase',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   desAccion: 'desAccion'
 } as const

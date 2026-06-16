@@ -26,8 +26,15 @@ export function dppRoutes(service: UnitTraceService, prisma: PrismaClient): Rout
           .status(422)
           .json({ error: "La URL no corresponde al dominio DPP", type: "VALIDATION" });
       }
+      const phase = typeof body.phase === "string" ? body.phase.trim().toLowerCase() : "";
+      if (phase !== "inicio" && phase !== "fin") {
+        return res
+          .status(400)
+          .json({ error: 'phase es obligatoria y debe ser "inicio" o "fin"', type: "VALIDATION" });
+      }
       const result = await service.ingestScan({
         url,
+        phase,
         scannedAt: typeof body.scannedAt === "string" ? body.scannedAt : null,
         typeEvent: typeof body.typeEvent === "string" ? body.typeEvent : null,
         idItemUnicoIot:

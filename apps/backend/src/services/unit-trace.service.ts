@@ -2,6 +2,8 @@ import type { PrismaClient } from "../../generated/prisma/client.js";
 
 export type IngestScanInput = {
   url: string;
+  /** Fase del escaneo: "inicio" | "fin". Obligatoria (validada en la ruta). */
+  phase: string;
   scannedAt?: string | null;
   typeEvent?: string | null;
   idItemUnicoIot?: string | null;
@@ -39,6 +41,7 @@ export class UnitTraceService {
       data: {
         idDlkOrderLabelDetail: unit.idDlkOrderLabelDetail,
         urlDppTrace: url.slice(0, 1000),
+        scanPhase: input.phase,
         ...(eventTime ? { eventTime } : {}),
         typeEvent: (input.typeEvent?.trim() || "SCAN").slice(0, 50),
         idItemUnicoIot: input.idItemUnicoIot ? input.idItemUnicoIot.slice(0, 50) : null,
@@ -84,6 +87,7 @@ export class UnitTraceService {
             typeEvent: true,
             eventTime: true,
             urlDppTrace: true,
+            scanPhase: true,
             idItemUnicoIot: true,
             observationUnitTrace: true,
             idDlkActivitiesRoute: true,

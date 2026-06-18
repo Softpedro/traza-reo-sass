@@ -39,9 +39,14 @@ export function OrderRegistroClient({
         return res.json();
       })
       .then((data: OrderHeadRow[]) =>
+        // Se muestran las órdenes en Registro (stage===1, editables) y las que ya
+        // pasaron (stage>1, en solo lectura). Se excluye Lista negra (stage 6).
         setRows(
           Array.isArray(data)
-            ? data.filter((r) => (r.stageOrderHead ?? 1) === 1)
+            ? data.filter((r) => {
+                const s = r.stageOrderHead ?? 1;
+                return s >= 1 && s < 6;
+              })
             : []
         )
       )
@@ -60,6 +65,7 @@ export function OrderRegistroClient({
   const columns = useMemo(
     () =>
       getOrderHeadColumns({
+        stage: 1,
         onEdit: (row) => {
           setSelected(row);
           setEditOpen(true);
@@ -100,7 +106,15 @@ export function OrderRegistroClient({
         <p className="text-sm text-muted-foreground">Cargando órdenes…</p>
       ) : (
         <div className="[&_thead_tr]:bg-orange-100 [&_thead_th]:font-semibold [&_thead_th]:text-neutral-900">
-          <DataTable columns={columns} data={rows} />
+          <DataTable
+            columns={columns}
+            data={rows}
+            rowClassName={(r) =>
+              (r.stageOrderHead ?? 1) > 1
+                ? "bg-muted/40 text-muted-foreground"
+                : undefined
+            }
+          />
         </div>
       )}
 

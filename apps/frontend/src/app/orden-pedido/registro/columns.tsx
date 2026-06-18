@@ -31,12 +31,15 @@ function formatQty(n: number | null | undefined) {
 }
 
 type ColProps = {
+  /** Etapa dueña de esta vista (1=Registro); una fila con stage mayor ya pasó (solo lectura). */
+  stage: number;
   onEdit: (row: OrderHeadRow) => void;
   onVer: (row: OrderHeadRow) => void;
   onDetalle: (row: OrderHeadRow) => void;
 };
 
 export function getOrderHeadColumns({
+  stage,
   onEdit,
   onVer,
   onDetalle,
@@ -79,6 +82,8 @@ export function getOrderHeadColumns({
       accessorKey: "statusStageOrderHead",
       header: "Estado",
       cell: ({ row }) => {
+        // Si la orden ya avanzó de Registro, en esta vista su estado es "Concluido".
+        if ((row.original.stageOrderHead ?? 1) > stage) return "Concluido";
         const s = row.original.statusStageOrderHead;
         return s != null ? (ORDER_HEAD_STATUS[s] ?? String(s)) : "—";
       },
@@ -86,31 +91,48 @@ export function getOrderHeadColumns({
     {
       id: "accion",
       header: "Acciones",
-      cell: ({ row }) => (
-        <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm">
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onEdit(row.original)}
-          >
-            Editar
-          </button>
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onVer(row.original)}
-          >
-            Ver
-          </button>
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onDetalle(row.original)}
-          >
-            Detalle
-          </button>
-        </div>
-      ),
+      cell: ({ row }) => {
+        // Filas que ya pasaron por Registro quedan en solo lectura: solo "Ver" (modal read-only).
+        if ((row.original.stageOrderHead ?? 1) > stage) {
+          return (
+            <div className="flex items-center gap-x-3 text-sm">
+              <span className="font-medium text-muted-foreground">✓ Completado</span>
+              <button
+                type="button"
+                className="font-medium text-primary hover:underline"
+                onClick={() => onVer(row.original)}
+              >
+                Ver
+              </button>
+            </div>
+          );
+        }
+        return (
+          <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm">
+            <button
+              type="button"
+              className="font-medium text-primary hover:underline"
+              onClick={() => onEdit(row.original)}
+            >
+              Editar
+            </button>
+            <button
+              type="button"
+              className="font-medium text-primary hover:underline"
+              onClick={() => onVer(row.original)}
+            >
+              Ver
+            </button>
+            <button
+              type="button"
+              className="font-medium text-primary hover:underline"
+              onClick={() => onDetalle(row.original)}
+            >
+              Detalle
+            </button>
+          </div>
+        );
+      },
     },
   ];
 }

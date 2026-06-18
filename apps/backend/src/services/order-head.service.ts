@@ -419,6 +419,16 @@ export class OrderHeadService {
   ) {
     const now = new Date();
 
+    // Defensa en profundidad: este PUT genérico edita Registro. Si la orden ya
+    // pasó de Registro (stage>1), queda en solo lectura como en los demás steps.
+    const existing = await this.prisma.odOrderHead.findUnique({
+      where: { idDlkOrderHead: id },
+      select: { stageOrderHead: true },
+    });
+    if (existing?.stageOrderHead != null && existing.stageOrderHead > 1) {
+      throw new Error("La orden ya avanzó de etapa; Registro quedó en solo lectura.");
+    }
+
     const data: Prisma.OdOrderHeadUncheckedUpdateInput = {
       fecProcesoModifDl: now,
       desAccion: "U",

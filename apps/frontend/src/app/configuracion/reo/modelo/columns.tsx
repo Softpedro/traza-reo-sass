@@ -26,7 +26,12 @@ export type ModelRow = {
   } | null;
 };
 
-export function getModelColumns(): ColumnDef<ModelRow>[] {
+type ModelColProps = {
+  onEdit: (model: ModelRow) => void;
+  onView: (model: ModelRow) => void;
+};
+
+export function getModelColumns({ onEdit, onView }: ModelColProps): ColumnDef<ModelRow>[] {
   return [
     {
       accessorKey: "codModel",
@@ -73,11 +78,28 @@ export function getModelColumns(): ColumnDef<ModelRow>[] {
     {
       id: "accion",
       header: "Acción",
-      // Inertes por ahora: la edición del modelo se implementa en una fase posterior.
-      cell: () => (
-        <div className="flex gap-3 text-sm text-muted-foreground">
-          <span>Editar</span>
-          <span>Ver</span>
+      cell: ({ row }) => (
+        <div className="flex gap-3 text-sm">
+          <button
+            type="button"
+            className="font-medium text-primary hover:underline"
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit(row.original);
+            }}
+          >
+            Editar
+          </button>
+          <button
+            type="button"
+            className="font-medium text-primary hover:underline"
+            onClick={(e) => {
+              e.stopPropagation();
+              onView(row.original);
+            }}
+          >
+            Ver
+          </button>
         </div>
       ),
     },

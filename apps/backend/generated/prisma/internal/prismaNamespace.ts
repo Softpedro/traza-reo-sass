@@ -4787,6 +4787,7 @@ export const MdModelScalarFieldEnum = {
   nroPieces: 'nroPieces',
   careModel: 'careModel',
   technicalSpecification: 'technicalSpecification',
+  technicalSpecFile: 'technicalSpecFile',
   stateModel: 'stateModel',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fehProcesoCargaDl: 'fehProcesoCargaDl',
@@ -4820,6 +4821,7 @@ export type MdCareScalarFieldEnum = (typeof MdCareScalarFieldEnum)[keyof typeof 
 export const MdModelImageScalarFieldEnum = {
   idDlkModelImages: 'idDlkModelImages',
   idDlkModel: 'idDlkModel',
+  idDlkModelDetail: 'idDlkModelDetail',
   imageData: 'imageData',
   imageType: 'imageType',
   stateImageModel: 'stateImageModel',

@@ -72,6 +72,7 @@ export type MdModelMinAggregateOutputType = {
   nroPieces: number | null
   careModel: string | null
   technicalSpecification: string | null
+  technicalSpecFile: runtime.Bytes | null
   stateModel: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -102,6 +103,7 @@ export type MdModelMaxAggregateOutputType = {
   nroPieces: number | null
   careModel: string | null
   technicalSpecification: string | null
+  technicalSpecFile: runtime.Bytes | null
   stateModel: number | null
   codUsuarioCargaDl: string | null
   fehProcesoCargaDl: Date | null
@@ -132,6 +134,7 @@ export type MdModelCountAggregateOutputType = {
   nroPieces: number
   careModel: number
   technicalSpecification: number
+  technicalSpecFile: number
   stateModel: number
   codUsuarioCargaDl: number
   fehProcesoCargaDl: number
@@ -188,6 +191,7 @@ export type MdModelMinAggregateInputType = {
   nroPieces?: true
   careModel?: true
   technicalSpecification?: true
+  technicalSpecFile?: true
   stateModel?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -218,6 +222,7 @@ export type MdModelMaxAggregateInputType = {
   nroPieces?: true
   careModel?: true
   technicalSpecification?: true
+  technicalSpecFile?: true
   stateModel?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -248,6 +253,7 @@ export type MdModelCountAggregateInputType = {
   nroPieces?: true
   careModel?: true
   technicalSpecification?: true
+  technicalSpecFile?: true
   stateModel?: true
   codUsuarioCargaDl?: true
   fehProcesoCargaDl?: true
@@ -365,6 +371,7 @@ export type MdModelGroupByOutputType = {
   nroPieces: number | null
   careModel: string | null
   technicalSpecification: string | null
+  technicalSpecFile: runtime.Bytes | null
   stateModel: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl: Date
@@ -418,6 +425,7 @@ export type MdModelWhereInput = {
   nroPieces?: Prisma.IntNullableFilter<"MdModel"> | number | null
   careModel?: Prisma.StringNullableFilter<"MdModel"> | string | null
   technicalSpecification?: Prisma.StringNullableFilter<"MdModel"> | string | null
+  technicalSpecFile?: Prisma.BytesNullableFilter<"MdModel"> | runtime.Bytes | null
   stateModel?: Prisma.IntFilter<"MdModel"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdModel"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdModel"> | Date | string
@@ -453,6 +461,7 @@ export type MdModelOrderByWithRelationInput = {
   nroPieces?: Prisma.SortOrderInput | Prisma.SortOrder
   careModel?: Prisma.SortOrderInput | Prisma.SortOrder
   technicalSpecification?: Prisma.SortOrderInput | Prisma.SortOrder
+  technicalSpecFile?: Prisma.SortOrderInput | Prisma.SortOrder
   stateModel?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -492,6 +501,7 @@ export type MdModelWhereUniqueInput = Prisma.AtLeast<{
   nroPieces?: Prisma.IntNullableFilter<"MdModel"> | number | null
   careModel?: Prisma.StringNullableFilter<"MdModel"> | string | null
   technicalSpecification?: Prisma.StringNullableFilter<"MdModel"> | string | null
+  technicalSpecFile?: Prisma.BytesNullableFilter<"MdModel"> | runtime.Bytes | null
   stateModel?: Prisma.IntFilter<"MdModel"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdModel"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdModel"> | Date | string
@@ -527,6 +537,7 @@ export type MdModelOrderByWithAggregationInput = {
   nroPieces?: Prisma.SortOrderInput | Prisma.SortOrder
   careModel?: Prisma.SortOrderInput | Prisma.SortOrder
   technicalSpecification?: Prisma.SortOrderInput | Prisma.SortOrder
+  technicalSpecFile?: Prisma.SortOrderInput | Prisma.SortOrder
   stateModel?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -565,6 +576,7 @@ export type MdModelScalarWhereWithAggregatesInput = {
   nroPieces?: Prisma.IntNullableWithAggregatesFilter<"MdModel"> | number | null
   careModel?: Prisma.StringNullableWithAggregatesFilter<"MdModel"> | string | null
   technicalSpecification?: Prisma.StringNullableWithAggregatesFilter<"MdModel"> | string | null
+  technicalSpecFile?: Prisma.BytesNullableWithAggregatesFilter<"MdModel"> | runtime.Bytes | null
   stateModel?: Prisma.IntWithAggregatesFilter<"MdModel"> | number
   codUsuarioCargaDl?: Prisma.StringWithAggregatesFilter<"MdModel"> | string
   fehProcesoCargaDl?: Prisma.DateTimeWithAggregatesFilter<"MdModel"> | Date | string
@@ -592,6 +604,7 @@ export type MdModelCreateInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -627,6 +640,7 @@ export type MdModelUncheckedCreateInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -657,6 +671,7 @@ export type MdModelUpdateInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -692,6 +707,7 @@ export type MdModelUncheckedUpdateInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -725,6 +741,7 @@ export type MdModelCreateManyInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -752,6 +769,7 @@ export type MdModelUpdateManyMutationInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -782,6 +800,7 @@ export type MdModelUncheckedUpdateManyInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -828,6 +847,7 @@ export type MdModelCountOrderByAggregateInput = {
   nroPieces?: Prisma.SortOrder
   careModel?: Prisma.SortOrder
   technicalSpecification?: Prisma.SortOrder
+  technicalSpecFile?: Prisma.SortOrder
   stateModel?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -870,6 +890,7 @@ export type MdModelMaxOrderByAggregateInput = {
   nroPieces?: Prisma.SortOrder
   careModel?: Prisma.SortOrder
   technicalSpecification?: Prisma.SortOrder
+  technicalSpecFile?: Prisma.SortOrder
   stateModel?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -900,6 +921,7 @@ export type MdModelMinOrderByAggregateInput = {
   nroPieces?: Prisma.SortOrder
   careModel?: Prisma.SortOrder
   technicalSpecification?: Prisma.SortOrder
+  technicalSpecFile?: Prisma.SortOrder
   stateModel?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -1070,6 +1092,7 @@ export type MdModelCreateWithoutBrandInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1103,6 +1126,7 @@ export type MdModelUncheckedCreateWithoutBrandInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1165,6 +1189,7 @@ export type MdModelScalarWhereInput = {
   nroPieces?: Prisma.IntNullableFilter<"MdModel"> | number | null
   careModel?: Prisma.StringNullableFilter<"MdModel"> | string | null
   technicalSpecification?: Prisma.StringNullableFilter<"MdModel"> | string | null
+  technicalSpecFile?: Prisma.BytesNullableFilter<"MdModel"> | runtime.Bytes | null
   stateModel?: Prisma.IntFilter<"MdModel"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdModel"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdModel"> | Date | string
@@ -1192,6 +1217,7 @@ export type MdModelCreateWithoutSubbrandInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1225,6 +1251,7 @@ export type MdModelUncheckedCreateWithoutSubbrandInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1281,6 +1308,7 @@ export type MdModelCreateWithoutCaresInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1315,6 +1343,7 @@ export type MdModelUncheckedCreateWithoutCaresInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1360,6 +1389,7 @@ export type MdModelUpdateWithoutCaresInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1394,6 +1424,7 @@ export type MdModelUncheckedUpdateWithoutCaresInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1423,6 +1454,7 @@ export type MdModelCreateWithoutImagesInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1457,6 +1489,7 @@ export type MdModelUncheckedCreateWithoutImagesInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1502,6 +1535,7 @@ export type MdModelUpdateWithoutImagesInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1536,6 +1570,7 @@ export type MdModelUncheckedUpdateWithoutImagesInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1565,6 +1600,7 @@ export type MdModelCreateWithoutDetailsInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1599,6 +1635,7 @@ export type MdModelUncheckedCreateWithoutDetailsInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1644,6 +1681,7 @@ export type MdModelUpdateWithoutDetailsInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1678,6 +1716,7 @@ export type MdModelUncheckedUpdateWithoutDetailsInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1709,6 +1748,7 @@ export type MdModelCreateManyBrandInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1736,6 +1776,7 @@ export type MdModelUpdateWithoutBrandInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1769,6 +1810,7 @@ export type MdModelUncheckedUpdateWithoutBrandInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1801,6 +1843,7 @@ export type MdModelUncheckedUpdateManyWithoutBrandInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1830,6 +1873,7 @@ export type MdModelCreateManySubbrandInput = {
   nroPieces?: number | null
   careModel?: string | null
   technicalSpecification?: string | null
+  technicalSpecFile?: runtime.Bytes | null
   stateModel?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -1857,6 +1901,7 @@ export type MdModelUpdateWithoutSubbrandInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1890,6 +1935,7 @@ export type MdModelUncheckedUpdateWithoutSubbrandInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1922,6 +1968,7 @@ export type MdModelUncheckedUpdateManyWithoutSubbrandInput = {
   nroPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   careModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   technicalSpecification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalSpecFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateModel?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2001,6 +2048,7 @@ export type MdModelSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   nroPieces?: boolean
   careModel?: boolean
   technicalSpecification?: boolean
+  technicalSpecFile?: boolean
   stateModel?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
@@ -2039,6 +2087,7 @@ export type MdModelSelectScalar = {
   nroPieces?: boolean
   careModel?: boolean
   technicalSpecification?: boolean
+  technicalSpecFile?: boolean
   stateModel?: boolean
   codUsuarioCargaDl?: boolean
   fehProcesoCargaDl?: boolean
@@ -2047,7 +2096,7 @@ export type MdModelSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type MdModelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkModel" | "idDlkBrand" | "idDlkSubbrand" | "codModel" | "nameModel" | "desModel" | "nameCollection" | "desCollection" | "categoryModel" | "materialModel" | "compositionModel" | "colorway" | "fondoTela" | "versionTela" | "year" | "season" | "sizeModel" | "isSet" | "nroPieces" | "careModel" | "technicalSpecification" | "stateModel" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdModel"]>
+export type MdModelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkModel" | "idDlkBrand" | "idDlkSubbrand" | "codModel" | "nameModel" | "desModel" | "nameCollection" | "desCollection" | "categoryModel" | "materialModel" | "compositionModel" | "colorway" | "fondoTela" | "versionTela" | "year" | "season" | "sizeModel" | "isSet" | "nroPieces" | "careModel" | "technicalSpecification" | "technicalSpecFile" | "stateModel" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdModel"]>
 export type MdModelInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   brand?: boolean | Prisma.MdBrandDefaultArgs<ExtArgs>
   subbrand?: boolean | Prisma.MdModel$subbrandArgs<ExtArgs>
@@ -2088,6 +2137,7 @@ export type $MdModelPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     nroPieces: number | null
     careModel: string | null
     technicalSpecification: string | null
+    technicalSpecFile: runtime.Bytes | null
     stateModel: number
     codUsuarioCargaDl: string
     fehProcesoCargaDl: Date
@@ -2489,6 +2539,7 @@ export interface MdModelFieldRefs {
   readonly nroPieces: Prisma.FieldRef<"MdModel", 'Int'>
   readonly careModel: Prisma.FieldRef<"MdModel", 'String'>
   readonly technicalSpecification: Prisma.FieldRef<"MdModel", 'String'>
+  readonly technicalSpecFile: Prisma.FieldRef<"MdModel", 'Bytes'>
   readonly stateModel: Prisma.FieldRef<"MdModel", 'Int'>
   readonly codUsuarioCargaDl: Prisma.FieldRef<"MdModel", 'String'>
   readonly fehProcesoCargaDl: Prisma.FieldRef<"MdModel", 'DateTime'>

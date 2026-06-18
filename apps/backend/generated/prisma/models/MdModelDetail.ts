@@ -261,6 +261,7 @@ export type MdModelDetailWhereInput = {
   desAccion?: Prisma.StringNullableFilter<"MdModelDetail"> | string | null
   flgStatutActif?: Prisma.IntFilter<"MdModelDetail"> | number
   model?: Prisma.XOR<Prisma.MdModelScalarRelationFilter, Prisma.MdModelWhereInput>
+  images?: Prisma.MdModelImageListRelationFilter
 }
 
 export type MdModelDetailOrderByWithRelationInput = {
@@ -274,6 +275,7 @@ export type MdModelDetailOrderByWithRelationInput = {
   desAccion?: Prisma.SortOrderInput | Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
   model?: Prisma.MdModelOrderByWithRelationInput
+  images?: Prisma.MdModelImageOrderByRelationAggregateInput
   _relevance?: Prisma.MdModelDetailOrderByRelevanceInput
 }
 
@@ -291,6 +293,7 @@ export type MdModelDetailWhereUniqueInput = Prisma.AtLeast<{
   desAccion?: Prisma.StringNullableFilter<"MdModelDetail"> | string | null
   flgStatutActif?: Prisma.IntFilter<"MdModelDetail"> | number
   model?: Prisma.XOR<Prisma.MdModelScalarRelationFilter, Prisma.MdModelWhereInput>
+  images?: Prisma.MdModelImageListRelationFilter
 }, "idDlkModelDetail">
 
 export type MdModelDetailOrderByWithAggregationInput = {
@@ -334,6 +337,7 @@ export type MdModelDetailCreateInput = {
   desAccion?: string | null
   flgStatutActif?: number
   model: Prisma.MdModelCreateNestedOneWithoutDetailsInput
+  images?: Prisma.MdModelImageCreateNestedManyWithoutModelDetailInput
 }
 
 export type MdModelDetailUncheckedCreateInput = {
@@ -346,6 +350,7 @@ export type MdModelDetailUncheckedCreateInput = {
   fehProcesoModifDl?: Date | string
   desAccion?: string | null
   flgStatutActif?: number
+  images?: Prisma.MdModelImageUncheckedCreateNestedManyWithoutModelDetailInput
 }
 
 export type MdModelDetailUpdateInput = {
@@ -357,6 +362,7 @@ export type MdModelDetailUpdateInput = {
   desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   model?: Prisma.MdModelUpdateOneRequiredWithoutDetailsNestedInput
+  images?: Prisma.MdModelImageUpdateManyWithoutModelDetailNestedInput
 }
 
 export type MdModelDetailUncheckedUpdateInput = {
@@ -369,6 +375,7 @@ export type MdModelDetailUncheckedUpdateInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  images?: Prisma.MdModelImageUncheckedUpdateManyWithoutModelDetailNestedInput
 }
 
 export type MdModelDetailCreateManyInput = {
@@ -413,6 +420,11 @@ export type MdModelDetailListRelationFilter = {
 
 export type MdModelDetailOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type MdModelDetailNullableScalarRelationFilter = {
+  is?: Prisma.MdModelDetailWhereInput | null
+  isNot?: Prisma.MdModelDetailWhereInput | null
 }
 
 export type MdModelDetailOrderByRelevanceInput = {
@@ -513,6 +525,22 @@ export type MdModelDetailUncheckedUpdateManyWithoutModelNestedInput = {
   deleteMany?: Prisma.MdModelDetailScalarWhereInput | Prisma.MdModelDetailScalarWhereInput[]
 }
 
+export type MdModelDetailCreateNestedOneWithoutImagesInput = {
+  create?: Prisma.XOR<Prisma.MdModelDetailCreateWithoutImagesInput, Prisma.MdModelDetailUncheckedCreateWithoutImagesInput>
+  connectOrCreate?: Prisma.MdModelDetailCreateOrConnectWithoutImagesInput
+  connect?: Prisma.MdModelDetailWhereUniqueInput
+}
+
+export type MdModelDetailUpdateOneWithoutImagesNestedInput = {
+  create?: Prisma.XOR<Prisma.MdModelDetailCreateWithoutImagesInput, Prisma.MdModelDetailUncheckedCreateWithoutImagesInput>
+  connectOrCreate?: Prisma.MdModelDetailCreateOrConnectWithoutImagesInput
+  upsert?: Prisma.MdModelDetailUpsertWithoutImagesInput
+  disconnect?: Prisma.MdModelDetailWhereInput | boolean
+  delete?: Prisma.MdModelDetailWhereInput | boolean
+  connect?: Prisma.MdModelDetailWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MdModelDetailUpdateToOneWithWhereWithoutImagesInput, Prisma.MdModelDetailUpdateWithoutImagesInput>, Prisma.MdModelDetailUncheckedUpdateWithoutImagesInput>
+}
+
 export type MdModelDetailCreateWithoutModelInput = {
   namePiece: string
   stateModelDetail?: number
@@ -521,6 +549,7 @@ export type MdModelDetailCreateWithoutModelInput = {
   fehProcesoModifDl?: Date | string
   desAccion?: string | null
   flgStatutActif?: number
+  images?: Prisma.MdModelImageCreateNestedManyWithoutModelDetailInput
 }
 
 export type MdModelDetailUncheckedCreateWithoutModelInput = {
@@ -532,6 +561,7 @@ export type MdModelDetailUncheckedCreateWithoutModelInput = {
   fehProcesoModifDl?: Date | string
   desAccion?: string | null
   flgStatutActif?: number
+  images?: Prisma.MdModelImageUncheckedCreateNestedManyWithoutModelDetailInput
 }
 
 export type MdModelDetailCreateOrConnectWithoutModelInput = {
@@ -575,6 +605,68 @@ export type MdModelDetailScalarWhereInput = {
   flgStatutActif?: Prisma.IntFilter<"MdModelDetail"> | number
 }
 
+export type MdModelDetailCreateWithoutImagesInput = {
+  namePiece: string
+  stateModelDetail?: number
+  codUsuarioCargaDl: string
+  fehProcesoCargaDl?: Date | string
+  fehProcesoModifDl?: Date | string
+  desAccion?: string | null
+  flgStatutActif?: number
+  model: Prisma.MdModelCreateNestedOneWithoutDetailsInput
+}
+
+export type MdModelDetailUncheckedCreateWithoutImagesInput = {
+  idDlkModelDetail?: number
+  idDlkModel: number
+  namePiece: string
+  stateModelDetail?: number
+  codUsuarioCargaDl: string
+  fehProcesoCargaDl?: Date | string
+  fehProcesoModifDl?: Date | string
+  desAccion?: string | null
+  flgStatutActif?: number
+}
+
+export type MdModelDetailCreateOrConnectWithoutImagesInput = {
+  where: Prisma.MdModelDetailWhereUniqueInput
+  create: Prisma.XOR<Prisma.MdModelDetailCreateWithoutImagesInput, Prisma.MdModelDetailUncheckedCreateWithoutImagesInput>
+}
+
+export type MdModelDetailUpsertWithoutImagesInput = {
+  update: Prisma.XOR<Prisma.MdModelDetailUpdateWithoutImagesInput, Prisma.MdModelDetailUncheckedUpdateWithoutImagesInput>
+  create: Prisma.XOR<Prisma.MdModelDetailCreateWithoutImagesInput, Prisma.MdModelDetailUncheckedCreateWithoutImagesInput>
+  where?: Prisma.MdModelDetailWhereInput
+}
+
+export type MdModelDetailUpdateToOneWithWhereWithoutImagesInput = {
+  where?: Prisma.MdModelDetailWhereInput
+  data: Prisma.XOR<Prisma.MdModelDetailUpdateWithoutImagesInput, Prisma.MdModelDetailUncheckedUpdateWithoutImagesInput>
+}
+
+export type MdModelDetailUpdateWithoutImagesInput = {
+  namePiece?: Prisma.StringFieldUpdateOperationsInput | string
+  stateModelDetail?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  model?: Prisma.MdModelUpdateOneRequiredWithoutDetailsNestedInput
+}
+
+export type MdModelDetailUncheckedUpdateWithoutImagesInput = {
+  idDlkModelDetail?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkModel?: Prisma.IntFieldUpdateOperationsInput | number
+  namePiece?: Prisma.StringFieldUpdateOperationsInput | string
+  stateModelDetail?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
 export type MdModelDetailCreateManyModelInput = {
   idDlkModelDetail?: number
   namePiece: string
@@ -594,6 +686,7 @@ export type MdModelDetailUpdateWithoutModelInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  images?: Prisma.MdModelImageUpdateManyWithoutModelDetailNestedInput
 }
 
 export type MdModelDetailUncheckedUpdateWithoutModelInput = {
@@ -605,6 +698,7 @@ export type MdModelDetailUncheckedUpdateWithoutModelInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  images?: Prisma.MdModelImageUncheckedUpdateManyWithoutModelDetailNestedInput
 }
 
 export type MdModelDetailUncheckedUpdateManyWithoutModelInput = {
@@ -619,6 +713,35 @@ export type MdModelDetailUncheckedUpdateManyWithoutModelInput = {
 }
 
 
+/**
+ * Count Type MdModelDetailCountOutputType
+ */
+
+export type MdModelDetailCountOutputType = {
+  images: number
+}
+
+export type MdModelDetailCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  images?: boolean | MdModelDetailCountOutputTypeCountImagesArgs
+}
+
+/**
+ * MdModelDetailCountOutputType without action
+ */
+export type MdModelDetailCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MdModelDetailCountOutputType
+   */
+  select?: Prisma.MdModelDetailCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MdModelDetailCountOutputType without action
+ */
+export type MdModelDetailCountOutputTypeCountImagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MdModelImageWhereInput
+}
+
 
 export type MdModelDetailSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idDlkModelDetail?: boolean
@@ -631,6 +754,8 @@ export type MdModelDetailSelect<ExtArgs extends runtime.Types.Extensions.Interna
   desAccion?: boolean
   flgStatutActif?: boolean
   model?: boolean | Prisma.MdModelDefaultArgs<ExtArgs>
+  images?: boolean | Prisma.MdModelDetail$imagesArgs<ExtArgs>
+  _count?: boolean | Prisma.MdModelDetailCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mdModelDetail"]>
 
 
@@ -650,12 +775,15 @@ export type MdModelDetailSelectScalar = {
 export type MdModelDetailOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkModelDetail" | "idDlkModel" | "namePiece" | "stateModelDetail" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdModelDetail"]>
 export type MdModelDetailInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   model?: boolean | Prisma.MdModelDefaultArgs<ExtArgs>
+  images?: boolean | Prisma.MdModelDetail$imagesArgs<ExtArgs>
+  _count?: boolean | Prisma.MdModelDetailCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $MdModelDetailPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MdModelDetail"
   objects: {
     model: Prisma.$MdModelPayload<ExtArgs>
+    images: Prisma.$MdModelImagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkModelDetail: number
@@ -1008,6 +1136,7 @@ readonly fields: MdModelDetailFieldRefs;
 export interface Prisma__MdModelDetailClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   model<T extends Prisma.MdModelDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdModelDefaultArgs<ExtArgs>>): Prisma.Prisma__MdModelClient<runtime.Types.Result.GetResult<Prisma.$MdModelPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  images<T extends Prisma.MdModelDetail$imagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdModelDetail$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdModelImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1391,6 +1520,30 @@ export type MdModelDetailDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many MdModelDetails to delete.
    */
   limit?: number
+}
+
+/**
+ * MdModelDetail.images
+ */
+export type MdModelDetail$imagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MdModelImage
+   */
+  select?: Prisma.MdModelImageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MdModelImage
+   */
+  omit?: Prisma.MdModelImageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MdModelImageInclude<ExtArgs> | null
+  where?: Prisma.MdModelImageWhereInput
+  orderBy?: Prisma.MdModelImageOrderByWithRelationInput | Prisma.MdModelImageOrderByWithRelationInput[]
+  cursor?: Prisma.MdModelImageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MdModelImageScalarFieldEnum | Prisma.MdModelImageScalarFieldEnum[]
 }
 
 /**

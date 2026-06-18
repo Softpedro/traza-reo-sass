@@ -869,6 +869,7 @@ model MdModel {
   nroPieces              Int?            @map("NRO_PIECES") @db.UnsignedTinyInt
   careModel              String?         @map("CARE_MODEL") @db.VarChar(50)
   technicalSpecification String?         @map("TECHNICAL_SPECIFICATION") @db.VarChar(100)
+  technicalSpecFile      Bytes?          @map("TECHNICAL_SPECIFICATION_FILE") @db.MediumBlob
   stateModel             Int             @default(1) @map("STATE_MODEL") @db.TinyInt
   codUsuarioCargaDl      String          @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
   fehProcesoCargaDl      DateTime        @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
@@ -907,19 +908,22 @@ model MdCare {
 }
 
 model MdModelImage {
-  idDlkModelImages  Int      @id @default(autoincrement()) @map("ID_DLK_MODEL_IMAGES")
-  idDlkModel        Int      @map("ID_DLK_MODEL")
-  imageData         Bytes    @map("IMAGE_DATA") @db.MediumBlob
-  imageType         String   @map("IMAGE_TYPE") @db.VarChar(30)
-  stateImageModel   Int      @default(1) @map("STATE_IMAGE_MODEL") @db.TinyInt
-  codUsuarioCargaDl String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
-  fehProcesoCargaDl DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
-  fehProcesoModifDl DateTime @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
-  desAccion         String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
-  flgStatutActif    Int      @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
-  model             MdModel  @relation(fields: [idDlkModel], references: [idDlkModel], onDelete: Restrict, onUpdate: Cascade, map: "fk_model_images_model")
+  idDlkModelImages  Int            @id @default(autoincrement()) @map("ID_DLK_MODEL_IMAGES")
+  idDlkModel        Int            @map("ID_DLK_MODEL")
+  idDlkModelDetail  Int?           @map("ID_DLK_MODEL_DETAIL")
+  imageData         Bytes          @map("IMAGE_DATA") @db.MediumBlob
+  imageType         String         @map("IMAGE_TYPE") @db.VarChar(30)
+  stateImageModel   Int            @default(1) @map("STATE_IMAGE_MODEL") @db.TinyInt
+  codUsuarioCargaDl String         @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl DateTime       @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fehProcesoModifDl DateTime       @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion         String?        @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif    Int            @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  model             MdModel        @relation(fields: [idDlkModel], references: [idDlkModel], onDelete: Restrict, onUpdate: Cascade, map: "fk_model_images_model")
+  modelDetail       MdModelDetail? @relation(fields: [idDlkModelDetail], references: [idDlkModelDetail], onDelete: Cascade, onUpdate: Cascade, map: "fk_model_images_detail")
 
   @@index([idDlkModel], map: "FK_MODEL_IMAGES_MODEL")
+  @@index([idDlkModelDetail], map: "FK_MODEL_IMAGES_DETAIL")
   @@map("MD_MODEL_IMAGES")
 }
 
@@ -934,6 +938,7 @@ model MdModelDetail {
   desAccion         String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
   flgStatutActif    Int      @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
   model             MdModel  @relation(fields: [idDlkModel], references: [idDlkModel], onDelete: Restrict, onUpdate: Cascade, map: "fk_model_detail_model")
+  images            MdModelImage[]
 
   @@index([idDlkModel], map: "FK_MODEL_DETAIL_MODEL")
   @@map("MD_MODEL_DETAIL")

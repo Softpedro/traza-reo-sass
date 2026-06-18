@@ -6,8 +6,10 @@ import { apiFetch } from "@/lib/api-fetch";
 import { getModelColumns, type ModelRow } from "./columns";
 import { getCareColumns, type CareRow } from "./care-columns";
 import { CareModal } from "./care-modal";
+import { ModelModal } from "./model-modal";
 
 type CareModalState = { open: boolean; mode: "create" | "edit" | "view"; item: CareRow | null };
+type ModelModalState = { open: boolean; mode: "create" | "edit" | "view"; modelId: number | null };
 
 export default function ModeloPage() {
   const [models, setModels] = useState<ModelRow[]>([]);
@@ -22,6 +24,11 @@ export default function ModeloPage() {
     open: false,
     mode: "create",
     item: null,
+  });
+  const [modelModal, setModelModal] = useState<ModelModalState>({
+    open: false,
+    mode: "create",
+    modelId: null,
   });
 
   const fetchModels = useCallback(() => {
@@ -56,7 +63,14 @@ export default function ModeloPage() {
     if (selectedModel) fetchCares(selectedModel.idDlkModel);
   }, [selectedModel, fetchCares]);
 
-  const modelColumns = useMemo(() => getModelColumns(), []);
+  const modelColumns = useMemo(
+    () =>
+      getModelColumns({
+        onEdit: (m) => setModelModal({ open: true, mode: "edit", modelId: m.idDlkModel }),
+        onView: (m) => setModelModal({ open: true, mode: "view", modelId: m.idDlkModel }),
+      }),
+    []
+  );
   const careColumns = useMemo(
     () =>
       getCareColumns({
@@ -72,14 +86,22 @@ export default function ModeloPage() {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-muted-foreground">Configuración &gt; REO &gt; Modelo</p>
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-muted-foreground">Configuración &gt; REO &gt; Modelo</p>
+        <button
+          onClick={() => setModelModal({ open: true, mode: "create", modelId: null })}
+          className="text-sm font-medium text-primary hover:underline underline-offset-4"
+        >
+          Crear +
+        </button>
+      </div>
 
       {/* Tabla principal de modelos (selección por fila) */}
       {loadingModels ? (
         <p className="text-sm text-muted-foreground">Cargando modelos…</p>
       ) : models.length === 0 ? (
         <p className="text-sm text-muted-foreground">
-          No hay modelos registrados. La creación de modelos se habilita en una fase posterior.
+          No hay modelos registrados. Usa <span className="font-medium">Crear +</span> para agregar uno.
         </p>
       ) : (
         <DataTable
@@ -152,6 +174,14 @@ export default function ModeloPage() {
         modelId={selectedModel?.idDlkModel ?? null}
         care={careModal.item}
         onSuccess={refreshCares}
+      />
+
+      <ModelModal
+        open={modelModal.open}
+        onOpenChange={(open) => setModelModal((prev) => ({ ...prev, open }))}
+        mode={modelModal.mode}
+        modelId={modelModal.modelId}
+        onSuccess={fetchModels}
       />
     </div>
   );

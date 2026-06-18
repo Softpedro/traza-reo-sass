@@ -3,7 +3,26 @@ import type { PrismaClient } from "../../generated/prisma/client.js";
 import type { UnitTraceService } from "../services/unit-trace.service.js";
 import { apiKeyMiddleware, type ApiClientRequest } from "../middleware/api-key.middleware.js";
 
-const DPP_URL_RE = /^https?:\/\/dpp\.qapary\.com\//i;
+// Dominios DPP permitidos para la ingesta de escaneos. Configurable por env
+// (DPP_ALLOWED_HOSTS, hosts separados por coma) para no tocar código al cambiar
+// de dominio. El default incluye el dominio actual y el anterior (transición).
+const DPP_ALLOWED_HOSTS = (
+  process.env.DPP_ALLOWED_HOSTS ?? "dpp.kusacotton.com,dpp.qapary.com"
+)
+  .split(",")
+  .map((h) => h.trim().toLowerCase())
+  .filter(Boolean);
+
+/** true si la URL es http(s) y su host está en la lista de dominios DPP permitidos. */
+function isAllowedDppUrl(url: string): boolean {
+  try {
+    const u = new URL(url);
+    if (u.protocol !== "http:" && u.protocol !== "https:") return false;
+    return DPP_ALLOWED_HOSTS.includes(u.hostname.toLowerCase());
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Endpoints de ingesta DPP (máquina-a-máquina), protegidos por API Key (X-API-Key).
@@ -21,7 +40,7 @@ export function dppRoutes(service: UnitTraceService, prisma: PrismaClient): Rout
       if (!url) {
         return res.status(400).json({ error: "url es obligatoria", type: "VALIDATION" });
       }
-      if (!DPP_URL_RE.test(url)) {
+      if (!isAllowedDppUrl(url)) {
         return res
           .status(422)
           .json({ error: "La URL no corresponde al dominio DPP", type: "VALIDATION" });

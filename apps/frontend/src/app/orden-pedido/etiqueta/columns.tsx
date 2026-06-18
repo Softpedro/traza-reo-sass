@@ -83,12 +83,19 @@ export function getEtiquetaColumns({ stage, onOpen, onUpdateEstado }: ColProps):
       id: "accion",
       header: "Acción",
       cell: ({ row }) => {
-        // Filas que ya pasaron por Etiqueta quedan en solo lectura.
+        // Filas que ya pasaron por Etiqueta quedan en solo lectura: solo "Ver".
         if ((row.original.stageOrderHead ?? 1) > stage) {
           return (
-            <span className="text-sm font-medium text-muted-foreground">
-              ✓ Completado · solo lectura
-            </span>
+            <div className="flex items-center gap-x-3 text-sm">
+              <span className="font-medium text-muted-foreground">✓ Completado</span>
+              <button
+                type="button"
+                className="font-medium text-primary hover:underline"
+                onClick={() => onOpen(row.original)}
+              >
+                Ver
+              </button>
+            </div>
           );
         }
         return (

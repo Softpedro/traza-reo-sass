@@ -92,12 +92,19 @@ export function getSuministroColumns({
       id: "accion",
       header: "Acción",
       cell: ({ row }) => {
-        // Filas que ya pasaron por Suministro quedan en solo lectura.
+        // Filas que ya pasaron por Suministro quedan en solo lectura: solo "Ver Detalle".
         if ((row.original.stageOrderHead ?? 1) > stage) {
           return (
-            <span className="text-sm font-medium text-muted-foreground">
-              ✓ Completado · solo lectura
-            </span>
+            <div className="flex items-center gap-x-3 text-sm">
+              <span className="font-medium text-muted-foreground">✓ Completado</span>
+              <button
+                type="button"
+                className="font-medium text-primary hover:underline"
+                onClick={() => onDetalle(row.original)}
+              >
+                Ver Detalle
+              </button>
+            </div>
           );
         }
         return (

@@ -24,6 +24,8 @@ interface DataTableProps<TData, TValue> {
   className?: string
   /** Clase(s) extra por fila, calculadas a partir de la fila (p. ej. atenuar filas en solo lectura). */
   rowClassName?: (row: TData) => string | undefined
+  /** Si se define, cada fila es clickeable y dispara este callback con la fila (p. ej. seleccionar). */
+  onRowClick?: (row: TData) => void
 }
 
 function DataTable<TData, TValue>({
@@ -31,6 +33,7 @@ function DataTable<TData, TValue>({
   data,
   className,
   rowClassName,
+  onRowClick,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
@@ -72,7 +75,11 @@ function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className={cn(rowClassName?.(row.original))}
+                  className={cn(
+                    onRowClick && "cursor-pointer",
+                    rowClassName?.(row.original)
+                  )}
+                  onClick={onRowClick ? () => onRowClick(row.original) : undefined}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

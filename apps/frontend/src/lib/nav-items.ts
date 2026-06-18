@@ -56,6 +56,7 @@ export const navItems: NavItem[] = [
           { type: "leaf", label: "Fábrica Maquila", href: "/configuracion/reo/fabrica-maquila" },
           { type: "leaf", label: "Marca", href: "/configuracion/reo/marca" },
           { type: "leaf", label: "Submarca", href: "/configuracion/reo/submarca" },
+          { type: "leaf", label: "Modelo", href: "/configuracion/reo/modelo" },
           { type: "leaf", label: "Usuario", href: "/configuracion/reo/usuario" },
         ],
       },

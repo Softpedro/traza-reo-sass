@@ -94,6 +94,7 @@ model MdBrand {
   parentCompany      MdParentCompany @relation(fields: [idDlkParentCompany], references: [idDlkParentCompany])
   subbrands          MdSubbrand[]
   orderHeads         OdOrderHead[]
+  models             MdModel[]
 
   @@index([idDlkParentCompany], map: "FK_BRAND_PARENT_COMPANY")
   @@index([codUbigeoBrand], map: "FK_BRAND_UBIGEO")
@@ -834,10 +835,108 @@ model MdSubbrand {
   desAccion         String   @map("DES_ACCION") @db.VarChar(20)
   flgStatutActif    Int      @default(1) @map("FLG_STATUT_ACTIF")
   brand             MdBrand  @relation(fields: [idDlkBrand], references: [idDlkBrand])
+  models            MdModel[]
 
   @@index([idDlkBrand], map: "FK_SUBBRAND_BRAND")
   @@index([codUbigeoSubbrand], map: "FK_SUBBRAND_UBIGEO")
   @@map("MD_SUBBRAND")
+}
+
+// =====================================================================
+//  MODELO (catálogo de prendas) y sus tablas hijas:
+//   MD_MODEL · MD_CARE (cuidado por modelo) · MD_MODEL_IMAGES · MD_MODEL_DETAIL
+//  Imágenes guardadas como binario (BLOB), consistente con logos/imgEstilo.
+// =====================================================================
+model MdModel {
+  idDlkModel             Int             @id @default(autoincrement()) @map("ID_DLK_MODEL")
+  idDlkBrand             Int             @map("ID_DLK_BRAND")
+  idDlkSubbrand          Int?            @map("ID_DLK_SUBBRAND")
+  codModel               String?         @map("COD_MODEL") @db.VarChar(50)
+  nameModel              String?         @map("NAME_MODEL") @db.VarChar(100)
+  desModel               String?         @map("DES_MODEL") @db.VarChar(500)
+  nameCollection         String?         @map("NAME_COLLECTION") @db.VarChar(100)
+  desCollection          String?         @map("DES_COLLECTION") @db.VarChar(500)
+  categoryModel          String?         @map("CATEGORY_MODEL") @db.VarChar(50)
+  materialModel          String?         @map("MATERIAL_MODEL") @db.VarChar(200)
+  compositionModel       String?         @map("COMPOSITION_MODEL") @db.VarChar(200)
+  colorway               String?         @map("COLORWAY") @db.VarChar(50)
+  fondoTela              String?         @map("FONDO_TELA") @db.VarChar(50)
+  versionTela            Int?            @map("VERSION_TELA") @db.TinyInt
+  year                   Int?            @map("YEAR") @db.SmallInt
+  season                 String?         @map("SEASON") @db.VarChar(50)
+  sizeModel              String?         @map("SIZE_MODEL") @db.VarChar(50)
+  isSet                  Int?            @map("IS_SET") @db.TinyInt
+  nroPieces              Int?            @map("NRO_PIECES") @db.UnsignedTinyInt
+  careModel              String?         @map("CARE_MODEL") @db.VarChar(50)
+  technicalSpecification String?         @map("TECHNICAL_SPECIFICATION") @db.VarChar(100)
+  stateModel             Int             @default(1) @map("STATE_MODEL") @db.TinyInt
+  codUsuarioCargaDl      String          @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl      DateTime        @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fehProcesoModifDl      DateTime        @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion              String?         @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif         Int             @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  brand                  MdBrand         @relation(fields: [idDlkBrand], references: [idDlkBrand], onDelete: Restrict, onUpdate: Cascade, map: "fk_model_brand")
+  subbrand               MdSubbrand?     @relation(fields: [idDlkSubbrand], references: [idDlkSubbrand], onDelete: Restrict, onUpdate: Cascade, map: "fk_model_subbrand")
+  cares                  MdCare[]
+  images                 MdModelImage[]
+  details                MdModelDetail[]
+
+  @@index([idDlkBrand], map: "FK_MODEL_BRAND")
+  @@index([idDlkSubbrand], map: "FK_MODEL_SUBBRAND")
+  @@map("MD_MODEL")
+}
+
+model MdCare {
+  idDlkCare         Int      @id @default(autoincrement()) @map("ID_DLK_CARE")
+  idDlkModel        Int      @map("ID_DLK_MODEL")
+  codCare           String   @map("COD_CARE") @db.VarChar(10)
+  nombCare          String   @map("NOMB_CARE") @db.VarChar(50)
+  carDescription    String   @map("CAR_DESCRIPTION") @db.VarChar(500)
+  carImage          Bytes?   @map("CAR_IMAGE") @db.MediumBlob
+  carSafety         String?  @map("CAR_SAFETY") @db.VarChar(500)
+  stateCare         Int      @default(1) @map("STATE_CARE") @db.TinyInt
+  codUsuarioCargaDl String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fehProcesoModifDl DateTime @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion         String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif    Int      @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  model             MdModel  @relation(fields: [idDlkModel], references: [idDlkModel], onDelete: Restrict, onUpdate: Cascade, map: "fk_care_model")
+
+  @@index([idDlkModel], map: "FK_CARE_MODEL")
+  @@map("MD_CARE")
+}
+
+model MdModelImage {
+  idDlkModelImages  Int      @id @default(autoincrement()) @map("ID_DLK_MODEL_IMAGES")
+  idDlkModel        Int      @map("ID_DLK_MODEL")
+  imageData         Bytes    @map("IMAGE_DATA") @db.MediumBlob
+  imageType         String   @map("IMAGE_TYPE") @db.VarChar(30)
+  stateImageModel   Int      @default(1) @map("STATE_IMAGE_MODEL") @db.TinyInt
+  codUsuarioCargaDl String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fehProcesoModifDl DateTime @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion         String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif    Int      @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  model             MdModel  @relation(fields: [idDlkModel], references: [idDlkModel], onDelete: Restrict, onUpdate: Cascade, map: "fk_model_images_model")
+
+  @@index([idDlkModel], map: "FK_MODEL_IMAGES_MODEL")
+  @@map("MD_MODEL_IMAGES")
+}
+
+model MdModelDetail {
+  idDlkModelDetail  Int      @id @default(autoincrement()) @map("ID_DLK_MODEL_DETAIL")
+  idDlkModel        Int      @map("ID_DLK_MODEL")
+  namePiece         String   @map("NAME_PIECE") @db.VarChar(100)
+  stateModelDetail  Int      @default(1) @map("STATE_MODEL_DETAIL") @db.TinyInt
+  codUsuarioCargaDl String   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl DateTime @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fehProcesoModifDl DateTime @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion         String?  @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif    Int      @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  model             MdModel  @relation(fields: [idDlkModel], references: [idDlkModel], onDelete: Restrict, onUpdate: Cascade, map: "fk_model_detail_model")
+
+  @@index([idDlkModel], map: "FK_MODEL_DETAIL_MODEL")
+  @@map("MD_MODEL_DETAIL")
 }
 
 model MdUserReo {

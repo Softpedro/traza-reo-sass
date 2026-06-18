@@ -165,6 +165,26 @@ export type MdParentCompanyMaquila = Prisma.MdParentCompanyMaquilaModel
  */
 export type MdSubbrand = Prisma.MdSubbrandModel
 /**
+ * Model MdModel
+ * 
+ */
+export type MdModel = Prisma.MdModelModel
+/**
+ * Model MdCare
+ * 
+ */
+export type MdCare = Prisma.MdCareModel
+/**
+ * Model MdModelImage
+ * 
+ */
+export type MdModelImage = Prisma.MdModelImageModel
+/**
+ * Model MdModelDetail
+ * 
+ */
+export type MdModelDetail = Prisma.MdModelDetailModel
+/**
  * Model MdUserReo
  * 
  */

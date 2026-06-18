@@ -79,6 +79,10 @@ export const ModelName = {
   MdFacilityMaquila: 'MdFacilityMaquila',
   MdParentCompanyMaquila: 'MdParentCompanyMaquila',
   MdSubbrand: 'MdSubbrand',
+  MdModel: 'MdModel',
+  MdCare: 'MdCare',
+  MdModelImage: 'MdModelImage',
+  MdModelDetail: 'MdModelDetail',
   MdUserReo: 'MdUserReo',
   MdUserBackupCode: 'MdUserBackupCode',
   LgUserAccess: 'LgUserAccess',
@@ -822,6 +826,89 @@ export const MdSubbrandScalarFieldEnum = {
 } as const
 
 export type MdSubbrandScalarFieldEnum = (typeof MdSubbrandScalarFieldEnum)[keyof typeof MdSubbrandScalarFieldEnum]
+
+
+export const MdModelScalarFieldEnum = {
+  idDlkModel: 'idDlkModel',
+  idDlkBrand: 'idDlkBrand',
+  idDlkSubbrand: 'idDlkSubbrand',
+  codModel: 'codModel',
+  nameModel: 'nameModel',
+  desModel: 'desModel',
+  nameCollection: 'nameCollection',
+  desCollection: 'desCollection',
+  categoryModel: 'categoryModel',
+  materialModel: 'materialModel',
+  compositionModel: 'compositionModel',
+  colorway: 'colorway',
+  fondoTela: 'fondoTela',
+  versionTela: 'versionTela',
+  year: 'year',
+  season: 'season',
+  sizeModel: 'sizeModel',
+  isSet: 'isSet',
+  nroPieces: 'nroPieces',
+  careModel: 'careModel',
+  technicalSpecification: 'technicalSpecification',
+  stateModel: 'stateModel',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdModelScalarFieldEnum = (typeof MdModelScalarFieldEnum)[keyof typeof MdModelScalarFieldEnum]
+
+
+export const MdCareScalarFieldEnum = {
+  idDlkCare: 'idDlkCare',
+  idDlkModel: 'idDlkModel',
+  codCare: 'codCare',
+  nombCare: 'nombCare',
+  carDescription: 'carDescription',
+  carImage: 'carImage',
+  carSafety: 'carSafety',
+  stateCare: 'stateCare',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdCareScalarFieldEnum = (typeof MdCareScalarFieldEnum)[keyof typeof MdCareScalarFieldEnum]
+
+
+export const MdModelImageScalarFieldEnum = {
+  idDlkModelImages: 'idDlkModelImages',
+  idDlkModel: 'idDlkModel',
+  imageData: 'imageData',
+  imageType: 'imageType',
+  stateImageModel: 'stateImageModel',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdModelImageScalarFieldEnum = (typeof MdModelImageScalarFieldEnum)[keyof typeof MdModelImageScalarFieldEnum]
+
+
+export const MdModelDetailScalarFieldEnum = {
+  idDlkModelDetail: 'idDlkModelDetail',
+  idDlkModel: 'idDlkModel',
+  namePiece: 'namePiece',
+  stateModelDetail: 'stateModelDetail',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdModelDetailScalarFieldEnum = (typeof MdModelDetailScalarFieldEnum)[keyof typeof MdModelDetailScalarFieldEnum]
 
 
 export const MdUserReoScalarFieldEnum = {
@@ -1790,6 +1877,58 @@ export const MdSubbrandOrderByRelevanceFieldEnum = {
 } as const
 
 export type MdSubbrandOrderByRelevanceFieldEnum = (typeof MdSubbrandOrderByRelevanceFieldEnum)[keyof typeof MdSubbrandOrderByRelevanceFieldEnum]
+
+
+export const MdModelOrderByRelevanceFieldEnum = {
+  codModel: 'codModel',
+  nameModel: 'nameModel',
+  desModel: 'desModel',
+  nameCollection: 'nameCollection',
+  desCollection: 'desCollection',
+  categoryModel: 'categoryModel',
+  materialModel: 'materialModel',
+  compositionModel: 'compositionModel',
+  colorway: 'colorway',
+  fondoTela: 'fondoTela',
+  season: 'season',
+  sizeModel: 'sizeModel',
+  careModel: 'careModel',
+  technicalSpecification: 'technicalSpecification',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdModelOrderByRelevanceFieldEnum = (typeof MdModelOrderByRelevanceFieldEnum)[keyof typeof MdModelOrderByRelevanceFieldEnum]
+
+
+export const MdCareOrderByRelevanceFieldEnum = {
+  codCare: 'codCare',
+  nombCare: 'nombCare',
+  carDescription: 'carDescription',
+  carSafety: 'carSafety',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdCareOrderByRelevanceFieldEnum = (typeof MdCareOrderByRelevanceFieldEnum)[keyof typeof MdCareOrderByRelevanceFieldEnum]
+
+
+export const MdModelImageOrderByRelevanceFieldEnum = {
+  imageType: 'imageType',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdModelImageOrderByRelevanceFieldEnum = (typeof MdModelImageOrderByRelevanceFieldEnum)[keyof typeof MdModelImageOrderByRelevanceFieldEnum]
+
+
+export const MdModelDetailOrderByRelevanceFieldEnum = {
+  namePiece: 'namePiece',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdModelDetailOrderByRelevanceFieldEnum = (typeof MdModelDetailOrderByRelevanceFieldEnum)[keyof typeof MdModelDetailOrderByRelevanceFieldEnum]
 
 
 export const MdUserReoOrderByRelevanceFieldEnum = {

@@ -412,6 +412,10 @@ export const ModelName = {
   MdFacilityMaquila: 'MdFacilityMaquila',
   MdParentCompanyMaquila: 'MdParentCompanyMaquila',
   MdSubbrand: 'MdSubbrand',
+  MdModel: 'MdModel',
+  MdCare: 'MdCare',
+  MdModelImage: 'MdModelImage',
+  MdModelDetail: 'MdModelDetail',
   MdUserReo: 'MdUserReo',
   MdUserBackupCode: 'MdUserBackupCode',
   LgUserAccess: 'LgUserAccess',
@@ -449,7 +453,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdApiClient" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderLabelComponent" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace"
+    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdApiClient" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdModel" | "mdCare" | "mdModelImage" | "mdModelDetail" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderLabelComponent" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2298,6 +2302,270 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MdSubbrandCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MdSubbrandCountAggregateOutputType> | number
+        }
+      }
+    }
+    MdModel: {
+      payload: Prisma.$MdModelPayload<ExtArgs>
+      fields: Prisma.MdModelFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MdModelFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MdModelFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelPayload>
+        }
+        findFirst: {
+          args: Prisma.MdModelFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MdModelFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelPayload>
+        }
+        findMany: {
+          args: Prisma.MdModelFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelPayload>[]
+        }
+        create: {
+          args: Prisma.MdModelCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelPayload>
+        }
+        createMany: {
+          args: Prisma.MdModelCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MdModelDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelPayload>
+        }
+        update: {
+          args: Prisma.MdModelUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelPayload>
+        }
+        deleteMany: {
+          args: Prisma.MdModelDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MdModelUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MdModelUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelPayload>
+        }
+        aggregate: {
+          args: Prisma.MdModelAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMdModel>
+        }
+        groupBy: {
+          args: Prisma.MdModelGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdModelGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MdModelCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdModelCountAggregateOutputType> | number
+        }
+      }
+    }
+    MdCare: {
+      payload: Prisma.$MdCarePayload<ExtArgs>
+      fields: Prisma.MdCareFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MdCareFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdCarePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MdCareFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdCarePayload>
+        }
+        findFirst: {
+          args: Prisma.MdCareFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdCarePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MdCareFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdCarePayload>
+        }
+        findMany: {
+          args: Prisma.MdCareFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdCarePayload>[]
+        }
+        create: {
+          args: Prisma.MdCareCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdCarePayload>
+        }
+        createMany: {
+          args: Prisma.MdCareCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MdCareDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdCarePayload>
+        }
+        update: {
+          args: Prisma.MdCareUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdCarePayload>
+        }
+        deleteMany: {
+          args: Prisma.MdCareDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MdCareUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MdCareUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdCarePayload>
+        }
+        aggregate: {
+          args: Prisma.MdCareAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMdCare>
+        }
+        groupBy: {
+          args: Prisma.MdCareGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdCareGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MdCareCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdCareCountAggregateOutputType> | number
+        }
+      }
+    }
+    MdModelImage: {
+      payload: Prisma.$MdModelImagePayload<ExtArgs>
+      fields: Prisma.MdModelImageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MdModelImageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelImagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MdModelImageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelImagePayload>
+        }
+        findFirst: {
+          args: Prisma.MdModelImageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelImagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MdModelImageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelImagePayload>
+        }
+        findMany: {
+          args: Prisma.MdModelImageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelImagePayload>[]
+        }
+        create: {
+          args: Prisma.MdModelImageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelImagePayload>
+        }
+        createMany: {
+          args: Prisma.MdModelImageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MdModelImageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelImagePayload>
+        }
+        update: {
+          args: Prisma.MdModelImageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelImagePayload>
+        }
+        deleteMany: {
+          args: Prisma.MdModelImageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MdModelImageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MdModelImageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelImagePayload>
+        }
+        aggregate: {
+          args: Prisma.MdModelImageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMdModelImage>
+        }
+        groupBy: {
+          args: Prisma.MdModelImageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdModelImageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MdModelImageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdModelImageCountAggregateOutputType> | number
+        }
+      }
+    }
+    MdModelDetail: {
+      payload: Prisma.$MdModelDetailPayload<ExtArgs>
+      fields: Prisma.MdModelDetailFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MdModelDetailFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelDetailPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MdModelDetailFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelDetailPayload>
+        }
+        findFirst: {
+          args: Prisma.MdModelDetailFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelDetailPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MdModelDetailFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelDetailPayload>
+        }
+        findMany: {
+          args: Prisma.MdModelDetailFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelDetailPayload>[]
+        }
+        create: {
+          args: Prisma.MdModelDetailCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelDetailPayload>
+        }
+        createMany: {
+          args: Prisma.MdModelDetailCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MdModelDetailDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelDetailPayload>
+        }
+        update: {
+          args: Prisma.MdModelDetailUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelDetailPayload>
+        }
+        deleteMany: {
+          args: Prisma.MdModelDetailDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MdModelDetailUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MdModelDetailUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdModelDetailPayload>
+        }
+        aggregate: {
+          args: Prisma.MdModelDetailAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMdModelDetail>
+        }
+        groupBy: {
+          args: Prisma.MdModelDetailGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdModelDetailGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MdModelDetailCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdModelDetailCountAggregateOutputType> | number
         }
       }
     }
@@ -4497,6 +4765,89 @@ export const MdSubbrandScalarFieldEnum = {
 export type MdSubbrandScalarFieldEnum = (typeof MdSubbrandScalarFieldEnum)[keyof typeof MdSubbrandScalarFieldEnum]
 
 
+export const MdModelScalarFieldEnum = {
+  idDlkModel: 'idDlkModel',
+  idDlkBrand: 'idDlkBrand',
+  idDlkSubbrand: 'idDlkSubbrand',
+  codModel: 'codModel',
+  nameModel: 'nameModel',
+  desModel: 'desModel',
+  nameCollection: 'nameCollection',
+  desCollection: 'desCollection',
+  categoryModel: 'categoryModel',
+  materialModel: 'materialModel',
+  compositionModel: 'compositionModel',
+  colorway: 'colorway',
+  fondoTela: 'fondoTela',
+  versionTela: 'versionTela',
+  year: 'year',
+  season: 'season',
+  sizeModel: 'sizeModel',
+  isSet: 'isSet',
+  nroPieces: 'nroPieces',
+  careModel: 'careModel',
+  technicalSpecification: 'technicalSpecification',
+  stateModel: 'stateModel',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdModelScalarFieldEnum = (typeof MdModelScalarFieldEnum)[keyof typeof MdModelScalarFieldEnum]
+
+
+export const MdCareScalarFieldEnum = {
+  idDlkCare: 'idDlkCare',
+  idDlkModel: 'idDlkModel',
+  codCare: 'codCare',
+  nombCare: 'nombCare',
+  carDescription: 'carDescription',
+  carImage: 'carImage',
+  carSafety: 'carSafety',
+  stateCare: 'stateCare',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdCareScalarFieldEnum = (typeof MdCareScalarFieldEnum)[keyof typeof MdCareScalarFieldEnum]
+
+
+export const MdModelImageScalarFieldEnum = {
+  idDlkModelImages: 'idDlkModelImages',
+  idDlkModel: 'idDlkModel',
+  imageData: 'imageData',
+  imageType: 'imageType',
+  stateImageModel: 'stateImageModel',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdModelImageScalarFieldEnum = (typeof MdModelImageScalarFieldEnum)[keyof typeof MdModelImageScalarFieldEnum]
+
+
+export const MdModelDetailScalarFieldEnum = {
+  idDlkModelDetail: 'idDlkModelDetail',
+  idDlkModel: 'idDlkModel',
+  namePiece: 'namePiece',
+  stateModelDetail: 'stateModelDetail',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdModelDetailScalarFieldEnum = (typeof MdModelDetailScalarFieldEnum)[keyof typeof MdModelDetailScalarFieldEnum]
+
+
 export const MdUserReoScalarFieldEnum = {
   idDlkUserReo: 'idDlkUserReo',
   codUserReo: 'codUserReo',
@@ -5465,6 +5816,58 @@ export const MdSubbrandOrderByRelevanceFieldEnum = {
 export type MdSubbrandOrderByRelevanceFieldEnum = (typeof MdSubbrandOrderByRelevanceFieldEnum)[keyof typeof MdSubbrandOrderByRelevanceFieldEnum]
 
 
+export const MdModelOrderByRelevanceFieldEnum = {
+  codModel: 'codModel',
+  nameModel: 'nameModel',
+  desModel: 'desModel',
+  nameCollection: 'nameCollection',
+  desCollection: 'desCollection',
+  categoryModel: 'categoryModel',
+  materialModel: 'materialModel',
+  compositionModel: 'compositionModel',
+  colorway: 'colorway',
+  fondoTela: 'fondoTela',
+  season: 'season',
+  sizeModel: 'sizeModel',
+  careModel: 'careModel',
+  technicalSpecification: 'technicalSpecification',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdModelOrderByRelevanceFieldEnum = (typeof MdModelOrderByRelevanceFieldEnum)[keyof typeof MdModelOrderByRelevanceFieldEnum]
+
+
+export const MdCareOrderByRelevanceFieldEnum = {
+  codCare: 'codCare',
+  nombCare: 'nombCare',
+  carDescription: 'carDescription',
+  carSafety: 'carSafety',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdCareOrderByRelevanceFieldEnum = (typeof MdCareOrderByRelevanceFieldEnum)[keyof typeof MdCareOrderByRelevanceFieldEnum]
+
+
+export const MdModelImageOrderByRelevanceFieldEnum = {
+  imageType: 'imageType',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdModelImageOrderByRelevanceFieldEnum = (typeof MdModelImageOrderByRelevanceFieldEnum)[keyof typeof MdModelImageOrderByRelevanceFieldEnum]
+
+
+export const MdModelDetailOrderByRelevanceFieldEnum = {
+  namePiece: 'namePiece',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdModelDetailOrderByRelevanceFieldEnum = (typeof MdModelDetailOrderByRelevanceFieldEnum)[keyof typeof MdModelDetailOrderByRelevanceFieldEnum]
+
+
 export const MdUserReoOrderByRelevanceFieldEnum = {
   codUserReo: 'codUserReo',
   codParentCompany: 'codParentCompany',
@@ -5985,6 +6388,10 @@ export type GlobalOmitConfig = {
   mdFacilityMaquila?: Prisma.MdFacilityMaquilaOmit
   mdParentCompanyMaquila?: Prisma.MdParentCompanyMaquilaOmit
   mdSubbrand?: Prisma.MdSubbrandOmit
+  mdModel?: Prisma.MdModelOmit
+  mdCare?: Prisma.MdCareOmit
+  mdModelImage?: Prisma.MdModelImageOmit
+  mdModelDetail?: Prisma.MdModelDetailOmit
   mdUserReo?: Prisma.MdUserReoOmit
   mdUserBackupCode?: Prisma.MdUserBackupCodeOmit
   lgUserAccess?: Prisma.LgUserAccessOmit

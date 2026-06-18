@@ -361,6 +361,7 @@ export type MdSubbrandWhereInput = {
   desAccion?: Prisma.StringFilter<"MdSubbrand"> | string
   flgStatutActif?: Prisma.IntFilter<"MdSubbrand"> | number
   brand?: Prisma.XOR<Prisma.MdBrandScalarRelationFilter, Prisma.MdBrandWhereInput>
+  models?: Prisma.MdModelListRelationFilter
 }
 
 export type MdSubbrandOrderByWithRelationInput = {
@@ -386,6 +387,7 @@ export type MdSubbrandOrderByWithRelationInput = {
   desAccion?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
   brand?: Prisma.MdBrandOrderByWithRelationInput
+  models?: Prisma.MdModelOrderByRelationAggregateInput
   _relevance?: Prisma.MdSubbrandOrderByRelevanceInput
 }
 
@@ -415,6 +417,7 @@ export type MdSubbrandWhereUniqueInput = Prisma.AtLeast<{
   desAccion?: Prisma.StringFilter<"MdSubbrand"> | string
   flgStatutActif?: Prisma.IntFilter<"MdSubbrand"> | number
   brand?: Prisma.XOR<Prisma.MdBrandScalarRelationFilter, Prisma.MdBrandWhereInput>
+  models?: Prisma.MdModelListRelationFilter
 }, "idDlkSubbrand" | "codSubbrand">
 
 export type MdSubbrandOrderByWithAggregationInput = {
@@ -494,6 +497,7 @@ export type MdSubbrandCreateInput = {
   desAccion: string
   flgStatutActif?: number
   brand: Prisma.MdBrandCreateNestedOneWithoutSubbrandsInput
+  models?: Prisma.MdModelCreateNestedManyWithoutSubbrandInput
 }
 
 export type MdSubbrandUncheckedCreateInput = {
@@ -518,6 +522,7 @@ export type MdSubbrandUncheckedCreateInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  models?: Prisma.MdModelUncheckedCreateNestedManyWithoutSubbrandInput
 }
 
 export type MdSubbrandUpdateInput = {
@@ -541,6 +546,7 @@ export type MdSubbrandUpdateInput = {
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
   brand?: Prisma.MdBrandUpdateOneRequiredWithoutSubbrandsNestedInput
+  models?: Prisma.MdModelUpdateManyWithoutSubbrandNestedInput
 }
 
 export type MdSubbrandUncheckedUpdateInput = {
@@ -565,6 +571,7 @@ export type MdSubbrandUncheckedUpdateInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  models?: Prisma.MdModelUncheckedUpdateManyWithoutSubbrandNestedInput
 }
 
 export type MdSubbrandCreateManyInput = {
@@ -741,6 +748,11 @@ export type MdSubbrandSumOrderByAggregateInput = {
   flgStatutActif?: Prisma.SortOrder
 }
 
+export type MdSubbrandNullableScalarRelationFilter = {
+  is?: Prisma.MdSubbrandWhereInput | null
+  isNot?: Prisma.MdSubbrandWhereInput | null
+}
+
 export type MdSubbrandCreateNestedManyWithoutBrandInput = {
   create?: Prisma.XOR<Prisma.MdSubbrandCreateWithoutBrandInput, Prisma.MdSubbrandUncheckedCreateWithoutBrandInput> | Prisma.MdSubbrandCreateWithoutBrandInput[] | Prisma.MdSubbrandUncheckedCreateWithoutBrandInput[]
   connectOrCreate?: Prisma.MdSubbrandCreateOrConnectWithoutBrandInput | Prisma.MdSubbrandCreateOrConnectWithoutBrandInput[]
@@ -783,6 +795,22 @@ export type MdSubbrandUncheckedUpdateManyWithoutBrandNestedInput = {
   deleteMany?: Prisma.MdSubbrandScalarWhereInput | Prisma.MdSubbrandScalarWhereInput[]
 }
 
+export type MdSubbrandCreateNestedOneWithoutModelsInput = {
+  create?: Prisma.XOR<Prisma.MdSubbrandCreateWithoutModelsInput, Prisma.MdSubbrandUncheckedCreateWithoutModelsInput>
+  connectOrCreate?: Prisma.MdSubbrandCreateOrConnectWithoutModelsInput
+  connect?: Prisma.MdSubbrandWhereUniqueInput
+}
+
+export type MdSubbrandUpdateOneWithoutModelsNestedInput = {
+  create?: Prisma.XOR<Prisma.MdSubbrandCreateWithoutModelsInput, Prisma.MdSubbrandUncheckedCreateWithoutModelsInput>
+  connectOrCreate?: Prisma.MdSubbrandCreateOrConnectWithoutModelsInput
+  upsert?: Prisma.MdSubbrandUpsertWithoutModelsInput
+  disconnect?: Prisma.MdSubbrandWhereInput | boolean
+  delete?: Prisma.MdSubbrandWhereInput | boolean
+  connect?: Prisma.MdSubbrandWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MdSubbrandUpdateToOneWithWhereWithoutModelsInput, Prisma.MdSubbrandUpdateWithoutModelsInput>, Prisma.MdSubbrandUncheckedUpdateWithoutModelsInput>
+}
+
 export type MdSubbrandCreateWithoutBrandInput = {
   codSubbrand: string
   codBrand: string
@@ -803,6 +831,7 @@ export type MdSubbrandCreateWithoutBrandInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  models?: Prisma.MdModelCreateNestedManyWithoutSubbrandInput
 }
 
 export type MdSubbrandUncheckedCreateWithoutBrandInput = {
@@ -826,6 +855,7 @@ export type MdSubbrandUncheckedCreateWithoutBrandInput = {
   fehProcesoModifDl?: Date | string
   desAccion: string
   flgStatutActif?: number
+  models?: Prisma.MdModelUncheckedCreateNestedManyWithoutSubbrandInput
 }
 
 export type MdSubbrandCreateOrConnectWithoutBrandInput = {
@@ -881,6 +911,116 @@ export type MdSubbrandScalarWhereInput = {
   flgStatutActif?: Prisma.IntFilter<"MdSubbrand"> | number
 }
 
+export type MdSubbrandCreateWithoutModelsInput = {
+  codSubbrand: string
+  codBrand: string
+  nameSubbrand: string
+  codUbigeoSubbrand: number
+  addressSubbrand: string
+  locationSubbrand?: string | null
+  emailSubbrand: string
+  cellularSubbrand: string
+  facebookSubbrand?: string | null
+  instagramSubbrand?: string | null
+  whatsappSubbrand?: string | null
+  ecommerceSubbrand?: string | null
+  logoSubbrand?: runtime.Bytes | null
+  stateSubbrand?: number
+  codUsuarioCargaDl: string
+  fehProcesoCargaDl?: Date | string
+  fehProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
+  brand: Prisma.MdBrandCreateNestedOneWithoutSubbrandsInput
+}
+
+export type MdSubbrandUncheckedCreateWithoutModelsInput = {
+  idDlkSubbrand?: number
+  codSubbrand: string
+  idDlkBrand: number
+  codBrand: string
+  nameSubbrand: string
+  codUbigeoSubbrand: number
+  addressSubbrand: string
+  locationSubbrand?: string | null
+  emailSubbrand: string
+  cellularSubbrand: string
+  facebookSubbrand?: string | null
+  instagramSubbrand?: string | null
+  whatsappSubbrand?: string | null
+  ecommerceSubbrand?: string | null
+  logoSubbrand?: runtime.Bytes | null
+  stateSubbrand?: number
+  codUsuarioCargaDl: string
+  fehProcesoCargaDl?: Date | string
+  fehProcesoModifDl?: Date | string
+  desAccion: string
+  flgStatutActif?: number
+}
+
+export type MdSubbrandCreateOrConnectWithoutModelsInput = {
+  where: Prisma.MdSubbrandWhereUniqueInput
+  create: Prisma.XOR<Prisma.MdSubbrandCreateWithoutModelsInput, Prisma.MdSubbrandUncheckedCreateWithoutModelsInput>
+}
+
+export type MdSubbrandUpsertWithoutModelsInput = {
+  update: Prisma.XOR<Prisma.MdSubbrandUpdateWithoutModelsInput, Prisma.MdSubbrandUncheckedUpdateWithoutModelsInput>
+  create: Prisma.XOR<Prisma.MdSubbrandCreateWithoutModelsInput, Prisma.MdSubbrandUncheckedCreateWithoutModelsInput>
+  where?: Prisma.MdSubbrandWhereInput
+}
+
+export type MdSubbrandUpdateToOneWithWhereWithoutModelsInput = {
+  where?: Prisma.MdSubbrandWhereInput
+  data: Prisma.XOR<Prisma.MdSubbrandUpdateWithoutModelsInput, Prisma.MdSubbrandUncheckedUpdateWithoutModelsInput>
+}
+
+export type MdSubbrandUpdateWithoutModelsInput = {
+  codSubbrand?: Prisma.StringFieldUpdateOperationsInput | string
+  codBrand?: Prisma.StringFieldUpdateOperationsInput | string
+  nameSubbrand?: Prisma.StringFieldUpdateOperationsInput | string
+  codUbigeoSubbrand?: Prisma.IntFieldUpdateOperationsInput | number
+  addressSubbrand?: Prisma.StringFieldUpdateOperationsInput | string
+  locationSubbrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailSubbrand?: Prisma.StringFieldUpdateOperationsInput | string
+  cellularSubbrand?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookSubbrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramSubbrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappSubbrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ecommerceSubbrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoSubbrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  stateSubbrand?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  brand?: Prisma.MdBrandUpdateOneRequiredWithoutSubbrandsNestedInput
+}
+
+export type MdSubbrandUncheckedUpdateWithoutModelsInput = {
+  idDlkSubbrand?: Prisma.IntFieldUpdateOperationsInput | number
+  codSubbrand?: Prisma.StringFieldUpdateOperationsInput | string
+  idDlkBrand?: Prisma.IntFieldUpdateOperationsInput | number
+  codBrand?: Prisma.StringFieldUpdateOperationsInput | string
+  nameSubbrand?: Prisma.StringFieldUpdateOperationsInput | string
+  codUbigeoSubbrand?: Prisma.IntFieldUpdateOperationsInput | number
+  addressSubbrand?: Prisma.StringFieldUpdateOperationsInput | string
+  locationSubbrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailSubbrand?: Prisma.StringFieldUpdateOperationsInput | string
+  cellularSubbrand?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookSubbrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramSubbrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappSubbrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ecommerceSubbrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoSubbrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  stateSubbrand?: Prisma.IntFieldUpdateOperationsInput | number
+  codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
+  fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  desAccion?: Prisma.StringFieldUpdateOperationsInput | string
+  flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
 export type MdSubbrandCreateManyBrandInput = {
   idDlkSubbrand?: number
   codSubbrand: string
@@ -924,6 +1064,7 @@ export type MdSubbrandUpdateWithoutBrandInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  models?: Prisma.MdModelUpdateManyWithoutSubbrandNestedInput
 }
 
 export type MdSubbrandUncheckedUpdateWithoutBrandInput = {
@@ -947,6 +1088,7 @@ export type MdSubbrandUncheckedUpdateWithoutBrandInput = {
   fehProcesoModifDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   desAccion?: Prisma.StringFieldUpdateOperationsInput | string
   flgStatutActif?: Prisma.IntFieldUpdateOperationsInput | number
+  models?: Prisma.MdModelUncheckedUpdateManyWithoutSubbrandNestedInput
 }
 
 export type MdSubbrandUncheckedUpdateManyWithoutBrandInput = {
@@ -973,6 +1115,35 @@ export type MdSubbrandUncheckedUpdateManyWithoutBrandInput = {
 }
 
 
+/**
+ * Count Type MdSubbrandCountOutputType
+ */
+
+export type MdSubbrandCountOutputType = {
+  models: number
+}
+
+export type MdSubbrandCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  models?: boolean | MdSubbrandCountOutputTypeCountModelsArgs
+}
+
+/**
+ * MdSubbrandCountOutputType without action
+ */
+export type MdSubbrandCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MdSubbrandCountOutputType
+   */
+  select?: Prisma.MdSubbrandCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MdSubbrandCountOutputType without action
+ */
+export type MdSubbrandCountOutputTypeCountModelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MdModelWhereInput
+}
+
 
 export type MdSubbrandSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idDlkSubbrand?: boolean
@@ -997,6 +1168,8 @@ export type MdSubbrandSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   desAccion?: boolean
   flgStatutActif?: boolean
   brand?: boolean | Prisma.MdBrandDefaultArgs<ExtArgs>
+  models?: boolean | Prisma.MdSubbrand$modelsArgs<ExtArgs>
+  _count?: boolean | Prisma.MdSubbrandCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mdSubbrand"]>
 
 
@@ -1028,12 +1201,15 @@ export type MdSubbrandSelectScalar = {
 export type MdSubbrandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkSubbrand" | "codSubbrand" | "idDlkBrand" | "codBrand" | "nameSubbrand" | "codUbigeoSubbrand" | "addressSubbrand" | "locationSubbrand" | "emailSubbrand" | "cellularSubbrand" | "facebookSubbrand" | "instagramSubbrand" | "whatsappSubbrand" | "ecommerceSubbrand" | "logoSubbrand" | "stateSubbrand" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdSubbrand"]>
 export type MdSubbrandInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   brand?: boolean | Prisma.MdBrandDefaultArgs<ExtArgs>
+  models?: boolean | Prisma.MdSubbrand$modelsArgs<ExtArgs>
+  _count?: boolean | Prisma.MdSubbrandCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $MdSubbrandPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MdSubbrand"
   objects: {
     brand: Prisma.$MdBrandPayload<ExtArgs>
+    models: Prisma.$MdModelPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkSubbrand: number
@@ -1398,6 +1574,7 @@ readonly fields: MdSubbrandFieldRefs;
 export interface Prisma__MdSubbrandClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   brand<T extends Prisma.MdBrandDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdBrandDefaultArgs<ExtArgs>>): Prisma.Prisma__MdBrandClient<runtime.Types.Result.GetResult<Prisma.$MdBrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  models<T extends Prisma.MdSubbrand$modelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MdSubbrand$modelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MdModelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1793,6 +1970,30 @@ export type MdSubbrandDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many MdSubbrands to delete.
    */
   limit?: number
+}
+
+/**
+ * MdSubbrand.models
+ */
+export type MdSubbrand$modelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MdModel
+   */
+  select?: Prisma.MdModelSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MdModel
+   */
+  omit?: Prisma.MdModelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MdModelInclude<ExtArgs> | null
+  where?: Prisma.MdModelWhereInput
+  orderBy?: Prisma.MdModelOrderByWithRelationInput | Prisma.MdModelOrderByWithRelationInput[]
+  cursor?: Prisma.MdModelWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MdModelScalarFieldEnum | Prisma.MdModelScalarFieldEnum[]
 }
 
 /**

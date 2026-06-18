@@ -632,9 +632,13 @@ export class OrderHeadService {
   ): Promise<OrderHeadListRow | null> {
     const existing = await this.prisma.odOrderHead.findUnique({
       where: { idDlkOrderHead: id },
-      select: { idDlkOrderHead: true },
+      select: { idDlkOrderHead: true, stageOrderHead: true },
     });
     if (!existing) return null;
+    // Defensa en profundidad: si la orden ya pasó de Suministro (stage>2), es solo lectura.
+    if (existing.stageOrderHead != null && existing.stageOrderHead > 2) {
+      throw new Error("La orden ya avanzó de etapa; Suministro quedó en solo lectura.");
+    }
 
     const now = new Date();
     const data: Prisma.OdOrderHeadUncheckedUpdateInput = {
@@ -712,9 +716,13 @@ export class OrderHeadService {
   ): Promise<OrderHeadListRow | null> {
     const existing = await this.prisma.odOrderHead.findUnique({
       where: { idDlkOrderHead: id },
-      select: { idDlkOrderHead: true },
+      select: { idDlkOrderHead: true, stageOrderHead: true },
     });
     if (!existing) return null;
+    // Defensa en profundidad: si la orden ya pasó de Etiqueta (stage>3), es solo lectura.
+    if (existing.stageOrderHead != null && existing.stageOrderHead > 3) {
+      throw new Error("La orden ya avanzó de etapa; Etiqueta quedó en solo lectura.");
+    }
 
     const status =
       body.statusStageOrderHead == null ? 1 : Number(body.statusStageOrderHead);
@@ -759,9 +767,13 @@ export class OrderHeadService {
   ): Promise<OrderHeadListRow | null> {
     const existing = await this.prisma.odOrderHead.findUnique({
       where: { idDlkOrderHead: id },
-      select: { idDlkOrderHead: true },
+      select: { idDlkOrderHead: true, stageOrderHead: true },
     });
     if (!existing) return null;
+    // Defensa en profundidad: si la orden ya pasó de Ruta (stage>4), es solo lectura.
+    if (existing.stageOrderHead != null && existing.stageOrderHead > 4) {
+      throw new Error("La orden ya avanzó de etapa; Ruta quedó en solo lectura.");
+    }
 
     const status =
       body.statusStageOrderHead == null ? 1 : Number(body.statusStageOrderHead);
@@ -809,9 +821,13 @@ export class OrderHeadService {
   ): Promise<OrderHeadListRow | null> {
     const existing = await this.prisma.odOrderHead.findUnique({
       where: { idDlkOrderHead: id },
-      select: { idDlkOrderHead: true },
+      select: { idDlkOrderHead: true, stageOrderHead: true },
     });
     if (!existing) return null;
+    // Defensa en profundidad: si la orden ya pasó de Trazabilidad (stage>5), es solo lectura.
+    if (existing.stageOrderHead != null && existing.stageOrderHead > 5) {
+      throw new Error("La orden ya avanzó de etapa; Trazabilidad quedó en solo lectura.");
+    }
 
     const status =
       body.statusStageOrderHead == null ? 1 : Number(body.statusStageOrderHead);

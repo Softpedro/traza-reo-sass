@@ -36,10 +36,13 @@ export function OrderRutaClient({
         return res.json();
       })
       .then((data: RutaRow[]) => {
-        // Solo se muestran órdenes actualmente en Ruta (stage===4).
-        // Las concluidas pasan a Trazabilidad y dejan de aparecer aquí.
+        // Se muestran las órdenes en Ruta (stage===4, editables) y las que ya
+        // pasaron por aquí (stage>4, en solo lectura). Se excluye Lista negra (stage 6).
         const visible = Array.isArray(data)
-          ? data.filter((r) => (r.stageOrderHead ?? 1) === STAGE_RUTA)
+          ? data.filter((r) => {
+              const s = r.stageOrderHead ?? 1;
+              return s >= STAGE_RUTA && s < 6;
+            })
           : [];
         setRows(visible);
       })
@@ -62,6 +65,7 @@ export function OrderRutaClient({
   const columns = useMemo(
     () =>
       getRutaColumns({
+        stage: STAGE_RUTA,
         onOpen: (row) => router.push(`/orden-pedido/ruta/${row.idDlkOrderHead}`),
         onUpdateEstado: (row) => {
           setEstadoOrder(row);
@@ -95,7 +99,15 @@ export function OrderRutaClient({
         </p>
       ) : (
         <div className="[&_thead_tr]:bg-orange-100 [&_thead_th]:font-semibold [&_thead_th]:text-neutral-900">
-          <DataTable columns={columns} data={rows} />
+          <DataTable
+            columns={columns}
+            data={rows}
+            rowClassName={(r) =>
+              (r.stageOrderHead ?? 1) > STAGE_RUTA
+                ? "bg-muted/40 text-muted-foreground"
+                : undefined
+            }
+          />
         </div>
       )}
 

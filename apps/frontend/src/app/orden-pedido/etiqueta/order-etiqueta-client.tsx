@@ -36,10 +36,13 @@ export function OrderEtiquetaClient({
         return res.json();
       })
       .then((data: EtiquetaRow[]) => {
-        // Solo se muestran órdenes actualmente en Etiqueta (stage===3).
-        // Las concluidas pasan a Ruta y dejan de aparecer aquí.
+        // Se muestran las órdenes en Etiqueta (stage===3, editables) y las que ya
+        // pasaron por aquí (stage>3, en solo lectura). Se excluye Lista negra (stage 6).
         const visible = Array.isArray(data)
-          ? data.filter((r) => (r.stageOrderHead ?? 1) === STAGE_ETIQUETA)
+          ? data.filter((r) => {
+              const s = r.stageOrderHead ?? 1;
+              return s >= STAGE_ETIQUETA && s < 6;
+            })
           : [];
         setRows(visible);
       })
@@ -62,6 +65,7 @@ export function OrderEtiquetaClient({
   const columns = useMemo(
     () =>
       getEtiquetaColumns({
+        stage: STAGE_ETIQUETA,
         onOpen: (row) => router.push(`/orden-pedido/etiqueta/${row.idDlkOrderHead}`),
         onUpdateEstado: (row) => {
           setEstadoOrder(row);
@@ -95,7 +99,15 @@ export function OrderEtiquetaClient({
         </p>
       ) : (
         <div className="[&_thead_tr]:bg-orange-100 [&_thead_th]:font-semibold [&_thead_th]:text-neutral-900">
-          <DataTable columns={columns} data={rows} />
+          <DataTable
+            columns={columns}
+            data={rows}
+            rowClassName={(r) =>
+              (r.stageOrderHead ?? 1) > STAGE_ETIQUETA
+                ? "bg-muted/40 text-muted-foreground"
+                : undefined
+            }
+          />
         </div>
       )}
 

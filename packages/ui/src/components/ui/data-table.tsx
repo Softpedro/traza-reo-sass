@@ -22,12 +22,15 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   className?: string
+  /** Clase(s) extra por fila, calculadas a partir de la fila (p. ej. atenuar filas en solo lectura). */
+  rowClassName?: (row: TData) => string | undefined
 }
 
 function DataTable<TData, TValue>({
   columns,
   data,
   className,
+  rowClassName,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
@@ -69,6 +72,7 @@ function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className={cn(rowClassName?.(row.original))}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

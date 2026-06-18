@@ -31,12 +31,15 @@ function formatQty(n: number | null | undefined) {
 }
 
 type ColProps = {
+  /** Etapa dueña de esta vista; una fila con stage mayor ya pasó y va en solo lectura. */
+  stage: number;
   onCrear: (row: SuministroRow) => void;
   onEditar: (row: SuministroRow) => void;
   onDetalle: (row: SuministroRow) => void;
 };
 
 export function getSuministroColumns({
+  stage,
   onCrear,
   onEditar,
   onDetalle,
@@ -79,6 +82,8 @@ export function getSuministroColumns({
       accessorKey: "statusStageOrderHead",
       header: "Estado",
       cell: ({ row }) => {
+        // Si la orden ya avanzó de etapa, en esta vista su estado es "Concluido".
+        if ((row.original.stageOrderHead ?? 1) > stage) return "3. Concluido";
         const s = row.original.statusStageOrderHead;
         return s != null ? (SUMINISTRO_STATUS[s] ?? String(s)) : "—";
       },
@@ -86,31 +91,41 @@ export function getSuministroColumns({
     {
       id: "accion",
       header: "Acción",
-      cell: ({ row }) => (
-        <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm">
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onCrear(row.original)}
-          >
-            Crear
-          </button>
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onEditar(row.original)}
-          >
-            Editar
-          </button>
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onDetalle(row.original)}
-          >
-            Ver Detalle
-          </button>
-        </div>
-      ),
+      cell: ({ row }) => {
+        // Filas que ya pasaron por Suministro quedan en solo lectura.
+        if ((row.original.stageOrderHead ?? 1) > stage) {
+          return (
+            <span className="text-sm font-medium text-muted-foreground">
+              ✓ Completado · solo lectura
+            </span>
+          );
+        }
+        return (
+          <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm">
+            <button
+              type="button"
+              className="font-medium text-primary hover:underline"
+              onClick={() => onCrear(row.original)}
+            >
+              Crear
+            </button>
+            <button
+              type="button"
+              className="font-medium text-primary hover:underline"
+              onClick={() => onEditar(row.original)}
+            >
+              Editar
+            </button>
+            <button
+              type="button"
+              className="font-medium text-primary hover:underline"
+              onClick={() => onDetalle(row.original)}
+            >
+              Ver Detalle
+            </button>
+          </div>
+        );
+      },
     },
   ];
 }

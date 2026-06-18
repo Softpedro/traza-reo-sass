@@ -28,11 +28,13 @@ function formatQty(n: number | null | undefined) {
 }
 
 type ColProps = {
+  /** Etapa dueña de esta vista; una fila con stage mayor ya pasó y va en solo lectura. */
+  stage: number;
   onOpen: (row: EtiquetaRow) => void;
   onUpdateEstado: (row: EtiquetaRow) => void;
 };
 
-export function getEtiquetaColumns({ onOpen, onUpdateEstado }: ColProps): ColumnDef<EtiquetaRow>[] {
+export function getEtiquetaColumns({ stage, onOpen, onUpdateEstado }: ColProps): ColumnDef<EtiquetaRow>[] {
   return [
     {
       accessorKey: "codOrderHead",
@@ -71,6 +73,8 @@ export function getEtiquetaColumns({ onOpen, onUpdateEstado }: ColProps): Column
       accessorKey: "statusStageOrderHead",
       header: "Estado",
       cell: ({ row }) => {
+        // Si la orden ya avanzó de etapa, en esta vista su estado es "Concluido".
+        if ((row.original.stageOrderHead ?? 1) > stage) return "3. Concluido";
         const s = row.original.statusStageOrderHead;
         return s != null ? (ORDER_HEAD_STATUS[s] ?? String(s)) : "—";
       },
@@ -78,24 +82,34 @@ export function getEtiquetaColumns({ onOpen, onUpdateEstado }: ColProps): Column
     {
       id: "accion",
       header: "Acción",
-      cell: ({ row }) => (
-        <div className="flex flex-col items-start gap-1">
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onOpen(row.original)}
-          >
-            Abrir etiqueta
-          </button>
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onUpdateEstado(row.original)}
-          >
-            Actualizar
-          </button>
-        </div>
-      ),
+      cell: ({ row }) => {
+        // Filas que ya pasaron por Etiqueta quedan en solo lectura.
+        if ((row.original.stageOrderHead ?? 1) > stage) {
+          return (
+            <span className="text-sm font-medium text-muted-foreground">
+              ✓ Completado · solo lectura
+            </span>
+          );
+        }
+        return (
+          <div className="flex flex-col items-start gap-1">
+            <button
+              type="button"
+              className="font-medium text-primary hover:underline"
+              onClick={() => onOpen(row.original)}
+            >
+              Abrir etiqueta
+            </button>
+            <button
+              type="button"
+              className="font-medium text-primary hover:underline"
+              onClick={() => onUpdateEstado(row.original)}
+            >
+              Actualizar
+            </button>
+          </div>
+        );
+      },
     },
   ];
 }

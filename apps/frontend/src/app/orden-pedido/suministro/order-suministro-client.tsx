@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { DataTable } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
 import { getSuministroColumns, type SuministroRow } from "./columns";
+import { STAGE_SUMINISTRO } from "./constants";
 import { SuministroModal } from "./suministro-modal";
 
 export type OrderSuministroClientProps = {
@@ -35,10 +36,13 @@ export function OrderSuministroClient({
         return res.json();
       })
       .then((data: SuministroRow[]) => {
-        // Sólo se muestran órdenes actualmente en Suministro (stage===2).
-        // Las concluidas pasan a Etiqueta y dejan de aparecer aquí.
+        // Se muestran las órdenes en Suministro (stage===2, editables) y las que ya
+        // pasaron por aquí (stage>2, en solo lectura). Se excluye Lista negra (stage 6).
         const visible = Array.isArray(data)
-          ? data.filter((r) => (r.stageOrderHead ?? 1) === 2)
+          ? data.filter((r) => {
+              const s = r.stageOrderHead ?? 1;
+              return s >= STAGE_SUMINISTRO && s < 6;
+            })
           : [];
         setRows(visible);
       })
@@ -61,6 +65,7 @@ export function OrderSuministroClient({
   const columns = useMemo(
     () =>
       getSuministroColumns({
+        stage: STAGE_SUMINISTRO,
         onCrear: (row) => {
           setSelected(row);
           setCreateOpen(true);
@@ -99,7 +104,15 @@ export function OrderSuministroClient({
         </p>
       ) : (
         <div className="[&_thead_tr]:bg-orange-100 [&_thead_th]:font-semibold [&_thead_th]:text-neutral-900">
-          <DataTable columns={columns} data={rows} />
+          <DataTable
+            columns={columns}
+            data={rows}
+            rowClassName={(r) =>
+              (r.stageOrderHead ?? 1) > STAGE_SUMINISTRO
+                ? "bg-muted/40 text-muted-foreground"
+                : undefined
+            }
+          />
         </div>
       )}
 

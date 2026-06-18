@@ -29,11 +29,13 @@ function formatQty(n: number | null | undefined) {
 }
 
 type ColProps = {
+  /** Etapa dueña de esta vista; una fila con stage mayor ya pasó y va en solo lectura. */
+  stage: number;
   onOpen: (row: RutaRow) => void;
   onUpdateEstado: (row: RutaRow) => void;
 };
 
-export function getRutaColumns({ onOpen, onUpdateEstado }: ColProps): ColumnDef<RutaRow>[] {
+export function getRutaColumns({ stage, onOpen, onUpdateEstado }: ColProps): ColumnDef<RutaRow>[] {
   return [
     {
       accessorKey: "codOrderHead",
@@ -72,6 +74,8 @@ export function getRutaColumns({ onOpen, onUpdateEstado }: ColProps): ColumnDef<
       accessorKey: "statusStageOrderHead",
       header: "Estado",
       cell: ({ row }) => {
+        // Si la orden ya avanzó de etapa, en esta vista su estado es "Concluido".
+        if ((row.original.stageOrderHead ?? 1) > stage) return "3. Concluido";
         const s = row.original.statusStageOrderHead;
         return s != null ? (ORDER_HEAD_STATUS[s] ?? String(s)) : "—";
       },
@@ -79,24 +83,34 @@ export function getRutaColumns({ onOpen, onUpdateEstado }: ColProps): ColumnDef<
     {
       id: "accion",
       header: "Acción",
-      cell: ({ row }) => (
-        <div className="flex flex-col items-start gap-1">
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onOpen(row.original)}
-          >
-            Abrir ruta
-          </button>
-          <button
-            type="button"
-            className="font-medium text-primary hover:underline"
-            onClick={() => onUpdateEstado(row.original)}
-          >
-            Actualizar
-          </button>
-        </div>
-      ),
+      cell: ({ row }) => {
+        // Filas que ya pasaron por Ruta quedan en solo lectura.
+        if ((row.original.stageOrderHead ?? 1) > stage) {
+          return (
+            <span className="text-sm font-medium text-muted-foreground">
+              ✓ Completado · solo lectura
+            </span>
+          );
+        }
+        return (
+          <div className="flex flex-col items-start gap-1">
+            <button
+              type="button"
+              className="font-medium text-primary hover:underline"
+              onClick={() => onOpen(row.original)}
+            >
+              Abrir ruta
+            </button>
+            <button
+              type="button"
+              className="font-medium text-primary hover:underline"
+              onClick={() => onUpdateEstado(row.original)}
+            >
+              Actualizar
+            </button>
+          </div>
+        );
+      },
     },
   ];
 }

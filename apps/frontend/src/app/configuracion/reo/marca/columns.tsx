@@ -31,6 +31,21 @@ export type Brand = {
   } | null;
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// TEMPORAL · Ofuscación de marcas/empresas en el listado de Marca.
+// Se enmascaran (********) las columnas "Marca" y "Empresa" de toda marca cuya
+// empresa NO empiece con "REO-1". Es momentáneo (pedido de negocio para prod).
+// Para REVERTIR: borrar este bloque, `isBrandMasked`, los usos en las celdas
+// "Marca"/"Empresa" y restaurar el render original (ver docs/ofuscacion-marcas-temporal.md).
+// ─────────────────────────────────────────────────────────────────────────────
+const MASK = "********";
+
+/** TEMPORAL: true si la empresa de la marca NO empieza con "REO-1" (debe ocultarse). */
+function isBrandMasked(brand: Brand): boolean {
+  const cod = brand.parentCompany?.codParentCompany ?? "";
+  return !cod.startsWith("REO-1");
+}
+
 export function getColumns(
   onEdit: (brand: Brand) => void,
   onView: (brand: Brand) => void
@@ -45,7 +60,8 @@ export function getColumns(
       header: "Marca",
       cell: ({ row }) => (
         <span className="text-primary font-medium">
-          {row.getValue("nameBrand")}
+          {/* TEMPORAL: ofuscación de marcas no-REO-1 (ver isBrandMasked) */}
+          {isBrandMasked(row.original) ? MASK : row.getValue("nameBrand")}
         </span>
       ),
     },
@@ -53,6 +69,8 @@ export function getColumns(
       id: "empresa",
       header: "Empresa",
       cell: ({ row }) => {
+        // TEMPORAL: ofuscación de empresas no-REO-1 (ver isBrandMasked)
+        if (isBrandMasked(row.original)) return MASK;
         const pc = row.original.parentCompany;
         return pc
           ? `${pc.codParentCompany ?? ""} - ${pc.nameParentCompany}`

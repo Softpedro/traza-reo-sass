@@ -1,6 +1,6 @@
 import "dotenv/config";
 import express from "express";
-import cors from "cors";
+import cors, { type CorsOptions, type CorsRequest } from "cors";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient } from "../generated/prisma/client.js";
 import { ParentCompanyService } from "./services/parent-company.service.js";
@@ -108,18 +108,25 @@ const defaultDevOrigins = ["http://localhost:3000", "http://localhost:3001"];
 const corsAllowed = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(",").map((s) => s.trim()).filter(Boolean)
   : defaultDevOrigins;
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || corsAllowed.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+// Los endpoints públicos máquina-a-máquina (/api/dpp/*) van protegidos por X-API-Key
+// y se consumen desde la app DPP en el navegador (cualquier origen). Para esas rutas
+// se permite todo origen; el resto de la API mantiene el allowlist por origen.
+app.use(
+  cors((req: CorsRequest & { url?: string }, callback: (err: Error | null, options?: CorsOptions) => void) => {
+    const isPublicDpp = (req.url ?? "").startsWith("/api/dpp/");
+    callback(null, {
+      origin: isPublicDpp
+        ? true
+        : (origin, cb) => {
+            if (!origin || corsAllowed.includes(origin)) cb(null, true);
+            else cb(new Error("Not allowed by CORS"));
+          },
+      credentials: !isPublicDpp,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization", "X-API-Key"],
+    });
+  })
+);
 // Logos/fotos en base64 superan el límite por defecto (~100kb) y provocan 413 Payload Too Large
 const jsonBodyLimit = process.env.JSON_BODY_LIMIT ?? "15mb";
 app.use(express.json({ limit: jsonBodyLimit }));

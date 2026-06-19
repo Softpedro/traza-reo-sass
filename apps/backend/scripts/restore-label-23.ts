@@ -3,16 +3,23 @@
  * (OD_ORDER_DETAIL id 23) borrada por error. Usa el servicio real para que
  * sGTIN / URL DPP / correlativos sean idénticos a los del sistema.
  */
+import "dotenv/config";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient } from "../generated/prisma/client.js";
 import { OrderLabelService } from "../src/services/order-label.service.js";
 
+// La conexión sale de DATABASE_URL (nunca credenciales en el código). Para
+// apuntar a prod, exportá la URL de prod antes de correr el script, ej.:
+//   DATABASE_URL="mysql://USER:PASS@HOST:PORT/DB" npx tsx scripts/restore-label-23.ts
+const dbUrl = process.env.DATABASE_URL;
+if (!dbUrl) throw new Error("DATABASE_URL es requerida (exportala antes de correr el script)");
+const u = new URL(dbUrl);
 const adapter = new PrismaMariaDb({
-  host: "up-de-fra1-mysql-2.db.run-on-seenode.com",
-  port: 11550,
-  user: "db_ihxf9qlaqdps",
-  password: "PqJ15QNKA34EoDZykLjUK1TG",
-  database: "db_ihxf9qlaqdps",
+  host: u.hostname,
+  port: u.port ? parseInt(u.port, 10) : 3306,
+  user: decodeURIComponent(u.username),
+  password: decodeURIComponent(u.password),
+  database: u.pathname.replace(/^\//, ""),
   connectionLimit: 5,
   acquireTimeout: 60000,
   connectTimeout: 15000,

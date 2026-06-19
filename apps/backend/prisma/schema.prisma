@@ -870,6 +870,7 @@ model MdModel {
   careModel              String?         @map("CARE_MODEL") @db.VarChar(50)
   technicalSpecification String?         @map("TECHNICAL_SPECIFICATION") @db.VarChar(100)
   technicalSpecFile      Bytes?          @map("TECHNICAL_SPECIFICATION_FILE") @db.MediumBlob
+  idDlkPacking           Int?            @map("ID_DLK_PACKING")
   stateModel             Int             @default(1) @map("STATE_MODEL") @db.TinyInt
   codUsuarioCargaDl      String          @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
   fehProcesoCargaDl      DateTime        @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
@@ -878,13 +879,38 @@ model MdModel {
   flgStatutActif         Int             @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
   brand                  MdBrand         @relation(fields: [idDlkBrand], references: [idDlkBrand], onDelete: Restrict, onUpdate: Cascade, map: "fk_model_brand")
   subbrand               MdSubbrand?     @relation(fields: [idDlkSubbrand], references: [idDlkSubbrand], onDelete: Restrict, onUpdate: Cascade, map: "fk_model_subbrand")
+  packaging              MdPackaging?    @relation(fields: [idDlkPacking], references: [idDlkPacking], onDelete: SetNull, onUpdate: Cascade, map: "fk_model_packing")
   cares                  MdCare[]
   images                 MdModelImage[]
   details                MdModelDetail[]
 
   @@index([idDlkBrand], map: "FK_MODEL_BRAND")
   @@index([idDlkSubbrand], map: "FK_MODEL_SUBBRAND")
+  @@index([idDlkPacking], map: "FK_MODEL_PACKING")
   @@map("MD_MODEL")
+}
+
+/**
+ * Empaque (catálogo reutilizable). 1 MD_PACKAGING → N MD_MODEL: un modelo tiene un
+ * empaque (MD_MODEL.ID_DLK_PACKING), pero un mismo empaque lo comparten varios modelos.
+ */
+model MdPackaging {
+  idDlkPacking       Int       @id @default(autoincrement()) @map("ID_DLK_PACKING")
+  type               String    @map("TYPE") @db.VarChar(500)
+  weight             Decimal?  @map("WEIGHT") @db.Decimal(10, 3)
+  volume             Decimal?  @map("VOLUME") @db.Decimal(10, 3)
+  recycling          String?   @map("RECYCLING") @db.VarChar(45)
+  percentageRecycled Decimal?  @map("PERCENTAGE_RECYCLED") @db.Decimal(5, 2)
+  statePackaging     Int       @default(1) @map("STATE_PACKAGING") @db.TinyInt
+  codUsuarioCargaDl  String    @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fehProcesoCargaDl  DateTime  @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fehProcesoModifDl  DateTime  @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion          String    @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif     Int       @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  models             MdModel[]
+
+  @@index([recycling], map: "IDX_MD_PACKAGING_RECYCLING")
+  @@map("MD_PACKAGING")
 }
 
 model MdCare {

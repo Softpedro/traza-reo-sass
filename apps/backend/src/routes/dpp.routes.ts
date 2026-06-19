@@ -1,6 +1,7 @@
 import { Router } from "express";
 import type { PrismaClient } from "../../generated/prisma/client.js";
 import type { UnitTraceService } from "../services/unit-trace.service.js";
+import type { DppPassportService } from "../services/dpp-passport.service.js";
 import { apiKeyMiddleware, type ApiClientRequest } from "../middleware/api-key.middleware.js";
 
 // Dominios DPP permitidos para la ingesta de escaneos. Configurable por env
@@ -28,9 +29,34 @@ function isAllowedDppUrl(url: string): boolean {
  * Endpoints de ingesta DPP (máquina-a-máquina), protegidos por API Key (X-API-Key).
  * Montar FUERA del guard JWT.
  */
-export function dppRoutes(service: UnitTraceService, prisma: PrismaClient): Router {
+export function dppRoutes(
+  service: UnitTraceService,
+  prisma: PrismaClient,
+  passportService: DppPassportService
+): Router {
   const router = Router();
   router.use(apiKeyMiddleware(prisma));
+
+  // Pasaporte digital de una prenda (lectura) para la app pública DPP.
+  // Recibe la URL del QR (GS1 Digital Link) por query y devuelve el JSON por secciones.
+  router.get("/passport", async (req: ApiClientRequest, res) => {
+    try {
+      const url = typeof req.query.url === "string" ? req.query.url.trim() : "";
+      if (!url) {
+        return res.status(400).json({ error: "url es obligatoria", type: "VALIDATION" });
+      }
+      const result = await passportService.getPassport(url);
+      if ("notFound" in result) {
+        return res
+          .status(404)
+          .json({ error: "Prenda no encontrada para esa URL", type: "NOT_FOUND" });
+      }
+      res.json(result.passport);
+    } catch (e) {
+      console.error("[dpp:passport]", e);
+      res.status(500).json({ error: "Error interno", type: "INTERNAL" });
+    }
+  });
 
   // Registra un escaneo de etiqueta DPP por un lector externo.
   router.post("/scan", async (req: ApiClientRequest, res) => {

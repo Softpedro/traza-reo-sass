@@ -194,6 +194,13 @@ export type MdSubbrand = Prisma.MdSubbrandModel
  */
 export type MdModel = Prisma.MdModelModel
 /**
+ * Model MdPackaging
+ * *
+ *  * Empaque (catálogo reutilizable). 1 MD_PACKAGING → N MD_MODEL: un modelo tiene un
+ *  * empaque (MD_MODEL.ID_DLK_PACKING), pero un mismo empaque lo comparten varios modelos.
+ */
+export type MdPackaging = Prisma.MdPackagingModel
+/**
  * Model MdCare
  * 
  */

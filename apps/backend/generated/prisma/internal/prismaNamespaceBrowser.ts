@@ -80,6 +80,7 @@ export const ModelName = {
   MdParentCompanyMaquila: 'MdParentCompanyMaquila',
   MdSubbrand: 'MdSubbrand',
   MdModel: 'MdModel',
+  MdPackaging: 'MdPackaging',
   MdCare: 'MdCare',
   MdModelImage: 'MdModelImage',
   MdModelDetail: 'MdModelDetail',
@@ -851,6 +852,7 @@ export const MdModelScalarFieldEnum = {
   careModel: 'careModel',
   technicalSpecification: 'technicalSpecification',
   technicalSpecFile: 'technicalSpecFile',
+  idDlkPacking: 'idDlkPacking',
   stateModel: 'stateModel',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fehProcesoCargaDl: 'fehProcesoCargaDl',
@@ -860,6 +862,24 @@ export const MdModelScalarFieldEnum = {
 } as const
 
 export type MdModelScalarFieldEnum = (typeof MdModelScalarFieldEnum)[keyof typeof MdModelScalarFieldEnum]
+
+
+export const MdPackagingScalarFieldEnum = {
+  idDlkPacking: 'idDlkPacking',
+  type: 'type',
+  weight: 'weight',
+  volume: 'volume',
+  recycling: 'recycling',
+  percentageRecycled: 'percentageRecycled',
+  statePackaging: 'statePackaging',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdPackagingScalarFieldEnum = (typeof MdPackagingScalarFieldEnum)[keyof typeof MdPackagingScalarFieldEnum]
 
 
 export const MdCareScalarFieldEnum = {
@@ -1901,6 +1921,16 @@ export const MdModelOrderByRelevanceFieldEnum = {
 } as const
 
 export type MdModelOrderByRelevanceFieldEnum = (typeof MdModelOrderByRelevanceFieldEnum)[keyof typeof MdModelOrderByRelevanceFieldEnum]
+
+
+export const MdPackagingOrderByRelevanceFieldEnum = {
+  type: 'type',
+  recycling: 'recycling',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdPackagingOrderByRelevanceFieldEnum = (typeof MdPackagingOrderByRelevanceFieldEnum)[keyof typeof MdPackagingOrderByRelevanceFieldEnum]
 
 
 export const MdCareOrderByRelevanceFieldEnum = {

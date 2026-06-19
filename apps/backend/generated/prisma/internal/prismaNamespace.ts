@@ -413,6 +413,7 @@ export const ModelName = {
   MdParentCompanyMaquila: 'MdParentCompanyMaquila',
   MdSubbrand: 'MdSubbrand',
   MdModel: 'MdModel',
+  MdPackaging: 'MdPackaging',
   MdCare: 'MdCare',
   MdModelImage: 'MdModelImage',
   MdModelDetail: 'MdModelDetail',
@@ -453,7 +454,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdApiClient" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdModel" | "mdCare" | "mdModelImage" | "mdModelDetail" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderLabelComponent" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace"
+    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdApiClient" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdModel" | "mdPackaging" | "mdCare" | "mdModelImage" | "mdModelDetail" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderLabelComponent" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2368,6 +2369,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MdModelCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MdModelCountAggregateOutputType> | number
+        }
+      }
+    }
+    MdPackaging: {
+      payload: Prisma.$MdPackagingPayload<ExtArgs>
+      fields: Prisma.MdPackagingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MdPackagingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdPackagingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MdPackagingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdPackagingPayload>
+        }
+        findFirst: {
+          args: Prisma.MdPackagingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdPackagingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MdPackagingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdPackagingPayload>
+        }
+        findMany: {
+          args: Prisma.MdPackagingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdPackagingPayload>[]
+        }
+        create: {
+          args: Prisma.MdPackagingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdPackagingPayload>
+        }
+        createMany: {
+          args: Prisma.MdPackagingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MdPackagingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdPackagingPayload>
+        }
+        update: {
+          args: Prisma.MdPackagingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdPackagingPayload>
+        }
+        deleteMany: {
+          args: Prisma.MdPackagingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MdPackagingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MdPackagingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MdPackagingPayload>
+        }
+        aggregate: {
+          args: Prisma.MdPackagingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMdPackaging>
+        }
+        groupBy: {
+          args: Prisma.MdPackagingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdPackagingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MdPackagingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MdPackagingCountAggregateOutputType> | number
         }
       }
     }
@@ -4788,6 +4855,7 @@ export const MdModelScalarFieldEnum = {
   careModel: 'careModel',
   technicalSpecification: 'technicalSpecification',
   technicalSpecFile: 'technicalSpecFile',
+  idDlkPacking: 'idDlkPacking',
   stateModel: 'stateModel',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   fehProcesoCargaDl: 'fehProcesoCargaDl',
@@ -4797,6 +4865,24 @@ export const MdModelScalarFieldEnum = {
 } as const
 
 export type MdModelScalarFieldEnum = (typeof MdModelScalarFieldEnum)[keyof typeof MdModelScalarFieldEnum]
+
+
+export const MdPackagingScalarFieldEnum = {
+  idDlkPacking: 'idDlkPacking',
+  type: 'type',
+  weight: 'weight',
+  volume: 'volume',
+  recycling: 'recycling',
+  percentageRecycled: 'percentageRecycled',
+  statePackaging: 'statePackaging',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fehProcesoCargaDl: 'fehProcesoCargaDl',
+  fehProcesoModifDl: 'fehProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type MdPackagingScalarFieldEnum = (typeof MdPackagingScalarFieldEnum)[keyof typeof MdPackagingScalarFieldEnum]
 
 
 export const MdCareScalarFieldEnum = {
@@ -5840,6 +5926,16 @@ export const MdModelOrderByRelevanceFieldEnum = {
 export type MdModelOrderByRelevanceFieldEnum = (typeof MdModelOrderByRelevanceFieldEnum)[keyof typeof MdModelOrderByRelevanceFieldEnum]
 
 
+export const MdPackagingOrderByRelevanceFieldEnum = {
+  type: 'type',
+  recycling: 'recycling',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type MdPackagingOrderByRelevanceFieldEnum = (typeof MdPackagingOrderByRelevanceFieldEnum)[keyof typeof MdPackagingOrderByRelevanceFieldEnum]
+
+
 export const MdCareOrderByRelevanceFieldEnum = {
   codCare: 'codCare',
   nombCare: 'nombCare',
@@ -6391,6 +6487,7 @@ export type GlobalOmitConfig = {
   mdParentCompanyMaquila?: Prisma.MdParentCompanyMaquilaOmit
   mdSubbrand?: Prisma.MdSubbrandOmit
   mdModel?: Prisma.MdModelOmit
+  mdPackaging?: Prisma.MdPackagingOmit
   mdCare?: Prisma.MdCareOmit
   mdModelImage?: Prisma.MdModelImageOmit
   mdModelDetail?: Prisma.MdModelDetailOmit

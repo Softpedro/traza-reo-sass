@@ -107,6 +107,9 @@ export class ModelService {
     return this.prisma.mdModel.findMany({
       where: { flgStatutActif: 1 },
       orderBy: { idDlkModel: "desc" },
+      // `omit` el BLOB de la ficha (MEDIUMBLOB ~1.5 MB c/u): con `include` y sin
+      // `select`, Prisma traía la ficha de cada modelo → el listado tardaba minutos.
+      omit: { technicalSpecFile: true },
       include: { brand: brandSelect, subbrand: subbrandSelect },
     });
   }
@@ -115,6 +118,9 @@ export class ModelService {
   async getById(id: number) {
     const row = await this.prisma.mdModel.findUnique({
       where: { idDlkModel: id },
+      // `omit` el BLOB de la ficha (~1.5 MB): aquí solo se necesita saber si existe
+      // (hasFicha), no su contenido. Traerlo hacía lento abrir el modelo.
+      omit: { technicalSpecFile: true },
       include: {
         brand: brandSelect,
         subbrand: subbrandSelect,
@@ -131,10 +137,13 @@ export class ModelService {
       },
     });
     if (!row) return null;
-    const { technicalSpecFile, details, ...rest } = row;
+    // hasFicha sin transferir el blob: consulta solo el tamaño de la columna.
+    const fichaLen = await this.prisma.$queryRaw<{ len: number | bigint | null }[]>`
+      SELECT OCTET_LENGTH(TECHNICAL_SPECIFICATION_FILE) AS len FROM MD_MODEL WHERE ID_DLK_MODEL = ${id}`;
+    const { details, ...rest } = row;
     return {
       ...rest,
-      hasFicha: technicalSpecFile != null && technicalSpecFile.byteLength > 0,
+      hasFicha: Number(fichaLen?.[0]?.len ?? 0) > 0,
       pieces: details.map((d) => ({
         idDlkModelDetail: d.idDlkModelDetail,
         namePiece: d.namePiece,

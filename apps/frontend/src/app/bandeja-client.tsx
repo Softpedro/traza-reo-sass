@@ -89,7 +89,7 @@ export function BandejaClient() {
       </div>
 
       <div className="flex justify-end">
-        <div className="w-full max-w-sm space-y-4">
+        <div className="w-full max-w-sm space-y-4 hidden">
           {DPP_STATS.map((stat) => (
             <div
               key={stat.label}

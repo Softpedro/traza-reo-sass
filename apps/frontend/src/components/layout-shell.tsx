@@ -23,8 +23,8 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
           <Sidebar />
           <main className="min-w-0 flex-1 overflow-auto p-6">{children}</main>
         </div>
-        <footer className="flex items-center justify-between border-t px-6 py-3 text-xs text-muted-foreground">
-          <span className="font-semibold">MREO-01</span>
+        <footer className="flex items-center justify-center border-t px-6 py-3 text-xs text-muted-foreground">
+          {/* <span className="font-semibold">MREO-01</span> */}
           <span className="font-semibold">UMA TECHNOLOGY</span>
         </footer>
       </div>

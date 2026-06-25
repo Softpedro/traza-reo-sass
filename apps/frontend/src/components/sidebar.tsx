@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Shirt } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@fullstack-reo/ui";
 import {
   navItems,
@@ -195,26 +195,6 @@ export function Sidebar() {
 
   return (
     <aside className="flex w-56 shrink-0 flex-col border-r border-black/10 bg-[hsl(var(--sidebar-bg))] px-4 py-5">
-      <div className="mb-5 px-1">
-        <div className="mb-2 flex items-center justify-between gap-1">
-          <span className="text-lg font-black tracking-tight text-neutral-900">TRAZA</span>
-          <span className="flex gap-0.5 text-neutral-900">
-            <Shirt className="h-5 w-5" strokeWidth={2.2} aria-hidden />
-            <Shirt className="h-5 w-5 -translate-x-1" strokeWidth={2.2} aria-hidden />
-          </span>
-        </div>
-        <div className="flex items-center gap-1.5" aria-hidden>
-          {[0, 1, 2, 3, 4, 5].map((i) => (
-            <span
-              key={i}
-              className={cn(
-                "h-2 w-2 rounded-full border border-neutral-900",
-                i < 3 ? "bg-neutral-900" : "bg-transparent"
-              )}
-            />
-          ))}
-        </div>
-      </div>
       <nav className="space-y-1">{navItems.map(renderItem)}</nav>
     </aside>
   );

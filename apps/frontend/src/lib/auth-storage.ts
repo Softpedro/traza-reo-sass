@@ -10,6 +10,8 @@ export type AuthUser = {
   positionUser: number;
   idDlkParentCompany: number;
   codParentCompany: string;
+  /** El backend (/api/auth/me) indica si el usuario tiene foto, sin enviar el blob. */
+  hasPhotograph?: boolean;
 };
 
 const TOKEN_KEY = "reo:auth:token";

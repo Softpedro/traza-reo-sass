@@ -114,6 +114,21 @@ export function authRoutes(service: AuthService): Router {
     }
   });
 
+  // Foto del usuario logueado (binaria). Endpoint dedicado para no arrastrar el blob en /me.
+  router.get("/me/photo", authMiddleware(service), async (req: AuthRequest, res) => {
+    try {
+      const photo = await service.mePhoto(req.user!.sub);
+      if (!photo) return res.status(404).json({ error: "Sin foto", type: "NOT_FOUND" });
+      res.setHeader("Content-Type", photo.contentType);
+      res.setHeader("Cache-Control", "private, max-age=300");
+      res.send(photo.buffer);
+    } catch (e) {
+      console.error("[auth:me/photo]", e);
+      const message = e instanceof Error ? e.message : "Error desconocido";
+      res.status(500).json({ error: message, type: "INTERNAL" });
+    }
+  });
+
   // ── 2FA: paso 2 del login (público; el tempToken viene en el body) ──
   router.post("/2fa/verify", async (req, res) => {
     try {

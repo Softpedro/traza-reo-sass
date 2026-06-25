@@ -1,10 +1,33 @@
 import bcrypt from "bcrypt";
+import { Buffer } from "node:buffer";
 import { randomBytes } from "node:crypto";
 import jwt, { type SignOptions } from "jsonwebtoken";
 import { generateSecret, generateURI, verifySync } from "otplib";
 import qrcode from "qrcode";
 import { AccessStatus, DeviceType, type PrismaClient } from "../../generated/prisma/client.js";
 import { decryptSecret, encryptSecret } from "../lib/crypto.js";
+
+/** Detecta el content-type de una imagen por sus magic bytes (fallback PNG). */
+function detectImageContentType(buf: Buffer): string {
+  if (buf.length >= 2 && buf[0] === 0xff && buf[1] === 0xd8) return "image/jpeg";
+  if (
+    buf.length >= 4 &&
+    buf[0] === 0x89 &&
+    buf[1] === 0x50 &&
+    buf[2] === 0x4e &&
+    buf[3] === 0x47
+  )
+    return "image/png";
+  if (buf.length >= 3 && buf[0] === 0x47 && buf[1] === 0x49 && buf[2] === 0x46)
+    return "image/gif";
+  if (
+    buf.length >= 12 &&
+    buf.subarray(0, 4).toString("ascii") === "RIFF" &&
+    buf.subarray(8, 12).toString("ascii") === "WEBP"
+  )
+    return "image/webp";
+  return "image/png";
+}
 
 export type JwtPayload = {
   sub: number;
@@ -511,6 +534,22 @@ export class AuthService {
       ...rest,
       hasPhotograph: photograph != null && photograph.byteLength > 0,
     };
+  }
+
+  /** Foto del usuario logueado como buffer + content-type, o null si no tiene. Liviano: solo trae el blob. */
+  async mePhoto(
+    idDlkUserReo: number
+  ): Promise<{ buffer: Buffer; contentType: string } | null> {
+    const user = await this.prisma.mdUserReo.findUnique({
+      where: { idDlkUserReo },
+      select: { photograph: true, flgStatutActif: true },
+    });
+    if (!user || user.flgStatutActif !== 1 || user.photograph == null) return null;
+    const buffer = Buffer.isBuffer(user.photograph)
+      ? user.photograph
+      : Buffer.from(user.photograph);
+    if (buffer.byteLength === 0) return null;
+    return { buffer, contentType: detectImageContentType(buffer) };
   }
 
   private async logAccess(

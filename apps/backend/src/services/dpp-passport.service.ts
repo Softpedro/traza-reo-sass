@@ -153,9 +153,14 @@ export class DppPassportService {
             details: {
               where: { flgStatutActif: 1 },
               orderBy: { idDlkModelDetail: "asc" },
-              include: { images: { where: { flgStatutActif: 1 } } },
+              include: {
+                images: {
+                  where: { flgStatutActif: 1 },
+                  orderBy: { idDlkModelImages: "asc" },
+                },
+              },
             },
-            images: { where: { flgStatutActif: 1 } },
+            images: { where: { flgStatutActif: 1 }, orderBy: { idDlkModelImages: "asc" } },
             packaging: true,
           },
         })
@@ -224,21 +229,37 @@ export class DppPassportService {
     const recycledPercentage = recycledPctRaw != null ? Number(recycledPctRaw) : null;
 
     // ── Imágenes ───────────────────────────────────────────────────────
-    // Prioridad: fotos de la pieza (catálogo) → fotos del modelo → fallback
-    // a la imagen del estilo (OD_ORDER_DETAIL.IMG_ESTILO) de la orden.
-    let images: string[] = [];
+    // Se exponen TODAS las fotos de TODAS las piezas del modelo, agrupadas por
+    // pieza y en orden. Ej. set pantalón + chaqueta con 4 fotos c/u → 8 imágenes.
+    // Cada imagen lleva:
+    //   - name:  nombre secuencial "image-1", "image-2", ... (a través de todas)
+    //   - piece: a qué pieza pertenece (MD_MODEL_DETAIL.NAME_PIECE), para que el
+    //            DPP sepa cuál es del pantalón y cuál de la chaqueta.
+    // Prioridad: fotos por pieza (catálogo MD_MODEL_DETAIL) → fotos del modelo
+    // → fallback a la imagen del estilo (OD_ORDER_DETAIL.IMG_ESTILO) de la orden.
+    let images: { name: string; piece: string | null; url: string }[] = [];
     if (model) {
-      const src =
-        model.details[pieceIdx - 1]?.images?.length
-          ? model.details[pieceIdx - 1].images
-          : model.images;
-      images = src
-        .map((im) => imageBytesToDataUrl(im.imageData))
-        .filter((x): x is string => x != null);
+      const collected: { piece: string | null; url: string }[] = [];
+      // Piezas en orden (details viene ordenado por idDlkModelDetail asc); las
+      // fotos de cada pieza se agregan seguidas, etiquetadas con su nombre.
+      for (const d of model.details) {
+        for (const im of d.images) {
+          const url = imageBytesToDataUrl(im.imageData);
+          if (url) collected.push({ piece: d.namePiece ?? null, url });
+        }
+      }
+      // Si ninguna pieza tiene fotos, caer a las fotos de nivel modelo (sin pieza).
+      if (collected.length === 0) {
+        for (const im of model.images) {
+          const url = imageBytesToDataUrl(im.imageData);
+          if (url) collected.push({ piece: null, url });
+        }
+      }
+      images = collected.map((c, i) => ({ name: `image-${i + 1}`, piece: c.piece, url: c.url }));
     }
     if (images.length === 0) {
       const fallback = imageBytesToDataUrl(detail?.imgEstilo);
-      if (fallback) images = [fallback];
+      if (fallback) images = [{ name: "image-1", piece: null, url: fallback }];
     }
 
     // ── Fabricación (timeline desde OD_PROCESS_ROUTE) ──────────────────

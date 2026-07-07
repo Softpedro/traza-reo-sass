@@ -73,7 +73,11 @@ curl -G "https://web-300ixhl1vesu.up-de-fra1-k8s-1.apps.run-on-seenode.com/api/d
       }
     }
   },
-  "images": ["string"],        // 0..N data URLs (base64). [] si no hay
+  "images": [                       // 0..N imágenes. [] si no hay. Todas las piezas,
+    { "name":  "string",            //   agrupadas por pieza y en orden.
+      "piece": "string|null",       //   name  = "image-N" secuencial
+      "url":   "string" }           //   piece = pieza a la que pertenece (ej. "Pantalón")
+  ],                                //   url   = data URL base64
   "description": {
     "title":      "string|null",   // nombre del modelo
     "collection": "string|null",   // colección
@@ -125,7 +129,7 @@ curl -G "https://web-300ixhl1vesu.up-de-fra1-k8s-1.apps.run-on-seenode.com/api/d
 {
   "unit": { "gtin": "07750549420014", "lote": "OP28261", "serial": "1", "sgtin": "07750549420014/1", "productCode": "7750549420014/10/OP28261/21/1", "blacklisted": false },
   "header": { "title": "Blusa Pijama Eleganza Dream Garden", "traceable": true, "brand": { "name": "QAPARY", "logoUrl": "data:image/png;base64,iV...", "social": { "facebook": "https://www.facebook.com/QAPARY.PE", "instagram": "", "whatsapp": "+51 934029711", "ecommerce": "https://www.qapary.com/" } } },
-  "images": ["data:image/jpeg;base64,/9j..."],
+  "images": [{ "name": "image-1", "piece": "Chaqueta m/l", "url": "data:image/jpeg;base64,/9j..." }],
   "description": { "title": "Pijama Eleganza Natural", "collection": "Dream Garden", "body": "Blusa de pijama manga larga, confeccionada en Interlock 50/1 Estampado (100% Pima Cotton)..." },
   "information": { "name": "Blusa Pijama Eleganza Dream Garden", "brand": "QAPARY", "gtin": "07750549420014", "productCode": "7750549420014/10/OP28261/21/1", "category": "Ropa de Dormir / Homewear Femenino (Sup.)", "color": "NAVY PEONY / SIN ESTAMPADO", "year": 2025, "season": "Spring 25", "size": "XS" },
   "materials": { "composition": "100% Pima Cotton. Tela: Interlock 50/1 Estampado. Densidad 0.19 kg/m2.", "recycled": false, "recycledPercentage": null, "recycledInput": null },
@@ -140,8 +144,10 @@ curl -G "https://web-300ixhl1vesu.up-de-fra1-k8s-1.apps.run-on-seenode.com/api/d
 
 - **`care.text`** es UN solo texto. Las líneas que empiezan con `*` son la **lista de cuidados**;
   el resto son párrafos (intro / cierre). Separá por `\n` y formateá las `*` como viñetas.
-- **`images` y `brand.logoUrl`** son **data URLs** (`data:image/...;base64,...`): se pueden poner
-  directo en `<img src>`. Pueden venir vacíos (`[]` / `null`).
+- **`images[].url` y `brand.logoUrl`** son **data URLs** (`data:image/...;base64,...`): se pueden
+  poner directo en `<img src>`. `images` es una lista de `{ name, piece, url }` con todas las fotos
+  de todas las piezas en orden (`name` = `"image-1"`, `"image-2"`, …; `piece` indica a qué pieza
+  pertenece cada foto, ej. "Pantalón" / "Chaqueta"). Puede venir vacía (`[]`).
 - **`packaging`** puede ser `null` (modelo sin empaque). `weight` en gramos, `volume` en m³; el
   texto "Aprox. 200 g" lo arma el front.
 - **`manufacturing.timeline`** hoy puede venir `[]` (ruta aún no cargada). La estructura ya es

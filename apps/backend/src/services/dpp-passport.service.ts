@@ -116,6 +116,11 @@ export class DppPassportService {
                     instagramBrand: true,
                     whatsappBrand: true,
                     ecommerceBrand: true,
+                    // Empresa matriz: su dirección es el fallback de manufacturing.location
+                    // cuando la ruta de proceso no tiene facility asignada.
+                    parentCompany: {
+                      select: { nameParentCompany: true, addressParentCompany: true },
+                    },
                   },
                 },
               },
@@ -282,6 +287,12 @@ export class DppPassportService {
       }
     }
 
+    // Fallback de location: si ningún proceso de la ruta tiene facility asignada,
+    // se usa la dirección de la empresa matriz (Configuración → Empresa → Dirección).
+    if (!manufacturingLocation) {
+      manufacturingLocation = brand?.parentCompany?.addressParentCompany ?? null;
+    }
+
     const productCode = `${normGtin(head?.codGtin).replace(/^0+/, "")}/10/${parsed.lote}/21/${parsed.serial}`;
 
     const passport = {
@@ -329,7 +340,9 @@ export class DppPassportService {
           .join(" / ") || detail?.colorAway || null,
         year: model?.year ?? null,
         season: model?.season ?? head?.seasonEstilo ?? null,
-        // talla: se reincorpora luego (head?.size)
+        // Talla de la unidad serializada; head.size como fallback (coinciden por el
+        // unique [idDlkOrderDetail, size] del head).
+        size: unit.size ?? head?.size ?? null,
       },
 
       materials: {

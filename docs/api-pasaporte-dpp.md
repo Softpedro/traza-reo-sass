@@ -85,7 +85,8 @@ curl -G "https://web-300ixhl1vesu.up-de-fra1-k8s-1.apps.run-on-seenode.com/api/d
     "category":    "string|null",
     "color":       "string|null",  // "Fondo / Estampado"
     "year":        0,              // number|null
-    "season":      "string|null"
+    "season":      "string|null",
+    "size":        "string|null"   // talla de la unidad (ej. "XS", "M")
   },
   "materials": {
     "composition":        "string|null",
@@ -124,7 +125,7 @@ curl -G "https://web-300ixhl1vesu.up-de-fra1-k8s-1.apps.run-on-seenode.com/api/d
   "header": { "title": "Blusa Pijama Eleganza Dream Garden", "traceable": true, "brand": { "name": "QAPARY", "logoUrl": "data:image/png;base64,iV...", "social": { "facebook": "https://www.facebook.com/QAPARY.PE", "instagram": "", "whatsapp": "+51 934029711", "ecommerce": "https://www.qapary.com/" } } },
   "images": ["data:image/jpeg;base64,/9j..."],
   "description": { "title": "Pijama Eleganza Natural", "collection": "Dream Garden", "body": "Blusa de pijama manga larga, confeccionada en Interlock 50/1 Estampado (100% Pima Cotton)..." },
-  "information": { "name": "Blusa Pijama Eleganza Dream Garden", "brand": "QAPARY", "gtin": "07750549420014", "productCode": "7750549420014/10/OP28261/21/1", "category": "Ropa de Dormir / Homewear Femenino (Sup.)", "color": "NAVY PEONY / SIN ESTAMPADO", "year": 2025, "season": "Spring 25" },
+  "information": { "name": "Blusa Pijama Eleganza Dream Garden", "brand": "QAPARY", "gtin": "07750549420014", "productCode": "7750549420014/10/OP28261/21/1", "category": "Ropa de Dormir / Homewear Femenino (Sup.)", "color": "NAVY PEONY / SIN ESTAMPADO", "year": 2025, "season": "Spring 25", "size": "XS" },
   "materials": { "composition": "100% Pima Cotton. Tela: Interlock 50/1 Estampado. Densidad 0.19 kg/m2.", "recycled": false, "recycledPercentage": null, "recycledInput": null },
   "packaging": { "type": "Empaque primario individual (Blusa XS) en bolsa biodegradable...", "weight": 200, "volume": 0.003, "recycling": "Biodegradable / carton reciclado", "percentageRecycled": 100, "recycled": true },
   "care": { "text": "Para conservar la suavidad color y forma de tu pijama Eleganza:\n* Lavar a máquina en ciclo delicado.\n* Usar agua fría (máx. 30°C)\n..." },
@@ -143,6 +144,10 @@ curl -G "https://web-300ixhl1vesu.up-de-fra1-k8s-1.apps.run-on-seenode.com/api/d
   texto "Aprox. 200 g" lo arma el front.
 - **`manufacturing.timeline`** hoy puede venir `[]` (ruta aún no cargada). La estructura ya es
   estable: construí contra ella.
+- **`manufacturing.location`** se resuelve con prioridad: (1) facility del primer proceso de la
+  ruta con fábrica asignada (`OD_PROCESS_ROUTE` → `MD_FACILITY`), y si ningún proceso tiene
+  facility, (2) fallback a la **dirección de la empresa matriz** (Configuración → Empresa →
+  Dirección). Puede ser `null` solo si tampoco hay empresa con dirección.
 
 ## 7. Respuestas de error
 

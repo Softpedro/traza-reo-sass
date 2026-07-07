@@ -23,6 +23,10 @@ export type Brand = {
   subdomainBrand?: string | null;
   /** Data URL desde API (logo binario mapeado en backend) */
   logoBrand?: string | null;
+  /** Logo específico para el DPP (Data URL desde API). Se expone en el servicio DPP. */
+  logoDpp?: string | null;
+  /** Color de fondo de la imagen en el DPP (hex, ej. "#0A0A0A"). Se expone en el servicio DPP. */
+  colorFondoImagenDpp?: string | null;
   stateBrand: number;
   parentCompany?: {
     idDlkParentCompany: number;

@@ -59,6 +59,8 @@ export type MdBrandMinAggregateOutputType = {
   whatsappBrand: string | null
   ecommerceBrand: string | null
   logoBrand: runtime.Bytes | null
+  logoDpp: runtime.Bytes | null
+  colorFondoImagenDpp: string | null
   subdomainBrand: string | null
   stateBrand: number | null
   codUsuarioCargaDl: string | null
@@ -85,6 +87,8 @@ export type MdBrandMaxAggregateOutputType = {
   whatsappBrand: string | null
   ecommerceBrand: string | null
   logoBrand: runtime.Bytes | null
+  logoDpp: runtime.Bytes | null
+  colorFondoImagenDpp: string | null
   subdomainBrand: string | null
   stateBrand: number | null
   codUsuarioCargaDl: string | null
@@ -111,6 +115,8 @@ export type MdBrandCountAggregateOutputType = {
   whatsappBrand: number
   ecommerceBrand: number
   logoBrand: number
+  logoDpp: number
+  colorFondoImagenDpp: number
   subdomainBrand: number
   stateBrand: number
   codUsuarioCargaDl: number
@@ -155,6 +161,8 @@ export type MdBrandMinAggregateInputType = {
   whatsappBrand?: true
   ecommerceBrand?: true
   logoBrand?: true
+  logoDpp?: true
+  colorFondoImagenDpp?: true
   subdomainBrand?: true
   stateBrand?: true
   codUsuarioCargaDl?: true
@@ -181,6 +189,8 @@ export type MdBrandMaxAggregateInputType = {
   whatsappBrand?: true
   ecommerceBrand?: true
   logoBrand?: true
+  logoDpp?: true
+  colorFondoImagenDpp?: true
   subdomainBrand?: true
   stateBrand?: true
   codUsuarioCargaDl?: true
@@ -207,6 +217,8 @@ export type MdBrandCountAggregateInputType = {
   whatsappBrand?: true
   ecommerceBrand?: true
   logoBrand?: true
+  logoDpp?: true
+  colorFondoImagenDpp?: true
   subdomainBrand?: true
   stateBrand?: true
   codUsuarioCargaDl?: true
@@ -320,6 +332,8 @@ export type MdBrandGroupByOutputType = {
   whatsappBrand: string | null
   ecommerceBrand: string | null
   logoBrand: runtime.Bytes | null
+  logoDpp: runtime.Bytes | null
+  colorFondoImagenDpp: string | null
   subdomainBrand: string | null
   stateBrand: number
   codUsuarioCargaDl: string
@@ -369,6 +383,8 @@ export type MdBrandWhereInput = {
   whatsappBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   ecommerceBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   logoBrand?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  logoDpp?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   subdomainBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   stateBrand?: Prisma.IntFilter<"MdBrand"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdBrand"> | string
@@ -399,6 +415,8 @@ export type MdBrandOrderByWithRelationInput = {
   whatsappBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   ecommerceBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   logoBrand?: Prisma.SortOrderInput | Prisma.SortOrder
+  logoDpp?: Prisma.SortOrderInput | Prisma.SortOrder
+  colorFondoImagenDpp?: Prisma.SortOrderInput | Prisma.SortOrder
   subdomainBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
@@ -433,6 +451,8 @@ export type MdBrandWhereUniqueInput = Prisma.AtLeast<{
   whatsappBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   ecommerceBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   logoBrand?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  logoDpp?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   subdomainBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   stateBrand?: Prisma.IntFilter<"MdBrand"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdBrand"> | string
@@ -463,6 +483,8 @@ export type MdBrandOrderByWithAggregationInput = {
   whatsappBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   ecommerceBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   logoBrand?: Prisma.SortOrderInput | Prisma.SortOrder
+  logoDpp?: Prisma.SortOrderInput | Prisma.SortOrder
+  colorFondoImagenDpp?: Prisma.SortOrderInput | Prisma.SortOrder
   subdomainBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
@@ -497,6 +519,8 @@ export type MdBrandScalarWhereWithAggregatesInput = {
   whatsappBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null
   ecommerceBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null
   logoBrand?: Prisma.BytesNullableWithAggregatesFilter<"MdBrand"> | runtime.Bytes | null
+  logoDpp?: Prisma.BytesNullableWithAggregatesFilter<"MdBrand"> | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null
   subdomainBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null
   stateBrand?: Prisma.IntWithAggregatesFilter<"MdBrand"> | number
   codUsuarioCargaDl?: Prisma.StringWithAggregatesFilter<"MdBrand"> | string
@@ -521,6 +545,8 @@ export type MdBrandCreateInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  logoDpp?: runtime.Bytes | null
+  colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
@@ -551,6 +577,8 @@ export type MdBrandUncheckedCreateInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  logoDpp?: runtime.Bytes | null
+  colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
@@ -578,6 +606,8 @@ export type MdBrandUpdateInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -608,6 +638,8 @@ export type MdBrandUncheckedUpdateInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -637,6 +669,8 @@ export type MdBrandCreateManyInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  logoDpp?: runtime.Bytes | null
+  colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
@@ -661,6 +695,8 @@ export type MdBrandUpdateManyMutationInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -687,6 +723,8 @@ export type MdBrandUncheckedUpdateManyInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -729,6 +767,8 @@ export type MdBrandCountOrderByAggregateInput = {
   whatsappBrand?: Prisma.SortOrder
   ecommerceBrand?: Prisma.SortOrder
   logoBrand?: Prisma.SortOrder
+  logoDpp?: Prisma.SortOrder
+  colorFondoImagenDpp?: Prisma.SortOrder
   subdomainBrand?: Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
@@ -763,6 +803,8 @@ export type MdBrandMaxOrderByAggregateInput = {
   whatsappBrand?: Prisma.SortOrder
   ecommerceBrand?: Prisma.SortOrder
   logoBrand?: Prisma.SortOrder
+  logoDpp?: Prisma.SortOrder
+  colorFondoImagenDpp?: Prisma.SortOrder
   subdomainBrand?: Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
@@ -789,6 +831,8 @@ export type MdBrandMinOrderByAggregateInput = {
   whatsappBrand?: Prisma.SortOrder
   ecommerceBrand?: Prisma.SortOrder
   logoBrand?: Prisma.SortOrder
+  logoDpp?: Prisma.SortOrder
+  colorFondoImagenDpp?: Prisma.SortOrder
   subdomainBrand?: Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
@@ -910,6 +954,8 @@ export type MdBrandCreateWithoutParentCompanyInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  logoDpp?: runtime.Bytes | null
+  colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
@@ -938,6 +984,8 @@ export type MdBrandUncheckedCreateWithoutParentCompanyInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  logoDpp?: runtime.Bytes | null
+  colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
@@ -996,6 +1044,8 @@ export type MdBrandScalarWhereInput = {
   whatsappBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   ecommerceBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   logoBrand?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  logoDpp?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   subdomainBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   stateBrand?: Prisma.IntFilter<"MdBrand"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdBrand"> | string
@@ -1020,6 +1070,8 @@ export type MdBrandCreateWithoutOrderHeadsInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  logoDpp?: runtime.Bytes | null
+  colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
@@ -1049,6 +1101,8 @@ export type MdBrandUncheckedCreateWithoutOrderHeadsInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  logoDpp?: runtime.Bytes | null
+  colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
@@ -1091,6 +1145,8 @@ export type MdBrandUpdateWithoutOrderHeadsInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1120,6 +1176,8 @@ export type MdBrandUncheckedUpdateWithoutOrderHeadsInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1146,6 +1204,8 @@ export type MdBrandCreateWithoutSubbrandsInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  logoDpp?: runtime.Bytes | null
+  colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
@@ -1175,6 +1235,8 @@ export type MdBrandUncheckedCreateWithoutSubbrandsInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  logoDpp?: runtime.Bytes | null
+  colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
@@ -1217,6 +1279,8 @@ export type MdBrandUpdateWithoutSubbrandsInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1246,6 +1310,8 @@ export type MdBrandUncheckedUpdateWithoutSubbrandsInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1272,6 +1338,8 @@ export type MdBrandCreateWithoutModelsInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  logoDpp?: runtime.Bytes | null
+  colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
@@ -1301,6 +1369,8 @@ export type MdBrandUncheckedCreateWithoutModelsInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  logoDpp?: runtime.Bytes | null
+  colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
@@ -1343,6 +1413,8 @@ export type MdBrandUpdateWithoutModelsInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1372,6 +1444,8 @@ export type MdBrandUncheckedUpdateWithoutModelsInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1399,6 +1473,8 @@ export type MdBrandCreateManyParentCompanyInput = {
   whatsappBrand?: string | null
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
+  logoDpp?: runtime.Bytes | null
+  colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
   codUsuarioCargaDl: string
@@ -1423,6 +1499,8 @@ export type MdBrandUpdateWithoutParentCompanyInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1451,6 +1529,8 @@ export type MdBrandUncheckedUpdateWithoutParentCompanyInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1479,6 +1559,8 @@ export type MdBrandUncheckedUpdateManyWithoutParentCompanyInput = {
   whatsappBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1554,6 +1636,8 @@ export type MdBrandSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   whatsappBrand?: boolean
   ecommerceBrand?: boolean
   logoBrand?: boolean
+  logoDpp?: boolean
+  colorFondoImagenDpp?: boolean
   subdomainBrand?: boolean
   stateBrand?: boolean
   codUsuarioCargaDl?: boolean
@@ -1587,6 +1671,8 @@ export type MdBrandSelectScalar = {
   whatsappBrand?: boolean
   ecommerceBrand?: boolean
   logoBrand?: boolean
+  logoDpp?: boolean
+  colorFondoImagenDpp?: boolean
   subdomainBrand?: boolean
   stateBrand?: boolean
   codUsuarioCargaDl?: boolean
@@ -1596,7 +1682,7 @@ export type MdBrandSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type MdBrandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkBrand" | "codBrand" | "idDlkParentCompany" | "codParentCompany" | "nameBrand" | "desBrand" | "codUbigeoBrand" | "addressBrand" | "locationBrand" | "emailBrand" | "cellularBrand" | "facebookBrand" | "instagramBrand" | "whatsappBrand" | "ecommerceBrand" | "logoBrand" | "subdomainBrand" | "stateBrand" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdBrand"]>
+export type MdBrandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkBrand" | "codBrand" | "idDlkParentCompany" | "codParentCompany" | "nameBrand" | "desBrand" | "codUbigeoBrand" | "addressBrand" | "locationBrand" | "emailBrand" | "cellularBrand" | "facebookBrand" | "instagramBrand" | "whatsappBrand" | "ecommerceBrand" | "logoBrand" | "logoDpp" | "colorFondoImagenDpp" | "subdomainBrand" | "stateBrand" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdBrand"]>
 export type MdBrandInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   subbrands?: boolean | Prisma.MdBrand$subbrandsArgs<ExtArgs>
@@ -1630,6 +1716,8 @@ export type $MdBrandPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     whatsappBrand: string | null
     ecommerceBrand: string | null
     logoBrand: runtime.Bytes | null
+    logoDpp: runtime.Bytes | null
+    colorFondoImagenDpp: string | null
     subdomainBrand: string | null
     stateBrand: number
     codUsuarioCargaDl: string
@@ -2026,6 +2114,8 @@ export interface MdBrandFieldRefs {
   readonly whatsappBrand: Prisma.FieldRef<"MdBrand", 'String'>
   readonly ecommerceBrand: Prisma.FieldRef<"MdBrand", 'String'>
   readonly logoBrand: Prisma.FieldRef<"MdBrand", 'Bytes'>
+  readonly logoDpp: Prisma.FieldRef<"MdBrand", 'Bytes'>
+  readonly colorFondoImagenDpp: Prisma.FieldRef<"MdBrand", 'String'>
   readonly subdomainBrand: Prisma.FieldRef<"MdBrand", 'String'>
   readonly stateBrand: Prisma.FieldRef<"MdBrand", 'Int'>
   readonly codUsuarioCargaDl: Prisma.FieldRef<"MdBrand", 'String'>

@@ -84,6 +84,11 @@ model MdBrand {
   whatsappBrand      String?         @map("WHATSAPP_BRAND") @db.VarChar(150)
   ecommerceBrand     String?         @map("ECOMMERCE_BRAND") @db.VarChar(150)
   logoBrand          Bytes?          @map("LOGO_BRAND")
+  // Logo que se expone en el servicio del DPP (app pública), independiente del
+  // "Logo Etiqueta" (logoBrand).
+  logoDpp            Bytes?          @map("LOGO_DPP")
+  // Color de fondo de la imagen en el DPP (hex, ej. "#0A0A0A").
+  colorFondoImagenDpp String?        @map("COLOR_FONDO_IMAGEN_DPP") @db.VarChar(20)
   subdomainBrand     String?         @map("SUBDOMAIN_BRAND") @db.VarChar(100)
   stateBrand         Int             @default(1) @map("STATE_BRAND")
   codUsuarioCargaDl  String          @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)

@@ -66,6 +66,8 @@ const emptyForm = {
   ecommerceBrand: "",
   subdomainBrand: "",
   logoBrand: "",
+  logoDpp: "",
+  colorFondoImagenDpp: "",
   /** 1 = activa, 0 = desactivada */
   stateBrand: 1,
 };
@@ -80,6 +82,7 @@ export function MarcaModal({
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [logoDppPreview, setLogoDppPreview] = useState<string | null>(null);
   const [detailBrand, setDetailBrand] = useState<Brand | null>(null);
   const [empresas, setEmpresas] = useState<ParentCompanyOption[]>([]);
   const [ubigeos, setUbigeos] = useState<UbigeoOption[]>([]);
@@ -108,6 +111,7 @@ export function MarcaModal({
       setForm(emptyForm);
       setDetailBrand(null);
       setLogoPreview(null);
+      setLogoDppPreview(null);
       return;
     }
 
@@ -131,11 +135,14 @@ export function MarcaModal({
         ecommerceBrand: b.ecommerceBrand ?? "",
         subdomainBrand: b.subdomainBrand ?? "",
         logoBrand: "",
+        logoDpp: "",
+        colorFondoImagenDpp: b.colorFondoImagenDpp ?? "",
         stateBrand: b.stateBrand === 1 ? 1 : 0,
       };
     }
 
     setLogoPreview(null);
+    setLogoDppPreview(null);
     setForm(brandRowToForm(marca));
     setDetailBrand(null);
 
@@ -185,6 +192,19 @@ export function MarcaModal({
     reader.readAsDataURL(file);
   }
 
+  function handleDppFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      const base64 = result.split(",")[1] ?? "";
+      setForm((prev) => ({ ...prev, logoDpp: base64 }));
+      setLogoDppPreview(result);
+    };
+    reader.readAsDataURL(file);
+  }
+
   async function handleSubmit() {
     if (!form.idDlkParentCompany || !form.codParentCompany) {
       alert("Debes seleccionar la empresa");
@@ -215,6 +235,9 @@ export function MarcaModal({
       };
       if (!payload.logoBrand) {
         delete (payload as Record<string, unknown>).logoBrand;
+      }
+      if (!payload.logoDpp) {
+        delete (payload as Record<string, unknown>).logoDpp;
       }
 
       const res = await apiFetch(url, {
@@ -258,6 +281,12 @@ export function MarcaModal({
       ? logoSrcFromApi(detailBrand?.logoBrand ?? marca?.logoBrand)
       : null;
   const logoDisplaySrc = logoPreview ?? storedLogoSrc;
+
+  const storedLogoDppSrc =
+    mode !== "create" && (detailBrand?.logoDpp ?? marca?.logoDpp)
+      ? logoSrcFromApi(detailBrand?.logoDpp ?? marca?.logoDpp)
+      : null;
+  const logoDppDisplaySrc = logoDppPreview ?? storedLogoDppSrc;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -364,6 +393,56 @@ export function MarcaModal({
                   )}
                 </>
               )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-4 items-start gap-4">
+            <Label className="text-right text-primary font-semibold pt-2">Logo DPP:</Label>
+            <div className="col-span-3 space-y-3">
+              {logoDppDisplaySrc ? (
+                <img
+                  src={logoDppDisplaySrc}
+                  alt="Logo DPP de la marca"
+                  className="max-h-40 max-w-full rounded-md border bg-muted/30 object-contain p-1"
+                />
+              ) : (
+                <p className="text-sm text-muted-foreground">Sin logo DPP</p>
+              )}
+              {!readOnly && (
+                <>
+                  <Input type="file" accept="image/*" onChange={handleDppFileChange} />
+                  {(mode === "edit" || mode === "create") && storedLogoDppSrc && !logoDppPreview && (
+                    <p className="text-xs text-muted-foreground">
+                      El archivo actual se mantiene si no eliges otro.
+                    </p>
+                  )}
+                  {(mode === "edit" || mode === "create") && logoDppPreview && (
+                    <p className="text-xs text-muted-foreground">
+                      Vista previa del archivo seleccionado. Guarda para aplicar el cambio.
+                    </p>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label className="text-right text-primary font-semibold">Color fondo imagen DPP:</Label>
+            <div className="col-span-3 flex items-center gap-2">
+              <input
+                type="color"
+                className="h-9 w-12 shrink-0 cursor-pointer rounded-md border border-input bg-background p-1 disabled:cursor-not-allowed disabled:opacity-50"
+                value={/^#[0-9a-fA-F]{6}$/.test(form.colorFondoImagenDpp) ? form.colorFondoImagenDpp : "#ffffff"}
+                onChange={(e) => handleChange("colorFondoImagenDpp", e.target.value)}
+                disabled={readOnly}
+              />
+              <Input
+                value={form.colorFondoImagenDpp}
+                onChange={(e) => handleChange("colorFondoImagenDpp", e.target.value)}
+                readOnly={readOnly}
+                maxLength={20}
+                placeholder="#0A0A0A"
+              />
             </div>
           </div>
 

@@ -29,10 +29,12 @@ type BrandWithCompany = MdBrand & {
 };
 
 function mapBrandForApi(row: BrandWithCompany) {
-  const { logoBrand, ...rest } = row;
+  // colorFondoImagenDpp es un string plano → pasa por ...rest sin transformar.
+  const { logoBrand, logoDpp, ...rest } = row;
   return {
     ...rest,
     logoBrand: logoBytesToDataUrl(logoBrand),
+    logoDpp: logoBytesToDataUrl(logoDpp),
   };
 }
 
@@ -89,6 +91,8 @@ export class BrandService {
     ecommerceBrand?: string | null;
     subdomainBrand?: string | null;
     logoBrand?: string;
+    logoDpp?: string;
+    colorFondoImagenDpp?: string | null;
     stateBrand?: number;
   }) {
     let codBrand = data.codBrand;
@@ -119,9 +123,11 @@ export class BrandService {
       whatsappBrand: data.whatsappBrand ?? null,
       ecommerceBrand: data.ecommerceBrand ?? null,
       subdomainBrand: data.subdomainBrand ?? null,
+      colorFondoImagenDpp: data.colorFondoImagenDpp ?? null,
       ...(data.logoBrand
         ? { logoBrand: Buffer.from(data.logoBrand, "base64") }
         : {}),
+      ...(data.logoDpp ? { logoDpp: Buffer.from(data.logoDpp, "base64") } : {}),
       stateBrand: data.stateBrand ?? 1,
       codUsuarioCargaDl: "SYSTEM",
       fehProcesoCargaDl: new Date(),
@@ -164,6 +170,8 @@ export class BrandService {
       ecommerceBrand: string | null;
       subdomainBrand: string | null;
       logoBrand: string;
+      logoDpp: string;
+      colorFondoImagenDpp: string | null;
       stateBrand: number;
     }>
   ) {
@@ -184,6 +192,7 @@ export class BrandService {
       "whatsappBrand",
       "ecommerceBrand",
       "subdomainBrand",
+      "colorFondoImagenDpp",
       "stateBrand",
     ] as const;
 
@@ -193,6 +202,9 @@ export class BrandService {
 
     if (data.logoBrand) {
       updateData.logoBrand = Buffer.from(data.logoBrand, "base64");
+    }
+    if (data.logoDpp) {
+      updateData.logoDpp = Buffer.from(data.logoDpp, "base64");
     }
 
     const updated = await this.prisma.mdBrand.update({

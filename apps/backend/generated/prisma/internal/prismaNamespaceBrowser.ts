@@ -190,6 +190,8 @@ export const MdBrandScalarFieldEnum = {
   whatsappBrand: 'whatsappBrand',
   ecommerceBrand: 'ecommerceBrand',
   logoBrand: 'logoBrand',
+  logoDpp: 'logoDpp',
+  colorFondoImagenDpp: 'colorFondoImagenDpp',
   subdomainBrand: 'subdomainBrand',
   stateBrand: 'stateBrand',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
@@ -1485,6 +1487,7 @@ export const MdBrandOrderByRelevanceFieldEnum = {
   instagramBrand: 'instagramBrand',
   whatsappBrand: 'whatsappBrand',
   ecommerceBrand: 'ecommerceBrand',
+  colorFondoImagenDpp: 'colorFondoImagenDpp',
   subdomainBrand: 'subdomainBrand',
   codUsuarioCargaDl: 'codUsuarioCargaDl',
   desAccion: 'desAccion'

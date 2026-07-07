@@ -112,6 +112,8 @@ export class DppPassportService {
                   select: {
                     nameBrand: true,
                     logoBrand: true,
+                    logoDpp: true,
+                    colorFondoImagenDpp: true,
                     facebookBrand: true,
                     instagramBrand: true,
                     whatsappBrand: true,
@@ -289,8 +291,10 @@ export class DppPassportService {
 
     // Fallback de location: si ningún proceso de la ruta tiene facility asignada,
     // se usa la dirección de la empresa matriz (Configuración → Empresa → Dirección).
+    // trim + `||` porque ADDRESS_PARENT_COMPANY es NOT NULL y puede venir como ""
+    // (con `??` ese "" se tomaría como válido y la location saldría vacía).
     if (!manufacturingLocation) {
-      manufacturingLocation = brand?.parentCompany?.addressParentCompany ?? null;
+      manufacturingLocation = brand?.parentCompany?.addressParentCompany?.trim() || null;
     }
 
     const productCode = `${normGtin(head?.codGtin).replace(/^0+/, "")}/10/${parsed.lote}/21/${parsed.serial}`;
@@ -311,6 +315,9 @@ export class DppPassportService {
         brand: {
           name: brand?.nameBrand ?? null,
           logoUrl: imageBytesToDataUrl(brand?.logoBrand),
+          // Logo y color de fondo específicos para el DPP (Configuración → Marca).
+          logoDppUrl: imageBytesToDataUrl(brand?.logoDpp),
+          backgroundColor: brand?.colorFondoImagenDpp?.trim() || null,
           social: {
             facebook: brand?.facebookBrand ?? null,
             instagram: brand?.instagramBrand ?? null,
@@ -340,9 +347,11 @@ export class DppPassportService {
           .join(" / ") || detail?.colorAway || null,
         year: model?.year ?? null,
         season: model?.season ?? head?.seasonEstilo ?? null,
-        // Talla de la unidad serializada; head.size como fallback (coinciden por el
-        // unique [idDlkOrderDetail, size] del head).
-        size: unit.size ?? head?.size ?? null,
+        // Talla de la unidad serializada (OD_ORDER_LABEL_DETAIL.SIZE); head.size como
+        // fallback (coinciden por el unique [idDlkOrderDetail, size] del head).
+        // Se usa `||` con trim porque en BD la talla puede venir como "" (cadena vacía)
+        // y no como NULL: con `??` ese "" se tomaría como válido y saldría vacío.
+        size: unit.size?.trim() || head?.size?.trim() || null,
       },
 
       materials: {

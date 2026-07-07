@@ -62,7 +62,9 @@ curl -G "https://web-300ixhl1vesu.up-de-fra1-k8s-1.apps.run-on-seenode.com/api/d
     "traceable": true,
     "brand": {
       "name":    "string",
-      "logoUrl": "string|null",            // data URL (base64) o null
+      "logoUrl": "string|null",            // logo etiqueta · data URL (base64) o null
+      "logoDppUrl": "string|null",         // logo específico DPP · data URL (base64) o null
+      "backgroundColor": "string|null",    // color de fondo de la imagen en el DPP (hex, ej. "#0A0A0A")
       "social": {
         "facebook":  "string|null",
         "instagram": "string|null",

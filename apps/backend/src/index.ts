@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express from "express";
+import express, { type RequestHandler } from "express";
 import cors, { type CorsOptions, type CorsRequest } from "cors";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient } from "../generated/prisma/client.js";
@@ -67,6 +67,7 @@ import { dppRoutes } from "./routes/dpp.routes.js";
 import { unitTraceRoutes } from "./routes/unit-trace.routes.js";
 import { jsonBigIntMiddleware } from "./middleware/json-bigint.js";
 import { authMiddleware } from "./middleware/auth.middleware.js";
+import { errorResponse, isDbConnectionError } from "./lib/http-error.js";
 
 function parseDatabaseUrl(url: string) {
   const u = new URL(url);
@@ -93,9 +94,13 @@ const adapter = new PrismaMariaDb({
   database: dbConfig.database,
   // Cupo del MySQL administrado: max_user_connections=15 (compartido con deploys y
   // sesiones admin). Con 3 por instancia hay margen aun con solapamiento de deploy.
-  connectionLimit: 3,
-  acquireTimeout: 60000,
-  connectTimeout: 15000,
+  connectionLimit: Number(process.env.DB_CONNECTION_LIMIT ?? 3),
+  // Fallar rápido: con 60s el usuario se quedaba un minuto entero mirando el botón de
+  // login antes de ver el error, y el health check del PaaS expiraba antes que el pool.
+  // 8s absorben un pico de concurrencia y devuelven un 503 accionable.
+  acquireTimeout: Number(process.env.DB_ACQUIRE_TIMEOUT_MS ?? 8000),
+  // Menor que acquireTimeout para que quepa un reintento dentro de la ventana de espera.
+  connectTimeout: Number(process.env.DB_CONNECT_TIMEOUT_MS ?? 5000),
 });
 const prisma = new PrismaClient({ adapter });
 
@@ -133,22 +138,37 @@ app.use(express.json({ limit: jsonBodyLimit }));
 app.use(express.urlencoded({ extended: true, limit: jsonBodyLimit }));
 app.use(jsonBigIntMiddleware);
 
-/** Sin consulta a DB: útil para comprobar que el proceso HTTP respondió (evita confundir “backend caído” con “MariaDB colgada”). */
-app.get("/health/live", (_req, res) => {
+// ── Health ───────────────────────────────────────────────────────────
+// Se montan en la raíz Y bajo /api. El proxy de Next (next.config.js) sólo reenvía
+// `/api/:path*` conservando el prefijo, así que las variantes en la raíz no son
+// alcanzables desde fuera del contenedor: sin las de /api no hay forma de sondear
+// el backend desde el dominio público ni desde un monitor externo.
+// Van ANTES del guard global `app.use("/api", authMiddleware(...))`, así que quedan
+// públicas; por eso no exponen ningún detalle interno.
+
+/** Sin consulta a DB: comprueba que el proceso HTTP responde (distingue “backend caído” de “MariaDB colgada”). */
+const liveHandler: RequestHandler = (_req, res) => {
   res.json({ status: "ok", service: "backend", db: "not_checked" });
-});
+};
+app.get("/health/live", liveHandler);
+app.get("/api/health/live", liveHandler);
 
 const dbHealthTimeoutMs = Number(process.env.DB_HEALTH_TIMEOUT_MS ?? 8000);
 
-app.get("/health", async (_req, res) => {
+/** Agotar la espera del health ES un problema de alcance, no un fallo genérico: se marca para distinguirlo. */
+class DbHealthTimeout extends Error {}
+
+/** Con consulta real a la base: es el que hay que mirar para saber si MariaDB acepta conexiones. */
+const readyHandler: RequestHandler = async (_req, res) => {
+  let timer: NodeJS.Timeout | undefined;
   try {
     await Promise.race([
       prisma.$queryRawUnsafe("SELECT 1"),
       new Promise<never>((_, reject) => {
-        setTimeout(
+        timer = setTimeout(
           () =>
             reject(
-              new Error(
+              new DbHealthTimeout(
                 `Timeout esperando a la base (${dbHealthTimeoutMs} ms). ¿MariaDB/MySQL accesible desde DATABASE_URL?`
               )
             ),
@@ -158,10 +178,20 @@ app.get("/health", async (_req, res) => {
     ]);
     res.json({ status: "ok", service: "backend", db: "connected" });
   } catch (e) {
-    const msg = e instanceof Error ? e.message : "unknown";
-    res.status(503).json({ status: "error", service: "backend", db: msg });
+    // Endpoint público: se registra el detalle y se devuelve sólo la causa gruesa.
+    console.error("[health:db]", e);
+    res.status(503).json({
+      status: "error",
+      service: "backend",
+      db: e instanceof DbHealthTimeout || isDbConnectionError(e) ? "unreachable" : "error",
+    });
+  } finally {
+    // Sin esto el proceso queda con un timer vivo hasta 8s por cada sondeo del monitor.
+    clearTimeout(timer);
   }
-});
+};
+app.get("/health", readyHandler);
+app.get("/api/health", readyHandler);
 
 // ── Servicios ────────────────────────────────────────────────────────
 const parentCompanyService = new ParentCompanyService(prisma);
@@ -247,19 +277,6 @@ app.use("/api/order-heads/:id/labels", orderLabelRoutes(orderLabelService));
 app.use("/api/unit-traces", unitTraceRoutes(unitTraceService));
 
 // ── Ubigeo ───────────────────────────────────────────────────────────
-
-// ── Helper de errores ─────────────────────────────────────────────
-function errorResponse(e: unknown) {
-  const message = e instanceof Error ? e.message : "Error desconocido";
-  const isPoolError = message.includes("pool timeout") || message.includes("connection");
-  return {
-    status: isPoolError ? 503 : 500,
-    body: {
-      error: message,
-      type: isPoolError ? "DB_CONNECTION" : "INTERNAL",
-    },
-  };
-}
 
 app.get("/api/ubigeo", async (req, res) => {
   try {

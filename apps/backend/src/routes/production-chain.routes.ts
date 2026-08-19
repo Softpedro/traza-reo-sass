@@ -1,17 +1,6 @@
 import { Router } from "express";
 import type { ProductionChainService } from "../services/production-chain.service.js";
-
-function errorResponse(e: unknown) {
-  const message = e instanceof Error ? e.message : "Error desconocido";
-  const isPoolError = message.includes("pool timeout") || message.includes("connection");
-  return {
-    status: isPoolError ? 503 : 500,
-    body: {
-      error: message,
-      type: isPoolError ? "DB_CONNECTION" : "INTERNAL",
-    },
-  };
-}
+import { errorResponse } from "../lib/http-error.js";
 
 export function productionChainRoutes(service: ProductionChainService): Router {
   const router = Router();

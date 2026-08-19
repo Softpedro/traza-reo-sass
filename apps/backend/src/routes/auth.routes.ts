@@ -2,6 +2,7 @@ import { Router, type Request } from "express";
 import { DeviceType } from "../../generated/prisma/client.js";
 import { AuthError, type AuthService } from "../services/auth.service.js";
 import { authMiddleware, type AuthRequest } from "../middleware/auth.middleware.js";
+import { errorResponse } from "../lib/http-error.js";
 
 function getClientIp(req: Request): string {
   const xff = req.headers["x-forwarded-for"];
@@ -96,8 +97,8 @@ export function authRoutes(service: AuthService): Router {
         return res.status(status).json({ error: e.message, type: e.code });
       }
       console.error("[auth:login]", e);
-      const message = e instanceof Error ? e.message : "Error desconocido";
-      res.status(500).json({ error: message, type: "INTERNAL" });
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
     }
   });
 
@@ -109,8 +110,8 @@ export function authRoutes(service: AuthService): Router {
       res.json({ ...me, backupCodesRemaining: remaining });
     } catch (e) {
       console.error("[auth:me]", e);
-      const message = e instanceof Error ? e.message : "Error desconocido";
-      res.status(500).json({ error: message, type: "INTERNAL" });
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
     }
   });
 
@@ -124,8 +125,8 @@ export function authRoutes(service: AuthService): Router {
       res.send(photo.buffer);
     } catch (e) {
       console.error("[auth:me/photo]", e);
-      const message = e instanceof Error ? e.message : "Error desconocido";
-      res.status(500).json({ error: message, type: "INTERNAL" });
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
     }
   });
 
@@ -155,8 +156,8 @@ export function authRoutes(service: AuthService): Router {
         return res.status(status).json({ error: e.message, type: e.code });
       }
       console.error("[auth:2fa:verify]", e);
-      const message = e instanceof Error ? e.message : "Error desconocido";
-      res.status(500).json({ error: message, type: "INTERNAL" });
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
     }
   });
 
@@ -170,8 +171,8 @@ export function authRoutes(service: AuthService): Router {
         return res.status(409).json({ error: e.message, type: e.code });
       }
       console.error("[auth:2fa:setup]", e);
-      const message = e instanceof Error ? e.message : "Error desconocido";
-      res.status(500).json({ error: message, type: "INTERNAL" });
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
     }
   });
 
@@ -187,8 +188,8 @@ export function authRoutes(service: AuthService): Router {
         return res.status(status).json({ error: e.message, type: e.code });
       }
       console.error("[auth:2fa:verify-setup]", e);
-      const message = e instanceof Error ? e.message : "Error desconocido";
-      res.status(500).json({ error: message, type: "INTERNAL" });
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
     }
   });
 
@@ -207,8 +208,8 @@ export function authRoutes(service: AuthService): Router {
         return res.status(status).json({ error: e.message, type: e.code });
       }
       console.error("[auth:2fa:disable]", e);
-      const message = e instanceof Error ? e.message : "Error desconocido";
-      res.status(500).json({ error: message, type: "INTERNAL" });
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
     }
   });
 
@@ -224,8 +225,8 @@ export function authRoutes(service: AuthService): Router {
         return res.status(status).json({ error: e.message, type: e.code });
       }
       console.error("[auth:2fa:regenerate]", e);
-      const message = e instanceof Error ? e.message : "Error desconocido";
-      res.status(500).json({ error: message, type: "INTERNAL" });
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
     }
   });
 

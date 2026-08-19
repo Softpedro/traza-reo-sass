@@ -1,17 +1,6 @@
 import { Router } from "express";
 import type { FacilityMaquilaService } from "../services/facility-maquila.service.js";
-
-function errorResponse(e: unknown) {
-  const message = e instanceof Error ? e.message : "Error desconocido";
-  const isPoolError = message.includes("pool timeout") || message.includes("connection");
-  return {
-    status: isPoolError ? 503 : 500,
-    body: {
-      error: message,
-      type: isPoolError ? "DB_CONNECTION" : "INTERNAL",
-    },
-  };
-}
+import { errorResponse } from "../lib/http-error.js";
 
 export function facilityMaquilaRoutes(service: FacilityMaquilaService): Router {
   const router = Router();

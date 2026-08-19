@@ -1,5 +1,6 @@
 import { Router } from "express";
 import type { UnitTraceService } from "../services/unit-trace.service.js";
+import { errorResponse } from "../lib/http-error.js";
 
 /**
  * Lectura del historial de trazabilidad unitaria (eventos por prenda).
@@ -35,11 +36,8 @@ export function unitTraceRoutes(service: UnitTraceService): Router {
       res.json(unit);
     } catch (e) {
       console.error("[unit-traces:list]", e);
-      const message = e instanceof Error ? e.message : "Error desconocido";
-      const isPool = message.includes("pool timeout") || message.includes("connection");
-      res
-        .status(isPool ? 503 : 500)
-        .json({ error: message, type: isPool ? "DB_CONNECTION" : "INTERNAL" });
+      const err = errorResponse(e);
+      res.status(err.status).json(err.body);
     }
   });
 

@@ -692,9 +692,36 @@ export class OrderLabelService {
   async update(labelId: number, input: UpdateLabelHeadInput): Promise<OrderLabelHeadListRow | null> {
     const existing = await this.prisma.odOrderLabelHead.findUnique({
       where: { idDlkOrderLabelHead: labelId },
-      select: { idDlkOrderLabelHead: true, idDlkOrderHead: true },
+      select: {
+        idDlkOrderLabelHead: true,
+        idDlkOrderHead: true,
+        codGtin: true,
+        estampado: true,
+      },
     });
     if (!existing) return null;
+
+    // GTIN y estampado quedan congelados tras generar los DPPs.
+    //
+    //  - El GTIN identifica el producto y va dentro de SGTIN_FULL y de la URL del DPP de
+    //    cada unidad, que update() no reescribe. Cambiarlo dejaría además el rango
+    //    INICIO/FIN_SERIAL_GS1 apuntando a la serie del GTIN anterior, y el contador del
+    //    nuevo reasignaría seriales ya emitidos.
+    //  - El estampado se copia a PRINT en cada detalle, con el mismo problema.
+    //
+    // Se comparan valores en vez de rechazar la clave: el cliente reenvía el objeto
+    // completo y un reenvío idéntico no es un intento de cambio.
+    const norm = (v: unknown) => (v == null || v === "" ? null : String(v).trim());
+    if (input.codGtin !== undefined && norm(input.codGtin) !== norm(existing.codGtin)) {
+      throw new Error(
+        "El GTIN no se puede cambiar: ya está impreso en el sGTIN y en la URL del DPP de cada unidad. Anula la etiqueta y vuelve a generarla."
+      );
+    }
+    if (input.estampado !== undefined && norm(input.estampado) !== norm(existing.estampado)) {
+      throw new Error(
+        "El estampado no se puede cambiar: ya está copiado en cada DPP generado. Anula la etiqueta y vuelve a generarla."
+      );
+    }
 
     const now = new Date();
     const data: Prisma.OdOrderLabelHeadUncheckedUpdateInput = {
@@ -719,8 +746,7 @@ export class OrderLabelService {
     setStr("descriptionEstilo", "descriptionEstilo");
     setStr("genderEstilo", "genderEstilo");
     setStr("seasonEstilo", "seasonEstilo");
-    setStr("codGtin", "codGtin");
-    setStr("estampado", "estampado");
+    // codGtin y estampado no se asignan: son inmutables (validado arriba).
     setStr("identifierType", "identifierType");
     setStr("identifierMaterial", "identifierMaterial");
     setStr("identifierLocation", "identifierLocation");

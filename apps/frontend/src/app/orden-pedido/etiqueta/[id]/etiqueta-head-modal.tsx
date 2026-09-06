@@ -54,6 +54,19 @@ function defaultPieceNames(numPiezas: number): string[] {
   return Array.from({ length: numPiezas }, (_, i) => `PIEZA ${i + 1}`);
 }
 
+/**
+ * Valor de sólo lectura. Va sin marco de input a propósito: un `<input readOnly>` se ve
+ * igual que uno editable e invita a escribir. Aquí el borde es la señal de "esto se
+ * escribe", así que lo que no se puede tocar no lo lleva.
+ */
+function ReadOnlyValue({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="px-3 py-1.5 text-sm text-muted-foreground">
+      {children === "" || children == null ? "—" : children}
+    </p>
+  );
+}
+
 function Row(props: { label: string; children: React.ReactNode }) {
   return (
     <div className="grid grid-cols-3 items-center gap-3">
@@ -229,10 +242,12 @@ export function EtiquetaHeadModal({
         alert("El GTIN es obligatorio");
         return;
       }
-      if (totalUnidades <= 0) {
-        alert("Ingresa la cantidad de producción para esta talla");
-        return;
-      }
+    }
+
+    // También en edición: el campo dejó de ser sólo lectura.
+    if (totalUnidades <= 0) {
+      alert("Ingresa la cantidad de producción para esta talla");
+      return;
     }
 
     // Validación de identificadores: set → por pieza; no-set → uno solo.
@@ -294,9 +309,9 @@ export function EtiquetaHeadModal({
           `/api/order-heads/${order.idDlkOrderHead}/labels/${labelHead!.idDlkOrderLabelHead}`
         );
         method = "PUT";
+        // Sin codGtin ni estampado: el backend los rechaza si cambian, y aquí ya no
+        // son editables.
         payload = {
-          codGtin: gtin.trim() || null,
-          estampado: estampado.trim() || null,
           stateOrderLabelHead: estado,
           totalPrendas: totalUnidades,
           ...(isSet
@@ -364,33 +379,39 @@ export function EtiquetaHeadModal({
 
         <div className="flex flex-col gap-3 py-2">
           <Row label="Orden de pedido">
-            <Input readOnly value={order?.codOrderHead ?? "—"} />
+            <ReadOnlyValue>{order?.codOrderHead ?? "—"}</ReadOnlyValue>
           </Row>
           <Row label="Código Estilo">
-            <Input readOnly value={colorway?.codEstilo ?? "—"} />
+            <ReadOnlyValue>{colorway?.codEstilo ?? "—"}</ReadOnlyValue>
           </Row>
           <Row label="Orden de Producción">
-            <Input readOnly value={colorway?.codOrderDetail ?? "—"} />
+            <ReadOnlyValue>{colorway?.codOrderDetail ?? "—"}</ReadOnlyValue>
           </Row>
           <Row label="Estilo">
-            <Input readOnly value={colorway?.nomEstilo ?? "—"} />
+            <ReadOnlyValue>{colorway?.nomEstilo ?? "—"}</ReadOnlyValue>
           </Row>
           <Row label="Color way">
-            <Input readOnly value={colorway?.colorAway ?? "—"} />
+            <ReadOnlyValue>{colorway?.colorAway ?? "—"}</ReadOnlyValue>
           </Row>
           <Row label="Fondo de tela">
-            <Input readOnly value={colorway?.fondoTela ?? "—"} />
+            <ReadOnlyValue>{colorway?.fondoTela ?? "—"}</ReadOnlyValue>
           </Row>
           <Row label="Talla">
-            <Input readOnly value={tallaActual ?? "—"} />
+            <ReadOnlyValue>{tallaActual ?? "—"}</ReadOnlyValue>
           </Row>
+          {/* Congelado tras generar los DPPs: va dentro del sGTIN y de la URL de cada
+              unidad, que no se reescriben al editar. */}
           <Row label="GTIN">
-            <Input
-              value={gtin}
-              onChange={(e) => setGtin(e.target.value)}
-              maxLength={14}
-              placeholder="GTIN-14 de esta talla"
-            />
+            {mode === "create" ? (
+              <Input
+                value={gtin}
+                onChange={(e) => setGtin(e.target.value)}
+                maxLength={14}
+                placeholder="GTIN-14 de esta talla"
+              />
+            ) : (
+              <ReadOnlyValue>{gtin || "—"}</ReadOnlyValue>
+            )}
           </Row>
 
           {/* Identificador a nivel cabecera: SOLO para etiquetas no-set. En sets va por pieza. */}
@@ -413,19 +434,24 @@ export function EtiquetaHeadModal({
             </Row>
           )}
 
+          {/* Congelado igual que el GTIN: se copia a PRINT en cada DPP generado. */}
           <Row label="Estampado">
-            <Select value={estampado} onValueChange={setEstampado}>
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccionar" />
-              </SelectTrigger>
-              <SelectContent>
-                {ESTAMPADO_OPTIONS.map((opt) => (
-                  <SelectItem key={opt} value={opt}>
-                    {opt}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            {mode === "create" ? (
+              <Select value={estampado} onValueChange={setEstampado}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccionar" />
+                </SelectTrigger>
+                <SelectContent>
+                  {ESTAMPADO_OPTIONS.map((opt) => (
+                    <SelectItem key={opt} value={opt}>
+                      {opt}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ) : (
+              <ReadOnlyValue>{estampado || "—"}</ReadOnlyValue>
+            )}
           </Row>
 
           {/* ¿Es set? / Cantidad de piezas — editable en create, solo lectura en edit. */}
@@ -458,11 +484,11 @@ export function EtiquetaHeadModal({
           ) : (
             <>
               <Row label="¿Es set?">
-                <Input readOnly value={isSet ? "Sí — un DPP por pieza" : "No"} />
+                <ReadOnlyValue>{isSet ? "Sí — un DPP por pieza" : "No"}</ReadOnlyValue>
               </Row>
               {isSet && (
                 <Row label="Cantidad de piezas">
-                  <Input readOnly value={String(pieces.length)} />
+                  <ReadOnlyValue>{String(pieces.length)}</ReadOnlyValue>
                 </Row>
               )}
             </>
@@ -494,10 +520,10 @@ export function EtiquetaHeadModal({
           </div>
 
           <Row label="Inicia">
-            <Input readOnly value={inicioPreview != null ? String(inicioPreview) : "—"} />
+            <ReadOnlyValue>{inicioPreview != null ? String(inicioPreview) : "—"}</ReadOnlyValue>
           </Row>
           <Row label="Finaliza">
-            <Input readOnly value={finaliza != null ? String(finaliza) : "—"} />
+            <ReadOnlyValue>{finaliza != null ? String(finaliza) : "—"}</ReadOnlyValue>
           </Row>
           <p className="text-center text-xs text-muted-foreground">
             El rango de serialización es automático y secuencial; no se puede editar.

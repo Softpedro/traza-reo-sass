@@ -103,9 +103,17 @@ export type LabelHead = {
   size: string | null;
   estampado: string | null;
   identifierType: string | null;
+  /** Inicia/Termina Serial DPP: contador por modelo, sólo para reportes ESPR. */
   inicioSerializacion: number | null;
+  /** También es el "Total Serial DPP" (acumulado del modelo). */
   finSerializacion: number | null;
+  /** Inicia/Termina Serial GS1: contador por GTIN. Es el serial impreso en el AI 21. */
+  inicioSerialGs1: number | null;
+  finSerialGs1: number | null;
+  /** Total Serial GS1: etiquetas emitidas = prendas x piezas. */
   totalLabel: number | null;
+  /** Total de prendas (p. ej. pijamas), no de piezas. */
+  totalPrendas: number | null;
   stateOrderLabelHead: number | null;
   digitalIdentifier?: {
     idDlkDigitalIdentifier: number;

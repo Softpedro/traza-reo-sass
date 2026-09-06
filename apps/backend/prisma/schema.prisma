@@ -1148,9 +1148,20 @@ model OdOrderLabelHead {
   identifierType         String?              @map("IDENTIFIER_TYPE") @db.VarChar(45)
   identifierMaterial     String?              @map("IDENTIFIER_MATERIAL") @db.VarChar(500)
   identifierLocation     String?              @map("IDENTIFIER_LOCATION") @db.VarChar(200)
+  /// Inicia Serial DPP. Contador por MODELO (COD_ESTILO), perpetuo entre órdenes.
+  /// Sólo para reportes ESPR: no viaja en la URL del DPP ni en el sGTIN.
   inicioSerializacion    Int?                 @map("INICIO_SERIALIZACION")
+  /// Termina Serial DPP. También es el "Total Serial DPP" (acumulado del modelo).
   finSerializacion       Int?                 @map("FIN_SERIALIZACION")
+  /// Total Serial GS1: etiquetas emitidas = prendas x piezas.
   totalLabel             Int?                 @map("TOTAL_LABEL")
+  /// Total de prendas (p. ej. pijamas). totalLabel / piezas.
+  totalPrendas           Int?                 @map("TOTAL_PRENDAS")
+  /// Inicia/Termina Serial GS1. Contador por GTIN (modelo+color+talla), perpetuo entre
+  /// órdenes: una OP futura del mismo GTIN continúa donde quedó la anterior. Este es el
+  /// serial que se imprime en el AI 21 del Digital Link y en el sGTIN.
+  inicioSerialGs1        Int?                 @map("INICIO_SERIAL_GS1")
+  finSerialGs1           Int?                 @map("FIN_SERIAL_GS1")
   signOpenResponsible    String?              @map("SIGN_OPEN_RESPONSIBLE") @db.Text
   fehSignOpen            DateTime?            @map("FEH_SIGN_OPEN") @db.DateTime(3)
   signCloseResponsible   String?              @map("SIGN_CLOSE_RESPONSIBLE") @db.Text
@@ -1169,6 +1180,10 @@ model OdOrderLabelHead {
   components             OdOrderLabelComponent[]
 
   @@unique([idDlkOrderDetail, size], map: "uq_label_head_detail_size")
+  /// Dos etiquetas del mismo GTIN no pueden arrancar en el mismo serial. El contador se
+  /// calcula con max(...)+1, así que sin esto una creación concurrente duplicaría el rango
+  /// y corrompería la numeración del GTIN hacia adelante, no sólo dentro de la orden.
+  @@unique([codGtin, inicioSerialGs1], map: "uq_label_head_gtin_gs1_start")
   @@index([idDlkOrderHead], map: "idx_label_head_order")
   @@index([idDlkDigitalIdentifier], map: "idx_label_head_digital_id")
   @@index([idDlkOrderDetail], map: "fk_label_head_order_detail")

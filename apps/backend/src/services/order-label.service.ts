@@ -24,7 +24,10 @@ const LABEL_HEAD_FOR_LIST = {
   identifierType: true,
   inicioSerializacion: true,
   finSerializacion: true,
+  inicioSerialGs1: true,
+  finSerialGs1: true,
   totalLabel: true,
+  totalPrendas: true,
   fehSignOpen: true,
   fehSignClose: true,
   stateOrderLabelHead: true,
@@ -492,19 +495,44 @@ export class OrderLabelService {
     }
 
     const gtin = input.codGtin ?? null;
+    const gtinKey = gtin?.trim() || null;
 
-    // inicioSerializacion: siempre automático y secuencial a nivel de TODA la orden
-    // (continúa tras el último rango de cualquier etiqueta de la orden, sin importar el
-    // GTIN/talla). Solo la vía legacy de rango explícito usa el inicio indicado.
-    let rangeStart: number;
+    // Dos contadores con alcances distintos, ambos perpetuos: ninguno se filtra por
+    // orden, así que una OP futura continúa la serie donde la dejó la anterior.
+    //
+    //   GS1 -> por GTIN (modelo+color+talla). Es el serial impreso: va en el AI 21 del
+    //          Digital Link y en el sGTIN.
+    //   DPP -> por MODELO (COD_ESTILO). Sólo acumulador para los reportes ESPR; no
+    //          aparece en ninguna URL.
+    //
+    // El modelo se lee del colorway y no de `codEstilo` de la cabecera, que es nullable
+    // y se rellena desde el input: no sirve como clave de un contador.
+    const modelo = detail?.codEstilo?.trim() || null;
+
+    let gs1Start: number;
     if (legacyRangeStart != null) {
-      rangeStart = legacyRangeStart;
+      // Vía legacy de rango explícito: el cliente fija el inicio.
+      gs1Start = legacyRangeStart;
+    } else if (gtinKey) {
+      const prevGs1 = await this.prisma.odOrderLabelHead.aggregate({
+        where: { codGtin: gtinKey, flgStatutActif: 1 },
+        _max: { finSerialGs1: true },
+      });
+      gs1Start = (prevGs1._max.finSerialGs1 ?? 0) + 1;
     } else {
-      const prev = await this.prisma.odOrderLabelHead.aggregate({
-        where: { idDlkOrderHead: input.idDlkOrderHead },
+      // Sin GTIN no hay serie que continuar: cada etiqueta arranca en 1.
+      gs1Start = 1;
+    }
+
+    let dppStart: number;
+    if (modelo) {
+      const prevDpp = await this.prisma.odOrderLabelHead.aggregate({
+        where: { orderDetail: { codEstilo: modelo }, flgStatutActif: 1 },
         _max: { finSerializacion: true },
       });
-      rangeStart = (prev._max.finSerializacion ?? 0) + 1;
+      dppStart = (prevDpp._max.finSerializacion ?? 0) + 1;
+    } else {
+      dppStart = gs1Start;
     }
 
     const codDl = input.codUsuarioCargaDl?.trim() || "SYSTEM";
@@ -530,9 +558,13 @@ export class OrderLabelService {
           identifierType: input.identifierType ?? digital.typeDigitalIdentifier ?? null,
           identifierMaterial: input.identifierMaterial ?? null,
           identifierLocation: input.identifierLocation ?? null,
-          inicioSerializacion: rangeStart,
-          finSerializacion: rangeStart + totalDetails - 1,
+          inicioSerializacion: dppStart,
+          finSerializacion: dppStart + totalDetails - 1,
+          inicioSerialGs1: gs1Start,
+          finSerialGs1: gs1Start + totalDetails - 1,
           totalLabel: totalDetails,
+          // Prendas, no piezas: un set de 2 piezas son 16 pijamas y 32 etiquetas.
+          totalPrendas: totalUnits,
           stateOrderLabelHead: 1,
           codUsuarioCargaDl: codDl,
           fecProcesoCargaDl: now,
@@ -570,22 +602,23 @@ export class OrderLabelService {
       const drafts: SerialDraft[] = [];
       // Serial plano por prenda: cada pieza (incl. piezas de un set) consume su
       // propio número. `unitN` agrupa las piezas de un mismo set físico.
-      let serialN = rangeStart;
+      // `gs1N` es el número impreso; `dppN` sólo alimenta los reportes ESPR. Avanzan a
+      // la par dentro de la etiqueta, pero arrancan en puntos distintos.
+      let gs1N = gs1Start;
+      let dppN = dppStart;
       let unitN = 0;
       for (const sz of sizeUnits) {
-        let bySize = 0;
         for (let u = 1; u <= sz.qty; u++) {
           unitN++;
           const setGroupId =
             numPiezas > 1 ? `${labelHead.idDlkOrderLabelHead}-${unitN}` : null;
           for (let pi = 0; pi < pieceLabels.length; pi++) {
             const piece = pieceLabels[pi];
-            bySize++;
-            const serial = buildSerialNumber(serialN);
+            const serial = buildSerialNumber(gs1N);
             const sgtin = buildSgtin(gtin, serial, labelHead.idDlkOrderLabelHead);
             drafts.push({
-              itemGlobal: serialN,
-              itemBySize: bySize,
+              itemGlobal: dppN,
+              itemBySize: gs1N,
               serialNumber: serial,
               sgtinFull: sgtin,
               urlDppFull: buildDppUrl(brandSubdomain, gtin, detail?.codOrderDetail, serial),
@@ -598,7 +631,8 @@ export class OrderLabelService {
               idDlkOrderLabelComponent: esSet ? componentIdByPiece[pi] : null,
               idDlkDigitalIdentifier: esSet ? null : pieceIdentifiers[0],
             });
-            serialN++;
+            gs1N++;
+            dppN++;
           }
         }
       }

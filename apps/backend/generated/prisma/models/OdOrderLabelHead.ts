@@ -35,6 +35,9 @@ export type OdOrderLabelHeadAvgAggregateOutputType = {
   inicioSerializacion: number | null
   finSerializacion: number | null
   totalLabel: number | null
+  totalPrendas: number | null
+  inicioSerialGs1: number | null
+  finSerialGs1: number | null
   stateOrderLabelHead: number | null
   flgStatutActif: number | null
 }
@@ -47,6 +50,9 @@ export type OdOrderLabelHeadSumAggregateOutputType = {
   inicioSerializacion: number | null
   finSerializacion: number | null
   totalLabel: number | null
+  totalPrendas: number | null
+  inicioSerialGs1: number | null
+  finSerialGs1: number | null
   stateOrderLabelHead: number | null
   flgStatutActif: number | null
 }
@@ -71,6 +77,9 @@ export type OdOrderLabelHeadMinAggregateOutputType = {
   inicioSerializacion: number | null
   finSerializacion: number | null
   totalLabel: number | null
+  totalPrendas: number | null
+  inicioSerialGs1: number | null
+  finSerialGs1: number | null
   signOpenResponsible: string | null
   fehSignOpen: Date | null
   signCloseResponsible: string | null
@@ -104,6 +113,9 @@ export type OdOrderLabelHeadMaxAggregateOutputType = {
   inicioSerializacion: number | null
   finSerializacion: number | null
   totalLabel: number | null
+  totalPrendas: number | null
+  inicioSerialGs1: number | null
+  finSerialGs1: number | null
   signOpenResponsible: string | null
   fehSignOpen: Date | null
   signCloseResponsible: string | null
@@ -137,6 +149,9 @@ export type OdOrderLabelHeadCountAggregateOutputType = {
   inicioSerializacion: number
   finSerializacion: number
   totalLabel: number
+  totalPrendas: number
+  inicioSerialGs1: number
+  finSerialGs1: number
   signOpenResponsible: number
   fehSignOpen: number
   signCloseResponsible: number
@@ -160,6 +175,9 @@ export type OdOrderLabelHeadAvgAggregateInputType = {
   inicioSerializacion?: true
   finSerializacion?: true
   totalLabel?: true
+  totalPrendas?: true
+  inicioSerialGs1?: true
+  finSerialGs1?: true
   stateOrderLabelHead?: true
   flgStatutActif?: true
 }
@@ -172,6 +190,9 @@ export type OdOrderLabelHeadSumAggregateInputType = {
   inicioSerializacion?: true
   finSerializacion?: true
   totalLabel?: true
+  totalPrendas?: true
+  inicioSerialGs1?: true
+  finSerialGs1?: true
   stateOrderLabelHead?: true
   flgStatutActif?: true
 }
@@ -196,6 +217,9 @@ export type OdOrderLabelHeadMinAggregateInputType = {
   inicioSerializacion?: true
   finSerializacion?: true
   totalLabel?: true
+  totalPrendas?: true
+  inicioSerialGs1?: true
+  finSerialGs1?: true
   signOpenResponsible?: true
   fehSignOpen?: true
   signCloseResponsible?: true
@@ -229,6 +253,9 @@ export type OdOrderLabelHeadMaxAggregateInputType = {
   inicioSerializacion?: true
   finSerializacion?: true
   totalLabel?: true
+  totalPrendas?: true
+  inicioSerialGs1?: true
+  finSerialGs1?: true
   signOpenResponsible?: true
   fehSignOpen?: true
   signCloseResponsible?: true
@@ -262,6 +289,9 @@ export type OdOrderLabelHeadCountAggregateInputType = {
   inicioSerializacion?: true
   finSerializacion?: true
   totalLabel?: true
+  totalPrendas?: true
+  inicioSerialGs1?: true
+  finSerialGs1?: true
   signOpenResponsible?: true
   fehSignOpen?: true
   signCloseResponsible?: true
@@ -382,6 +412,9 @@ export type OdOrderLabelHeadGroupByOutputType = {
   inicioSerializacion: number | null
   finSerializacion: number | null
   totalLabel: number | null
+  totalPrendas: number | null
+  inicioSerialGs1: number | null
+  finSerialGs1: number | null
   signOpenResponsible: string | null
   fehSignOpen: Date | null
   signCloseResponsible: string | null
@@ -438,6 +471,9 @@ export type OdOrderLabelHeadWhereInput = {
   inicioSerializacion?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
   finSerializacion?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
   totalLabel?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
+  totalPrendas?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
+  inicioSerialGs1?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
+  finSerialGs1?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
   signOpenResponsible?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   fehSignOpen?: Prisma.DateTimeNullableFilter<"OdOrderLabelHead"> | Date | string | null
   signCloseResponsible?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
@@ -476,6 +512,9 @@ export type OdOrderLabelHeadOrderByWithRelationInput = {
   inicioSerializacion?: Prisma.SortOrderInput | Prisma.SortOrder
   finSerializacion?: Prisma.SortOrderInput | Prisma.SortOrder
   totalLabel?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalPrendas?: Prisma.SortOrderInput | Prisma.SortOrder
+  inicioSerialGs1?: Prisma.SortOrderInput | Prisma.SortOrder
+  finSerialGs1?: Prisma.SortOrderInput | Prisma.SortOrder
   signOpenResponsible?: Prisma.SortOrderInput | Prisma.SortOrder
   fehSignOpen?: Prisma.SortOrderInput | Prisma.SortOrder
   signCloseResponsible?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -498,6 +537,7 @@ export type OdOrderLabelHeadOrderByWithRelationInput = {
 export type OdOrderLabelHeadWhereUniqueInput = Prisma.AtLeast<{
   idDlkOrderLabelHead?: number
   idDlkOrderDetail_size?: Prisma.OdOrderLabelHeadIdDlkOrderDetailSizeCompoundUniqueInput
+  codGtin_inicioSerialGs1?: Prisma.OdOrderLabelHeadCodGtinInicioSerialGs1CompoundUniqueInput
   AND?: Prisma.OdOrderLabelHeadWhereInput | Prisma.OdOrderLabelHeadWhereInput[]
   OR?: Prisma.OdOrderLabelHeadWhereInput[]
   NOT?: Prisma.OdOrderLabelHeadWhereInput | Prisma.OdOrderLabelHeadWhereInput[]
@@ -519,6 +559,9 @@ export type OdOrderLabelHeadWhereUniqueInput = Prisma.AtLeast<{
   inicioSerializacion?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
   finSerializacion?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
   totalLabel?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
+  totalPrendas?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
+  inicioSerialGs1?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
+  finSerialGs1?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
   signOpenResponsible?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   fehSignOpen?: Prisma.DateTimeNullableFilter<"OdOrderLabelHead"> | Date | string | null
   signCloseResponsible?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
@@ -535,7 +578,7 @@ export type OdOrderLabelHeadWhereUniqueInput = Prisma.AtLeast<{
   orderDetail?: Prisma.XOR<Prisma.OdOrderDetailNullableScalarRelationFilter, Prisma.OdOrderDetailWhereInput> | null
   details?: Prisma.OdOrderLabelDetailListRelationFilter
   components?: Prisma.OdOrderLabelComponentListRelationFilter
-}, "idDlkOrderLabelHead" | "idDlkOrderDetail_size">
+}, "idDlkOrderLabelHead" | "idDlkOrderDetail_size" | "codGtin_inicioSerialGs1">
 
 export type OdOrderLabelHeadOrderByWithAggregationInput = {
   idDlkOrderLabelHead?: Prisma.SortOrder
@@ -557,6 +600,9 @@ export type OdOrderLabelHeadOrderByWithAggregationInput = {
   inicioSerializacion?: Prisma.SortOrderInput | Prisma.SortOrder
   finSerializacion?: Prisma.SortOrderInput | Prisma.SortOrder
   totalLabel?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalPrendas?: Prisma.SortOrderInput | Prisma.SortOrder
+  inicioSerialGs1?: Prisma.SortOrderInput | Prisma.SortOrder
+  finSerialGs1?: Prisma.SortOrderInput | Prisma.SortOrder
   signOpenResponsible?: Prisma.SortOrderInput | Prisma.SortOrder
   fehSignOpen?: Prisma.SortOrderInput | Prisma.SortOrder
   signCloseResponsible?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -598,6 +644,9 @@ export type OdOrderLabelHeadScalarWhereWithAggregatesInput = {
   inicioSerializacion?: Prisma.IntNullableWithAggregatesFilter<"OdOrderLabelHead"> | number | null
   finSerializacion?: Prisma.IntNullableWithAggregatesFilter<"OdOrderLabelHead"> | number | null
   totalLabel?: Prisma.IntNullableWithAggregatesFilter<"OdOrderLabelHead"> | number | null
+  totalPrendas?: Prisma.IntNullableWithAggregatesFilter<"OdOrderLabelHead"> | number | null
+  inicioSerialGs1?: Prisma.IntNullableWithAggregatesFilter<"OdOrderLabelHead"> | number | null
+  finSerialGs1?: Prisma.IntNullableWithAggregatesFilter<"OdOrderLabelHead"> | number | null
   signOpenResponsible?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelHead"> | string | null
   fehSignOpen?: Prisma.DateTimeNullableWithAggregatesFilter<"OdOrderLabelHead"> | Date | string | null
   signCloseResponsible?: Prisma.StringNullableWithAggregatesFilter<"OdOrderLabelHead"> | string | null
@@ -627,6 +676,9 @@ export type OdOrderLabelHeadCreateInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -665,6 +717,9 @@ export type OdOrderLabelHeadUncheckedCreateInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -696,6 +751,9 @@ export type OdOrderLabelHeadUpdateInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -734,6 +792,9 @@ export type OdOrderLabelHeadUncheckedUpdateInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -769,6 +830,9 @@ export type OdOrderLabelHeadCreateManyInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -798,6 +862,9 @@ export type OdOrderLabelHeadUpdateManyMutationInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -831,6 +898,9 @@ export type OdOrderLabelHeadUncheckedUpdateManyInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -865,6 +935,11 @@ export type OdOrderLabelHeadIdDlkOrderDetailSizeCompoundUniqueInput = {
   size: string
 }
 
+export type OdOrderLabelHeadCodGtinInicioSerialGs1CompoundUniqueInput = {
+  codGtin: string
+  inicioSerialGs1: number
+}
+
 export type OdOrderLabelHeadCountOrderByAggregateInput = {
   idDlkOrderLabelHead?: Prisma.SortOrder
   idDlkOrderHead?: Prisma.SortOrder
@@ -885,6 +960,9 @@ export type OdOrderLabelHeadCountOrderByAggregateInput = {
   inicioSerializacion?: Prisma.SortOrder
   finSerializacion?: Prisma.SortOrder
   totalLabel?: Prisma.SortOrder
+  totalPrendas?: Prisma.SortOrder
+  inicioSerialGs1?: Prisma.SortOrder
+  finSerialGs1?: Prisma.SortOrder
   signOpenResponsible?: Prisma.SortOrder
   fehSignOpen?: Prisma.SortOrder
   signCloseResponsible?: Prisma.SortOrder
@@ -906,6 +984,9 @@ export type OdOrderLabelHeadAvgOrderByAggregateInput = {
   inicioSerializacion?: Prisma.SortOrder
   finSerializacion?: Prisma.SortOrder
   totalLabel?: Prisma.SortOrder
+  totalPrendas?: Prisma.SortOrder
+  inicioSerialGs1?: Prisma.SortOrder
+  finSerialGs1?: Prisma.SortOrder
   stateOrderLabelHead?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
 }
@@ -930,6 +1011,9 @@ export type OdOrderLabelHeadMaxOrderByAggregateInput = {
   inicioSerializacion?: Prisma.SortOrder
   finSerializacion?: Prisma.SortOrder
   totalLabel?: Prisma.SortOrder
+  totalPrendas?: Prisma.SortOrder
+  inicioSerialGs1?: Prisma.SortOrder
+  finSerialGs1?: Prisma.SortOrder
   signOpenResponsible?: Prisma.SortOrder
   fehSignOpen?: Prisma.SortOrder
   signCloseResponsible?: Prisma.SortOrder
@@ -963,6 +1047,9 @@ export type OdOrderLabelHeadMinOrderByAggregateInput = {
   inicioSerializacion?: Prisma.SortOrder
   finSerializacion?: Prisma.SortOrder
   totalLabel?: Prisma.SortOrder
+  totalPrendas?: Prisma.SortOrder
+  inicioSerialGs1?: Prisma.SortOrder
+  finSerialGs1?: Prisma.SortOrder
   signOpenResponsible?: Prisma.SortOrder
   fehSignOpen?: Prisma.SortOrder
   signCloseResponsible?: Prisma.SortOrder
@@ -984,6 +1071,9 @@ export type OdOrderLabelHeadSumOrderByAggregateInput = {
   inicioSerializacion?: Prisma.SortOrder
   finSerializacion?: Prisma.SortOrder
   totalLabel?: Prisma.SortOrder
+  totalPrendas?: Prisma.SortOrder
+  inicioSerialGs1?: Prisma.SortOrder
+  finSerialGs1?: Prisma.SortOrder
   stateOrderLabelHead?: Prisma.SortOrder
   flgStatutActif?: Prisma.SortOrder
 }
@@ -1163,6 +1253,9 @@ export type OdOrderLabelHeadCreateWithoutOrderHeadInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -1199,6 +1292,9 @@ export type OdOrderLabelHeadUncheckedCreateWithoutOrderHeadInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -1263,6 +1359,9 @@ export type OdOrderLabelHeadScalarWhereInput = {
   inicioSerializacion?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
   finSerializacion?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
   totalLabel?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
+  totalPrendas?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
+  inicioSerialGs1?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
+  finSerialGs1?: Prisma.IntNullableFilter<"OdOrderLabelHead"> | number | null
   signOpenResponsible?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
   fehSignOpen?: Prisma.DateTimeNullableFilter<"OdOrderLabelHead"> | Date | string | null
   signCloseResponsible?: Prisma.StringNullableFilter<"OdOrderLabelHead"> | string | null
@@ -1292,6 +1391,9 @@ export type OdOrderLabelHeadCreateWithoutOrderDetailInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -1328,6 +1430,9 @@ export type OdOrderLabelHeadUncheckedCreateWithoutOrderDetailInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -1385,6 +1490,9 @@ export type OdOrderLabelHeadCreateWithoutDigitalIdentifierInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -1421,6 +1529,9 @@ export type OdOrderLabelHeadUncheckedCreateWithoutDigitalIdentifierInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -1478,6 +1589,9 @@ export type OdOrderLabelHeadCreateWithoutDetailsInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -1515,6 +1629,9 @@ export type OdOrderLabelHeadUncheckedCreateWithoutDetailsInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -1561,6 +1678,9 @@ export type OdOrderLabelHeadUpdateWithoutDetailsInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1598,6 +1718,9 @@ export type OdOrderLabelHeadUncheckedUpdateWithoutDetailsInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1628,6 +1751,9 @@ export type OdOrderLabelHeadCreateWithoutComponentsInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -1665,6 +1791,9 @@ export type OdOrderLabelHeadUncheckedCreateWithoutComponentsInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -1711,6 +1840,9 @@ export type OdOrderLabelHeadUpdateWithoutComponentsInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1748,6 +1880,9 @@ export type OdOrderLabelHeadUncheckedUpdateWithoutComponentsInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1781,6 +1916,9 @@ export type OdOrderLabelHeadCreateManyOrderHeadInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -1810,6 +1948,9 @@ export type OdOrderLabelHeadUpdateWithoutOrderHeadInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1846,6 +1987,9 @@ export type OdOrderLabelHeadUncheckedUpdateWithoutOrderHeadInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1880,6 +2024,9 @@ export type OdOrderLabelHeadUncheckedUpdateManyWithoutOrderHeadInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1912,6 +2059,9 @@ export type OdOrderLabelHeadCreateManyOrderDetailInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -1941,6 +2091,9 @@ export type OdOrderLabelHeadUpdateWithoutOrderDetailInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1977,6 +2130,9 @@ export type OdOrderLabelHeadUncheckedUpdateWithoutOrderDetailInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2011,6 +2167,9 @@ export type OdOrderLabelHeadUncheckedUpdateManyWithoutOrderDetailInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2043,6 +2202,9 @@ export type OdOrderLabelHeadCreateManyDigitalIdentifierInput = {
   inicioSerializacion?: number | null
   finSerializacion?: number | null
   totalLabel?: number | null
+  totalPrendas?: number | null
+  inicioSerialGs1?: number | null
+  finSerialGs1?: number | null
   signOpenResponsible?: string | null
   fehSignOpen?: Date | string | null
   signCloseResponsible?: string | null
@@ -2072,6 +2234,9 @@ export type OdOrderLabelHeadUpdateWithoutDigitalIdentifierInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2108,6 +2273,9 @@ export type OdOrderLabelHeadUncheckedUpdateWithoutDigitalIdentifierInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2142,6 +2310,9 @@ export type OdOrderLabelHeadUncheckedUpdateManyWithoutDigitalIdentifierInput = {
   inicioSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   finSerializacion?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   totalLabel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalPrendas?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inicioSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  finSerialGs1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signOpenResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fehSignOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signCloseResponsible?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2215,6 +2386,9 @@ export type OdOrderLabelHeadSelect<ExtArgs extends runtime.Types.Extensions.Inte
   inicioSerializacion?: boolean
   finSerializacion?: boolean
   totalLabel?: boolean
+  totalPrendas?: boolean
+  inicioSerialGs1?: boolean
+  finSerialGs1?: boolean
   signOpenResponsible?: boolean
   fehSignOpen?: boolean
   signCloseResponsible?: boolean
@@ -2256,6 +2430,9 @@ export type OdOrderLabelHeadSelectScalar = {
   inicioSerializacion?: boolean
   finSerializacion?: boolean
   totalLabel?: boolean
+  totalPrendas?: boolean
+  inicioSerialGs1?: boolean
+  finSerialGs1?: boolean
   signOpenResponsible?: boolean
   fehSignOpen?: boolean
   signCloseResponsible?: boolean
@@ -2269,7 +2446,7 @@ export type OdOrderLabelHeadSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type OdOrderLabelHeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkOrderLabelHead" | "idDlkOrderHead" | "idDlkDigitalIdentifier" | "idDlkOrderDetail" | "codOrderLabel" | "codEstilo" | "nameEstilo" | "descriptionEstilo" | "genderEstilo" | "seasonEstilo" | "codGtin" | "size" | "estampado" | "identifierType" | "identifierMaterial" | "identifierLocation" | "inicioSerializacion" | "finSerializacion" | "totalLabel" | "signOpenResponsible" | "fehSignOpen" | "signCloseResponsible" | "fehSignClose" | "digitalCertificateId" | "stateOrderLabelHead" | "codUsuarioCargaDl" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["odOrderLabelHead"]>
+export type OdOrderLabelHeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkOrderLabelHead" | "idDlkOrderHead" | "idDlkDigitalIdentifier" | "idDlkOrderDetail" | "codOrderLabel" | "codEstilo" | "nameEstilo" | "descriptionEstilo" | "genderEstilo" | "seasonEstilo" | "codGtin" | "size" | "estampado" | "identifierType" | "identifierMaterial" | "identifierLocation" | "inicioSerializacion" | "finSerializacion" | "totalLabel" | "totalPrendas" | "inicioSerialGs1" | "finSerialGs1" | "signOpenResponsible" | "fehSignOpen" | "signCloseResponsible" | "fehSignClose" | "digitalCertificateId" | "stateOrderLabelHead" | "codUsuarioCargaDl" | "fecProcesoCargaDl" | "fecProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["odOrderLabelHead"]>
 export type OdOrderLabelHeadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderHead?: boolean | Prisma.OdOrderHeadDefaultArgs<ExtArgs>
   digitalIdentifier?: boolean | Prisma.MdDigitalIdentifierDefaultArgs<ExtArgs>
@@ -2305,9 +2482,30 @@ export type $OdOrderLabelHeadPayload<ExtArgs extends runtime.Types.Extensions.In
     identifierType: string | null
     identifierMaterial: string | null
     identifierLocation: string | null
+    /**
+     * Inicia Serial DPP. Contador por MODELO (COD_ESTILO), perpetuo entre órdenes.
+     * Sólo para reportes ESPR: no viaja en la URL del DPP ni en el sGTIN.
+     */
     inicioSerializacion: number | null
+    /**
+     * Termina Serial DPP. También es el "Total Serial DPP" (acumulado del modelo).
+     */
     finSerializacion: number | null
+    /**
+     * Total Serial GS1: etiquetas emitidas = prendas x piezas.
+     */
     totalLabel: number | null
+    /**
+     * Total de prendas (p. ej. pijamas). totalLabel / piezas.
+     */
+    totalPrendas: number | null
+    /**
+     * Inicia/Termina Serial GS1. Contador por GTIN (modelo+color+talla), perpetuo entre
+     * órdenes: una OP futura del mismo GTIN continúa donde quedó la anterior. Este es el
+     * serial que se imprime en el AI 21 del Digital Link y en el sGTIN.
+     */
+    inicioSerialGs1: number | null
+    finSerialGs1: number | null
     signOpenResponsible: string | null
     fehSignOpen: Date | null
     signCloseResponsible: string | null
@@ -2712,6 +2910,9 @@ export interface OdOrderLabelHeadFieldRefs {
   readonly inicioSerializacion: Prisma.FieldRef<"OdOrderLabelHead", 'Int'>
   readonly finSerializacion: Prisma.FieldRef<"OdOrderLabelHead", 'Int'>
   readonly totalLabel: Prisma.FieldRef<"OdOrderLabelHead", 'Int'>
+  readonly totalPrendas: Prisma.FieldRef<"OdOrderLabelHead", 'Int'>
+  readonly inicioSerialGs1: Prisma.FieldRef<"OdOrderLabelHead", 'Int'>
+  readonly finSerialGs1: Prisma.FieldRef<"OdOrderLabelHead", 'Int'>
   readonly signOpenResponsible: Prisma.FieldRef<"OdOrderLabelHead", 'String'>
   readonly fehSignOpen: Prisma.FieldRef<"OdOrderLabelHead", 'DateTime'>
   readonly signCloseResponsible: Prisma.FieldRef<"OdOrderLabelHead", 'String'>

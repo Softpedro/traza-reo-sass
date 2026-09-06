@@ -226,8 +226,12 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
                 <th className="border px-2 py-1.5 font-semibold">GTIN</th>
                 <th className="border px-2 py-1.5 font-semibold">Tipo</th>
                 <th className="border px-2 py-1.5 font-semibold">Total</th>
-                <th className="border px-2 py-1.5 font-semibold">Inicia</th>
-                <th className="border px-2 py-1.5 font-semibold">Termina</th>
+                <th className="border px-2 py-1.5 font-semibold">Total Serial GS1</th>
+                <th className="border px-2 py-1.5 font-semibold">Inicia Serial GS1</th>
+                <th className="border px-2 py-1.5 font-semibold">Termina Serial GS1</th>
+                <th className="border px-2 py-1.5 font-semibold">Total Serial DPP</th>
+                <th className="border px-2 py-1.5 font-semibold">Inicia Serial DPP</th>
+                <th className="border px-2 py-1.5 font-semibold">Termina Serial DPP</th>
                 <th className="border px-2 py-1.5 font-semibold">Acción</th>
               </tr>
             </thead>
@@ -237,7 +241,7 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
                 if (isAddRow) {
                   return (
                     <tr key={`${cw.idDlkOrderDetail}-add`} className="hover:bg-muted/40">
-                      <td className="border px-2 py-1.5 text-center text-xs" colSpan={7}>
+                      <td className="border px-2 py-1.5 text-center text-xs" colSpan={11}>
                         <button
                           type="button"
                           className="font-medium text-primary hover:underline"
@@ -284,7 +288,13 @@ export function OrderEtiquetaDetailClient({ orderHeadId }: Props) {
                     <td className="border px-2 py-1.5">{talla}</td>
                     <td className="border px-2 py-1.5">{label?.codGtin ?? "—"}</td>
                     <td className="border px-2 py-1.5">{label?.identifierType ?? "—"}</td>
-                    <td className="border px-2 py-1.5">{label?.totalLabel ?? cantidad ?? "—"}</td>
+                    {/* Prendas, no piezas: un set de 2 piezas son 16 pijamas y 32 etiquetas. */}
+                    <td className="border px-2 py-1.5">{label?.totalPrendas ?? cantidad ?? "—"}</td>
+                    <td className="border px-2 py-1.5">{label?.totalLabel ?? "—"}</td>
+                    <td className="border px-2 py-1.5">{label?.inicioSerialGs1 ?? "—"}</td>
+                    <td className="border px-2 py-1.5">{label?.finSerialGs1 ?? "—"}</td>
+                    {/* "Total Serial DPP" es el acumulado del modelo = el fin del rango. */}
+                    <td className="border px-2 py-1.5">{label?.finSerializacion ?? "—"}</td>
                     <td className="border px-2 py-1.5">{label?.inicioSerializacion ?? "—"}</td>
                     <td className="border px-2 py-1.5">{label?.finSerializacion ?? "—"}</td>
                     <td className="border px-2 py-1.5">

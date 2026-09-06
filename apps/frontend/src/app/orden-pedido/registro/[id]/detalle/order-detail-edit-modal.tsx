@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -15,10 +15,11 @@ import {
   SelectValue,
   SelectContent,
   SelectItem,
+  ImageUpload,
+  type ImageUploadValue,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
 import { apiFetch } from "@/lib/api-fetch";
-import { compressPhoto } from "@/lib/image-compress";
 import type { OrderDetailRow } from "./order-detail-columns";
 
 type Props = {
@@ -149,34 +150,25 @@ export function OrderDetailEditModal({ open, onOpenChange, headId, row, onSucces
   const [form, setForm] = useState<FormState | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [newImageFile, setNewImageFile] = useState<File | null>(null);
-  const [clearImage, setClearImage] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  /**
+   * Un solo valor reemplaza al File + el checkbox "Quitar imagen actual": `base64` es
+   * una imagen nueva, `null` es quitarla, y `{ preview }` a secas es la guardada sin
+   * cambios. A diferencia de los logos, aquí el backend sí sabe borrar (clearImgEstilo).
+   */
+  const [image, setImage] = useState<ImageUploadValue | null>(null);
 
   useEffect(() => {
     if (!open || !row) return;
     setForm(rowToForm(row));
-    setNewImageFile(null);
-    setClearImage(false);
+    // La guardada se muestra por URL; el endpoint de imagen está en publicPaths, así
+    // que <img> puede pedirla sin el header Authorization.
+    setImage(
+      row.hasImgEstilo
+        ? { preview: apiUrl(`/api/order-heads/${headId}/details/${row.idDlkOrderDetail}/image`) }
+        : null
+    );
     setError(null);
-    if (fileInputRef.current) fileInputRef.current.value = "";
-  }, [open, row]);
-
-  const currentImageUrl = useMemo(() => {
-    if (!row || !row.hasImgEstilo || clearImage) return null;
-    return apiUrl(`/api/order-heads/${headId}/details/${row.idDlkOrderDetail}/image`);
-  }, [row, headId, clearImage]);
-
-  const newImagePreview = useMemo(() => {
-    if (!newImageFile) return null;
-    return URL.createObjectURL(newImageFile);
-  }, [newImageFile]);
-
-  useEffect(() => {
-    return () => {
-      if (newImagePreview) URL.revokeObjectURL(newImagePreview);
-    };
-  }, [newImagePreview]);
+  }, [open, row, headId]);
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => (prev ? { ...prev, [key]: value } : prev));
@@ -206,11 +198,11 @@ export function OrderDetailEditModal({ open, onOpenChange, headId, row, onSucces
       for (const { key } of LETTER_SIZES) {
         payload[key] = toPayloadNum(form[key]);
       }
-      if (newImageFile) {
-        // La foto del estilo viaja en el JSON: se reduce antes para no chocar con el
-        // límite de body del backend.
-        payload.imgEstiloBase64 = (await compressPhoto(newImageFile)).dataUrl;
-      } else if (clearImage && row.hasImgEstilo) {
+      if (image?.base64) {
+        // Ya viene reducida por ImageUpload: sin eso, la foto chocaba con el límite de
+        // body del backend.
+        payload.imgEstiloBase64 = image.base64;
+      } else if (!image && row.hasImgEstilo) {
         payload.clearImgEstilo = true;
       }
 
@@ -303,54 +295,16 @@ export function OrderDetailEditModal({ open, onOpenChange, headId, row, onSucces
           </div>
 
           <SectionTitle>Imagen</SectionTitle>
-          <div className="md:col-span-2 flex items-start gap-4">
-            <div className="flex-shrink-0">
-              {newImagePreview ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={newImagePreview}
-                  alt="Nueva imagen"
-                  className="h-24 w-24 rounded border border-border object-cover bg-muted"
-                />
-              ) : currentImageUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={currentImageUrl}
-                  alt={row.nomEstilo ?? "Estilo"}
-                  className="h-24 w-24 rounded border border-border object-cover bg-muted"
-                />
-              ) : (
-                <div className="flex h-24 w-24 items-center justify-center rounded border border-dashed text-xs text-muted-foreground">
-                  sin imagen
-                </div>
-              )}
-            </div>
-            <div className="flex-1 space-y-2">
-              <div>
-                <Label className="text-xs text-muted-foreground">Reemplazar imagen</Label>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const f = e.target.files?.[0] ?? null;
-                    setNewImageFile(f);
-                    if (f) setClearImage(false);
-                  }}
-                  className="block text-sm mt-1"
-                />
-              </div>
-              {row.hasImgEstilo && !newImageFile && (
-                <label className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <input
-                    type="checkbox"
-                    checked={clearImage}
-                    onChange={(e) => setClearImage(e.target.checked)}
-                  />
-                  Quitar imagen actual
-                </label>
-              )}
-            </div>
+          <div className="md:col-span-2 max-w-[15rem]">
+            <ImageUpload
+              label={row.nomEstilo ?? "Estilo"}
+              value={image}
+              onChange={(v) => {
+                setImage(v);
+                setError(null);
+              }}
+              onError={setError}
+            />
           </div>
 
           <SectionTitle>Tallas bebé (meses)</SectionTitle>

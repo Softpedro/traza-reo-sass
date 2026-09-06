@@ -17,8 +17,8 @@ import {
   SelectItem,
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
+import { ImageUpload, type ImageUploadValue } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
-import { compressImage } from "@/lib/image-compress";
 import type { UserReo } from "./columns";
 import { POSITION_USER_LABELS, ROL_USER_LABELS } from "./columns";
 
@@ -173,19 +173,6 @@ export function UsuarioModal({
     }));
   }
 
-  async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    try {
-      // Se muestra en miniatura: 512 px sobran y evitan mandar los 3-4 MB del celular.
-      const { base64, dataUrl } = await compressImage(file, { maxDimension: 512, format: "jpeg" });
-      setForm((prev) => ({ ...prev, photograph: base64 }));
-      setPhotoPreview(dataUrl);
-    } catch {
-      alert(`No se pudo procesar la imagen "${file.name}".`);
-    }
-  }
-
   async function handleSubmit() {
     if (!form.idDlkParentCompany || !form.codParentCompany) {
       alert("Debes seleccionar la empresa");
@@ -271,7 +258,16 @@ export function UsuarioModal({
     mode !== "create" && (detailUser?.photograph ?? usuario?.photograph)
       ? photoSrcFromApi(detailUser?.photograph ?? usuario?.photograph)
       : null;
-  const photoDisplaySrc = photoPreview ?? storedPhotoSrc;
+  /**
+   * `base64` sólo cuando el usuario eligió un archivo nuevo; si no, se muestra el
+   * guardado sin reenviar sus bytes. El servicio no sabe borrar la imagen (sólo
+   * escribe el campo si llega con contenido), de ahí `allowRemove={false}`.
+   */
+  const photoValue: ImageUploadValue | null = photoPreview
+    ? { base64: form.photograph, preview: photoPreview }
+    : storedPhotoSrc
+      ? { preview: storedPhotoSrc }
+      : null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -522,30 +518,19 @@ export function UsuarioModal({
           <div className="grid grid-cols-4 items-start gap-4">
             <Label className="text-right text-primary font-semibold pt-2">Foto:</Label>
             <div className="col-span-3 space-y-3">
-              {photoDisplaySrc ? (
-                <img
-                  src={photoDisplaySrc}
-                  alt="Fotografía del usuario"
-                  className="h-32 w-32 rounded-full object-cover border bg-muted/30"
+              <div className="max-w-[15rem]">
+                <ImageUpload
+                  value={photoValue}
+                  disabled={readOnly}
+                  compression="logo"
+                  allowRemove={false}
+                  onChange={(v) => {
+                    setForm((prev) => ({ ...prev, photograph: v?.base64 ?? "" }));
+                    setPhotoPreview(v?.base64 ? (v.preview ?? null) : null);
+                  }}
+                  onError={(m) => alert(m)}
                 />
-              ) : (
-                <p className="text-sm text-muted-foreground">Sin foto</p>
-              )}
-              {!readOnly && (
-                <>
-                  <Input type="file" accept="image/*" onChange={handlePhotoChange} />
-                  {(mode === "edit" || mode === "create") && storedPhotoSrc && !photoPreview && (
-                    <p className="text-xs text-muted-foreground">
-                      La foto actual se mantiene si no eliges otra.
-                    </p>
-                  )}
-                  {(mode === "edit" || mode === "create") && photoPreview && (
-                    <p className="text-xs text-muted-foreground">
-                      Vista previa. Guarda para aplicar el cambio.
-                    </p>
-                  )}
-                </>
-              )}
+              </div>
             </div>
           </div>
 

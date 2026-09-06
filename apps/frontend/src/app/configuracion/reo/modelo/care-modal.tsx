@@ -11,8 +11,8 @@ import {
   Label,
   Button,
 } from "@fullstack-reo/ui";
+import { ImageUpload, type ImageUploadValue } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
-import { compressLogo } from "@/lib/image-compress";
 import type { CareRow } from "./care-columns";
 
 type Mode = "create" | "edit" | "view";
@@ -31,8 +31,11 @@ const emptyForm = { nombCare: "", carDescription: "", carSafety: "", stateCare: 
 
 export function CareModal({ open, onOpenChange, mode, modelId, care, onSuccess }: CareModalProps) {
   const [form, setForm] = useState(emptyForm);
-  const [imageBase64, setImageBase64] = useState("");
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  /**
+   * `base64` sólo cuando el usuario eligió un archivo nuevo. El servicio no sabe borrar
+   * el pictograma (sólo escribe carImage si llega con contenido), de ahí allowRemove={false}.
+   */
+  const [image, setImage] = useState<ImageUploadValue | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const readOnly = mode === "view";
@@ -40,10 +43,9 @@ export function CareModal({ open, onOpenChange, mode, modelId, care, onSuccess }
   useEffect(() => {
     if (!open) return;
     setError(null);
-    setImageBase64("");
     if (mode === "create" || !care) {
       setForm(emptyForm);
-      setImagePreview(null);
+      setImage(null);
     } else {
       setForm({
         nombCare: care.nombCare ?? "",
@@ -51,23 +53,9 @@ export function CareModal({ open, onOpenChange, mode, modelId, care, onSuccess }
         carSafety: care.carSafety ?? "",
         stateCare: care.stateCare === 0 ? 0 : 1,
       });
-      setImagePreview(care.carImage ?? null);
+      setImage(care.carImage ? { preview: care.carImage } : null);
     }
   }, [open, mode, care]);
-
-  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setError(null);
-    try {
-      // Pictograma: `compressLogo` conserva la transparencia si el PNG la trae.
-      const { base64, dataUrl } = await compressLogo(file);
-      setImageBase64(base64);
-      setImagePreview(dataUrl);
-    } catch {
-      setError(`No se pudo procesar la imagen "${file.name}".`);
-    }
-  }
 
   async function handleSubmit() {
     if (mode === "create" && (!modelId || modelId <= 0)) {
@@ -95,7 +83,7 @@ export function CareModal({ open, onOpenChange, mode, modelId, care, onSuccess }
         stateCare: Number(form.stateCare),
       };
       if (!isEdit) payload.idDlkModel = modelId;
-      if (imageBase64) payload.carImage = imageBase64;
+      if (image?.base64) payload.carImage = image.base64;
 
       const res = await apiFetch(url, {
         method,
@@ -170,11 +158,20 @@ export function CareModal({ open, onOpenChange, mode, modelId, care, onSuccess }
 
           <div className="grid gap-1.5">
             <Label>Imagen</Label>
-            {imagePreview && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={imagePreview} alt="cuidado" className="h-16 w-auto object-contain" />
-            )}
-            {!readOnly && <Input type="file" accept="image/*" onChange={handleFile} />}
+            <div className="max-w-[12rem]">
+              <ImageUpload
+                value={image}
+                disabled={readOnly}
+                // Pictograma: `logo` conserva la transparencia si el PNG la trae.
+                compression="logo"
+                allowRemove={false}
+                onChange={(v) => {
+                  setImage(v);
+                  setError(null);
+                }}
+                onError={setError}
+              />
+            </div>
           </div>
 
           {mode !== "create" && (

@@ -36,6 +36,12 @@ export interface ImageUploadProps {
    */
   compression?: "photo" | "logo" | "document" | "none";
   disabled?: boolean;
+  /**
+   * Oculta "Quitar". Ponlo en false cuando el endpoint no sepa borrar la imagen:
+   * varios servicios sólo escriben el campo si llega un valor con contenido, así que
+   * el botón cambiaría la pantalla y el guardado no haría nada.
+   */
+  allowRemove?: boolean;
   /** Se llama con un mensaje ya redactado cuando el archivo no se puede procesar. */
   onError?: (message: string) => void;
   className?: string;
@@ -68,7 +74,19 @@ async function readFile(file: File): Promise<CompressedImage> {
 }
 
 const ImageUpload = React.forwardRef<HTMLDivElement, ImageUploadProps>(
-  ({ label, value, onChange, compression = "photo", disabled, onError, className }, ref) => {
+  (
+    {
+      label,
+      value,
+      onChange,
+      compression = "photo",
+      disabled,
+      allowRemove = true,
+      onError,
+      className,
+    },
+    ref
+  ) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const [dragging, setDragging] = React.useState(false);
     const [busy, setBusy] = React.useState(false);
@@ -110,13 +128,13 @@ const ImageUpload = React.forwardRef<HTMLDivElement, ImageUploadProps>(
 
     return (
       <div ref={ref} className={cn("flex flex-col gap-1.5", className)}>
-        {label && (
+        {(label || isDirty) && (
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
               {label}
             </span>
             {isDirty && (
-              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
+              <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
                 Sin guardar
               </span>
             )}
@@ -195,15 +213,17 @@ const ImageUpload = React.forwardRef<HTMLDivElement, ImageUploadProps>(
                 <RefreshCw className="h-3 w-3" aria-hidden />
                 Reemplazar
               </button>
-              <button
-                type="button"
-                aria-label={`Quitar imagen ${label ?? ""}`}
-                onClick={() => onChange(null)}
-                className="inline-flex items-center gap-1 font-medium text-destructive hover:underline"
-              >
-                <X className="h-3 w-3" aria-hidden />
-                Quitar
-              </button>
+              {allowRemove && (
+                <button
+                  type="button"
+                  aria-label={`Quitar imagen ${label ?? ""}`}
+                  onClick={() => onChange(null)}
+                  className="inline-flex items-center gap-1 font-medium text-destructive hover:underline"
+                >
+                  <X className="h-3 w-3" aria-hidden />
+                  Quitar
+                </button>
+              )}
             </div>
           )}
         </div>

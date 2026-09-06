@@ -18,8 +18,8 @@ import {
 } from "@fullstack-reo/ui";
 import { UbigeoSelector } from "@/components/ubigeo-selector";
 import { apiUrl } from "@/lib/api";
+import { ImageUpload, type ImageUploadValue } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
-import { compressLogo } from "@/lib/image-compress";
 import type { Maquila } from "./columns";
 
 function logoSrcFromApi(logo: string | null | undefined): string | null {
@@ -77,7 +77,16 @@ export function MaquilaModal({
     mode !== "create" && maquila?.logoMaquila
       ? logoSrcFromApi(maquila.logoMaquila)
       : null;
-  const logoDisplaySrc = logoPreview ?? storedLogoSrc;
+  /**
+   * `base64` sólo cuando el usuario eligió un archivo nuevo; si no, se muestra el
+   * guardado sin reenviar sus bytes. El servicio no sabe borrar la imagen (sólo
+   * escribe el campo si llega con contenido), de ahí `allowRemove={false}`.
+   */
+  const logoValue: ImageUploadValue | null = logoPreview
+    ? { base64: form.logoMaquila, preview: logoPreview }
+    : storedLogoSrc
+      ? { preview: storedLogoSrc }
+      : null;
 
   useEffect(() => {
     if (!open) return;
@@ -111,19 +120,6 @@ export function MaquilaModal({
 
   function handleChange(field: string, value: string | number) {
     setForm((prev) => ({ ...prev, [field]: value }));
-  }
-
-  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    try {
-      // El logo viaja en base64 dentro del JSON del formulario: se reduce antes de subirlo.
-      const { base64, dataUrl } = await compressLogo(file);
-      setForm((prev) => ({ ...prev, logoMaquila: base64 }));
-      setLogoPreview(dataUrl);
-    } catch {
-      alert(`No se pudo procesar la imagen "${file.name}".`);
-    }
   }
 
   async function handleSubmit() {
@@ -309,30 +305,19 @@ export function MaquilaModal({
           <div className="grid grid-cols-4 items-start gap-4">
             <Label className="text-right text-primary font-semibold pt-2">Logo:</Label>
             <div className="col-span-3 space-y-3">
-              {logoDisplaySrc ? (
-                <img
-                  src={logoDisplaySrc}
-                  alt="Logo de la maquila"
-                  className="max-h-40 max-w-full rounded-md border bg-muted/30 object-contain p-1"
+              <div className="max-w-[15rem]">
+                <ImageUpload
+                  value={logoValue}
+                  disabled={readOnly}
+                  compression="logo"
+                  allowRemove={false}
+                  onChange={(v) => {
+                    setForm((prev) => ({ ...prev, logoMaquila: v?.base64 ?? "" }));
+                    setLogoPreview(v?.base64 ? (v.preview ?? null) : null);
+                  }}
+                  onError={(m) => alert(m)}
                 />
-              ) : (
-                <p className="text-sm text-muted-foreground">Sin logo</p>
-              )}
-              {!readOnly && (
-                <>
-                  <Input type="file" accept="image/*" onChange={handleFileChange} />
-                  {(mode === "edit" || mode === "create") && storedLogoSrc && !logoPreview && (
-                    <p className="text-xs text-muted-foreground">
-                      El archivo actual se mantiene si no eliges otro.
-                    </p>
-                  )}
-                  {(mode === "edit" || mode === "create") && logoPreview && (
-                    <p className="text-xs text-muted-foreground">
-                      Vista previa del archivo seleccionado. Guarda para aplicar el cambio.
-                    </p>
-                  )}
-                </>
-              )}
+              </div>
             </div>
           </div>
 

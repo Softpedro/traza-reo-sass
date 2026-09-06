@@ -66,6 +66,14 @@ export const SinGuardar: Story = {
   ),
 };
 
+/**
+ * Sin "Quitar". Es el caso de los logos: su servicio sólo escribe el campo si llega un
+ * valor con contenido, así que el botón cambiaría la pantalla sin borrar nada.
+ */
+export const SinBorrado: Story = {
+  render: () => <Demo value={{ id: 42, preview: SAMPLE }} allowRemove={false} />,
+};
+
 /** Modo lectura: sin acciones ni zona de drop. */
 export const SoloLectura: Story = {
   render: () => <Demo value={{ id: 42, preview: SAMPLE }} disabled />,

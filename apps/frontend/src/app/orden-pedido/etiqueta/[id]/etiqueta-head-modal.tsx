@@ -107,9 +107,9 @@ export function EtiquetaHeadModal({
   const unidadesShown =
     mode === "create"
       ? totalUnidades
-      : labelHead?.totalLabel != null
-        ? Math.round(labelHead.totalLabel / piezasCount)
-        : 0;
+      : // Lo guardado manda; el cálculo es el respaldo para etiquetas anteriores al campo.
+        (labelHead?.totalPrendas ??
+        (labelHead?.totalLabel != null ? Math.round(labelHead.totalLabel / piezasCount) : 0));
   const dppsShown = mode === "create" ? totalDetails : (labelHead?.totalLabel ?? 0);
 
   // Inicio SIEMPRE automático: secuencia continua a nivel de toda la orden (tras el último
@@ -145,7 +145,13 @@ export function EtiquetaHeadModal({
       setGtin(labelHead.codGtin ?? "");
       setEstampado(labelHead.estampado ?? "");
       setEstado(labelHead.stateOrderLabelHead === 0 ? 0 : 1);
-      setCantidad(labelHead.totalLabel != null ? String(labelHead.totalLabel) : "");
+      setCantidad(
+        labelHead.totalPrendas != null
+          ? String(labelHead.totalPrendas)
+          : labelHead.totalLabel != null
+            ? String(labelHead.totalLabel)
+            : ""
+      );
       const comps = (labelHead.components ?? [])
         .slice()
         .sort((a, b) => a.numPiece - b.numPiece);
@@ -269,6 +275,7 @@ export function EtiquetaHeadModal({
           codGtin: gtin.trim() || null,
           size: tallaActual,
           totalLabel: totalUnidades,
+          totalPrendas: totalUnidades,
           estampado: estampado.trim() || null,
           esSet: esSet ? 1 : 0,
           ...(esSet
@@ -291,6 +298,7 @@ export function EtiquetaHeadModal({
           codGtin: gtin.trim() || null,
           estampado: estampado.trim() || null,
           stateOrderLabelHead: estado,
+          totalPrendas: totalUnidades,
           ...(isSet
             ? {
                 pieces: pieces.map((p) => ({
@@ -460,26 +468,29 @@ export function EtiquetaHeadModal({
             </>
           )}
 
-          {/* Cantidad de producción — editable en create, solo lectura en edit. */}
+          {/* Cantidad de prendas. En create define cuántos DPPs se generan; en edit es
+              sólo el dato declarado y corregirlo no toca la serialización ya emitida. */}
           <div className="flex flex-col gap-2 rounded-md border bg-muted/30 px-3 py-2">
             <Row label="Cantidad">
-              {mode === "create" ? (
-                <Input
-                  type="number"
-                  min="0"
-                  value={cantidad}
-                  onChange={(e) => setCantidad(e.target.value)}
-                  placeholder={`Unidades para talla ${tallaActual ?? ""}`}
-                />
-              ) : (
-                <Input readOnly value={String(unidadesShown)} />
-              )}
+              <Input
+                type="number"
+                min="0"
+                value={cantidad}
+                onChange={(e) => setCantidad(e.target.value)}
+                placeholder={`Unidades para talla ${tallaActual ?? ""}`}
+              />
             </Row>
             <p className="text-xs text-muted-foreground">
               Producción: <strong>{unidadesShown}</strong>
               {isSet ? ` · ${dppsShown} DPPs` : ""}
               {defaultQtyForTalla > 0 ? ` · pedido: ${defaultQtyForTalla}` : ""}
             </p>
+            {mode === "edit" && (
+              <p className="text-xs text-muted-foreground">
+                Corrige el dato declarado. Los {dppsShown} DPPs ya emitidos no cambian:
+                para variar la cantidad serializada hay que regenerar la etiqueta.
+              </p>
+            )}
           </div>
 
           <Row label="Inicia">

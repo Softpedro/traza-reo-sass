@@ -157,6 +157,11 @@ export type CreateLabelHeadInput = {
   finSerializacion?: number | null;
   /** Si llega, manda; si no, se calcula `fin - inicio + 1`. */
   totalLabel?: number | null;
+  /**
+   * Total de prendas (p. ej. pijamas). Se digita en el registro; si no llega, se calcula
+   * como etiquetas / piezas. Es informativo: no interviene en la serialización.
+   */
+  totalPrendas?: number | null;
   /** Talla por unidad cuando no hay un OD_ORDER_DETAIL del que tomarla (opcional). */
   size?: string | null;
   color?: string | null;
@@ -181,6 +186,12 @@ export type CreateLabelHeadInput = {
 };
 
 export type UpdateLabelHeadInput = {
+  /**
+   * Total de prendas. Es el único dato de cantidad editable: no interviene en la
+   * serialización, así que corregirlo no reescribe DPPs ni URLs. `totalLabel` y los
+   * rangos siguen siendo inmutables — cambiarlos exigiría regenerar la etiqueta.
+   */
+  totalPrendas?: number | null;
   codOrderLabel?: string | null;
   codEstilo?: string | null;
   nameEstilo?: string | null;
@@ -564,7 +575,11 @@ export class OrderLabelService {
           finSerialGs1: gs1Start + totalDetails - 1,
           totalLabel: totalDetails,
           // Prendas, no piezas: un set de 2 piezas son 16 pijamas y 32 etiquetas.
-          totalPrendas: totalUnits,
+          // Lo digitado manda; si no llega, se cae al calculado.
+          totalPrendas:
+            input.totalPrendas != null && Number(input.totalPrendas) > 0
+              ? Math.trunc(Number(input.totalPrendas))
+              : totalUnits,
           stateOrderLabelHead: 1,
           codUsuarioCargaDl: codDl,
           fecProcesoCargaDl: now,
@@ -710,6 +725,7 @@ export class OrderLabelService {
     setStr("identifierMaterial", "identifierMaterial");
     setStr("identifierLocation", "identifierLocation");
     setStr("digitalCertificateId", "digitalCertificateId");
+    setNum("totalPrendas", "totalPrendas");
     setNum("stateOrderLabelHead", "stateOrderLabelHead");
     setNum("flgStatutActif", "flgStatutActif");
     if (input.codUsuarioCargaDl !== undefined) data.codUsuarioCargaDl = input.codUsuarioCargaDl;

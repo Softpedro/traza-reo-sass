@@ -83,6 +83,7 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
   const [empresas, setEmpresas] = useState<ParentCompanyOption[]>([]);
   const [piecePanel, setPiecePanel] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
+  const [descargando, setDescargando] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const readOnly = mode === "view";
 
@@ -214,6 +215,52 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
   const filteredSubbrands = form.idDlkBrand
     ? subbrands.filter((s) => s.idDlkBrand === form.idDlkBrand)
     : subbrands;
+
+  /**
+   * La descarga va por `apiFetch` y un Blob, no por un `<a href>`.
+   *
+   * El enlace apuntaba a la ruta relativa `/api/models/:id/ficha`, que es la única del
+   * frontend que pasa por el rewrite de Next. Ese proxy devuelve 500 en producción
+   * (API_INTERNAL_URL sin definir cae al 127.0.0.1:4000 del contenedor de Next, donde
+   * no escucha nadie). Y aun arreglando el proxy seguiría fallando: un `<a href>` no
+   * manda el header Authorization y el guard de /api/* responde 401.
+   */
+  async function handleDescargarFicha() {
+    if (!modelId) return;
+    setError(null);
+    setDescargando(true);
+    try {
+      const res = await apiFetch(`/api/models/${modelId}/ficha`);
+      if (!res.ok) {
+        const b = await res.json().catch(() => null);
+        throw new Error(b?.error ?? `Error ${res.status} al descargar la ficha`);
+      }
+      const blob = await res.blob();
+      // El backend manda el nombre real percent-encoded en Content-Disposition.
+      const disposition = res.headers.get("Content-Disposition") ?? "";
+      const match = /filename="([^"]*)"/.exec(disposition);
+      let filename = `ficha-modelo-${modelId}.pdf`;
+      if (match?.[1]) {
+        try {
+          filename = decodeURIComponent(match[1]);
+        } catch {
+          filename = match[1];
+        }
+      }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "No se pudo descargar la ficha");
+    } finally {
+      setDescargando(false);
+    }
+  }
 
   async function handleSubmit() {
     if (!form.idDlkBrand) {
@@ -485,14 +532,14 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
           {!readOnly && <Input type="file" accept="application/pdf" onChange={handleFicha} />}
           {fichaName && <span className="text-xs text-muted-foreground">{fichaName}</span>}
           {mode !== "create" && hasFicha && (
-            <a
-              href={`/api/models/${modelId}/ficha`}
-              className="text-sm font-medium text-primary hover:underline"
-              target="_blank"
-              rel="noreferrer"
+            <button
+              type="button"
+              onClick={handleDescargarFicha}
+              disabled={descargando}
+              className="self-start text-sm font-medium text-primary hover:underline disabled:opacity-60"
             >
-              Descargar ficha actual
-            </a>
+              {descargando ? "Descargando…" : "Descargar ficha actual"}
+            </button>
           )}
         </div>
 

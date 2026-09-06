@@ -129,6 +129,9 @@ app.use(
       credentials: !isPublicDpp,
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       allowedHeaders: ["Content-Type", "Authorization", "X-API-Key"],
+      // Sin esto el navegador no deja leer Content-Disposition desde JS (no es un
+      // header "simple"), y la descarga de la ficha perdería el nombre del archivo.
+      exposedHeaders: ["Content-Disposition"],
     });
   })
 );

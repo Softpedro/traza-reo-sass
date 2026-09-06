@@ -12,6 +12,7 @@ import {
   Button,
 } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
+import { compressImage } from "@/lib/image-compress";
 
 type Mode = "create" | "edit" | "view";
 
@@ -177,12 +178,18 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
     setForm((p) => ({ ...p, [field]: value }));
   }
 
-  function handlePieceImage(pieceIdx: number, perspective: string, e: React.ChangeEvent<HTMLInputElement>) {
+  async function handlePieceImage(
+    pieceIdx: number,
+    perspective: string,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
+    setError(null);
+    try {
+      // Las fotos de celular pesan 3-4 MB; el modelo entero viaja en un solo JSON y sin
+      // reducirlas el alta se pasa del límite de body del backend (413).
+      const { base64, dataUrl } = await compressImage(file);
       setPieces((prev) => {
         const next = [...prev];
         next[pieceIdx] = {
@@ -190,13 +197,14 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
           images: {
             ...next[pieceIdx].images,
             // Sin `id`: es un reemplazo, el backend borra la anterior de esta perspectiva.
-            [perspective]: { base64: result.split(",")[1] ?? "", preview: result },
+            [perspective]: { base64, preview: dataUrl },
           },
         };
         return next;
       });
-    };
-    reader.readAsDataURL(file);
+    } catch {
+      setError(`No se pudo procesar la imagen "${file.name}".`);
+    }
   }
 
   function handleFicha(e: React.ChangeEvent<HTMLInputElement>) {

@@ -85,6 +85,7 @@ export function UsuarioModal({
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoRemoved, setPhotoRemoved] = useState(false);
   const [detailUser, setDetailUser] = useState<UserReo | null>(null);
   const [empresas, setEmpresas] = useState<ParentCompanyOption[]>([]);
   const readOnly = mode === "view";
@@ -107,6 +108,8 @@ export function UsuarioModal({
       setForm(emptyForm);
       setDetailUser(null);
       setPhotoPreview(null);
+    setPhotoRemoved(false);
+      setPhotoRemoved(false);
       return;
     }
 
@@ -137,6 +140,7 @@ export function UsuarioModal({
     }
 
     setPhotoPreview(null);
+    setPhotoRemoved(false);
     setForm(userRowToForm(usuario));
     setDetailUser(null);
 
@@ -211,8 +215,11 @@ export function UsuarioModal({
         rolUser: Number(form.rolUser),
         stateUser: Number(form.stateUser),
       };
+      // Vacío significa dos cosas distintas: sin cambios (la clave ausente le dice al
+      // backend que no toque el campo) o quitada (null explícito para que la borre).
       if (!payload.photograph) {
-        delete payload.photograph;
+        if (photoRemoved) (payload as Record<string, unknown>).photograph = null;
+        else delete (payload as Record<string, unknown>).photograph;
       }
       if (mode === "edit" && !form.password.trim()) {
         delete payload.password;
@@ -260,12 +267,12 @@ export function UsuarioModal({
       : null;
   /**
    * `base64` sólo cuando el usuario eligió un archivo nuevo; si no, se muestra el
-   * guardado sin reenviar sus bytes. El servicio no sabe borrar la imagen (sólo
-   * escribe el campo si llega con contenido), de ahí `allowRemove={false}`.
+   * guardado sin reenviar sus bytes. `photoRemoved` distingue "quitada" de "sin cambios":
+   * ambas dejan el campo del form vacío, pero sólo la primera manda null para borrar.
    */
   const photoValue: ImageUploadValue | null = photoPreview
     ? { base64: form.photograph, preview: photoPreview }
-    : storedPhotoSrc
+    : !photoRemoved && storedPhotoSrc
       ? { preview: storedPhotoSrc }
       : null;
 
@@ -523,10 +530,10 @@ export function UsuarioModal({
                   value={photoValue}
                   disabled={readOnly}
                   compression="logo"
-                  allowRemove={false}
                   onChange={(v) => {
                     setForm((prev) => ({ ...prev, photograph: v?.base64 ?? "" }));
                     setPhotoPreview(v?.base64 ? (v.preview ?? null) : null);
+                    setPhotoRemoved(v === null);
                   }}
                   onError={(m) => alert(m)}
                 />

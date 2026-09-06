@@ -70,6 +70,7 @@ export function ProveedorModal({
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [logoRemoved, setLogoRemoved] = useState(false);
   const [detailSupplier, setDetailSupplier] = useState<Supplier | null>(null);
   const [ubigeos, setUbigeos] = useState<UbigeoOption[]>([]);
   const readOnly = mode === "view";
@@ -103,6 +104,8 @@ export function ProveedorModal({
       setForm(emptyForm);
       setDetailSupplier(null);
       setLogoPreview(null);
+    setLogoRemoved(false);
+      setLogoRemoved(false);
       return;
     }
 
@@ -128,6 +131,7 @@ export function ProveedorModal({
     }
 
     setLogoPreview(null);
+    setLogoRemoved(false);
     setForm(rowToForm(proveedor));
     setDetailSupplier(null);
 
@@ -192,8 +196,11 @@ export function ProveedorModal({
         payload.stateSupplier = Number(form.stateSupplier);
       }
 
+      // Sin cambios: no se manda la clave. Quitada: null explícito para que la borre.
       if (form.logoSupplier) {
         payload.logoSupplier = form.logoSupplier;
+      } else if (logoRemoved) {
+        (payload as Record<string, unknown>).logoSupplier = null;
       }
 
       const res = await apiFetch(url, {
@@ -236,12 +243,12 @@ export function ProveedorModal({
       : null;
   /**
    * `base64` sólo cuando el usuario eligió un archivo nuevo; si no, se muestra el
-   * guardado sin reenviar sus bytes. El servicio no sabe borrar la imagen (sólo
-   * escribe el campo si llega con contenido), de ahí `allowRemove={false}`.
+   * guardado sin reenviar sus bytes. `logoRemoved` distingue "quitada" de "sin cambios":
+   * ambas dejan el campo del form vacío, pero sólo la primera manda null para borrar.
    */
   const logoValue: ImageUploadValue | null = logoPreview
     ? { base64: form.logoSupplier, preview: logoPreview }
-    : storedLogoSrc
+    : !logoRemoved && storedLogoSrc
       ? { preview: storedLogoSrc }
       : null;
 
@@ -391,10 +398,10 @@ export function ProveedorModal({
                   value={logoValue}
                   disabled={readOnly}
                   compression="logo"
-                  allowRemove={false}
                   onChange={(v) => {
                     setForm((prev) => ({ ...prev, logoSupplier: v?.base64 ?? "" }));
                     setLogoPreview(v?.base64 ? (v.preview ?? null) : null);
+                    setLogoRemoved(v === null);
                   }}
                   onError={(m) => alert(m)}
                 />

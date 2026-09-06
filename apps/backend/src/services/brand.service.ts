@@ -90,8 +90,10 @@ export class BrandService {
     whatsappBrand?: string | null;
     ecommerceBrand?: string | null;
     subdomainBrand?: string | null;
-    logoBrand?: string;
-    logoDpp?: string;
+    /** undefined = no tocar; string = reemplazar; null = borrar. Antes era un chequeo de verdad, así que no había forma de quitar la imagen. */
+    logoBrand?: string | null;
+    /** undefined = no tocar; string = reemplazar; null = borrar. Antes era un chequeo de verdad, así que no había forma de quitar la imagen. */
+    logoDpp?: string | null;
     colorFondoImagenDpp?: string | null;
     stateBrand?: number;
   }) {
@@ -169,8 +171,8 @@ export class BrandService {
       whatsappBrand: string | null;
       ecommerceBrand: string | null;
       subdomainBrand: string | null;
-      logoBrand: string;
-      logoDpp: string;
+      logoBrand: string | null;
+      logoDpp: string | null;
       colorFondoImagenDpp: string | null;
       stateBrand: number;
     }>
@@ -200,11 +202,11 @@ export class BrandService {
       if (data[f] !== undefined) updateData[f] = data[f];
     }
 
-    if (data.logoBrand) {
-      updateData.logoBrand = Buffer.from(data.logoBrand, "base64");
+    if (data.logoBrand !== undefined) {
+      updateData.logoBrand = data.logoBrand ? Buffer.from(data.logoBrand, "base64") : null;
     }
-    if (data.logoDpp) {
-      updateData.logoDpp = Buffer.from(data.logoDpp, "base64");
+    if (data.logoDpp !== undefined) {
+      updateData.logoDpp = data.logoDpp ? Buffer.from(data.logoDpp, "base64") : null;
     }
 
     const updated = await this.prisma.mdBrand.update({

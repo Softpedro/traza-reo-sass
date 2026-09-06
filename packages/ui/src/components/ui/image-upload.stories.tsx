@@ -67,8 +67,8 @@ export const SinGuardar: Story = {
 };
 
 /**
- * Sin "Quitar". Es el caso de los logos: su servicio sólo escribe el campo si llega un
- * valor con contenido, así que el botón cambiaría la pantalla sin borrar nada.
+ * Sin "Quitar", para cuando la imagen es obligatoria o el endpoint no sabe borrarla:
+ * ofrecer el botón cambiaría la pantalla sin que el guardado hiciera nada.
  */
 export const SinBorrado: Story = {
   render: () => <Demo value={{ id: 42, preview: SAMPLE }} allowRemove={false} />,

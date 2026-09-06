@@ -59,7 +59,8 @@ export class MaquilaService {
     webMaquila?: string;
     canisterDataMaquila?: number;
     canisterAssetsMaquila?: string;
-    logoMaquila?: string;
+    /** undefined = no tocar; string = reemplazar; null = borrar. Antes era un chequeo de verdad, así que no había forma de quitar la imagen. */
+    logoMaquila?: string | null;
     stateMaquila?: number;
   }) {
     let codMaquila = data.codMaquila;
@@ -119,7 +120,7 @@ export class MaquilaService {
       webMaquila: string;
       canisterDataMaquila: number;
       canisterAssetsMaquila: string;
-      logoMaquila: string;
+      logoMaquila: string | null;
       stateMaquila: number;
     }>
   ) {
@@ -145,8 +146,12 @@ export class MaquilaService {
       if (data[f] !== undefined) updateData[f] = data[f];
     }
 
-    if (data.logoMaquila) {
-      updateData.logoMaquila = Buffer.from(data.logoMaquila, "base64");
+    if (data.logoMaquila !== undefined) {
+      // LOGO_MAQUILA es NOT NULL en la base: "sin logo" se representa con un
+      // buffer vacío, igual que en create, y logoBytesToDataUrl lo lee como null.
+      updateData.logoMaquila = data.logoMaquila
+        ? Buffer.from(data.logoMaquila, "base64")
+        : Buffer.alloc(0);
     }
 
     const updated = await this.prisma.mdMaquila.update({

@@ -87,6 +87,7 @@ export function SubmarcaModal({
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [logoRemoved, setLogoRemoved] = useState(false);
   const [detailSubbrand, setDetailSubbrand] = useState<Subbrand | null>(null);
   const [empresas, setEmpresas] = useState<ParentCompanyOption[]>([]);
   const [brands, setBrands] = useState<BrandOption[]>([]);
@@ -121,6 +122,8 @@ export function SubmarcaModal({
       setForm(emptyForm);
       setDetailSubbrand(null);
       setLogoPreview(null);
+    setLogoRemoved(false);
+      setLogoRemoved(false);
       return;
     }
 
@@ -149,6 +152,7 @@ export function SubmarcaModal({
     }
 
     setLogoPreview(null);
+    setLogoRemoved(false);
     setForm(subRowToForm(item));
     setDetailSubbrand(null);
 
@@ -233,8 +237,11 @@ export function SubmarcaModal({
         idDlkParentCompany: Number(form.idDlkParentCompany),
         stateSubbrand: Number(form.stateSubbrand),
       };
+      // Vacío significa dos cosas distintas: sin cambios (la clave ausente le dice al
+      // backend que no toque el campo) o quitada (null explícito para que la borre).
       if (!payload.logoSubbrand) {
-        delete (payload as Record<string, unknown>).logoSubbrand;
+        if (logoRemoved) (payload as Record<string, unknown>).logoSubbrand = null;
+        else delete (payload as Record<string, unknown>).logoSubbrand;
       }
 
       const res = await apiFetch(url, {
@@ -279,12 +286,12 @@ export function SubmarcaModal({
       : null;
   /**
    * `base64` sólo cuando el usuario eligió un archivo nuevo; si no, se muestra el
-   * guardado sin reenviar sus bytes. El servicio no sabe borrar la imagen (sólo
-   * escribe el campo si llega con contenido), de ahí `allowRemove={false}`.
+   * guardado sin reenviar sus bytes. `logoRemoved` distingue "quitada" de "sin cambios":
+   * ambas dejan el campo del form vacío, pero sólo la primera manda null para borrar.
    */
   const logoValue: ImageUploadValue | null = logoPreview
     ? { base64: form.logoSubbrand, preview: logoPreview }
-    : storedLogoSrc
+    : !logoRemoved && storedLogoSrc
       ? { preview: storedLogoSrc }
       : null;
 
@@ -399,10 +406,10 @@ export function SubmarcaModal({
                   value={logoValue}
                   disabled={readOnly}
                   compression="logo"
-                  allowRemove={false}
                   onChange={(v) => {
                     setForm((prev) => ({ ...prev, logoSubbrand: v?.base64 ?? "" }));
                     setLogoPreview(v?.base64 ? (v.preview ?? null) : null);
+                    setLogoRemoved(v === null);
                   }}
                   onError={(m) => alert(m)}
                 />

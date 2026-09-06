@@ -94,7 +94,8 @@ export class SubbrandService {
     instagramSubbrand?: string | null;
     whatsappSubbrand?: string | null;
     ecommerceSubbrand?: string | null;
-    logoSubbrand?: string;
+    /** undefined = no tocar; string = reemplazar; null = borrar. Antes era un chequeo de verdad, así que no había forma de quitar la imagen. */
+    logoSubbrand?: string | null;
     stateSubbrand?: number;
   }) {
     let codSubbrand = data.codSubbrand;
@@ -155,7 +156,7 @@ export class SubbrandService {
       instagramSubbrand: string | null;
       whatsappSubbrand: string | null;
       ecommerceSubbrand: string | null;
-      logoSubbrand: string;
+      logoSubbrand: string | null;
       stateSubbrand: number;
     }>
   ) {
@@ -181,8 +182,8 @@ export class SubbrandService {
       if (data[f] !== undefined) updateData[f] = data[f];
     }
 
-    if (data.logoSubbrand) {
-      updateData.logoSubbrand = Buffer.from(data.logoSubbrand, "base64");
+    if (data.logoSubbrand !== undefined) {
+      updateData.logoSubbrand = data.logoSubbrand ? Buffer.from(data.logoSubbrand, "base64") : null;
     }
 
     const updated = await this.prisma.mdSubbrand.update({

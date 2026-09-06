@@ -295,7 +295,8 @@ export class SupplierService {
     emailSupplier: string;
     cellularSupplier: string;
     webSupplier?: string | null;
-    logoSupplier?: string;
+    /** undefined = no tocar; string = reemplazar; null = borrar. Antes era un chequeo de verdad, así que no había forma de quitar la imagen. */
+    logoSupplier?: string | null;
     stateSupplier?: number;
   }) {
     const ruc = (data.rucSupplier ?? data.numRucSupplier ?? "").trim();
@@ -468,7 +469,7 @@ export class SupplierService {
       emailSupplier: string;
       cellularSupplier: string;
       webSupplier: string | null;
-      logoSupplier: string;
+      logoSupplier: string | null;
       stateSupplier: number;
     }>
   ) {
@@ -514,8 +515,12 @@ export class SupplierService {
       const w = data.webSupplier?.trim() ? data.webSupplier.trim() : null;
       parts.push(Prisma.sql`WEB_SUPPLIER = ${w}`);
     }
-    if (data.logoSupplier) {
-      parts.push(Prisma.sql`LOGO_SUPPLIER = ${Buffer.from(data.logoSupplier, "base64")}`);
+    if (data.logoSupplier !== undefined) {
+      parts.push(
+        data.logoSupplier
+          ? Prisma.sql`LOGO_SUPPLIER = ${Buffer.from(data.logoSupplier, "base64")}`
+          : Prisma.sql`LOGO_SUPPLIER = NULL`
+      );
     }
     if (data.stateSupplier !== undefined) {
       const s = Number(data.stateSupplier);

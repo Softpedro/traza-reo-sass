@@ -69,6 +69,7 @@ export function EmpresaModal({
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [logoRemoved, setLogoRemoved] = useState(false);
   const [ubigeos, setUbigeos] = useState<UbigeoOption[]>([]);
   const readOnly = mode === "view";
 
@@ -78,12 +79,12 @@ export function EmpresaModal({
       : null;
   /**
    * `base64` sólo cuando el usuario eligió un archivo nuevo; si no, se muestra el
-   * guardado sin reenviar sus bytes. El servicio no sabe borrar la imagen (sólo
-   * escribe el campo si llega con contenido), de ahí `allowRemove={false}`.
+   * guardado sin reenviar sus bytes. `logoRemoved` distingue "quitada" de "sin cambios":
+   * ambas dejan el campo del form vacío, pero sólo la primera manda null para borrar.
    */
   const logoValue: ImageUploadValue | null = logoPreview
     ? { base64: form.logoParentCompany, preview: logoPreview }
-    : storedLogoSrc
+    : !logoRemoved && storedLogoSrc
       ? { preview: storedLogoSrc }
       : null;
 
@@ -116,9 +117,13 @@ export function EmpresaModal({
         stateParentCompany: empresa.stateParentCompany === 1 ? 1 : 0,
       });
       setLogoPreview(null);
+    setLogoRemoved(false);
+      setLogoRemoved(false);
     } else {
       setForm(emptyForm);
       setLogoPreview(null);
+    setLogoRemoved(false);
+      setLogoRemoved(false);
     }
   }, [empresa, mode, open]);
 
@@ -147,8 +152,11 @@ export function EmpresaModal({
         ...form,
         codUbigeoParentCompany: Number(form.codUbigeoParentCompany),
       };
+      // Vacío significa dos cosas distintas: sin cambios (la clave ausente le dice al
+      // backend que no toque el campo) o quitada (null explícito para que la borre).
       if (!payload.logoParentCompany) {
-        delete (payload as Record<string, unknown>).logoParentCompany;
+        if (logoRemoved) (payload as Record<string, unknown>).logoParentCompany = null;
+        else delete (payload as Record<string, unknown>).logoParentCompany;
       }
 
       const res = await apiFetch(url, {
@@ -411,10 +419,10 @@ export function EmpresaModal({
                   value={logoValue}
                   disabled={readOnly}
                   compression="logo"
-                  allowRemove={false}
                   onChange={(v) => {
                     setForm((prev) => ({ ...prev, logoParentCompany: v?.base64 ?? "" }));
                     setLogoPreview(v?.base64 ? (v.preview ?? null) : null);
+                    setLogoRemoved(v === null);
                   }}
                   onError={(m) => alert(m)}
                 />

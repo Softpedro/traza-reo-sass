@@ -37,9 +37,8 @@ export interface ImageUploadProps {
   compression?: "photo" | "logo" | "document" | "none";
   disabled?: boolean;
   /**
-   * Oculta "Quitar". Ponlo en false cuando el endpoint no sepa borrar la imagen:
-   * varios servicios sólo escriben el campo si llega un valor con contenido, así que
-   * el botón cambiaría la pantalla y el guardado no haría nada.
+   * Oculta "Quitar". Ponlo en false cuando la imagen sea obligatoria o el endpoint no
+   * sepa borrarla: el botón cambiaría la pantalla y el guardado no haría nada.
    */
   allowRemove?: boolean;
   /** Se llama con un mensaje ya redactado cuando el archivo no se puede procesar. */

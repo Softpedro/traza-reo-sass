@@ -50,7 +50,8 @@ export class CareService {
     carDescription: string;
     carSafety?: string | null;
     /** Imagen en base64 (sin prefijo data:). */
-    carImage?: string;
+    /** undefined = no tocar; string = reemplazar; null = borrar. Antes era un chequeo de verdad, así que no había forma de quitar la imagen. */
+    carImage?: string | null;
     stateCare?: number;
   }) {
     let codCare = data.codCare;
@@ -86,7 +87,7 @@ export class CareService {
       nombCare: string;
       carDescription: string;
       carSafety: string | null;
-      carImage: string;
+      carImage: string | null;
       stateCare: number;
     }>
   ) {
@@ -95,8 +96,8 @@ export class CareService {
     for (const f of fields) {
       if (data[f] !== undefined) updateData[f] = data[f];
     }
-    if (data.carImage) {
-      updateData.carImage = Buffer.from(data.carImage, "base64");
+    if (data.carImage !== undefined) {
+      updateData.carImage = data.carImage ? Buffer.from(data.carImage, "base64") : null;
     }
     const updated = await this.prisma.mdCare.update({
       where: { idDlkCare: id },

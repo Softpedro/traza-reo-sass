@@ -83,7 +83,9 @@ export function MarcaModal({
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [logoRemoved, setLogoRemoved] = useState(false);
   const [logoDppPreview, setLogoDppPreview] = useState<string | null>(null);
+  const [logoDppRemoved, setLogoDppRemoved] = useState(false);
   const [detailBrand, setDetailBrand] = useState<Brand | null>(null);
   const [empresas, setEmpresas] = useState<ParentCompanyOption[]>([]);
   const [ubigeos, setUbigeos] = useState<UbigeoOption[]>([]);
@@ -112,7 +114,11 @@ export function MarcaModal({
       setForm(emptyForm);
       setDetailBrand(null);
       setLogoPreview(null);
+    setLogoRemoved(false);
+      setLogoRemoved(false);
       setLogoDppPreview(null);
+    setLogoDppRemoved(false);
+      setLogoDppRemoved(false);
       return;
     }
 
@@ -143,7 +149,9 @@ export function MarcaModal({
     }
 
     setLogoPreview(null);
+    setLogoRemoved(false);
     setLogoDppPreview(null);
+    setLogoDppRemoved(false);
     setForm(brandRowToForm(marca));
     setDetailBrand(null);
 
@@ -208,11 +216,15 @@ export function MarcaModal({
         idDlkParentCompany: Number(form.idDlkParentCompany),
         stateBrand: Number(form.stateBrand),
       };
+      // Vacío significa dos cosas distintas: sin cambios (la clave ausente le dice al
+      // backend que no toque el campo) o quitada (null explícito para que la borre).
       if (!payload.logoBrand) {
-        delete (payload as Record<string, unknown>).logoBrand;
+        if (logoRemoved) (payload as Record<string, unknown>).logoBrand = null;
+        else delete (payload as Record<string, unknown>).logoBrand;
       }
       if (!payload.logoDpp) {
-        delete (payload as Record<string, unknown>).logoDpp;
+        if (logoDppRemoved) (payload as Record<string, unknown>).logoDpp = null;
+        else delete (payload as Record<string, unknown>).logoDpp;
       }
 
       const res = await apiFetch(url, {
@@ -257,12 +269,12 @@ export function MarcaModal({
       : null;
   /**
    * `base64` sólo cuando el usuario eligió un archivo nuevo; si no, se muestra el
-   * guardado sin reenviar sus bytes. El servicio no sabe borrar la imagen (sólo
-   * escribe el campo si llega con contenido), de ahí `allowRemove={false}`.
+   * guardado sin reenviar sus bytes. `logoRemoved` distingue "quitada" de "sin cambios":
+   * ambas dejan el campo del form vacío, pero sólo la primera manda null para borrar.
    */
   const logoValue: ImageUploadValue | null = logoPreview
     ? { base64: form.logoBrand, preview: logoPreview }
-    : storedLogoSrc
+    : !logoRemoved && storedLogoSrc
       ? { preview: storedLogoSrc }
       : null;
 
@@ -272,12 +284,12 @@ export function MarcaModal({
       : null;
   /**
    * `base64` sólo cuando el usuario eligió un archivo nuevo; si no, se muestra el
-   * guardado sin reenviar sus bytes. El servicio no sabe borrar la imagen (sólo
-   * escribe el campo si llega con contenido), de ahí `allowRemove={false}`.
+   * guardado sin reenviar sus bytes. `logoDppRemoved` distingue "quitada" de "sin cambios":
+   * ambas dejan el campo del form vacío, pero sólo la primera manda null para borrar.
    */
   const logoDppValue: ImageUploadValue | null = logoDppPreview
     ? { base64: form.logoDpp, preview: logoDppPreview }
-    : storedLogoDppSrc
+    : !logoDppRemoved && storedLogoDppSrc
       ? { preview: storedLogoDppSrc }
       : null;
 
@@ -367,10 +379,10 @@ export function MarcaModal({
                   value={logoValue}
                   disabled={readOnly}
                   compression="logo"
-                  allowRemove={false}
                   onChange={(v) => {
                     setForm((prev) => ({ ...prev, logoBrand: v?.base64 ?? "" }));
                     setLogoPreview(v?.base64 ? (v.preview ?? null) : null);
+                    setLogoRemoved(v === null);
                   }}
                   onError={(m) => alert(m)}
                 />
@@ -386,10 +398,10 @@ export function MarcaModal({
                   value={logoDppValue}
                   disabled={readOnly}
                   compression="logo"
-                  allowRemove={false}
                   onChange={(v) => {
                     setForm((prev) => ({ ...prev, logoDpp: v?.base64 ?? "" }));
                     setLogoDppPreview(v?.base64 ? (v.preview ?? null) : null);
+                    setLogoDppRemoved(v === null);
                   }}
                   onError={(m) => alert(m)}
                 />

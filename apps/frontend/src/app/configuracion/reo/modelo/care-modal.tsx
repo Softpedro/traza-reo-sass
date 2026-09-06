@@ -32,8 +32,8 @@ const emptyForm = { nombCare: "", carDescription: "", carSafety: "", stateCare: 
 export function CareModal({ open, onOpenChange, mode, modelId, care, onSuccess }: CareModalProps) {
   const [form, setForm] = useState(emptyForm);
   /**
-   * `base64` sólo cuando el usuario eligió un archivo nuevo. El servicio no sabe borrar
-   * el pictograma (sólo escribe carImage si llega con contenido), de ahí allowRemove={false}.
+   * `base64` sólo cuando el usuario eligió un archivo nuevo; `null` significa quitarlo,
+   * y sólo entonces el submit manda carImage: null para que el backend lo borre.
    */
   const [image, setImage] = useState<ImageUploadValue | null>(null);
   const [saving, setSaving] = useState(false);
@@ -83,7 +83,9 @@ export function CareModal({ open, onOpenChange, mode, modelId, care, onSuccess }
         stateCare: Number(form.stateCare),
       };
       if (!isEdit) payload.idDlkModel = modelId;
+      // Sin cambios: no se manda la clave. Quitada: null explícito para que la borre.
       if (image?.base64) payload.carImage = image.base64;
+      else if (!image && care?.carImage) payload.carImage = null;
 
       const res = await apiFetch(url, {
         method,
@@ -164,7 +166,6 @@ export function CareModal({ open, onOpenChange, mode, modelId, care, onSuccess }
                 disabled={readOnly}
                 // Pictograma: `logo` conserva la transparencia si el PNG la trae.
                 compression="logo"
-                allowRemove={false}
                 onChange={(v) => {
                   setImage(v);
                   setError(null);

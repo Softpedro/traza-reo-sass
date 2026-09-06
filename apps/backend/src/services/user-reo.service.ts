@@ -94,7 +94,8 @@ export class UserReoService {
     cellularUser: string;
     userLogin: string;
     password: string;
-    photograph?: string;
+    /** undefined = no tocar; string = reemplazar; null = borrar. Antes era un chequeo de verdad, así que no había forma de quitar la imagen. */
+    photograph?: string | null;
   }) {
     let codUserReo = data.codUserReo;
     if (!codUserReo) {
@@ -161,7 +162,7 @@ export class UserReoService {
       cellularUser: string;
       userLogin: string;
       password: string;
-      photograph: string;
+      photograph: string | null;
       isLocked: number;
       stateUser: number;
     }>
@@ -193,8 +194,8 @@ export class UserReoService {
       updateData.password = await ensureHashed(data.password);
     }
 
-    if (data.photograph) {
-      updateData.photograph = Buffer.from(data.photograph, "base64");
+    if (data.photograph !== undefined) {
+      updateData.photograph = data.photograph ? Buffer.from(data.photograph, "base64") : null;
     }
 
     const updated = await this.prisma.mdUserReo.update({

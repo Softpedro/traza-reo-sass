@@ -231,7 +231,8 @@ export class ParentCompanyService {
     webParentCompany?: string;
     canisterDataParentCompany?: string;
     canisterAssetsParentCompany?: string;
-    logoParentCompany?: string;
+    /** undefined = no tocar; string = reemplazar; null = borrar. Antes era un chequeo de verdad, así que no había forma de quitar la imagen. */
+    logoParentCompany?: string | null;
     stateParentCompany?: number;
     idDlkAdmReo?: string | null;
     typeParentCompany?: number;
@@ -303,7 +304,7 @@ export class ParentCompanyService {
       webParentCompany: string;
       canisterDataParentCompany: string;
       canisterAssetsParentCompany: string;
-      logoParentCompany: string;
+      logoParentCompany: string | null;
       stateParentCompany: number;
       idDlkAdmReo: string | null;
       typeParentCompany: number;
@@ -347,8 +348,8 @@ export class ParentCompanyService {
       updateData[f] = data[f];
     }
 
-    if (data.logoParentCompany) {
-      updateData.logoParentCompany = Buffer.from(data.logoParentCompany, "base64");
+    if (data.logoParentCompany !== undefined) {
+      updateData.logoParentCompany = data.logoParentCompany ? Buffer.from(data.logoParentCompany, "base64") : null;
     }
 
     if (data.idDlkAdmReo !== undefined) {

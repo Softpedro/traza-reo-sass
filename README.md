@@ -72,6 +72,20 @@ O por app:
 | `db:push`      | Aplica schema a la DB          |
 | `db:studio`    | Abre Prisma Studio             |
 
+### Orden del build
+
+`packages/ui` se compila con `tsup` y su `package.json` apunta a `./dist`, que está en
+`.gitignore`. Un clon limpio no lo tiene, así que `next build` no resuelve
+`@fullstack-reo/ui` si el paquete no se construyó antes.
+
+Dos cosas lo garantizan, y conviene no deshacerlas:
+
+- En la raíz, `packages/*` va **primero** en `workspaces`: `npm run build --workspaces`
+  respeta ese orden, no el grafo de dependencias.
+- `apps/frontend` tiene un `prebuild` que compila `packages/ui`, así que su build
+  funciona aunque se invoque ese workspace por separado (que es lo que suele hacer un
+  PaaS al desplegar sólo el frontend).
+
 ## Endpoints de ejemplo (backend)
 
 - `GET /health` – Health check

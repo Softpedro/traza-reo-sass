@@ -2,9 +2,9 @@
   "name": "fullstack-reo",
   "private": true,
   "workspaces": [
-    "apps/frontend",
+    "packages/*",
     "apps/backend",
-    "packages/*"
+    "apps/frontend"
   ],
   "scripts": {
     "dev": "npm run dev --workspaces --if-present",

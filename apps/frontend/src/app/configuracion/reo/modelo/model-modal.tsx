@@ -10,9 +10,10 @@ import {
   Input,
   Label,
   Button,
+  ImageUpload,
+  type ImageUploadValue,
 } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
-import { compressPhoto } from "@/lib/image-compress";
 
 type Mode = "create" | "edit" | "view";
 
@@ -26,8 +27,9 @@ const PERSPECTIVES = [
 /**
  * `id` presente = imagen ya guardada en la base; al guardar se manda sólo ese id, nunca
  * los bytes. `base64` presente = archivo recién elegido, es lo único que viaja.
+ * Ausente del record = el usuario la quitó y el backend la borra.
  */
-type PieceImage = { id?: number; base64?: string; preview?: string | null };
+type PieceImage = ImageUploadValue;
 type PieceState = { idDlkModelDetail?: number; namePiece: string; images: Record<string, PieceImage> };
 
 type BrandOption = {
@@ -178,33 +180,16 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
     setForm((p) => ({ ...p, [field]: value }));
   }
 
-  async function handlePieceImage(
-    pieceIdx: number,
-    perspective: string,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setError(null);
-    try {
-      // Las fotos de celular pesan 3-4 MB; el modelo entero viaja en un solo JSON y sin
-      // reducirlas el alta se pasa del límite de body del backend (413).
-      const { base64, dataUrl } = await compressPhoto(file);
-      setPieces((prev) => {
-        const next = [...prev];
-        next[pieceIdx] = {
-          ...next[pieceIdx],
-          images: {
-            ...next[pieceIdx].images,
-            // Sin `id`: es un reemplazo, el backend borra la anterior de esta perspectiva.
-            [perspective]: { base64, preview: dataUrl },
-          },
-        };
-        return next;
-      });
-    } catch {
-      setError(`No se pudo procesar la imagen "${file.name}".`);
-    }
+  /** `null` = el usuario quitó la imagen: se saca del record y el backend la borra. */
+  function setPieceImage(pieceIdx: number, perspective: string, value: PieceImage | null) {
+    setPieces((prev) => {
+      const next = [...prev];
+      const images = { ...next[pieceIdx].images };
+      if (value) images[perspective] = value;
+      else delete images[perspective];
+      next[pieceIdx] = { ...next[pieceIdx], images };
+      return next;
+    });
   }
 
   function handleFicha(e: React.ChangeEvent<HTMLInputElement>) {
@@ -499,35 +484,31 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
 
         {/* Panel de imágenes por pieza */}
         <Dialog open={piecePanel !== null} onOpenChange={(o) => !o && setPiecePanel(null)}>
-          <DialogContent className="max-w-md">
+          <DialogContent className="max-w-xl">
             <DialogHeader>
               <DialogTitle>
                 {piecePanel !== null ? `Pieza ${piecePanel + 1}: ${pieces[piecePanel]?.namePiece ?? ""}` : "Imágenes"}
               </DialogTitle>
-              <DialogDescription>Imágenes por perspectiva.</DialogDescription>
+              <DialogDescription>
+                Imágenes por perspectiva. Se reducen automáticamente al subirlas.
+              </DialogDescription>
             </DialogHeader>
             {piecePanel !== null && (
-              <div className="grid gap-3 py-2">
-                {PERSPECTIVES.map((persp) => {
-                  const img = pieces[piecePanel]?.images[persp.key];
-                  return (
-                    <div key={persp.key} className="grid gap-1.5">
-                      <Label>{persp.label}</Label>
-                      {img?.preview && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={img.preview} alt={persp.label} className="h-16 w-auto object-contain" />
-                      )}
-                      {!readOnly && (
-                        <Input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handlePieceImage(piecePanel, persp.key, e)}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
+              <div className="grid grid-cols-2 gap-3 py-2">
+                {PERSPECTIVES.map((persp) => (
+                  <ImageUpload
+                    key={persp.key}
+                    label={persp.label}
+                    value={pieces[piecePanel]?.images[persp.key] ?? null}
+                    disabled={readOnly}
+                    onChange={(v) => setPieceImage(piecePanel, persp.key, v)}
+                    onError={setError}
+                  />
+                ))}
               </div>
+            )}
+            {error && (
+              <p className="text-sm text-destructive">{error}</p>
             )}
             <div className="flex justify-end pt-1">
               <Button variant="outline" onClick={() => setPiecePanel(null)}>

@@ -20,6 +20,8 @@ export {
 export { DataTable } from "./components/ui/data-table";
 export type { DataTableProps } from "./components/ui/data-table";
 export { Input } from "./components/ui/input";
+export { ImageUpload } from "./components/ui/image-upload";
+export type { ImageUploadProps, ImageUploadValue } from "./components/ui/image-upload";
 export { Badge, badgeVariants } from "./components/ui/badge";
 export type { BadgeProps } from "./components/ui/badge";
 export {
@@ -46,3 +48,5 @@ export {
   SelectLabel,
 } from "./components/ui/select";
 export { cn } from "./lib/utils";
+export { compressImage, compressPhoto, compressLogo } from "./lib/image-compress";
+export type { CompressImageOptions, CompressedImage } from "./lib/image-compress";

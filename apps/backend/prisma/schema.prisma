@@ -758,7 +758,7 @@ model MdMaquila {
   webMaquila            String                   @map("WEB_MAQUILA") @db.VarChar(100)
   canisterDataMaquila   Int                      @map("CANISTER_DATA_MAQUILA")
   canisterAssetsMaquila String                   @map("CANISTER_ASSETS_MAQUILA") @db.VarChar(100)
-  logoMaquila           Bytes                    @map("LOGO_MAQUILA")
+  logoMaquila           Bytes?                   @map("LOGO_MAQUILA")
   stateMaquila          Int                      @default(1) @map("STATE_MAQUILA")
   codUsuarioCargaDl     String                   @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
   fehProcesoCargaDl     DateTime                 @default(now()) @map("FEH_PROCESO_CARGA_DL")

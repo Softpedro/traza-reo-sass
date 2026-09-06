@@ -90,9 +90,7 @@ export class MaquilaService {
         webMaquila: data.webMaquila ?? "",
         canisterDataMaquila: data.canisterDataMaquila ?? 0,
         canisterAssetsMaquila: data.canisterAssetsMaquila ?? "",
-        logoMaquila: data.logoMaquila
-          ? Buffer.from(data.logoMaquila, "base64")
-          : Buffer.alloc(0),
+        logoMaquila: data.logoMaquila ? Buffer.from(data.logoMaquila, "base64") : null,
         stateMaquila: data.stateMaquila ?? 1,
         codUsuarioCargaDl: "SYSTEM",
         fehProcesoCargaDl: new Date(),
@@ -147,11 +145,9 @@ export class MaquilaService {
     }
 
     if (data.logoMaquila !== undefined) {
-      // LOGO_MAQUILA es NOT NULL en la base: "sin logo" se representa con un
-      // buffer vacío, igual que en create, y logoBytesToDataUrl lo lee como null.
       updateData.logoMaquila = data.logoMaquila
         ? Buffer.from(data.logoMaquila, "base64")
-        : Buffer.alloc(0);
+        : null;
     }
 
     const updated = await this.prisma.mdMaquila.update({

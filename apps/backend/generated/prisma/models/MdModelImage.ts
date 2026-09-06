@@ -565,6 +565,10 @@ export type MdModelImageUncheckedUpdateManyWithoutModelNestedInput = {
   deleteMany?: Prisma.MdModelImageScalarWhereInput | Prisma.MdModelImageScalarWhereInput[]
 }
 
+export type BytesFieldUpdateOperationsInput = {
+  set?: runtime.Bytes
+}
+
 export type MdModelImageCreateNestedManyWithoutModelDetailInput = {
   create?: Prisma.XOR<Prisma.MdModelImageCreateWithoutModelDetailInput, Prisma.MdModelImageUncheckedCreateWithoutModelDetailInput> | Prisma.MdModelImageCreateWithoutModelDetailInput[] | Prisma.MdModelImageUncheckedCreateWithoutModelDetailInput[]
   connectOrCreate?: Prisma.MdModelImageCreateOrConnectWithoutModelDetailInput | Prisma.MdModelImageCreateOrConnectWithoutModelDetailInput[]

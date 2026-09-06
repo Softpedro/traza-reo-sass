@@ -310,7 +310,7 @@ export type MdMaquilaGroupByOutputType = {
   webMaquila: string
   canisterDataMaquila: number
   canisterAssetsMaquila: string
-  logoMaquila: runtime.Bytes
+  logoMaquila: runtime.Bytes | null
   stateMaquila: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl: Date
@@ -357,7 +357,7 @@ export type MdMaquilaWhereInput = {
   webMaquila?: Prisma.StringFilter<"MdMaquila"> | string
   canisterDataMaquila?: Prisma.IntFilter<"MdMaquila"> | number
   canisterAssetsMaquila?: Prisma.StringFilter<"MdMaquila"> | string
-  logoMaquila?: Prisma.BytesFilter<"MdMaquila"> | runtime.Bytes
+  logoMaquila?: Prisma.BytesNullableFilter<"MdMaquila"> | runtime.Bytes | null
   stateMaquila?: Prisma.IntFilter<"MdMaquila"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdMaquila"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdMaquila"> | Date | string
@@ -383,7 +383,7 @@ export type MdMaquilaOrderByWithRelationInput = {
   webMaquila?: Prisma.SortOrder
   canisterDataMaquila?: Prisma.SortOrder
   canisterAssetsMaquila?: Prisma.SortOrder
-  logoMaquila?: Prisma.SortOrder
+  logoMaquila?: Prisma.SortOrderInput | Prisma.SortOrder
   stateMaquila?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -413,7 +413,7 @@ export type MdMaquilaWhereUniqueInput = Prisma.AtLeast<{
   webMaquila?: Prisma.StringFilter<"MdMaquila"> | string
   canisterDataMaquila?: Prisma.IntFilter<"MdMaquila"> | number
   canisterAssetsMaquila?: Prisma.StringFilter<"MdMaquila"> | string
-  logoMaquila?: Prisma.BytesFilter<"MdMaquila"> | runtime.Bytes
+  logoMaquila?: Prisma.BytesNullableFilter<"MdMaquila"> | runtime.Bytes | null
   stateMaquila?: Prisma.IntFilter<"MdMaquila"> | number
   codUsuarioCargaDl?: Prisma.StringFilter<"MdMaquila"> | string
   fehProcesoCargaDl?: Prisma.DateTimeFilter<"MdMaquila"> | Date | string
@@ -439,7 +439,7 @@ export type MdMaquilaOrderByWithAggregationInput = {
   webMaquila?: Prisma.SortOrder
   canisterDataMaquila?: Prisma.SortOrder
   canisterAssetsMaquila?: Prisma.SortOrder
-  logoMaquila?: Prisma.SortOrder
+  logoMaquila?: Prisma.SortOrderInput | Prisma.SortOrder
   stateMaquila?: Prisma.SortOrder
   codUsuarioCargaDl?: Prisma.SortOrder
   fehProcesoCargaDl?: Prisma.SortOrder
@@ -471,7 +471,7 @@ export type MdMaquilaScalarWhereWithAggregatesInput = {
   webMaquila?: Prisma.StringWithAggregatesFilter<"MdMaquila"> | string
   canisterDataMaquila?: Prisma.IntWithAggregatesFilter<"MdMaquila"> | number
   canisterAssetsMaquila?: Prisma.StringWithAggregatesFilter<"MdMaquila"> | string
-  logoMaquila?: Prisma.BytesWithAggregatesFilter<"MdMaquila"> | runtime.Bytes
+  logoMaquila?: Prisma.BytesNullableWithAggregatesFilter<"MdMaquila"> | runtime.Bytes | null
   stateMaquila?: Prisma.IntWithAggregatesFilter<"MdMaquila"> | number
   codUsuarioCargaDl?: Prisma.StringWithAggregatesFilter<"MdMaquila"> | string
   fehProcesoCargaDl?: Prisma.DateTimeWithAggregatesFilter<"MdMaquila"> | Date | string
@@ -494,7 +494,7 @@ export type MdMaquilaCreateInput = {
   webMaquila: string
   canisterDataMaquila: number
   canisterAssetsMaquila: string
-  logoMaquila: runtime.Bytes
+  logoMaquila?: runtime.Bytes | null
   stateMaquila?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -520,7 +520,7 @@ export type MdMaquilaUncheckedCreateInput = {
   webMaquila: string
   canisterDataMaquila: number
   canisterAssetsMaquila: string
-  logoMaquila: runtime.Bytes
+  logoMaquila?: runtime.Bytes | null
   stateMaquila?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -545,7 +545,7 @@ export type MdMaquilaUpdateInput = {
   webMaquila?: Prisma.StringFieldUpdateOperationsInput | string
   canisterDataMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   canisterAssetsMaquila?: Prisma.StringFieldUpdateOperationsInput | string
-  logoMaquila?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  logoMaquila?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -571,7 +571,7 @@ export type MdMaquilaUncheckedUpdateInput = {
   webMaquila?: Prisma.StringFieldUpdateOperationsInput | string
   canisterDataMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   canisterAssetsMaquila?: Prisma.StringFieldUpdateOperationsInput | string
-  logoMaquila?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  logoMaquila?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -597,7 +597,7 @@ export type MdMaquilaCreateManyInput = {
   webMaquila: string
   canisterDataMaquila: number
   canisterAssetsMaquila: string
-  logoMaquila: runtime.Bytes
+  logoMaquila?: runtime.Bytes | null
   stateMaquila?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -620,7 +620,7 @@ export type MdMaquilaUpdateManyMutationInput = {
   webMaquila?: Prisma.StringFieldUpdateOperationsInput | string
   canisterDataMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   canisterAssetsMaquila?: Prisma.StringFieldUpdateOperationsInput | string
-  logoMaquila?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  logoMaquila?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -644,7 +644,7 @@ export type MdMaquilaUncheckedUpdateManyInput = {
   webMaquila?: Prisma.StringFieldUpdateOperationsInput | string
   canisterDataMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   canisterAssetsMaquila?: Prisma.StringFieldUpdateOperationsInput | string
-  logoMaquila?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  logoMaquila?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -754,10 +754,6 @@ export type MdMaquilaScalarRelationFilter = {
   isNot?: Prisma.MdMaquilaWhereInput
 }
 
-export type BytesFieldUpdateOperationsInput = {
-  set?: runtime.Bytes
-}
-
 export type MdMaquilaCreateNestedOneWithoutFacilitiesInput = {
   create?: Prisma.XOR<Prisma.MdMaquilaCreateWithoutFacilitiesInput, Prisma.MdMaquilaUncheckedCreateWithoutFacilitiesInput>
   connectOrCreate?: Prisma.MdMaquilaCreateOrConnectWithoutFacilitiesInput
@@ -800,7 +796,7 @@ export type MdMaquilaCreateWithoutFacilitiesInput = {
   webMaquila: string
   canisterDataMaquila: number
   canisterAssetsMaquila: string
-  logoMaquila: runtime.Bytes
+  logoMaquila?: runtime.Bytes | null
   stateMaquila?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -825,7 +821,7 @@ export type MdMaquilaUncheckedCreateWithoutFacilitiesInput = {
   webMaquila: string
   canisterDataMaquila: number
   canisterAssetsMaquila: string
-  logoMaquila: runtime.Bytes
+  logoMaquila?: runtime.Bytes | null
   stateMaquila?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -865,7 +861,7 @@ export type MdMaquilaUpdateWithoutFacilitiesInput = {
   webMaquila?: Prisma.StringFieldUpdateOperationsInput | string
   canisterDataMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   canisterAssetsMaquila?: Prisma.StringFieldUpdateOperationsInput | string
-  logoMaquila?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  logoMaquila?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -890,7 +886,7 @@ export type MdMaquilaUncheckedUpdateWithoutFacilitiesInput = {
   webMaquila?: Prisma.StringFieldUpdateOperationsInput | string
   canisterDataMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   canisterAssetsMaquila?: Prisma.StringFieldUpdateOperationsInput | string
-  logoMaquila?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  logoMaquila?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -914,7 +910,7 @@ export type MdMaquilaCreateWithoutParentCompaniesInput = {
   webMaquila: string
   canisterDataMaquila: number
   canisterAssetsMaquila: string
-  logoMaquila: runtime.Bytes
+  logoMaquila?: runtime.Bytes | null
   stateMaquila?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -939,7 +935,7 @@ export type MdMaquilaUncheckedCreateWithoutParentCompaniesInput = {
   webMaquila: string
   canisterDataMaquila: number
   canisterAssetsMaquila: string
-  logoMaquila: runtime.Bytes
+  logoMaquila?: runtime.Bytes | null
   stateMaquila?: number
   codUsuarioCargaDl: string
   fehProcesoCargaDl?: Date | string
@@ -979,7 +975,7 @@ export type MdMaquilaUpdateWithoutParentCompaniesInput = {
   webMaquila?: Prisma.StringFieldUpdateOperationsInput | string
   canisterDataMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   canisterAssetsMaquila?: Prisma.StringFieldUpdateOperationsInput | string
-  logoMaquila?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  logoMaquila?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1004,7 +1000,7 @@ export type MdMaquilaUncheckedUpdateWithoutParentCompaniesInput = {
   webMaquila?: Prisma.StringFieldUpdateOperationsInput | string
   canisterDataMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   canisterAssetsMaquila?: Prisma.StringFieldUpdateOperationsInput | string
-  logoMaquila?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  logoMaquila?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   stateMaquila?: Prisma.IntFieldUpdateOperationsInput | number
   codUsuarioCargaDl?: Prisma.StringFieldUpdateOperationsInput | string
   fehProcesoCargaDl?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1135,7 +1131,7 @@ export type $MdMaquilaPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     webMaquila: string
     canisterDataMaquila: number
     canisterAssetsMaquila: string
-    logoMaquila: runtime.Bytes
+    logoMaquila: runtime.Bytes | null
     stateMaquila: number
     codUsuarioCargaDl: string
     fehProcesoCargaDl: Date

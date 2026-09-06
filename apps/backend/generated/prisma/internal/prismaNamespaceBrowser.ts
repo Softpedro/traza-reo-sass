@@ -854,6 +854,7 @@ export const MdModelScalarFieldEnum = {
   careModel: 'careModel',
   technicalSpecification: 'technicalSpecification',
   technicalSpecFile: 'technicalSpecFile',
+  measurementsSheet: 'measurementsSheet',
   idDlkPacking: 'idDlkPacking',
   stateModel: 'stateModel',
   codUsuarioCargaDl: 'codUsuarioCargaDl',

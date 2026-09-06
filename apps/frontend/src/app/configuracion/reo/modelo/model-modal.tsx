@@ -22,8 +22,12 @@ const PERSPECTIVES = [
   { key: "LATERAL_IZQUIERDO", label: "Lateral Izquierdo" },
 ] as const;
 
-type PieceImage = { base64?: string; preview?: string | null };
-type PieceState = { namePiece: string; images: Record<string, PieceImage> };
+/**
+ * `id` presente = imagen ya guardada en la base; al guardar se manda sólo ese id, nunca
+ * los bytes. `base64` presente = archivo recién elegido, es lo único que viaja.
+ */
+type PieceImage = { id?: number; base64?: string; preview?: string | null };
+type PieceState = { idDlkModelDetail?: number; namePiece: string; images: Record<string, PieceImage> };
 
 type BrandOption = {
   idDlkBrand: number;
@@ -63,12 +67,6 @@ const emptyForm = {
   nroPieces: 1,
   careModel: "",
 };
-
-function dataUrlToBase64(dataUrl: string | null | undefined): string | undefined {
-  if (!dataUrl) return undefined;
-  const i = dataUrl.indexOf(",");
-  return i >= 0 ? dataUrl.slice(i + 1) : dataUrl;
-}
 
 export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: ModelModalProps) {
   const [form, setForm] = useState(emptyForm);
@@ -135,13 +133,19 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
         });
         setHasFicha(Boolean(m.hasFicha));
         const loaded: PieceState[] = Array.isArray(m.pieces) && m.pieces.length
-          ? m.pieces.map((p: { namePiece: string; images: { imageType: string; imageData: string | null }[] }) => {
-              const images: Record<string, PieceImage> = {};
-              for (const im of p.images ?? []) {
-                images[im.imageType] = { preview: im.imageData };
+          ? m.pieces.map(
+              (p: {
+                idDlkModelDetail?: number;
+                namePiece: string;
+                images: { idDlkModelImages: number; imageType: string; imageData: string | null }[];
+              }) => {
+                const images: Record<string, PieceImage> = {};
+                for (const im of p.images ?? []) {
+                  images[im.imageType] = { id: im.idDlkModelImages, preview: im.imageData };
+                }
+                return { idDlkModelDetail: p.idDlkModelDetail, namePiece: p.namePiece ?? "", images };
               }
-              return { namePiece: p.namePiece ?? "", images };
-            })
+            )
           : [{ namePiece: "Prenda", images: {} }];
         setPieces(loaded);
       } catch {
@@ -185,6 +189,7 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
           ...next[pieceIdx],
           images: {
             ...next[pieceIdx].images,
+            // Sin `id`: es un reemplazo, el backend borra la anterior de esta perspectiva.
             [perspective]: { base64: result.split(",")[1] ?? "", preview: result },
           },
         };
@@ -226,11 +231,14 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
     setError(null);
     try {
       const piecesPayload = pieces.map((p) => ({
+        idDlkModelDetail: p.idDlkModelDetail,
         namePiece: p.namePiece,
         images: PERSPECTIVES.map((persp) => {
           const img = p.images[persp.key];
-          const base64 = img?.base64 ?? dataUrlToBase64(img?.preview);
-          return base64 ? { imageType: persp.key, base64 } : null;
+          if (img?.base64) return { imageType: persp.key, base64: img.base64 };
+          // Ya guardada y sin cambios: viaja el id, no los megas.
+          if (img?.id != null) return { imageType: persp.key, idDlkModelImages: img.id };
+          return null;
         }).filter(Boolean),
       }));
 

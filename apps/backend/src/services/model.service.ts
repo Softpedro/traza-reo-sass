@@ -34,8 +34,23 @@ const subbrandSelect = {
   select: { idDlkSubbrand: true, codSubbrand: true, nameSubbrand: true },
 } as const;
 
-type PieceImageInput = { imageType: string; base64?: string | null };
-type PieceInput = { namePiece: string; images?: PieceImageInput[] };
+/**
+ * Imagen de una pieza. Dos formas excluyentes:
+ *  - `idDlkModelImages`: la imagen ya está guardada y se conserva tal cual (el cliente
+ *    NO reenvía sus bytes).
+ *  - `base64`: imagen nueva o reemplazo; se inserta y la anterior de esa perspectiva se borra.
+ */
+type PieceImageInput = {
+  imageType: string;
+  base64?: string | null;
+  idDlkModelImages?: number | null;
+};
+/** `idDlkModelDetail` presente = pieza existente que se conserva; ausente = pieza nueva. */
+type PieceInput = {
+  namePiece: string;
+  idDlkModelDetail?: number | null;
+  images?: PieceImageInput[];
+};
 
 /** Campos escalares editables del modelo (todos opcionales para create/update). */
 type ModelScalars = Partial<{
@@ -98,6 +113,18 @@ const SCALAR_FIELDS = [
   "technicalSpecification",
   "stateModel",
 ] as const;
+
+/**
+ * El default de Prisma para transacciones interactivas es 5s, y aquí dentro pueden ir
+ * varios INSERT de MEDIUMBLOB (fotos de piezas) contra un MySQL remoto. Con 5s la
+ * transacción se cerraba a mitad y salía un P2028 que el cliente veía como
+ * "Ocurrió un error interno". `maxWait` va por encima del acquireTimeout del pool (8s)
+ * para no competir con él por el mismo síntoma.
+ */
+const TX_OPTIONS = {
+  timeout: Number(process.env.DB_TX_TIMEOUT_MS ?? 30000),
+  maxWait: Number(process.env.DB_TX_MAX_WAIT_MS ?? 10000),
+} as const;
 
 export class ModelService {
   constructor(private prisma: PrismaClient) {}
@@ -199,7 +226,7 @@ export class ModelService {
       const model = await tx.mdModel.create({ data });
       await this.createPieces(tx, model.idDlkModel, input.pieces ?? []);
       return model.idDlkModel;
-    });
+    }, TX_OPTIONS);
     return this.getById(newId);
   }
 
@@ -212,15 +239,15 @@ export class ModelService {
       data.technicalSpecFile = input.fichaBase64 ? Buffer.from(input.fichaBase64, "base64") : null;
     }
 
-    await this.prisma.$transaction(async (tx) => {
-      await tx.mdModel.update({ where: { idDlkModel: id }, data });
-      // Estrategia de reemplazo: si llegan piezas, se rehacen piezas + imágenes.
-      if (input.pieces !== undefined) {
-        await tx.mdModelImage.deleteMany({ where: { idDlkModel: id } });
-        await tx.mdModelDetail.deleteMany({ where: { idDlkModel: id } });
-        await this.createPieces(tx, id, input.pieces);
-      }
-    });
+    await this.prisma.$transaction(
+      async (tx) => {
+        await tx.mdModel.update({ where: { idDlkModel: id }, data });
+        if (input.pieces !== undefined) {
+          await this.syncPieces(tx, id, input.pieces);
+        }
+      },
+      TX_OPTIONS
+    );
     return this.getById(id);
   }
 
@@ -229,6 +256,100 @@ export class ModelService {
       where: { idDlkModel: id },
       data: { flgStatutActif: 0, stateModel: 0, desAccion: "DELETE" },
     });
+  }
+
+  /**
+   * Reconcilia piezas e imágenes sin reescribir lo que no cambió.
+   *
+   * Antes esto era `deleteMany` de imágenes + `deleteMany` de piezas + recrear todo desde
+   * base64. Como el modal reenviaba las fotos ya guardadas en cada guardado, editar un
+   * campo de texto reinsertaba todos los BLOB: la transacción se pasaba de los 5s (500) y
+   * el payload se pasaba del límite de body (413). Ahora el cliente manda
+   * `idDlkModelImages` para lo que conserva y sólo bytes para lo nuevo.
+   */
+  private async syncPieces(tx: Prisma.TransactionClient, modelId: number, pieces: PieceInput[]) {
+    const existing = await tx.mdModelDetail.findMany({
+      where: { idDlkModel: modelId },
+      select: {
+        idDlkModelDetail: true,
+        images: { select: { idDlkModelImages: true } },
+      },
+    });
+    const existingById = new Map(existing.map((d) => [d.idDlkModelDetail, d]));
+
+    const keptDetailIds = new Set<number>();
+    for (const p of pieces) {
+      if (typeof p.idDlkModelDetail === "number" && existingById.has(p.idDlkModelDetail)) {
+        keptDetailIds.add(p.idDlkModelDetail);
+      }
+    }
+
+    // Piezas que ya no vienen en el payload. Las imágenes se borran explícitamente: el
+    // ON DELETE CASCADE está declarado en el schema, pero no dependemos de que el FK real
+    // en la base lo tenga.
+    const removedDetailIds = existing
+      .map((d) => d.idDlkModelDetail)
+      .filter((detailId) => !keptDetailIds.has(detailId));
+    if (removedDetailIds.length) {
+      await tx.mdModelImage.deleteMany({ where: { idDlkModelDetail: { in: removedDetailIds } } });
+      await tx.mdModelDetail.deleteMany({ where: { idDlkModelDetail: { in: removedDetailIds } } });
+    }
+
+    for (const p of pieces) {
+      const current =
+        typeof p.idDlkModelDetail === "number" ? existingById.get(p.idDlkModelDetail) : undefined;
+
+      let detailId: number;
+      if (current) {
+        await tx.mdModelDetail.update({
+          where: { idDlkModelDetail: current.idDlkModelDetail },
+          data: { namePiece: p.namePiece, desAccion: "UPDATE" },
+        });
+        detailId = current.idDlkModelDetail;
+      } else {
+        const created = await tx.mdModelDetail.create({
+          data: {
+            idDlkModel: modelId,
+            namePiece: p.namePiece,
+            stateModelDetail: 1,
+            codUsuarioCargaDl: "SYSTEM",
+            desAccion: "INSERT",
+            flgStatutActif: 1,
+          },
+        });
+        detailId = created.idDlkModelDetail;
+      }
+
+      const images = p.images ?? [];
+      const keptImageIds = new Set(
+        images
+          .map((im) => im.idDlkModelImages)
+          .filter((imageId): imageId is number => typeof imageId === "number")
+      );
+      // Todo lo que la pieza tenía y el cliente no conserva: reemplazado o eliminado.
+      const staleImageIds = (current?.images ?? [])
+        .map((im) => im.idDlkModelImages)
+        .filter((imageId) => !keptImageIds.has(imageId));
+      if (staleImageIds.length) {
+        await tx.mdModelImage.deleteMany({ where: { idDlkModelImages: { in: staleImageIds } } });
+      }
+
+      for (const img of images) {
+        if (!img.base64) continue; // conservada (llegó por id) o vacía
+        await tx.mdModelImage.create({
+          data: {
+            idDlkModel: modelId,
+            idDlkModelDetail: detailId,
+            imageType: img.imageType,
+            imageData: Buffer.from(img.base64, "base64"),
+            stateImageModel: 1,
+            codUsuarioCargaDl: "SYSTEM",
+            desAccion: "INSERT",
+            flgStatutActif: 1,
+          },
+        });
+      }
+    }
   }
 
   /** Crea piezas (MD_MODEL_DETAIL) con sus imágenes (MD_MODEL_IMAGES) dentro de una transacción. */

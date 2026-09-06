@@ -71,6 +71,10 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
             : Number(body.finSerializacion),
         totalLabel:
           body.totalLabel === "" || body.totalLabel == null ? null : Number(body.totalLabel),
+        totalPrendas:
+          body.totalPrendas === "" || body.totalPrendas == null
+            ? null
+            : Number(body.totalPrendas),
         size: body.size == null ? null : String(body.size),
         color: body.color == null ? null : String(body.color),
         print: body.print == null ? null : String(body.print),
@@ -258,6 +262,12 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
         ...(body.digitalCertificateId !== undefined && {
           digitalCertificateId:
             body.digitalCertificateId == null ? null : String(body.digitalCertificateId),
+        }),
+        ...(body.totalPrendas !== undefined && {
+          totalPrendas:
+            body.totalPrendas === "" || body.totalPrendas == null
+              ? null
+              : Number(body.totalPrendas),
         }),
         ...(body.stateOrderLabelHead !== undefined && {
           stateOrderLabelHead:

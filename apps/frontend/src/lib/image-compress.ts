@@ -1,21 +1,27 @@
 /**
  * Reduce imágenes en el navegador antes de subirlas como base64.
  *
- * Las fotos de piezas salen del celular con 3-4 MB cada una. Como el modelo entero viaja
- * en un solo JSON (hasta 10 piezas x 4 perspectivas), el alta se pasaba del límite de body
- * del backend y devolvía 413. A 1600 px de lado mayor y JPEG 0.8 una foto queda en
- * ~200-400 KB, de sobra para lo que se muestra en el pasaporte DPP.
+ * Todas las imágenes de la app viajan dentro del JSON de su formulario. Las fotos de
+ * celular pesan 3-4 MB cada una, y el alta de un modelo manda hasta 40 (10 piezas x 4
+ * perspectivas): se pasaba del límite de body del backend y devolvía 413. A 1600 px de
+ * lado mayor y JPEG 0.8 una foto queda en ~200-400 KB, de sobra para lo que se muestra
+ * en el pasaporte DPP.
  *
  * Nunca falla de forma dura: si el navegador no puede decodificar el archivo, o si
- * recodificar lo dejaría más pesado, devuelve el original.
+ * recodificar lo dejaría más pesado, devuelve el original tal cual.
  */
 
 const DEFAULTS = {
-  /** Lado mayor del resultado. No agranda imágenes que ya sean más chicas. */
+  /** Lado mayor del resultado. Nunca agranda una imagen que ya sea más chica. */
   maxDimension: 1600,
-  /** Calidad JPEG/WebP (0-1). Ignorada por PNG. */
+  /** Calidad JPEG (0-1). PNG es sin pérdida y la ignora. */
   quality: 0.8,
-  mimeType: "image/jpeg",
+  /**
+   * "auto" = PNG si la imagen trae píxeles transparentes, JPEG si no.
+   * Importante para los logos: el logo DPP se pinta sobre un color de fondo configurable,
+   * así que aplanarlo contra blanco lo dejaría con un recuadro visible.
+   */
+  format: "jpeg" as "auto" | "jpeg" | "png",
 };
 
 export type CompressImageOptions = Partial<typeof DEFAULTS>;
@@ -86,11 +92,20 @@ async function decode(file: File): Promise<Decoded> {
   }
 }
 
+/** ¿Algún píxel no es completamente opaco? El canvas no está contaminado: la fuente es un File local. */
+function hasTransparency(ctx: CanvasRenderingContext2D, width: number, height: number): boolean {
+  const { data } = ctx.getImageData(0, 0, width, height);
+  for (let i = 3; i < data.length; i += 4) {
+    if (data[i] < 255) return true;
+  }
+  return false;
+}
+
 export async function compressImage(
   file: File,
   options: CompressImageOptions = {}
 ): Promise<CompressedImage> {
-  const { maxDimension, quality, mimeType } = { ...DEFAULTS, ...options };
+  const { maxDimension, quality, format } = { ...DEFAULTS, ...options };
 
   const originalDataUrl = await readAsDataUrl(file);
   const original = { dataUrl: originalDataUrl, ...splitDataUrl(originalDataUrl) };
@@ -118,12 +133,23 @@ export async function compressImage(
     const ctx = canvas.getContext("2d");
     if (!ctx) return original;
     ctx.imageSmoothingQuality = "high";
-    // JPEG no tiene canal alfa: sin este relleno, un PNG transparente sale con fondo negro.
+    ctx.drawImage(source, 0, 0, canvas.width, canvas.height);
+
+    const mimeType =
+      format === "auto"
+        ? hasTransparency(ctx, canvas.width, canvas.height)
+          ? "image/png"
+          : "image/jpeg"
+        : `image/${format}`;
+
     if (mimeType === "image/jpeg") {
+      // JPEG no tiene canal alfa y sin fondo lo transparente sale negro. `destination-over`
+      // pinta el blanco *detrás* de lo ya dibujado, sin tener que redibujar la imagen.
+      ctx.globalCompositeOperation = "destination-over";
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = "source-over";
     }
-    ctx.drawImage(source, 0, 0, canvas.width, canvas.height);
 
     const dataUrl = canvas.toDataURL(mimeType, quality);
     const compressed = { dataUrl, ...splitDataUrl(dataUrl) };
@@ -132,4 +158,17 @@ export async function compressImage(
   } finally {
     decoded.release();
   }
+}
+
+/** Fotos: piezas de modelo, estilos de orden, foto de usuario. */
+export function compressPhoto(file: File): Promise<CompressedImage> {
+  return compressImage(file, { maxDimension: 1600, format: "jpeg" });
+}
+
+/**
+ * Logos y pictogramas de cuidado. Más chicos que una foto y con la transparencia
+ * preservada cuando la traen.
+ */
+export function compressLogo(file: File): Promise<CompressedImage> {
+  return compressImage(file, { maxDimension: 512, format: "auto" });
 }

@@ -18,6 +18,7 @@ import {
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
 import { apiFetch } from "@/lib/api-fetch";
+import { compressPhoto } from "@/lib/image-compress";
 import type { OrderDetailRow } from "./order-detail-columns";
 
 type Props = {
@@ -136,15 +137,6 @@ function toPayloadText(s: string): string | null {
   return t === "" ? null : t;
 }
 
-function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(typeof r.result === "string" ? r.result : "");
-    r.onerror = () => reject(r.error ?? new Error("No se pudo leer el archivo"));
-    r.readAsDataURL(file);
-  });
-}
-
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
     <h4 className="col-span-full text-sm font-semibold text-primary border-b pb-1 mt-2">
@@ -215,7 +207,9 @@ export function OrderDetailEditModal({ open, onOpenChange, headId, row, onSucces
         payload[key] = toPayloadNum(form[key]);
       }
       if (newImageFile) {
-        payload.imgEstiloBase64 = await fileToBase64(newImageFile);
+        // La foto del estilo viaja en el JSON: se reduce antes para no chocar con el
+        // límite de body del backend.
+        payload.imgEstiloBase64 = (await compressPhoto(newImageFile)).dataUrl;
       } else if (clearImage && row.hasImgEstilo) {
         payload.clearImgEstilo = true;
       }

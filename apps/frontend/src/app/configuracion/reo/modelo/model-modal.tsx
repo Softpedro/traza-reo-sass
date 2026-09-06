@@ -12,7 +12,7 @@ import {
   Button,
 } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
-import { compressImage } from "@/lib/image-compress";
+import { compressPhoto } from "@/lib/image-compress";
 
 type Mode = "create" | "edit" | "view";
 
@@ -189,7 +189,7 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
     try {
       // Las fotos de celular pesan 3-4 MB; el modelo entero viaja en un solo JSON y sin
       // reducirlas el alta se pasa del límite de body del backend (413).
-      const { base64, dataUrl } = await compressImage(file);
+      const { base64, dataUrl } = await compressPhoto(file);
       setPieces((prev) => {
         const next = [...prev];
         next[pieceIdx] = {

@@ -12,6 +12,7 @@ import {
   Button,
 } from "@fullstack-reo/ui";
 import { apiFetch } from "@/lib/api-fetch";
+import { compressLogo } from "@/lib/image-compress";
 import type { CareRow } from "./care-columns";
 
 type Mode = "create" | "edit" | "view";
@@ -54,16 +55,18 @@ export function CareModal({ open, onOpenChange, mode, modelId, care, onSuccess }
     }
   }, [open, mode, care]);
 
-  function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
-      setImageBase64(result.split(",")[1] ?? "");
-      setImagePreview(result);
-    };
-    reader.readAsDataURL(file);
+    setError(null);
+    try {
+      // Pictograma: `compressLogo` conserva la transparencia si el PNG la trae.
+      const { base64, dataUrl } = await compressLogo(file);
+      setImageBase64(base64);
+      setImagePreview(dataUrl);
+    } catch {
+      setError(`No se pudo procesar la imagen "${file.name}".`);
+    }
   }
 
   async function handleSubmit() {

@@ -19,6 +19,7 @@ import {
 import { UbigeoSelector } from "@/components/ubigeo-selector";
 import { apiUrl } from "@/lib/api";
 import { apiFetch } from "@/lib/api-fetch";
+import { compressLogo } from "@/lib/image-compress";
 import type { Brand } from "./columns";
 
 function logoSrcFromApi(logo: string | null | undefined): string | null {
@@ -179,30 +180,30 @@ export function MarcaModal({
     }));
   }
 
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
-      const base64 = result.split(",")[1] ?? "";
+    try {
+      // El logo viaja en base64 dentro del JSON del formulario: se reduce antes de subirlo.
+      const { base64, dataUrl } = await compressLogo(file);
       setForm((prev) => ({ ...prev, logoBrand: base64 }));
-      setLogoPreview(result);
-    };
-    reader.readAsDataURL(file);
+      setLogoPreview(dataUrl);
+    } catch {
+      alert(`No se pudo procesar la imagen "${file.name}".`);
+    }
   }
 
-  function handleDppFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleDppFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
-      const base64 = result.split(",")[1] ?? "";
+    try {
+      // El logo viaja en base64 dentro del JSON del formulario: se reduce antes de subirlo.
+      const { base64, dataUrl } = await compressLogo(file);
       setForm((prev) => ({ ...prev, logoDpp: base64 }));
-      setLogoDppPreview(result);
-    };
-    reader.readAsDataURL(file);
+      setLogoDppPreview(dataUrl);
+    } catch {
+      alert(`No se pudo procesar la imagen "${file.name}".`);
+    }
   }
 
   async function handleSubmit() {

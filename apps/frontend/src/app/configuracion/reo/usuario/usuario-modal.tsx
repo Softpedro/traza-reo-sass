@@ -18,6 +18,7 @@ import {
 } from "@fullstack-reo/ui";
 import { apiUrl } from "@/lib/api";
 import { apiFetch } from "@/lib/api-fetch";
+import { compressImage } from "@/lib/image-compress";
 import type { UserReo } from "./columns";
 import { POSITION_USER_LABELS, ROL_USER_LABELS } from "./columns";
 
@@ -172,17 +173,17 @@ export function UsuarioModal({
     }));
   }
 
-  function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
-      const base64 = result.split(",")[1] ?? "";
+    try {
+      // Se muestra en miniatura: 512 px sobran y evitan mandar los 3-4 MB del celular.
+      const { base64, dataUrl } = await compressImage(file, { maxDimension: 512, format: "jpeg" });
       setForm((prev) => ({ ...prev, photograph: base64 }));
-      setPhotoPreview(result);
-    };
-    reader.readAsDataURL(file);
+      setPhotoPreview(dataUrl);
+    } catch {
+      alert(`No se pudo procesar la imagen "${file.name}".`);
+    }
   }
 
   async function handleSubmit() {

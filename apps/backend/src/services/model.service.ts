@@ -81,12 +81,16 @@ type CreateModelInput = ModelScalars & {
   codModel?: string;
   /** PDF de ficha técnica en base64 (sin prefijo data:). */
   fichaBase64?: string | null;
+  /** Imagen de la ficha de medidas en base64 (sin prefijo data:). */
+  measurementsSheetBase64?: string | null;
   pieces?: PieceInput[];
 };
 
 type UpdateModelInput = ModelScalars & {
   /** undefined = no tocar; string = reemplazar; null = borrar. */
   fichaBase64?: string | null;
+  /** undefined = no tocar; string = reemplazar; null = borrar. */
+  measurementsSheetBase64?: string | null;
   /** undefined = no tocar piezas; array = reemplazar piezas+imágenes. */
   pieces?: PieceInput[];
 };
@@ -134,9 +138,10 @@ export class ModelService {
     return this.prisma.mdModel.findMany({
       where: { flgStatutActif: 1 },
       orderBy: { idDlkModel: "desc" },
-      // `omit` el BLOB de la ficha (MEDIUMBLOB ~1.5 MB c/u): con `include` y sin
-      // `select`, Prisma traía la ficha de cada modelo → el listado tardaba minutos.
-      omit: { technicalSpecFile: true },
+      // `omit` los BLOB pesados (ficha técnica ~1.5 MB c/u y ficha de medidas): con
+      // `include` y sin `select`, Prisma los traía de cada modelo → el listado tardaba
+      // minutos.
+      omit: { technicalSpecFile: true, measurementsSheet: true },
       include: { brand: brandSelect, subbrand: subbrandSelect },
     });
   }
@@ -145,8 +150,9 @@ export class ModelService {
   async getById(id: number) {
     const row = await this.prisma.mdModel.findUnique({
       where: { idDlkModel: id },
-      // `omit` el BLOB de la ficha (~1.5 MB): aquí solo se necesita saber si existe
-      // (hasFicha), no su contenido. Traerlo hacía lento abrir el modelo.
+      // `omit` el BLOB de la ficha técnica (~1.5 MB): aquí solo se necesita saber si
+      // existe (hasFicha), no su contenido. Traerlo hacía lento abrir el modelo.
+      // La ficha de medidas sí viaja: es una imagen y el formulario la muestra.
       omit: { technicalSpecFile: true },
       include: {
         brand: brandSelect,
@@ -167,10 +173,13 @@ export class ModelService {
     // hasFicha sin transferir el blob: consulta solo el tamaño de la columna.
     const fichaLen = await this.prisma.$queryRaw<{ len: number | bigint | null }[]>`
       SELECT OCTET_LENGTH(TECHNICAL_SPECIFICATION_FILE) AS len FROM MD_MODEL WHERE ID_DLK_MODEL = ${id}`;
-    const { details, ...rest } = row;
+    const { details, measurementsSheet, ...rest } = row;
     return {
       ...rest,
       hasFicha: Number(fichaLen?.[0]?.len ?? 0) > 0,
+      // Se saca del spread y se reemplaza por el data URL: los Bytes crudos de Prisma
+      // serializarían como un objeto inútil para el cliente.
+      measurementsSheet: imageBytesToDataUrl(measurementsSheet),
       pieces: details.map((d) => ({
         idDlkModelDetail: d.idDlkModelDetail,
         namePiece: d.namePiece,
@@ -221,6 +230,9 @@ export class ModelService {
     if (input.fichaBase64) {
       data.technicalSpecFile = Buffer.from(input.fichaBase64, "base64");
     }
+    if (input.measurementsSheetBase64) {
+      data.measurementsSheet = Buffer.from(input.measurementsSheetBase64, "base64");
+    }
 
     const newId = await this.prisma.$transaction(async (tx) => {
       const model = await tx.mdModel.create({ data });
@@ -237,6 +249,11 @@ export class ModelService {
     }
     if (input.fichaBase64 !== undefined) {
       data.technicalSpecFile = input.fichaBase64 ? Buffer.from(input.fichaBase64, "base64") : null;
+    }
+    if (input.measurementsSheetBase64 !== undefined) {
+      data.measurementsSheet = input.measurementsSheetBase64
+        ? Buffer.from(input.measurementsSheetBase64, "base64")
+        : null;
     }
 
     await this.prisma.$transaction(

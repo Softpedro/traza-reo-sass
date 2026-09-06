@@ -166,6 +166,16 @@ export function compressPhoto(file: File): Promise<CompressedImage> {
 }
 
 /**
+ * Documentos capturados o escaneados: fichas de medidas, cuadros de tallas.
+ * Más resolución y calidad que una foto porque llevan texto y números chicos que
+ * tienen que quedar legibles, y `auto` conserva el PNG de una captura de pantalla:
+ * para una tabla de texto pesa menos y se lee mejor que el mismo contenido en JPEG.
+ */
+export function compressDocument(file: File): Promise<CompressedImage> {
+  return compressImage(file, { maxDimension: 2400, quality: 0.92, format: "auto" });
+}
+
+/**
  * Logos y pictogramas de cuidado. Más chicos que una foto y con la transparencia
  * preservada cuando la traen.
  */

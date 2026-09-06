@@ -74,6 +74,7 @@ const emptyForm = {
 export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: ModelModalProps) {
   const [form, setForm] = useState(emptyForm);
   const [pieces, setPieces] = useState<PieceState[]>([{ namePiece: "Prenda", images: {} }]);
+  const [measurementsSheet, setMeasurementsSheet] = useState<ImageUploadValue | null>(null);
   const [fichaBase64, setFichaBase64] = useState<string>("");
   const [fichaName, setFichaName] = useState<string>("");
   const [hasFicha, setHasFicha] = useState(false);
@@ -100,6 +101,7 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
     setFichaBase64("");
     setFichaName("");
     setPiecePanel(null);
+    setMeasurementsSheet(null);
     if (mode === "create" || !modelId) {
       setForm(emptyForm);
       setPieces([{ namePiece: "Prenda", images: {} }]);
@@ -135,6 +137,8 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
           careModel: m.careModel ?? "",
         });
         setHasFicha(Boolean(m.hasFicha));
+        // Sin `base64`: está guardada y no se reenvían sus bytes salvo que se reemplace.
+        setMeasurementsSheet(m.measurementsSheet ? { preview: m.measurementsSheet } : null);
         const loaded: PieceState[] = Array.isArray(m.pieces) && m.pieces.length
           ? m.pieces.map(
               (p: {
@@ -259,6 +263,13 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
       if (fichaBase64) {
         payload.fichaBase64 = fichaBase64;
         payload.technicalSpecification = fichaName;
+      }
+      // Igual que la ficha técnica: la clave ausente significa "no tocar". Sólo viaja
+      // cuando hay imagen nueva (los bytes) o cuando se quitó (null para borrarla).
+      if (measurementsSheet?.base64) {
+        payload.measurementsSheetBase64 = measurementsSheet.base64;
+      } else if (!measurementsSheet) {
+        payload.measurementsSheetBase64 = null;
       }
 
       const isEdit = mode === "edit";
@@ -449,6 +460,23 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
               </button>
             </div>
           ))}
+        </div>
+
+        {/* Ficha de medidas */}
+        <div className="grid gap-1.5 pt-2">
+          <Label>Ficha de Medidas</Label>
+          <div className="max-w-sm">
+            <ImageUpload
+              value={measurementsSheet}
+              disabled={readOnly}
+              compression="document"
+              onChange={(v) => {
+                setMeasurementsSheet(v);
+                setError(null);
+              }}
+              onError={setError}
+            />
+          </div>
         </div>
 
         {/* Ficha técnica */}

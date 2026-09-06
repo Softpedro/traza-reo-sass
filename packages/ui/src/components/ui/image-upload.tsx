@@ -1,7 +1,12 @@
 import * as React from "react";
 import { ImagePlus, RefreshCw, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { compressLogo, compressPhoto, type CompressedImage } from "@/lib/image-compress";
+import {
+  compressDocument,
+  compressLogo,
+  compressPhoto,
+  type CompressedImage,
+} from "@/lib/image-compress";
 
 /**
  * Una imagen del formulario. Las tres formas posibles son excluyentes y determinan
@@ -29,7 +34,7 @@ export interface ImageUploadProps {
    * Perfil aplicado antes de emitir el valor. Comprimir es el default a propósito:
    * estas imágenes viajan en base64 dentro del JSON del formulario.
    */
-  compression?: "photo" | "logo" | "none";
+  compression?: "photo" | "logo" | "document" | "none";
   disabled?: boolean;
   /** Se llama con un mensaje ya redactado cuando el archivo no se puede procesar. */
   onError?: (message: string) => void;
@@ -87,7 +92,9 @@ const ImageUpload = React.forwardRef<HTMLDivElement, ImageUploadProps>(
             ? await compressPhoto(file)
             : compression === "logo"
               ? await compressLogo(file)
-              : await readFile(file);
+              : compression === "document"
+                ? await compressDocument(file)
+                : await readFile(file);
         // Sin `id`: es una imagen nueva, el backend reemplaza la anterior de este slot.
         onChange({ base64: result.base64, preview: result.dataUrl, bytes: result.bytes });
       } catch {

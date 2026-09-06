@@ -48,5 +48,5 @@ export {
   SelectLabel,
 } from "./components/ui/select";
 export { cn } from "./lib/utils";
-export { compressImage, compressPhoto, compressLogo } from "./lib/image-compress";
+export { compressImage, compressPhoto, compressLogo, compressDocument } from "./lib/image-compress";
 export type { CompressImageOptions, CompressedImage } from "./lib/image-compress";

@@ -7,5 +7,5 @@
  * Este re-export mantiene funcionando los modales que todavía llaman a la función
  * directamente (logos, pictograma de cuidado, foto de usuario, foto de estilo).
  */
-export { compressImage, compressPhoto, compressLogo } from "@fullstack-reo/ui";
+export { compressImage, compressPhoto, compressLogo, compressDocument } from "@fullstack-reo/ui";
 export type { CompressImageOptions, CompressedImage } from "@fullstack-reo/ui";

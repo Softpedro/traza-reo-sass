@@ -148,6 +148,10 @@ export class DppPassportService {
     const model = detail?.codEstilo
       ? await this.prisma.mdModel.findFirst({
           where: { codModel: detail.codEstilo, flgStatutActif: 1 },
+          // El pasaporte no usa ninguno de los dos blobs pesados del modelo, y sin
+          // `omit` Prisma los traía en cada request público: la ficha técnica sola
+          // son ~1.5 MB por pasaporte.
+          omit: { technicalSpecFile: true, measurementsSheet: true },
           include: {
             cares: { where: { flgStatutActif: 1 }, orderBy: { idDlkCare: "asc" } },
             details: {

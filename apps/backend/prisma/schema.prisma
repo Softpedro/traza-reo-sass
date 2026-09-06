@@ -875,6 +875,11 @@ model MdModel {
   careModel              String?         @map("CARE_MODEL") @db.VarChar(50)
   technicalSpecification String?         @map("TECHNICAL_SPECIFICATION") @db.VarChar(100)
   technicalSpecFile      Bytes?          @map("TECHNICAL_SPECIFICATION_FILE") @db.MediumBlob
+  /**
+   * Ficha de medidas: imagen con el cuadro de medidas del modelo. Igual que la ficha
+   * técnica, es un blob pesado — hay que excluirlo de listados y del pasaporte DPP.
+   */
+  measurementsSheet      Bytes?          @map("MEASUREMENTS_SHEET") @db.MediumBlob
   idDlkPacking           Int?            @map("ID_DLK_PACKING")
   stateModel             Int             @default(1) @map("STATE_MODEL") @db.TinyInt
   codUsuarioCargaDl      String          @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)

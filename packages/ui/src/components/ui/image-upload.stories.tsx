@@ -23,7 +23,7 @@ const meta: Meta<typeof ImageUpload> = {
   component: ImageUpload,
   parameters: { layout: "centered" },
   argTypes: {
-    compression: { control: "radio", options: ["photo", "logo", "none"] },
+    compression: { control: "radio", options: ["photo", "logo", "document", "none"] },
   },
 };
 export default meta;

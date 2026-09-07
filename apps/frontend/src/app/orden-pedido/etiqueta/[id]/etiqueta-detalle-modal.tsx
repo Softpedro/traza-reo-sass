@@ -63,21 +63,35 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
   }, [open, fetchDetails]);
 
   /** Resumen + paridad por grupo de set para sombrear las piezas de cada set. */
-  const { unidades, hasSets, groupParity } = useMemo(() => {
+  const { unidades, hasSets, groupParity, productoPorFila } = useMemo(() => {
     // Una unidad es una prenda física, no un DPP. En un set cada pieza tiene su propio
     // itemGlobal, así que contarlos daba 64 unidades para 32 pijamas y el resumen
     // terminaba diciendo "1 piezas por unidad". `setGroupId` agrupa las piezas del
     // mismo set; sin set, cada fila ya es una unidad.
-    const units = new Set<string>();
     const parity = new Map<string, number>();
+    // Nº de producto: el pijama completo. Las piezas del mismo set lo comparten, así que
+    // la chaqueta y el short del primer producto son 1 y 1, y los del segundo 2 y 2.
+    const producto = new Map<number, number>();
+    const numeroPorGrupo = new Map<string, number>();
     let g = 0;
     let sets = false;
     for (const it of items) {
-      units.add(it.setGroupId ?? `u-${it.itemGlobal}`);
+      const grupo = it.setGroupId ?? `u-${it.itemGlobal}`;
       if (it.pieceType) sets = true;
       if (it.setGroupId && !parity.has(it.setGroupId)) parity.set(it.setGroupId, g++);
+      let n = numeroPorGrupo.get(grupo);
+      if (n === undefined) {
+        n = numeroPorGrupo.size + 1;
+        numeroPorGrupo.set(grupo, n);
+      }
+      producto.set(it.idDlkOrderLabelDetail, n);
     }
-    return { unidades: units.size, hasSets: sets, groupParity: parity };
+    return {
+      unidades: numeroPorGrupo.size,
+      hasSets: sets,
+      groupParity: parity,
+      productoPorFila: producto,
+    };
   }, [items]);
 
   /** Abre el detalle en una ventana aparte en formato horizontal y lanza el diálogo de PDF. */
@@ -102,7 +116,7 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
       .map(
         (d) => `<tr${d.isBlacklisted === 1 ? ' class="bl"' : ""}>
           <td>${escapeHtml(d.itemGlobal)}</td>
-          <td>${escapeHtml(d.itemBySize)}</td>
+          <td>${escapeHtml(productoPorFila.get(d.idDlkOrderLabelDetail) ?? "—")}</td>
           <td>${escapeHtml(d.size ?? "—")}</td>
           <td>${escapeHtml(d.pieceType ?? "—")}</td>
           <td class="mono">${escapeHtml(d.serialNumber)}</td>
@@ -143,7 +157,7 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
   <table>
     <thead>
       <tr>
-        <th>Item</th><th>Ítem talla</th><th>Talla</th><th>Pieza</th><th>Serial</th>
+        <th>Item</th><th>Producto</th><th>Talla</th><th>Pieza</th><th>Serial</th>
         <th>sGTIN</th><th>QR / DPP</th><th>Color</th><th>Fondo de tela</th><th>Estampado</th>
       </tr>
     </thead>
@@ -152,7 +166,7 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
 </body>
 </html>`);
     win.document.close();
-  }, [items, labelHead, order, unidades, total, hasSets]);
+  }, [items, labelHead, order, unidades, total, hasSets, productoPorFila]);
 
   if (!open) return null;
 
@@ -202,7 +216,7 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
               <thead>
                 <tr className="bg-orange-100 text-left text-neutral-900">
                   <th className="border px-2 py-1.5 font-semibold">Item</th>
-                  <th className="border px-2 py-1.5 font-semibold">Ítem talla</th>
+                  <th className="border px-2 py-1.5 font-semibold">Producto</th>
                   <th className="border px-2 py-1.5 font-semibold">Talla</th>
                   <th className="border px-2 py-1.5 font-semibold">Pieza</th>
                   <th className="border px-2 py-1.5 font-semibold">Serial</th>
@@ -229,7 +243,7 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
                     }
                   >
                     <td className="border px-2 py-1">{d.itemGlobal}</td>
-                    <td className="border px-2 py-1">{d.itemBySize}</td>
+                    <td className="border px-2 py-1">{productoPorFila.get(d.idDlkOrderLabelDetail) ?? "—"}</td>
                     <td className="border px-2 py-1">{d.size ?? "—"}</td>
                     <td className="border px-2 py-1">{d.pieceType ?? "—"}</td>
                     <td className="border px-2 py-1 font-mono">{d.serialNumber}</td>

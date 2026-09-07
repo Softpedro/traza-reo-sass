@@ -194,8 +194,10 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
   // ---------- Spacing rítmico ----------
   // GAP = espacio base entre bloques. Todos los gaps verticales son múltiplos de GAP
   // para mantener la etiqueta visualmente uniforme.
-  const GAP = 3 * MM_TO_PT;       // 3 mm entre bloques de texto/separadores
-  const BIG_GAP = 4 * MM_TO_PT;   // 4 mm alrededor de la fila de iconos (más aire)
+  // El reparto se ajustó para devolverle tamaño al QR: con los valores anteriores
+  // (3 / 4 / 4 mm) la cabecera consumía 56 de los 100 mm y el QR bajaba a 16.
+  const GAP = 2 * MM_TO_PT;       // 2 mm entre bloques de texto/separadores
+  const BIG_GAP = 3 * MM_TO_PT;   // 3 mm alrededor de la fila de iconos
 
   // Alturas reservadas (en mm) para tener layout estable en 40 × 100.
   // topMargin = 10 mm: zona de costura. La etiqueta se cose por arriba y esos
@@ -204,7 +206,7 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
   const bottomMargin = 3 * MM_TO_PT;
   const footerLineH = 2.6 * MM_TO_PT;
   const footerH = footerLineH * 3;
-  const iconSize = 4 * MM_TO_PT;      // 4 mm cuadrado: aire amplio entre iconos
+  const iconSize = 3 * MM_TO_PT;      // 3 mm cuadrado
   const sgtinFs = 8;
   // Bloque inferior: footer + iconos + el sGTIN, que va debajo del QR.
   // La línea del sGTIN se reserva exacta (su alto + un GAP a cada lado): reservar de

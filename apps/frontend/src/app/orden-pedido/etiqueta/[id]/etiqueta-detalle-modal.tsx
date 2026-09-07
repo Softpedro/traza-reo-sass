@@ -64,12 +64,16 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
 
   /** Resumen + paridad por grupo de set para sombrear las piezas de cada set. */
   const { unidades, hasSets, groupParity } = useMemo(() => {
-    const units = new Set<number>();
+    // Una unidad es una prenda física, no un DPP. En un set cada pieza tiene su propio
+    // itemGlobal, así que contarlos daba 64 unidades para 32 pijamas y el resumen
+    // terminaba diciendo "1 piezas por unidad". `setGroupId` agrupa las piezas del
+    // mismo set; sin set, cada fila ya es una unidad.
+    const units = new Set<string>();
     const parity = new Map<string, number>();
     let g = 0;
     let sets = false;
     for (const it of items) {
-      units.add(it.itemGlobal);
+      units.add(it.setGroupId ?? `u-${it.itemGlobal}`);
       if (it.pieceType) sets = true;
       if (it.setGroupId && !parity.has(it.setGroupId)) parity.set(it.setGroupId, g++);
     }

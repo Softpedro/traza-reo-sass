@@ -809,15 +809,27 @@ export class OrderLabelService {
     // identificador vía el componente, así que no se reescriben seriales ni se borra nada.
     for (const p of piecesEdit) {
       if (!p.idDlkOrderLabelComponent) continue;
+      const componentId = Number(p.idDlkOrderLabelComponent);
       const compData: Prisma.OdOrderLabelComponentUncheckedUpdateInput = { desAccion: "UPDATE" };
       if (p.name !== undefined) compData.nameComponent = p.name?.trim() || null;
       if (p.idDlkDigitalIdentifier != null && Number(p.idDlkDigitalIdentifier) > 0) {
         compData.idDlkDigitalIdentifier = Number(p.idDlkDigitalIdentifier);
       }
       await this.prisma.odOrderLabelComponent.update({
-        where: { idDlkOrderLabelComponent: Number(p.idDlkOrderLabelComponent) },
+        where: { idDlkOrderLabelComponent: componentId },
         data: compData,
       });
+
+      // PIECE_TYPE del detalle es una copia denormalizada del nombre de la pieza, escrita
+      // al crear. Sin propagar el cambio, el modal "Ver" seguía mostrando el nombre viejo
+      // ("CAMISA" en vez de "Chaqueta m/c") aunque el componente ya estuviera renombrado.
+      // Es descriptivo: no toca seriales, sGTIN ni URL, así que se reescribe sin riesgo.
+      if (p.name !== undefined) {
+        await this.prisma.odOrderLabelDetail.updateMany({
+          where: { idDlkOrderLabelComponent: componentId },
+          data: { pieceType: p.name?.trim() || null },
+        });
+      }
     }
 
     // Transición Etiqueta → Ruta. Misma convención que registro/suministro:

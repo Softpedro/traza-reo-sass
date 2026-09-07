@@ -207,12 +207,14 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
   const footerLineH = 2.6 * MM_TO_PT;
   const footerH = footerLineH * 3;
   const iconSize = 3 * MM_TO_PT;      // 3 mm cuadrado
+  const ICON_GAP = 1.5 * MM_TO_PT;    // separación entre iconos
+  const ICON_ROW_GAP = 1.5 * MM_TO_PT; // aire entre la fila de iconos y el pie
   const sgtinFs = 8;
   // Bloque inferior: footer + iconos + el sGTIN, que va debajo del QR.
   // La línea del sGTIN se reserva exacta (su alto + un GAP a cada lado): reservar de
   // más aquí se lo quitaba al QR, que es lo único de la etiqueta que tiene que ser
   // legible por una cámara.
-  const iconsTop = bottomMargin + footerH + BIG_GAP + iconSize;
+  const iconsTop = bottomMargin + footerH + ICON_ROW_GAP + iconSize;
   const sgtinBaseline = iconsTop + GAP;
   const bottomBlockTop = sgtinBaseline + sgtinFs + GAP;
 
@@ -298,21 +300,24 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
   page.drawImage(qrImg, { x: qrX, y: qrBottom, width: qrSide, height: qrSide });
 
   // Posicionamiento de los iconos (sin línea separadora arriba).
-  const iconsBottom = bottomMargin + footerH + BIG_GAP;
+  const iconsBottom = bottomMargin + footerH + ICON_ROW_GAP;
 
   // sGTIN — entre el QR y los iconos, centrado en el hueco que reserva sgtinBlockH.
   const sgtinFsFit = fitFont(unit.sgtinFull, fontBold, innerW, sgtinFs);
   drawCentered(page, unit.sgtinFull, fontBold, sgtinFsFit, w, sgtinBaseline, black);
 
-  // Fila de 5 íconos uniformemente repartidos.
-  const slot = (w - 2 * mx) / icons.length;
+  // Fila de iconos: bloque centrado con separación fija entre ellos. Antes se repartía
+  // todo el ancho útil, así que los iconos quedaban desperdigados de borde a borde.
+  const slot = iconSize + ICON_GAP;
+  const rowW = icons.length * iconSize + (icons.length - 1) * ICON_GAP;
+  const rowX = (w - rowW) / 2;
   for (let i = 0; i < icons.length; i++) {
     const img = icons[i];
     // Encajar el icono manteniendo aspect ratio dentro de iconSize × iconSize.
     const ratio = img.width / img.height;
     const iw = ratio >= 1 ? iconSize : iconSize * ratio;
     const ih = ratio >= 1 ? iconSize / ratio : iconSize;
-    const cx = mx + slot * (i + 0.5);
+    const cx = rowX + slot * i + iconSize / 2;
     page.drawImage(img, {
       x: cx - iw / 2,
       y: iconsBottom + (iconSize - ih) / 2,

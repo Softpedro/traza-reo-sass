@@ -89,11 +89,11 @@ function loadIcon(filename: string): IconAsset {
 
 /** Orden de presentación en la fila inferior de la etiqueta. */
 const ICON_FILES: { file: string; alt: string }[] = [
-  { file: "trazabilidad.png", alt: "Trazabilidad" },
   { file: "circular.png", alt: "Economía circular" },
+  { file: "no-toxico.png", alt: "No tóxico" },
+  { file: "trazabilidad.png", alt: "Trazabilidad" },
   { file: "carbono.png", alt: "Huella de carbono" },
   { file: "agua.png", alt: "Agua" },
-  { file: "no-toxico.png", alt: "No tóxico" },
 ];
 
 const ICON_ASSETS: IconAsset[] = ICON_FILES.map((i) => loadIcon(i.file));

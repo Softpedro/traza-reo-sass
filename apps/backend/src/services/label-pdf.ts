@@ -15,6 +15,8 @@ const MM_TO_PT = 72 / 25.4;
 
 /** Tamaño del QR fijo (legible, deja espacio para iconos y texto). */
 const QR_SIZE_MM = 22;
+/** Piso del QR. Por debajo de esto la lectura con cámara de celular se vuelve incómoda. */
+const QR_MIN_MM = 16;
 /** Quiet zone (margen blanco obligatorio) alrededor del QR. */
 const QR_QUIET_MM = 2;
 
@@ -205,9 +207,12 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
   const iconSize = 4 * MM_TO_PT;      // 4 mm cuadrado: aire amplio entre iconos
   const sgtinFs = 8;
   // Bloque inferior: footer + iconos + el sGTIN, que va debajo del QR.
-  const sgtinBlockH = sgtinFs + GAP;
-  const bottomBlockTop =
-    bottomMargin + footerH + BIG_GAP + iconSize + BIG_GAP + sgtinBlockH;
+  // La línea del sGTIN se reserva exacta (su alto + un GAP a cada lado): reservar de
+  // más aquí se lo quitaba al QR, que es lo único de la etiqueta que tiene que ser
+  // legible por una cámara.
+  const iconsTop = bottomMargin + footerH + BIG_GAP + iconSize;
+  const sgtinBaseline = iconsTop + GAP;
+  const bottomBlockTop = sgtinBaseline + sgtinFs + GAP;
 
   let y = h - topMargin; // cursor descendente desde el borde superior
 
@@ -266,11 +271,17 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
   }
   y -= GAP;
 
-  // QR — 22 mm. El espacio sobrante se reparte 70% arriba / 30% abajo para que
-  // el QR quede más cerca de los iconos (visualmente "centrado bajo").
-  const qrSide = QR_SIZE_MM * MM_TO_PT;
+  // QR — 22 mm cuando hay sitio. El espacio sobrante se reparte 70% arriba / 30% abajo
+  // para que quede más cerca de los iconos (visualmente "centrado bajo").
   const qrPad = QR_QUIET_MM * MM_TO_PT;
   const band = y - bottomBlockTop;
+  // Se encoge si el bloque de identificación creció (nombre de modelo largo, pieza en
+  // dos líneas). Antes era fijo: al no caber, el QR se dibujaba sobre el sGTIN y los
+  // iconos, y un QR pisado no escanea.
+  // Nunca puede exceder la banda: un QR que invade el sGTIN o los iconos no escanea.
+  // Si `band` bajara de QR_MIN_MM habría que replantear el reparto vertical, porque el
+  // código quedaría por debajo de lo que una cámara de celular lee con comodidad.
+  const qrSide = Math.min(band, QR_SIZE_MM * MM_TO_PT);
   const QR_TOP_BIAS = 0.7;
   const qrTop = y - Math.max(0, (band - qrSide) * QR_TOP_BIAS);
   const qrX = (w - qrSide) / 2;
@@ -289,15 +300,7 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
 
   // sGTIN — entre el QR y los iconos, centrado en el hueco que reserva sgtinBlockH.
   const sgtinFsFit = fitFont(unit.sgtinFull, fontBold, innerW, sgtinFs);
-  drawCentered(
-    page,
-    unit.sgtinFull,
-    fontBold,
-    sgtinFsFit,
-    w,
-    iconsBottom + iconSize + BIG_GAP * 0.5,
-    black
-  );
+  drawCentered(page, unit.sgtinFull, fontBold, sgtinFsFit, w, sgtinBaseline, black);
 
   // Fila de 5 íconos uniformemente repartidos.
   const slot = (w - 2 * mx) / icons.length;

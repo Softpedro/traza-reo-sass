@@ -332,6 +332,8 @@ export class DppPassportService {
         sgtin: unit.sgtinFull,
         productCode,
         blacklisted: unit.isBlacklisted === 1,
+        /** Pieza escaneada del set; ya se usaba como título de la cabecera. */
+        piece: pieceName,
       },
 
       header: {

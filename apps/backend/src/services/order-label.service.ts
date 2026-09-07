@@ -4,6 +4,7 @@ import {
   detectImageKind,
   type LabelLogo,
   type LabelSizeKey,
+  type LabelUnit,
 } from "./label-pdf.js";
 
 /** Tope defensivo para evitar generar millones de detalles por error de cálculo. */
@@ -876,6 +877,102 @@ export class OrderLabelService {
    * PDF imprimible de una etiqueta: una página por unidad serializada (DPP),
    * en el tamaño elegido. Pensado para la GODEX G500 (1 página = 1 etiqueta).
    */
+  /**
+   * Arma las unidades para el PDF: además del sGTIN y la URL, resuelve los tres datos
+   * de identificación que van impresos.
+   *
+   *  - modelName: MD_MODEL.NAME_MODEL. El enlace es por código, porque en Perú "estilo"
+   *    es el nombre del modelo y COD_ESTILO == COD_MODEL.
+   *  - pieceLabel: la pieza y su posición dentro del set, desde OD_ORDER_LABEL_COMPONENT.
+   *    No se usa ES_SET/NUM_PIEZAS del colorway: ahí el dato no es fiable.
+   *  - productNumber: la prenda física. Las piezas de un mismo set comparten número, así
+   *    que se numeran los setGroupId en el orden en que aparecen.
+   */
+  private async buildLabelUnits(labelIds: number[]): Promise<LabelUnit[]> {
+    const details = await this.prisma.odOrderLabelDetail.findMany({
+      where: { idDlkOrderLabelHead: { in: labelIds } },
+      orderBy: [
+        { idDlkOrderLabelHead: "asc" },
+        { itemGlobal: "asc" },
+        { idDlkOrderLabelDetail: "asc" },
+      ],
+      select: {
+        idDlkOrderLabelDetail: true,
+        idDlkOrderLabelHead: true,
+        sgtinFull: true,
+        urlDppFull: true,
+        pieceType: true,
+        setGroupId: true,
+        idDlkOrderLabelComponent: true,
+      },
+    });
+    if (details.length === 0) return [];
+
+    const heads = await this.prisma.odOrderLabelHead.findMany({
+      where: { idDlkOrderLabelHead: { in: labelIds } },
+      select: {
+        idDlkOrderLabelHead: true,
+        orderDetail: { select: { codEstilo: true } },
+        components: { select: { idDlkOrderLabelComponent: true, numPiece: true } },
+      },
+    });
+
+    const estilos = [
+      ...new Set(
+        heads.map((h) => h.orderDetail?.codEstilo?.trim()).filter((c): c is string => !!c)
+      ),
+    ];
+    const modelos = estilos.length
+      ? await this.prisma.mdModel.findMany({
+          where: { codModel: { in: estilos }, flgStatutActif: 1 },
+          select: { codModel: true, nameModel: true },
+        })
+      : [];
+    const nombrePorEstilo = new Map(modelos.map((m) => [m.codModel ?? "", m.nameModel ?? ""]));
+
+    const infoPorHead = new Map(
+      heads.map((h) => [
+        h.idDlkOrderLabelHead,
+        {
+          modelName: nombrePorEstilo.get(h.orderDetail?.codEstilo?.trim() ?? "") ?? null,
+          piezas: h.components.length,
+          numPiecePorComponente: new Map(
+            h.components.map((c) => [c.idDlkOrderLabelComponent, c.numPiece])
+          ),
+        },
+      ])
+    );
+
+    const numeroPorGrupo = new Map<string, number>();
+    return details.map((d) => {
+      const info = infoPorHead.get(d.idDlkOrderLabelHead);
+      const grupo = d.setGroupId ?? `u-${d.idDlkOrderLabelDetail}`;
+      let producto = numeroPorGrupo.get(grupo);
+      if (producto === undefined) {
+        producto = numeroPorGrupo.size + 1;
+        numeroPorGrupo.set(grupo, producto);
+      }
+
+      const piezas = info?.piezas ?? 0;
+      const numPiece =
+        d.idDlkOrderLabelComponent != null
+          ? info?.numPiecePorComponente.get(d.idDlkOrderLabelComponent)
+          : null;
+      const pieceLabel =
+        d.pieceType && piezas > 1 && numPiece != null
+          ? `${d.pieceType} (Set ${piezas} piezas, ${numPiece}/${piezas})`
+          : (d.pieceType ?? null);
+
+      return {
+        sgtinFull: d.sgtinFull ?? "",
+        urlDppFull: d.urlDppFull ?? "",
+        modelName: info?.modelName ?? null,
+        pieceLabel,
+        productNumber: producto,
+      };
+    });
+  }
+
   async buildLabelPdf(
     orderHeadId: number,
     labelId: number,
@@ -890,21 +987,14 @@ export class OrderLabelService {
       throw new Error("La etiqueta no pertenece a esta orden de pedido");
     }
 
-    const details = await this.prisma.odOrderLabelDetail.findMany({
-      where: { idDlkOrderLabelHead: labelId },
-      orderBy: [{ itemGlobal: "asc" }, { idDlkOrderLabelDetail: "asc" }],
-      select: { sgtinFull: true, urlDppFull: true },
-    });
-    if (details.length === 0) {
+    const units = await this.buildLabelUnits([labelId]);
+    if (units.length === 0) {
       throw new Error("La etiqueta no tiene unidades serializadas para imprimir");
     }
 
     const brand = await this.getBrandForOrder(orderHeadId);
-    const pdf = await buildLabelsPdf(
-      details.map((d) => ({ sgtinFull: d.sgtinFull ?? "", urlDppFull: d.urlDppFull ?? "" })),
-      { size, brandName: brand.name, logo: brand.logo }
-    );
-    return { pdf, count: details.length };
+    const pdf = await buildLabelsPdf(units, { size, brandName: brand.name, logo: brand.logo });
+    return { pdf, count: units.length };
   }
 
   /**
@@ -923,25 +1013,14 @@ export class OrderLabelService {
     if (heads.length === 0) throw new Error("Esta orden no tiene etiquetas creadas");
 
     const ids = heads.map((h) => h.idDlkOrderLabelHead);
-    const details = await this.prisma.odOrderLabelDetail.findMany({
-      where: { idDlkOrderLabelHead: { in: ids } },
-      orderBy: [
-        { idDlkOrderLabelHead: "asc" },
-        { itemGlobal: "asc" },
-        { idDlkOrderLabelDetail: "asc" },
-      ],
-      select: { sgtinFull: true, urlDppFull: true },
-    });
-    if (details.length === 0) {
+    const units = await this.buildLabelUnits(ids);
+    if (units.length === 0) {
       throw new Error("Las etiquetas de esta orden no tienen unidades para imprimir");
     }
 
     const brand = await this.getBrandForOrder(orderHeadId);
-    const pdf = await buildLabelsPdf(
-      details.map((d) => ({ sgtinFull: d.sgtinFull ?? "", urlDppFull: d.urlDppFull ?? "" })),
-      { size, brandName: brand.name, logo: brand.logo }
-    );
-    return { pdf, count: details.length };
+    const pdf = await buildLabelsPdf(units, { size, brandName: brand.name, logo: brand.logo });
+    return { pdf, count: units.length };
   }
 
   /** Marca / desmarca una unidad serializada como rechazada (lista negra). */

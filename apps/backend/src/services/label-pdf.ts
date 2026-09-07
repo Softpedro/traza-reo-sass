@@ -32,7 +32,16 @@ export function isLabelSize(v: unknown): v is LabelSizeKey {
   return v === "40x100";
 }
 
-export type LabelUnit = { sgtinFull: string; urlDppFull: string };
+export type LabelUnit = {
+  sgtinFull: string;
+  urlDppFull: string;
+  /** Nombre comercial del modelo (MD_MODEL.NAME_MODEL), p. ej. "Dream Garden Amore Natural". */
+  modelName?: string | null;
+  /** Pieza y su posición en el set: "Chaqueta m/c (Set 2 piezas, 1/2)". */
+  pieceLabel?: string | null;
+  /** Nº de producto: la prenda física. Las piezas de un mismo set lo comparten. */
+  productNumber?: number | null;
+};
 
 export type LabelLogo = { bytes: Uint8Array; kind: "png" | "jpg" };
 
@@ -194,8 +203,11 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
   const footerLineH = 2.6 * MM_TO_PT;
   const footerH = footerLineH * 3;
   const iconSize = 4 * MM_TO_PT;      // 4 mm cuadrado: aire amplio entre iconos
-  // Bloque inferior: footer + gap + iconos + gap + línea separadora superior.
-  const bottomBlockTop = bottomMargin + footerH + BIG_GAP + iconSize + BIG_GAP;
+  const sgtinFs = 8;
+  // Bloque inferior: footer + iconos + el sGTIN, que va debajo del QR.
+  const sgtinBlockH = sgtinFs + GAP;
+  const bottomBlockTop =
+    bottomMargin + footerH + BIG_GAP + iconSize + BIG_GAP + sgtinBlockH;
 
   let y = h - topMargin; // cursor descendente desde el borde superior
 
@@ -221,10 +233,26 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
   hr(page, mx, w - mx, y, black);
   y -= GAP;
 
-  // sGTIN — código grande, centrado.
-  const gFs = fitFont(unit.sgtinFull, fontBold, innerW, 11);
-  y -= gFs;
-  drawCentered(page, unit.sgtinFull, fontBold, gFs, w, y, black);
+  // Identificación del producto: modelo, pieza y nº de producto.
+  if (unit.modelName) {
+    const fs = fitFont(unit.modelName, fontBold, innerW, 9);
+    for (const ln of wrap(unit.modelName, fontBold, fs, innerW)) {
+      y -= fs * 1.2;
+      drawCentered(page, ln, fontBold, fs, w, y, black);
+    }
+  }
+  if (unit.pieceLabel) {
+    const fs = fitFont(unit.pieceLabel, font, innerW, 7);
+    for (const ln of wrap(unit.pieceLabel, font, fs, innerW)) {
+      y -= fs * 1.25;
+      drawCentered(page, ln, font, fs, w, y, black);
+    }
+  }
+  if (unit.productNumber != null) {
+    const fs = 9;
+    y -= fs * 1.35;
+    drawCentered(page, `N° ${unit.productNumber}`, fontBold, fs, w, y, black);
+  }
   y -= GAP;
 
   hr(page, mx, w - mx, y, black);
@@ -258,6 +286,18 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
 
   // Posicionamiento de los iconos (sin línea separadora arriba).
   const iconsBottom = bottomMargin + footerH + BIG_GAP;
+
+  // sGTIN — entre el QR y los iconos, centrado en el hueco que reserva sgtinBlockH.
+  const sgtinFsFit = fitFont(unit.sgtinFull, fontBold, innerW, sgtinFs);
+  drawCentered(
+    page,
+    unit.sgtinFull,
+    fontBold,
+    sgtinFsFit,
+    w,
+    iconsBottom + iconSize + BIG_GAP * 0.5,
+    black
+  );
 
   // Fila de 5 íconos uniformemente repartidos.
   const slot = (w - 2 * mx) / icons.length;

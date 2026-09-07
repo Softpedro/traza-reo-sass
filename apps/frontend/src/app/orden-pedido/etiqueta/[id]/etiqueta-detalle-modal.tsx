@@ -63,35 +63,21 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
   }, [open, fetchDetails]);
 
   /** Resumen + paridad por grupo de set para sombrear las piezas de cada set. */
-  const { unidades, hasSets, groupParity, productoPorFila } = useMemo(() => {
+  const { unidades, hasSets, groupParity } = useMemo(() => {
     // Una unidad es una prenda física, no un DPP. En un set cada pieza tiene su propio
     // itemGlobal, así que contarlos daba 64 unidades para 32 pijamas y el resumen
     // terminaba diciendo "1 piezas por unidad". `setGroupId` agrupa las piezas del
     // mismo set; sin set, cada fila ya es una unidad.
     const parity = new Map<string, number>();
-    // Nº de producto: el pijama completo. Las piezas del mismo set lo comparten, así que
-    // la chaqueta y el short del primer producto son 1 y 1, y los del segundo 2 y 2.
-    const producto = new Map<number, number>();
-    const numeroPorGrupo = new Map<string, number>();
+    const numeroPorGrupo = new Set<string>();
     let g = 0;
     let sets = false;
     for (const it of items) {
-      const grupo = it.setGroupId ?? `u-${it.itemGlobal}`;
+      numeroPorGrupo.add(it.setGroupId ?? `u-${it.itemGlobal}`);
       if (it.pieceType) sets = true;
       if (it.setGroupId && !parity.has(it.setGroupId)) parity.set(it.setGroupId, g++);
-      let n = numeroPorGrupo.get(grupo);
-      if (n === undefined) {
-        n = numeroPorGrupo.size + 1;
-        numeroPorGrupo.set(grupo, n);
-      }
-      producto.set(it.idDlkOrderLabelDetail, n);
     }
-    return {
-      unidades: numeroPorGrupo.size,
-      hasSets: sets,
-      groupParity: parity,
-      productoPorFila: producto,
-    };
+    return { unidades: numeroPorGrupo.size, hasSets: sets, groupParity: parity };
   }, [items]);
 
   /** Abre el detalle en una ventana aparte en formato horizontal y lanza el diálogo de PDF. */
@@ -116,7 +102,7 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
       .map(
         (d) => `<tr${d.isBlacklisted === 1 ? ' class="bl"' : ""}>
           <td>${escapeHtml(d.itemGlobal)}</td>
-          <td>${escapeHtml(productoPorFila.get(d.idDlkOrderLabelDetail) ?? "—")}</td>
+          <td>${escapeHtml(d.numProducto ?? "—")}</td>
           <td>${escapeHtml(d.size ?? "—")}</td>
           <td>${escapeHtml(d.pieceType ?? "—")}</td>
           <td class="mono">${escapeHtml(d.serialNumber)}</td>
@@ -166,7 +152,7 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
 </body>
 </html>`);
     win.document.close();
-  }, [items, labelHead, order, unidades, total, hasSets, productoPorFila]);
+  }, [items, labelHead, order, unidades, total, hasSets]);
 
   if (!open) return null;
 
@@ -243,7 +229,7 @@ export function EtiquetaDetalleModal({ open, onOpenChange, order, labelHead }: P
                     }
                   >
                     <td className="border px-2 py-1">{d.itemGlobal}</td>
-                    <td className="border px-2 py-1">{productoPorFila.get(d.idDlkOrderLabelDetail) ?? "—"}</td>
+                    <td className="border px-2 py-1">{d.numProducto ?? "—"}</td>
                     <td className="border px-2 py-1">{d.size ?? "—"}</td>
                     <td className="border px-2 py-1">{d.pieceType ?? "—"}</td>
                     <td className="border px-2 py-1 font-mono">{d.serialNumber}</td>

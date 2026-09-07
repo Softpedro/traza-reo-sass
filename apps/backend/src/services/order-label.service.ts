@@ -281,7 +281,7 @@ export class OrderLabelService {
   async listDetails(labelId: number, opts?: { skip?: number; take?: number }) {
     const take = Math.min(Math.max(opts?.take ?? 500, 1), 5000);
     const skip = Math.max(opts?.skip ?? 0, 0);
-    const [items, total] = await Promise.all([
+    const [items, total, ctxPorCabecera] = await Promise.all([
       this.prisma.odOrderLabelDetail.findMany({
         where: { idDlkOrderLabelHead: labelId },
         // itemGlobal ya sigue el orden por talla; el id secundario mantiene
@@ -291,8 +291,20 @@ export class OrderLabelService {
         take,
       }),
       this.prisma.odOrderLabelDetail.count({ where: { idDlkOrderLabelHead: labelId } }),
+      this.productoPorCabecera([labelId]),
     ]);
-    return { items, total, skip, take };
+    const ctx = ctxPorCabecera.get(labelId);
+    // El nº de producto lo calcula el servidor: el cliente sólo ve una cabecera y no
+    // puede saber cuántas prendas del mismo modelo van delante.
+    return {
+      items: items.map((d) => ({
+        ...d,
+        numProducto: this.numeroDeProducto(ctx, d.itemGlobal),
+      })),
+      total,
+      skip,
+      take,
+    };
   }
 
   /**
@@ -888,6 +900,75 @@ export class OrderLabelService {
    *  - productNumber: la prenda física. Las piezas de un mismo set comparten número, así
    *    que se numeran los setGroupId en el orden en que aparecen.
    */
+  /**
+   * Numeración de producto por MODELO, no por etiqueta.
+   *
+   * Cada talla es una cabecera distinta, así que numerar dentro de la cabecera hacía
+   * que la talla S volviera a empezar en 1 cuando debía continuar donde terminó XS.
+   * El contador de producto sigue el mismo alcance que el DPP: el modelo.
+   *
+   * Devuelve, por cabecera, el desplazamiento inicial y los datos para ubicar cada fila:
+   *   numProducto = offset + floor((itemGlobal - inicio) / piezas) + 1
+   *
+   * La forma aritmética evita tener que leer todas las filas del modelo y funciona
+   * igual con paginación.
+   */
+  private async productoPorCabecera(
+    labelIds: number[]
+  ): Promise<Map<number, { offset: number; inicio: number; piezas: number }>> {
+    const objetivo = await this.prisma.odOrderLabelHead.findMany({
+      where: { idDlkOrderLabelHead: { in: labelIds } },
+      select: { idDlkOrderLabelHead: true, orderDetail: { select: { codEstilo: true } } },
+    });
+    const estilos = [
+      ...new Set(
+        objetivo.map((h) => h.orderDetail?.codEstilo?.trim()).filter((c): c is string => !!c)
+      ),
+    ];
+
+    // Todas las cabeceras de esos modelos, para acumular las prendas que van delante.
+    const hermanas = estilos.length
+      ? await this.prisma.odOrderLabelHead.findMany({
+          where: { orderDetail: { codEstilo: { in: estilos } }, flgStatutActif: 1 },
+          select: {
+            idDlkOrderLabelHead: true,
+            inicioSerializacion: true,
+            totalPrendas: true,
+            totalLabel: true,
+            orderDetail: { select: { codEstilo: true } },
+            components: { select: { idDlkOrderLabelComponent: true } },
+          },
+          orderBy: { inicioSerializacion: "asc" },
+        })
+      : [];
+
+    const acumuladoPorEstilo = new Map<string, number>();
+    const out = new Map<number, { offset: number; inicio: number; piezas: number }>();
+    for (const h of hermanas) {
+      const estilo = h.orderDetail?.codEstilo?.trim() ?? "";
+      const offset = acumuladoPorEstilo.get(estilo) ?? 0;
+      const piezas = Math.max(h.components.length, 1);
+      out.set(h.idDlkOrderLabelHead, {
+        offset,
+        inicio: h.inicioSerializacion ?? 1,
+        piezas,
+      });
+      // Si totalPrendas faltara (etiquetas anteriores al campo), se deriva.
+      const prendas = h.totalPrendas ?? Math.round((h.totalLabel ?? 0) / piezas);
+      acumuladoPorEstilo.set(estilo, offset + prendas);
+    }
+    return out;
+  }
+
+  /** numProducto de una fila, dado el contexto de su cabecera. */
+  private numeroDeProducto(
+    ctx: { offset: number; inicio: number; piezas: number } | undefined,
+    itemGlobal: number
+  ): number | null {
+    if (!ctx) return null;
+    return ctx.offset + Math.floor((itemGlobal - ctx.inicio) / ctx.piezas) + 1;
+  }
+
   private async buildLabelUnits(labelIds: number[]): Promise<LabelUnit[]> {
     const details = await this.prisma.odOrderLabelDetail.findMany({
       where: { idDlkOrderLabelHead: { in: labelIds } },
@@ -899,6 +980,7 @@ export class OrderLabelService {
       select: {
         idDlkOrderLabelDetail: true,
         idDlkOrderLabelHead: true,
+        itemGlobal: true,
         sgtinFull: true,
         urlDppFull: true,
         pieceType: true,
@@ -943,15 +1025,13 @@ export class OrderLabelService {
       ])
     );
 
-    const numeroPorGrupo = new Map<string, number>();
+    const ctxPorCabecera = await this.productoPorCabecera(labelIds);
     return details.map((d) => {
       const info = infoPorHead.get(d.idDlkOrderLabelHead);
-      const grupo = d.setGroupId ?? `u-${d.idDlkOrderLabelDetail}`;
-      let producto = numeroPorGrupo.get(grupo);
-      if (producto === undefined) {
-        producto = numeroPorGrupo.size + 1;
-        numeroPorGrupo.set(grupo, producto);
-      }
+      const producto = this.numeroDeProducto(
+        ctxPorCabecera.get(d.idDlkOrderLabelHead),
+        d.itemGlobal
+      );
 
       const piezas = info?.piezas ?? 0;
       const numPiece =

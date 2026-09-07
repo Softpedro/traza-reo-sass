@@ -147,5 +147,11 @@ export type LabelDetail = {
   size: string | null;
   pieceType: string | null;
   setGroupId: string | null;
+  /**
+   * Nº de producto (la prenda física) dentro del MODELO, no de la etiqueta. Lo calcula
+   * el servidor: el cliente sólo recibe una cabecera y no sabe cuántas prendas del
+   * mismo modelo van delante, así que la talla S continúa donde terminó XS.
+   */
+  numProducto: number | null;
   isBlacklisted: number | null;
 };

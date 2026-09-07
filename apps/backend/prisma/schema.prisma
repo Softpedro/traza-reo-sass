@@ -856,7 +856,9 @@ model MdModel {
   idDlkModel             Int             @id @default(autoincrement()) @map("ID_DLK_MODEL")
   idDlkBrand             Int             @map("ID_DLK_BRAND")
   idDlkSubbrand          Int?            @map("ID_DLK_SUBBRAND")
-  codModel               String?         @map("COD_MODEL") @db.VarChar(50)
+  /// Código de estilo. En Perú "estilo" es el nombre del modelo, así que este código
+  /// es el mismo que OD_ORDER_DETAIL.COD_ESTILO y es lo que enlaza catálogo y órdenes.
+  codModel               String?         @unique(map: "uq_model_cod") @map("COD_MODEL") @db.VarChar(50)
   nameModel              String?         @map("NAME_MODEL") @db.VarChar(100)
   desModel               String?         @map("DES_MODEL") @db.VarChar(500)
   nameCollection         String?         @map("NAME_COLLECTION") @db.VarChar(100)

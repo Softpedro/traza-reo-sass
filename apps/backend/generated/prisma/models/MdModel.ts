@@ -502,12 +502,12 @@ export type MdModelOrderByWithRelationInput = {
 
 export type MdModelWhereUniqueInput = Prisma.AtLeast<{
   idDlkModel?: number
+  codModel?: string
   AND?: Prisma.MdModelWhereInput | Prisma.MdModelWhereInput[]
   OR?: Prisma.MdModelWhereInput[]
   NOT?: Prisma.MdModelWhereInput | Prisma.MdModelWhereInput[]
   idDlkBrand?: Prisma.IntFilter<"MdModel"> | number
   idDlkSubbrand?: Prisma.IntNullableFilter<"MdModel"> | number | null
-  codModel?: Prisma.StringNullableFilter<"MdModel"> | string | null
   nameModel?: Prisma.StringNullableFilter<"MdModel"> | string | null
   desModel?: Prisma.StringNullableFilter<"MdModel"> | string | null
   nameCollection?: Prisma.StringNullableFilter<"MdModel"> | string | null
@@ -540,7 +540,7 @@ export type MdModelWhereUniqueInput = Prisma.AtLeast<{
   cares?: Prisma.MdCareListRelationFilter
   images?: Prisma.MdModelImageListRelationFilter
   details?: Prisma.MdModelDetailListRelationFilter
-}, "idDlkModel">
+}, "idDlkModel" | "codModel">
 
 export type MdModelOrderByWithAggregationInput = {
   idDlkModel?: Prisma.SortOrder
@@ -2498,6 +2498,10 @@ export type $MdModelPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     idDlkModel: number
     idDlkBrand: number
     idDlkSubbrand: number | null
+    /**
+     * Código de estilo. En Perú "estilo" es el nombre del modelo, así que este código
+     * es el mismo que OD_ORDER_DETAIL.COD_ESTILO y es lo que enlaza catálogo y órdenes.
+     */
     codModel: string | null
     nameModel: string | null
     desModel: string | null

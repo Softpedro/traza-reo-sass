@@ -50,6 +50,7 @@ interface ModelModalProps {
 }
 
 const emptyForm = {
+  codModel: "",
   nameModel: "",
   idDlkParentCompany: 0,
   idDlkBrand: 0,
@@ -117,6 +118,7 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
         const m = await res.json();
         if (cancelled) return;
         setForm({
+          codModel: m.codModel ?? "",
           nameModel: m.nameModel ?? "",
           idDlkParentCompany: m.brand?.parentCompany?.idDlkParentCompany ?? 0,
           idDlkBrand: m.idDlkBrand ?? 0,
@@ -271,6 +273,10 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
       setError("El nombre del modelo es obligatorio.");
       return;
     }
+    if (mode === "create" && !form.codModel.trim()) {
+      setError("El código de estilo es obligatorio.");
+      return;
+    }
     setSaving(true);
     setError(null);
     try {
@@ -287,6 +293,9 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
       }));
 
       const payload: Record<string, unknown> = {
+        // Sólo al crear: el código es la identidad del modelo y lo que lo enlaza con las
+        // órdenes; cambiarlo después rompería ese vínculo.
+        ...(mode === "create" ? { codModel: form.codModel.trim() } : {}),
         idDlkBrand: form.idDlkBrand,
         idDlkSubbrand: form.idDlkSubbrand || null,
         nameModel: form.nameModel,
@@ -353,7 +362,21 @@ export function ModelModal({ open, onOpenChange, mode, modelId, onSuccess }: Mod
         </DialogHeader>
 
         <div className="grid gap-3 py-2 sm:grid-cols-2">
-          <Field label="Modelo" full>
+          <Field label="Código Estilo">
+            {mode === "create" ? (
+              <Input
+                value={form.codModel}
+                onChange={(e) => set("codModel", e.target.value)}
+                maxLength={50}
+                placeholder="Ej. DG-AMORE"
+              />
+            ) : (
+              // Inmutable: las órdenes referencian el modelo por este código.
+              <Input value={form.codModel || "—"} readOnly />
+            )}
+          </Field>
+
+          <Field label="Modelo">
             <Input value={form.nameModel} readOnly={readOnly} onChange={(e) => set("nameModel", e.target.value)} />
           </Field>
 

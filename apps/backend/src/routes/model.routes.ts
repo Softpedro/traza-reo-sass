@@ -67,6 +67,9 @@ export function modelRoutes(service: ModelService): Router {
       if (!req.body.nameModel?.trim()) {
         return res.status(400).json({ error: "El nombre del modelo es obligatorio", type: "VALIDATION" });
       }
+      if (!req.body.codModel?.trim()) {
+        return res.status(400).json({ error: "El código de estilo es obligatorio", type: "VALIDATION" });
+      }
       const item = await service.create({ ...req.body, idDlkBrand });
       res.status(201).json(item);
     } catch (e) {

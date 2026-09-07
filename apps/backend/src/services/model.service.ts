@@ -78,7 +78,13 @@ type ModelScalars = Partial<{
 
 type CreateModelInput = ModelScalars & {
   idDlkBrand: number;
-  codModel?: string;
+  /**
+   * Código de estilo. Obligatorio: es la identidad del modelo y lo que enlaza el
+   * catálogo con las órdenes (OD_ORDER_DETAIL.COD_ESTILO). Antes se autogeneraba como
+   * MOD-N cuando no llegaba, y como el formulario nunca lo enviaba, el maestro quedaba
+   * con códigos que ninguna orden usaba y el join no encontraba nada.
+   */
+  codModel: string;
   /** PDF de ficha técnica en base64 (sin prefijo data:). */
   fichaBase64?: string | null;
   /** Imagen de la ficha de medidas en base64 (sin prefijo data:). */
@@ -205,14 +211,19 @@ export class ModelService {
   }
 
   async create(input: CreateModelInput) {
-    let codModel = input.codModel;
-    if (!codModel) {
-      const last = await this.prisma.mdModel.findFirst({
-        orderBy: { idDlkModel: "desc" },
-        select: { codModel: true },
-      });
-      const lastNum = last?.codModel ? parseInt(last.codModel.replace(/\D/g, ""), 10) || 0 : 0;
-      codModel = `MOD-${lastNum + 1}`;
+    const codModel = input.codModel?.trim();
+    if (!codModel) throw new Error("El código de estilo es obligatorio");
+
+    // El código es único en la base; un mensaje claro evita que salga el error crudo
+    // del índice, que no dice cuál es el modelo que ya lo ocupa.
+    const dup = await this.prisma.mdModel.findFirst({
+      where: { codModel },
+      select: { idDlkModel: true, nameModel: true },
+    });
+    if (dup) {
+      throw new Error(
+        `El código de estilo "${codModel}" ya lo usa el modelo "${dup.nameModel ?? dup.idDlkModel}"`
+      );
     }
 
     const data: Prisma.MdModelUncheckedCreateInput = {

@@ -24,6 +24,17 @@ function imageBytesToDataUrl(img: Uint8Array | Buffer | null | undefined): strin
   if (buf.length >= 3 && buf[0] === 0x47 && buf[1] === 0x49 && buf[2] === 0x46) {
     return `data:image/gif;base64,${b64}`;
   }
+  // WebP: contenedor RIFF con la marca "WEBP" en el byte 8. Las fotos de pieza se suben
+  // en este formato porque son recortes con fondo transparente y en PNG no caben en el
+  // límite de body. Sin esta rama caían al `data:image/png` de reserva y el pasaporte
+  // anunciaba un MIME que no correspondía a los bytes.
+  if (
+    buf.length >= 12 &&
+    buf.subarray(0, 4).toString("ascii") === "RIFF" &&
+    buf.subarray(8, 12).toString("ascii") === "WEBP"
+  ) {
+    return `data:image/webp;base64,${b64}`;
+  }
   return `data:image/png;base64,${b64}`;
 }
 

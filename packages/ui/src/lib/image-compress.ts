@@ -11,6 +11,8 @@
  * recodificar lo dejaría más pesado, devuelve el original tal cual.
  */
 
+export type CompressFormat = "auto" | "auto-webp" | "jpeg" | "png" | "webp";
+
 const DEFAULTS = {
   /** Lado mayor del resultado. Nunca agranda una imagen que ya sea más chica. */
   maxDimension: 1600,
@@ -29,7 +31,7 @@ const DEFAULTS = {
    * 45-71% de píxeles transparentes), así que aplanarlos contra blanco los arruina. Pero
    * en PNG pesan ~760 KB y 40 fotos no caben en el límite de body; en WebP son ~38 KB.
    */
-  format: "jpeg" as "auto" | "auto-webp" | "jpeg" | "png" | "webp",
+  format: "jpeg" as CompressFormat,
 };
 
 export type CompressImageOptions = Partial<typeof DEFAULTS>;
@@ -41,6 +43,21 @@ export type CompressedImage = {
   base64: string;
   /** Bytes aproximados del binario resultante. */
   bytes: number;
+};
+
+/**
+ * Tipos del archivo original que se pueden conservar tal cual por cada perfil. Fuera de
+ * esta lista siempre gana el recomprimido, aunque pese más: guardar un formato que el
+ * consumidor no sabe leer es peor que guardar unos KB de más.
+ */
+const ACEPTA_ORIGINAL: Record<CompressFormat, string[]> = {
+  // Los logos acaban en el PDF de etiqueta, que sólo embebe PNG y JPG.
+  auto: ["data:image/png", "data:image/jpeg"],
+  // Las fotos sólo se muestran en web; WebP también vale.
+  "auto-webp": ["data:image/png", "data:image/jpeg", "data:image/webp"],
+  jpeg: ["data:image/jpeg"],
+  png: ["data:image/png"],
+  webp: ["data:image/webp"],
 };
 
 function splitDataUrl(dataUrl: string): { base64: string; bytes: number } {
@@ -179,7 +196,13 @@ export async function compressImage(
       }
     }
     const compressed = { dataUrl, ...splitDataUrl(dataUrl) };
-    // Recodificar puede engordar un PNG chico o una imagen ya optimizada: gana el menor.
+    // Recodificar puede engordar un PNG chico o una imagen ya optimizada: gana el menor,
+    // salvo que conservar el original signifique guardar un tipo que el destino no sabe
+    // leer. Un AVIF de 3 KB nunca pierde por tamaño, pero el PDF de etiqueta sólo embebe
+    // PNG y JPG (`detectImageKind`): al no reconocerlo imprimía el nombre de la marca en
+    // vez del logo.
+    const originalCompatible = ACEPTA_ORIGINAL[format].some((t) => originalDataUrl.startsWith(t));
+    if (!originalCompatible) return compressed;
     return compressed.bytes < original.bytes ? compressed : original;
   } finally {
     decoded.release();

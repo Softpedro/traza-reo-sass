@@ -364,6 +364,8 @@ export class DppPassportService {
       name: string;
       company: string | null;
       gln: string;
+      /** RUC de la empresa dueña de la planta; llena el `ruc` del consumidor. */
+      ruc: string | null;
       address: string | null;
       gps: string | null;
     };
@@ -399,7 +401,9 @@ export class DppPassportService {
                   codGlnFacility: true,
                   addressFacility: true,
                   gpsLocationFacility: true,
-                  parentCompany: { select: { nameParentCompany: true } },
+                  parentCompany: {
+                    select: { nameParentCompany: true, numRucParentCompany: true },
+                  },
                 },
               },
             },
@@ -416,6 +420,7 @@ export class DppPassportService {
               name: f.nameFacility,
               company: f.parentCompany?.nameParentCompany ?? null,
               gln: f.codGlnFacility,
+              ruc: f.parentCompany?.numRucParentCompany ?? null,
               address: f.addressFacility || null,
               gps: f.gpsLocationFacility || null,
             }

@@ -95,10 +95,13 @@ curl -G "https://web-300ixhl1vesu.up-de-fra1-k8s-1.apps.run-on-seenode.com/api/d
     "size":        "string|null"   // talla de la unidad (ej. "XS", "M")
   },
   "materials": {
-    "composition":        "string|null",
-    "recycled":           false,         // boolean
-    "recycledPercentage": 0,             // number|null
-    "recycledInput":      "string|null"
+    "composition":         "string|null",
+    "recycled":            false,         // boolean
+    "recycledPercentage":  0,             // number|null — 0 es un valor declarado, null es "no se sabe"
+    "recycledInput":       "string|null",
+    "renewable":           false,         // boolean
+    "renewablePercentage": 0,             // number|null — misma distinción que el reciclado
+    "renewableInput":      "string|null"
   },
   "packaging": {                          // objeto, o null si el modelo no tiene empaque
     "type":               "string",
@@ -132,7 +135,7 @@ curl -G "https://web-300ixhl1vesu.up-de-fra1-k8s-1.apps.run-on-seenode.com/api/d
   "images": [{ "name": "image-1", "piece": "Chaqueta m/l", "url": "data:image/jpeg;base64,/9j..." }],
   "description": { "title": "Pijama Eleganza Natural", "collection": "Dream Garden", "body": "Blusa de pijama manga larga, confeccionada en Interlock 50/1 Estampado (100% Pima Cotton)..." },
   "information": { "name": "Blusa Pijama Eleganza Dream Garden", "brand": "QAPARY", "gtin": "07750549420014", "productCode": "7750549420014/10/OP28261/21/1", "category": "Ropa de Dormir / Homewear Femenino (Sup.)", "color": "NAVY PEONY / SIN ESTAMPADO", "year": 2025, "season": "Spring 25", "size": "XS" },
-  "materials": { "composition": "100% Pima Cotton. Tela: Interlock 50/1 Estampado. Densidad 0.19 kg/m2.", "recycled": false, "recycledPercentage": null, "recycledInput": null },
+  "materials": { "composition": "100% Pima Cotton. Tela: Interlock 50/1 Estampado. Densidad 0.19 kg/m2.", "recycled": false, "recycledPercentage": 0, "recycledInput": null, "renewable": false, "renewablePercentage": 0, "renewableInput": "Ninguna" },
   "packaging": { "type": "Empaque primario individual (Blusa XS) en bolsa biodegradable...", "weight": 200, "volume": 0.003, "recycling": "Biodegradable / carton reciclado", "percentageRecycled": 100, "recycled": true },
   "care": { "text": "Para conservar la suavidad color y forma de tu pijama Eleganza:\n* Lavar a máquina en ciclo delicado.\n* Usar agua fría (máx. 30°C)\n..." },
   "suppliers": [ { "name": "BERGMAN / RIVERA S.A.", "address": "Jr. Chiclayo 985 Miraflores", "ruc": "20516438445", "gps": "-12.1147, -77.0387" } ],

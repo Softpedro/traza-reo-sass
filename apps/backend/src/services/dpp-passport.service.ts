@@ -208,6 +208,9 @@ export class DppPassportService {
             recycled: true,
             percentageRecycledMaterials: true,
             recycledInputSource: true,
+            renewableMaterial: true,
+            percentageRenewableMaterial: true,
+            renewableInputSource: true,
             supplier: { select: supplierSelect },
           },
         })
@@ -234,14 +237,31 @@ export class DppPassportService {
     }
     const suppliers = [...supplierMap.values()];
 
-    // Reciclado: agregado de los materiales de la orden
+    // Reciclado y renovable: agregado de los materiales de la orden.
+    //
+    // Se toma el primer material que TENGA el dato, no el primero mayor que cero. Un 0
+    // declarado ("0% reciclado") es una afirmación, no un dato faltante, y la diferencia
+    // importa en un pasaporte: `null` dice "no se sabe" y `0` dice "ninguno".
+    const primerNumero = (
+      valores: (unknown | null | undefined)[]
+    ): number | null => {
+      const v = valores.find((x) => x != null);
+      return v != null ? Number(v) : null;
+    };
+
     const recycledAny = materialRows.some((m) => m.recycled === 1);
     const recycledInput =
       materialRows.find((m) => m.recycledInputSource)?.recycledInputSource ?? null;
-    const recycledPctRaw = materialRows.find(
-      (m) => m.percentageRecycledMaterials != null && Number(m.percentageRecycledMaterials) > 0
-    )?.percentageRecycledMaterials;
-    const recycledPercentage = recycledPctRaw != null ? Number(recycledPctRaw) : null;
+    const recycledPercentage = primerNumero(
+      materialRows.map((m) => m.percentageRecycledMaterials)
+    );
+
+    const renewableAny = materialRows.some((m) => m.renewableMaterial === 1);
+    const renewableInput =
+      materialRows.find((m) => m.renewableInputSource)?.renewableInputSource ?? null;
+    const renewablePercentage = primerNumero(
+      materialRows.map((m) => m.percentageRenewableMaterial)
+    );
 
     // ── Imágenes ───────────────────────────────────────────────────────
     // Se exponen TODAS las fotos de TODAS las piezas del modelo, agrupadas por
@@ -398,6 +418,10 @@ export class DppPassportService {
         recycled: recycledAny,
         recycledPercentage,
         recycledInput,
+        // Renovable: mismo agregado que reciclado, desde MD_MATERIAL.
+        renewable: renewableAny,
+        renewablePercentage,
+        renewableInput,
       },
 
       packaging: model?.packaging

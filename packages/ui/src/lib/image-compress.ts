@@ -17,11 +17,19 @@ const DEFAULTS = {
   /** Calidad JPEG (0-1). PNG es sin pérdida y la ignora. */
   quality: 0.8,
   /**
-   * "auto" = PNG si la imagen trae píxeles transparentes, JPEG si no.
-   * Importante para los logos: el logo DPP se pinta sobre un color de fondo configurable,
-   * así que aplanarlo contra blanco lo dejaría con un recuadro visible.
+   * Qué formato emitir:
+   *   "auto"      -> PNG si hay píxeles transparentes, JPEG si no.
+   *   "auto-webp" -> WebP si hay transparencia, JPEG si no.
+   *
+   * La distinción importa. Los logos usan "auto" porque el PDF de etiqueta sólo sabe
+   * embeber PNG/JPG (`detectImageKind`), y un logo WebP haría que la etiqueta imprimiera
+   * el nombre de la marca en lugar del logo.
+   *
+   * Las fotos de pieza usan "auto-webp": son recortes con fondo transparente (medidos:
+   * 45-71% de píxeles transparentes), así que aplanarlos contra blanco los arruina. Pero
+   * en PNG pesan ~760 KB y 40 fotos no caben en el límite de body; en WebP son ~38 KB.
    */
-  format: "jpeg" as "auto" | "jpeg" | "png",
+  format: "jpeg" as "auto" | "auto-webp" | "jpeg" | "png" | "webp",
 };
 
 export type CompressImageOptions = Partial<typeof DEFAULTS>;
@@ -135,12 +143,20 @@ export async function compressImage(
     ctx.imageSmoothingQuality = "high";
     ctx.drawImage(source, 0, 0, canvas.width, canvas.height);
 
-    const mimeType =
-      format === "auto"
+    const conAlfa =
+      format === "auto" || format === "auto-webp"
         ? hasTransparency(ctx, canvas.width, canvas.height)
+        : false;
+    let mimeType =
+      format === "auto"
+        ? conAlfa
           ? "image/png"
           : "image/jpeg"
-        : `image/${format}`;
+        : format === "auto-webp"
+          ? conAlfa
+            ? "image/webp"
+            : "image/jpeg"
+          : `image/${format}`;
 
     if (mimeType === "image/jpeg") {
       // JPEG no tiene canal alfa y sin fondo lo transparente sale negro. `destination-over`
@@ -151,7 +167,17 @@ export async function compressImage(
       ctx.globalCompositeOperation = "source-over";
     }
 
-    const dataUrl = canvas.toDataURL(mimeType, quality);
+    let dataUrl = canvas.toDataURL(mimeType, quality);
+    // `toDataURL` cae a PNG en silencio si el navegador no soporta el tipo pedido. Se
+    // detecta por el prefijo para no etiquetar mal los bytes: un PNG con alfa es peor
+    // opción que WebP, pero sigue siendo correcto.
+    if (!dataUrl.startsWith(`data:${mimeType}`)) {
+      mimeType = dataUrl.slice(5, dataUrl.indexOf(";"));
+      if (mimeType === "image/png" && !conAlfa) {
+        // Sin transparencia que preservar, JPEG pesa mucho menos que el PNG de reserva.
+        dataUrl = canvas.toDataURL("image/jpeg", quality);
+      }
+    }
     const compressed = { dataUrl, ...splitDataUrl(dataUrl) };
     // Recodificar puede engordar un PNG chico o una imagen ya optimizada: gana el menor.
     return compressed.bytes < original.bytes ? compressed : original;
@@ -162,7 +188,7 @@ export async function compressImage(
 
 /** Fotos: piezas de modelo, estilos de orden, foto de usuario. */
 export function compressPhoto(file: File): Promise<CompressedImage> {
-  return compressImage(file, { maxDimension: 1600, format: "jpeg" });
+  return compressImage(file, { maxDimension: 1600, format: "auto-webp" });
 }
 
 /**

@@ -358,12 +358,27 @@ export class DppPassportService {
     // Lectura de la ruta de producción de los componentes de este colorway.
     // Dedupe por etapa (nameProcess) y orden por precedencia → un timeline único.
     let manufacturingLocation: string | null = null;
+    /** Fábrica donde se produce. Identificada con su GLN, que es la clave GS1 de ubicación. */
+    type Facility = {
+      code: string;
+      name: string;
+      company: string | null;
+      gln: string;
+      address: string | null;
+      gps: string | null;
+    };
+    let manufacturingFacility: Facility | null = null;
     const timeline: {
       stage: string;
       /** ISO 8601 con desfase explícito, en hora de planta. */
       startAt: string | null;
       endAt: string | null;
       responsible: string | null;
+      /**
+       * Fábrica de esta etapa. Va por etapa y no sólo a nivel de fabricación porque una
+       * orden puede repartirse entre plantas: publicar una sola las daría por todas.
+       */
+      facility: Facility | null;
     }[] = [];
     if (detail?.idDlkOrderDetail) {
       const components = await this.prisma.odOrderComponent.findMany({
@@ -377,7 +392,16 @@ export class DppPassportService {
               responsibleProcess: true,
               inputTimeProcessRoute: true,
               outputTimeProcessRoute: true,
-              facility: { select: { nameFacility: true, addressFacility: true } },
+              facility: {
+                select: {
+                  codFacility: true,
+                  nameFacility: true,
+                  codGlnFacility: true,
+                  addressFacility: true,
+                  gpsLocationFacility: true,
+                  parentCompany: { select: { nameParentCompany: true } },
+                },
+              },
             },
           },
         },
@@ -385,8 +409,22 @@ export class DppPassportService {
       const flat = components
         .flatMap((c) => c.processRoutes)
         .sort((a, b) => a.ordenPrecedenciaProcess - b.ordenPrecedenciaProcess);
+      const aFacility = (f: (typeof flat)[number]["facility"]): Facility | null =>
+        f
+          ? {
+              code: f.codFacility,
+              name: f.nameFacility,
+              company: f.parentCompany?.nameParentCompany ?? null,
+              gln: f.codGlnFacility,
+              address: f.addressFacility || null,
+              gps: f.gpsLocationFacility || null,
+            }
+          : null;
+
       const seen = new Set<string>();
       for (const pr of flat) {
+        const facility = aFacility(pr.facility);
+        if (!manufacturingFacility && facility) manufacturingFacility = facility;
         if (!manufacturingLocation && pr.facility) {
           manufacturingLocation =
             [pr.facility.nameFacility, pr.facility.addressFacility].filter(Boolean).join(", ") ||
@@ -399,6 +437,7 @@ export class DppPassportService {
           startAt: toLocalIso(pr.inputTimeProcessRoute),
           endAt: toLocalIso(pr.outputTimeProcessRoute),
           responsible: pr.responsibleProcess || null,
+          facility,
         });
       }
     }
@@ -512,7 +551,13 @@ export class DppPassportService {
 
       suppliers,
 
-      manufacturing: { location: manufacturingLocation, timeline },
+      manufacturing: {
+        location: manufacturingLocation,
+        // Fábrica principal: la de la primera etapa con planta asignada. `location` se
+        // mantiene por compatibilidad con los consumidores que ya la leen.
+        facility: manufacturingFacility,
+        timeline,
+      },
     };
 
     return { passport };

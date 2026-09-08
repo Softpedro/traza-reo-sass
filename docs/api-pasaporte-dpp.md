@@ -120,6 +120,9 @@ curl -G "https://web-300ixhl1vesu.up-de-fra1-k8s-1.apps.run-on-seenode.com/api/d
   "manufacturing": {
     "location": "string|null",
     "timeline": [
+      // startAt/endAt: ISO 8601 con desfase explícito en hora de planta,
+      // p. ej. "2026-03-05T08:00:00-05:00". No llevan "Z": el mismo instante en UTC
+      // sería "T13:00:00Z" y se leía como si la jornada hubiera empezado a las 13:00.
       { "stage": "string", "startAt": "ISO-8601|null", "endAt": "ISO-8601|null", "responsible": "string|null" }
     ]
   }

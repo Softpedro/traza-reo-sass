@@ -38,6 +38,63 @@ function imageBytesToDataUrl(img: Uint8Array | Buffer | null | undefined): strin
   return `data:image/png;base64,${b64}`;
 }
 
+/**
+ * Zona en la que se declaran las fechas del pasaporte. Perú no aplica horario de verano,
+ * pero el desfase se calcula igual en vez de fijar "-05:00": así la fórmula sigue siendo
+ * correcta si algún día se expone otra zona.
+ */
+const DPP_TIMEZONE = process.env.DPP_TIMEZONE ?? "America/Lima";
+
+/** Desfase de `tz` respecto a UTC, en minutos, para ese instante concreto. */
+function offsetMinutes(d: Date, tz: string): number {
+  const p = new Intl.DateTimeFormat("en-US", {
+    timeZone: tz,
+    hour12: false,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  })
+    .formatToParts(d)
+    .reduce<Record<string, string>>((a, x) => {
+      a[x.type] = x.value;
+      return a;
+    }, {});
+  const comoUtc = Date.UTC(
+    Number(p.year),
+    Number(p.month) - 1,
+    Number(p.day),
+    Number(p.hour) % 24,
+    Number(p.minute),
+    Number(p.second)
+  );
+  return Math.round((comoUtc - d.getTime()) / 60000);
+}
+
+/**
+ * Fecha en ISO 8601 con el desfase explícito: `2026-03-05T08:00:00-05:00`.
+ *
+ * Es el mismo instante que el `...T13:00:00Z` que salía antes, pero se lee directo en
+ * hora de planta. Con la `Z` el pasaporte publicaba 22:00 donde el operario había
+ * registrado las 17:00, y quien leía el JSON en crudo lo interpretaba como un error de
+ * datos. El dato siempre estuvo bien; era la forma de expresarlo la que confundía.
+ */
+function toLocalIso(d: Date | null | undefined, tz = DPP_TIMEZONE): string | null {
+  if (!d) return null;
+  const off = offsetMinutes(d, tz);
+  const local = new Date(d.getTime() + off * 60000);
+  const signo = off < 0 ? "-" : "+";
+  const abs = Math.abs(off);
+  const pad = (n: number, w = 2) => String(n).padStart(w, "0");
+  return (
+    `${local.getUTCFullYear()}-${pad(local.getUTCMonth() + 1)}-${pad(local.getUTCDate())}` +
+    `T${pad(local.getUTCHours())}:${pad(local.getUTCMinutes())}:${pad(local.getUTCSeconds())}` +
+    `${signo}${pad(Math.floor(abs / 60))}:${pad(abs % 60)}`
+  );
+}
+
 /** Quita separadores no alfanuméricos (mismo criterio que buildDppUrl al armar el lote). */
 function sanitizeLote(v: string | null | undefined): string {
   return (v ?? "").replace(/[^A-Za-z0-9]/g, "").toUpperCase();
@@ -303,8 +360,9 @@ export class DppPassportService {
     let manufacturingLocation: string | null = null;
     const timeline: {
       stage: string;
-      startAt: Date | null;
-      endAt: Date | null;
+      /** ISO 8601 con desfase explícito, en hora de planta. */
+      startAt: string | null;
+      endAt: string | null;
       responsible: string | null;
     }[] = [];
     if (detail?.idDlkOrderDetail) {
@@ -338,8 +396,8 @@ export class DppPassportService {
         seen.add(pr.nameProcess);
         timeline.push({
           stage: pr.nameProcess,
-          startAt: pr.inputTimeProcessRoute,
-          endAt: pr.outputTimeProcessRoute,
+          startAt: toLocalIso(pr.inputTimeProcessRoute),
+          endAt: toLocalIso(pr.outputTimeProcessRoute),
           responsible: pr.responsibleProcess || null,
         });
       }

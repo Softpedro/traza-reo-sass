@@ -60,6 +60,8 @@ export type MdBrandMinAggregateOutputType = {
   ecommerceBrand: string | null
   logoBrand: runtime.Bytes | null
   logoDpp: runtime.Bytes | null
+  faviconDpp: runtime.Bytes | null
+  tituloDpp: string | null
   colorFondoImagenDpp: string | null
   subdomainBrand: string | null
   stateBrand: number | null
@@ -88,6 +90,8 @@ export type MdBrandMaxAggregateOutputType = {
   ecommerceBrand: string | null
   logoBrand: runtime.Bytes | null
   logoDpp: runtime.Bytes | null
+  faviconDpp: runtime.Bytes | null
+  tituloDpp: string | null
   colorFondoImagenDpp: string | null
   subdomainBrand: string | null
   stateBrand: number | null
@@ -116,6 +120,8 @@ export type MdBrandCountAggregateOutputType = {
   ecommerceBrand: number
   logoBrand: number
   logoDpp: number
+  faviconDpp: number
+  tituloDpp: number
   colorFondoImagenDpp: number
   subdomainBrand: number
   stateBrand: number
@@ -162,6 +168,8 @@ export type MdBrandMinAggregateInputType = {
   ecommerceBrand?: true
   logoBrand?: true
   logoDpp?: true
+  faviconDpp?: true
+  tituloDpp?: true
   colorFondoImagenDpp?: true
   subdomainBrand?: true
   stateBrand?: true
@@ -190,6 +198,8 @@ export type MdBrandMaxAggregateInputType = {
   ecommerceBrand?: true
   logoBrand?: true
   logoDpp?: true
+  faviconDpp?: true
+  tituloDpp?: true
   colorFondoImagenDpp?: true
   subdomainBrand?: true
   stateBrand?: true
@@ -218,6 +228,8 @@ export type MdBrandCountAggregateInputType = {
   ecommerceBrand?: true
   logoBrand?: true
   logoDpp?: true
+  faviconDpp?: true
+  tituloDpp?: true
   colorFondoImagenDpp?: true
   subdomainBrand?: true
   stateBrand?: true
@@ -333,6 +345,8 @@ export type MdBrandGroupByOutputType = {
   ecommerceBrand: string | null
   logoBrand: runtime.Bytes | null
   logoDpp: runtime.Bytes | null
+  faviconDpp: runtime.Bytes | null
+  tituloDpp: string | null
   colorFondoImagenDpp: string | null
   subdomainBrand: string | null
   stateBrand: number
@@ -384,6 +398,8 @@ export type MdBrandWhereInput = {
   ecommerceBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   logoBrand?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
   logoDpp?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  faviconDpp?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  tituloDpp?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   colorFondoImagenDpp?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   subdomainBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   stateBrand?: Prisma.IntFilter<"MdBrand"> | number
@@ -416,6 +432,8 @@ export type MdBrandOrderByWithRelationInput = {
   ecommerceBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   logoBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   logoDpp?: Prisma.SortOrderInput | Prisma.SortOrder
+  faviconDpp?: Prisma.SortOrderInput | Prisma.SortOrder
+  tituloDpp?: Prisma.SortOrderInput | Prisma.SortOrder
   colorFondoImagenDpp?: Prisma.SortOrderInput | Prisma.SortOrder
   subdomainBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
@@ -452,6 +470,8 @@ export type MdBrandWhereUniqueInput = Prisma.AtLeast<{
   ecommerceBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   logoBrand?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
   logoDpp?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  faviconDpp?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  tituloDpp?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   colorFondoImagenDpp?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   subdomainBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   stateBrand?: Prisma.IntFilter<"MdBrand"> | number
@@ -484,6 +504,8 @@ export type MdBrandOrderByWithAggregationInput = {
   ecommerceBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   logoBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   logoDpp?: Prisma.SortOrderInput | Prisma.SortOrder
+  faviconDpp?: Prisma.SortOrderInput | Prisma.SortOrder
+  tituloDpp?: Prisma.SortOrderInput | Prisma.SortOrder
   colorFondoImagenDpp?: Prisma.SortOrderInput | Prisma.SortOrder
   subdomainBrand?: Prisma.SortOrderInput | Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
@@ -520,6 +542,8 @@ export type MdBrandScalarWhereWithAggregatesInput = {
   ecommerceBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null
   logoBrand?: Prisma.BytesNullableWithAggregatesFilter<"MdBrand"> | runtime.Bytes | null
   logoDpp?: Prisma.BytesNullableWithAggregatesFilter<"MdBrand"> | runtime.Bytes | null
+  faviconDpp?: Prisma.BytesNullableWithAggregatesFilter<"MdBrand"> | runtime.Bytes | null
+  tituloDpp?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null
   colorFondoImagenDpp?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null
   subdomainBrand?: Prisma.StringNullableWithAggregatesFilter<"MdBrand"> | string | null
   stateBrand?: Prisma.IntWithAggregatesFilter<"MdBrand"> | number
@@ -546,6 +570,8 @@ export type MdBrandCreateInput = {
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
   logoDpp?: runtime.Bytes | null
+  faviconDpp?: runtime.Bytes | null
+  tituloDpp?: string | null
   colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
@@ -578,6 +604,8 @@ export type MdBrandUncheckedCreateInput = {
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
   logoDpp?: runtime.Bytes | null
+  faviconDpp?: runtime.Bytes | null
+  tituloDpp?: string | null
   colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
@@ -607,6 +635,8 @@ export type MdBrandUpdateInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -639,6 +669,8 @@ export type MdBrandUncheckedUpdateInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -670,6 +702,8 @@ export type MdBrandCreateManyInput = {
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
   logoDpp?: runtime.Bytes | null
+  faviconDpp?: runtime.Bytes | null
+  tituloDpp?: string | null
   colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
@@ -696,6 +730,8 @@ export type MdBrandUpdateManyMutationInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -724,6 +760,8 @@ export type MdBrandUncheckedUpdateManyInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -768,6 +806,8 @@ export type MdBrandCountOrderByAggregateInput = {
   ecommerceBrand?: Prisma.SortOrder
   logoBrand?: Prisma.SortOrder
   logoDpp?: Prisma.SortOrder
+  faviconDpp?: Prisma.SortOrder
+  tituloDpp?: Prisma.SortOrder
   colorFondoImagenDpp?: Prisma.SortOrder
   subdomainBrand?: Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
@@ -804,6 +844,8 @@ export type MdBrandMaxOrderByAggregateInput = {
   ecommerceBrand?: Prisma.SortOrder
   logoBrand?: Prisma.SortOrder
   logoDpp?: Prisma.SortOrder
+  faviconDpp?: Prisma.SortOrder
+  tituloDpp?: Prisma.SortOrder
   colorFondoImagenDpp?: Prisma.SortOrder
   subdomainBrand?: Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
@@ -832,6 +874,8 @@ export type MdBrandMinOrderByAggregateInput = {
   ecommerceBrand?: Prisma.SortOrder
   logoBrand?: Prisma.SortOrder
   logoDpp?: Prisma.SortOrder
+  faviconDpp?: Prisma.SortOrder
+  tituloDpp?: Prisma.SortOrder
   colorFondoImagenDpp?: Prisma.SortOrder
   subdomainBrand?: Prisma.SortOrder
   stateBrand?: Prisma.SortOrder
@@ -955,6 +999,8 @@ export type MdBrandCreateWithoutParentCompanyInput = {
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
   logoDpp?: runtime.Bytes | null
+  faviconDpp?: runtime.Bytes | null
+  tituloDpp?: string | null
   colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
@@ -985,6 +1031,8 @@ export type MdBrandUncheckedCreateWithoutParentCompanyInput = {
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
   logoDpp?: runtime.Bytes | null
+  faviconDpp?: runtime.Bytes | null
+  tituloDpp?: string | null
   colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
@@ -1045,6 +1093,8 @@ export type MdBrandScalarWhereInput = {
   ecommerceBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   logoBrand?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
   logoDpp?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  faviconDpp?: Prisma.BytesNullableFilter<"MdBrand"> | runtime.Bytes | null
+  tituloDpp?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   colorFondoImagenDpp?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   subdomainBrand?: Prisma.StringNullableFilter<"MdBrand"> | string | null
   stateBrand?: Prisma.IntFilter<"MdBrand"> | number
@@ -1071,6 +1121,8 @@ export type MdBrandCreateWithoutOrderHeadsInput = {
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
   logoDpp?: runtime.Bytes | null
+  faviconDpp?: runtime.Bytes | null
+  tituloDpp?: string | null
   colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
@@ -1102,6 +1154,8 @@ export type MdBrandUncheckedCreateWithoutOrderHeadsInput = {
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
   logoDpp?: runtime.Bytes | null
+  faviconDpp?: runtime.Bytes | null
+  tituloDpp?: string | null
   colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
@@ -1146,6 +1200,8 @@ export type MdBrandUpdateWithoutOrderHeadsInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1177,6 +1233,8 @@ export type MdBrandUncheckedUpdateWithoutOrderHeadsInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1205,6 +1263,8 @@ export type MdBrandCreateWithoutSubbrandsInput = {
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
   logoDpp?: runtime.Bytes | null
+  faviconDpp?: runtime.Bytes | null
+  tituloDpp?: string | null
   colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
@@ -1236,6 +1296,8 @@ export type MdBrandUncheckedCreateWithoutSubbrandsInput = {
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
   logoDpp?: runtime.Bytes | null
+  faviconDpp?: runtime.Bytes | null
+  tituloDpp?: string | null
   colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
@@ -1280,6 +1342,8 @@ export type MdBrandUpdateWithoutSubbrandsInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1311,6 +1375,8 @@ export type MdBrandUncheckedUpdateWithoutSubbrandsInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1339,6 +1405,8 @@ export type MdBrandCreateWithoutModelsInput = {
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
   logoDpp?: runtime.Bytes | null
+  faviconDpp?: runtime.Bytes | null
+  tituloDpp?: string | null
   colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
@@ -1370,6 +1438,8 @@ export type MdBrandUncheckedCreateWithoutModelsInput = {
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
   logoDpp?: runtime.Bytes | null
+  faviconDpp?: runtime.Bytes | null
+  tituloDpp?: string | null
   colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
@@ -1414,6 +1484,8 @@ export type MdBrandUpdateWithoutModelsInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1445,6 +1517,8 @@ export type MdBrandUncheckedUpdateWithoutModelsInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1474,6 +1548,8 @@ export type MdBrandCreateManyParentCompanyInput = {
   ecommerceBrand?: string | null
   logoBrand?: runtime.Bytes | null
   logoDpp?: runtime.Bytes | null
+  faviconDpp?: runtime.Bytes | null
+  tituloDpp?: string | null
   colorFondoImagenDpp?: string | null
   subdomainBrand?: string | null
   stateBrand?: number
@@ -1500,6 +1576,8 @@ export type MdBrandUpdateWithoutParentCompanyInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1530,6 +1608,8 @@ export type MdBrandUncheckedUpdateWithoutParentCompanyInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1560,6 +1640,8 @@ export type MdBrandUncheckedUpdateManyWithoutParentCompanyInput = {
   ecommerceBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoBrand?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   logoDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  faviconDpp?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  tituloDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   colorFondoImagenDpp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subdomainBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stateBrand?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1637,6 +1719,8 @@ export type MdBrandSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   ecommerceBrand?: boolean
   logoBrand?: boolean
   logoDpp?: boolean
+  faviconDpp?: boolean
+  tituloDpp?: boolean
   colorFondoImagenDpp?: boolean
   subdomainBrand?: boolean
   stateBrand?: boolean
@@ -1672,6 +1756,8 @@ export type MdBrandSelectScalar = {
   ecommerceBrand?: boolean
   logoBrand?: boolean
   logoDpp?: boolean
+  faviconDpp?: boolean
+  tituloDpp?: boolean
   colorFondoImagenDpp?: boolean
   subdomainBrand?: boolean
   stateBrand?: boolean
@@ -1682,7 +1768,7 @@ export type MdBrandSelectScalar = {
   flgStatutActif?: boolean
 }
 
-export type MdBrandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkBrand" | "codBrand" | "idDlkParentCompany" | "codParentCompany" | "nameBrand" | "desBrand" | "codUbigeoBrand" | "addressBrand" | "locationBrand" | "emailBrand" | "cellularBrand" | "facebookBrand" | "instagramBrand" | "whatsappBrand" | "ecommerceBrand" | "logoBrand" | "logoDpp" | "colorFondoImagenDpp" | "subdomainBrand" | "stateBrand" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdBrand"]>
+export type MdBrandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idDlkBrand" | "codBrand" | "idDlkParentCompany" | "codParentCompany" | "nameBrand" | "desBrand" | "codUbigeoBrand" | "addressBrand" | "locationBrand" | "emailBrand" | "cellularBrand" | "facebookBrand" | "instagramBrand" | "whatsappBrand" | "ecommerceBrand" | "logoBrand" | "logoDpp" | "faviconDpp" | "tituloDpp" | "colorFondoImagenDpp" | "subdomainBrand" | "stateBrand" | "codUsuarioCargaDl" | "fehProcesoCargaDl" | "fehProcesoModifDl" | "desAccion" | "flgStatutActif", ExtArgs["result"]["mdBrand"]>
 export type MdBrandInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parentCompany?: boolean | Prisma.MdParentCompanyDefaultArgs<ExtArgs>
   subbrands?: boolean | Prisma.MdBrand$subbrandsArgs<ExtArgs>
@@ -1717,6 +1803,8 @@ export type $MdBrandPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     ecommerceBrand: string | null
     logoBrand: runtime.Bytes | null
     logoDpp: runtime.Bytes | null
+    faviconDpp: runtime.Bytes | null
+    tituloDpp: string | null
     colorFondoImagenDpp: string | null
     subdomainBrand: string | null
     stateBrand: number
@@ -2115,6 +2203,8 @@ export interface MdBrandFieldRefs {
   readonly ecommerceBrand: Prisma.FieldRef<"MdBrand", 'String'>
   readonly logoBrand: Prisma.FieldRef<"MdBrand", 'Bytes'>
   readonly logoDpp: Prisma.FieldRef<"MdBrand", 'Bytes'>
+  readonly faviconDpp: Prisma.FieldRef<"MdBrand", 'Bytes'>
+  readonly tituloDpp: Prisma.FieldRef<"MdBrand", 'String'>
   readonly colorFondoImagenDpp: Prisma.FieldRef<"MdBrand", 'String'>
   readonly subdomainBrand: Prisma.FieldRef<"MdBrand", 'String'>
   readonly stateBrand: Prisma.FieldRef<"MdBrand", 'Int'>

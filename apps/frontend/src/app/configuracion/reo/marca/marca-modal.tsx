@@ -68,6 +68,8 @@ const emptyForm = {
   subdomainBrand: "",
   logoBrand: "",
   logoDpp: "",
+  faviconDpp: "",
+  tituloDpp: "",
   colorFondoImagenDpp: "",
   /** 1 = activa, 0 = desactivada */
   stateBrand: 1,
@@ -86,6 +88,8 @@ export function MarcaModal({
   const [logoRemoved, setLogoRemoved] = useState(false);
   const [logoDppPreview, setLogoDppPreview] = useState<string | null>(null);
   const [logoDppRemoved, setLogoDppRemoved] = useState(false);
+  const [faviconDppPreview, setFaviconDppPreview] = useState<string | null>(null);
+  const [faviconDppRemoved, setFaviconDppRemoved] = useState(false);
   const [detailBrand, setDetailBrand] = useState<Brand | null>(null);
   const [empresas, setEmpresas] = useState<ParentCompanyOption[]>([]);
   const [ubigeos, setUbigeos] = useState<UbigeoOption[]>([]);
@@ -119,6 +123,8 @@ export function MarcaModal({
       setLogoDppPreview(null);
     setLogoDppRemoved(false);
       setLogoDppRemoved(false);
+      setFaviconDppPreview(null);
+      setFaviconDppRemoved(false);
       return;
     }
 
@@ -143,6 +149,8 @@ export function MarcaModal({
         subdomainBrand: b.subdomainBrand ?? "",
         logoBrand: "",
         logoDpp: "",
+        faviconDpp: "",
+        tituloDpp: b.tituloDpp ?? "",
         colorFondoImagenDpp: b.colorFondoImagenDpp ?? "",
         stateBrand: b.stateBrand === 1 ? 1 : 0,
       };
@@ -152,6 +160,8 @@ export function MarcaModal({
     setLogoRemoved(false);
     setLogoDppPreview(null);
     setLogoDppRemoved(false);
+    setFaviconDppPreview(null);
+    setFaviconDppRemoved(false);
     setForm(brandRowToForm(marca));
     setDetailBrand(null);
 
@@ -226,6 +236,10 @@ export function MarcaModal({
         if (logoDppRemoved) (payload as Record<string, unknown>).logoDpp = null;
         else delete (payload as Record<string, unknown>).logoDpp;
       }
+      if (!payload.faviconDpp) {
+        if (faviconDppRemoved) (payload as Record<string, unknown>).faviconDpp = null;
+        else delete (payload as Record<string, unknown>).faviconDpp;
+      }
 
       const res = await apiFetch(url, {
         method,
@@ -291,6 +305,17 @@ export function MarcaModal({
     ? { base64: form.logoDpp, preview: logoDppPreview }
     : !logoDppRemoved && storedLogoDppSrc
       ? { preview: storedLogoDppSrc }
+      : null;
+
+  const storedFaviconDppSrc =
+    mode !== "create" && (detailBrand?.faviconDpp ?? marca?.faviconDpp)
+      ? logoSrcFromApi(detailBrand?.faviconDpp ?? marca?.faviconDpp)
+      : null;
+  /** Mismo trato que el logo DPP: vacío es "sin cambios" salvo que se haya quitado. */
+  const faviconDppValue: ImageUploadValue | null = faviconDppPreview
+    ? { base64: form.faviconDpp, preview: faviconDppPreview }
+    : !faviconDppRemoved && storedFaviconDppSrc
+      ? { preview: storedFaviconDppSrc }
       : null;
 
   return (
@@ -407,6 +432,36 @@ export function MarcaModal({
                 />
               </div>
             </div>
+          </div>
+
+          <div className="grid grid-cols-4 items-start gap-4">
+            <Label className="text-right text-primary font-semibold pt-2">Favicon:</Label>
+            <div className="col-span-3 space-y-3">
+              <div className="max-w-[15rem]">
+                <ImageUpload
+                  value={faviconDppValue}
+                  disabled={readOnly}
+                  compression="logo"
+                  onChange={(v) => {
+                    setForm((prev) => ({ ...prev, faviconDpp: v?.base64 ?? "" }));
+                    setFaviconDppPreview(v?.base64 ? (v.preview ?? null) : null);
+                    setFaviconDppRemoved(v === null);
+                  }}
+                  onError={(m) => alert(m)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label className="text-right text-primary font-semibold">Título:</Label>
+            <Input
+              className="col-span-3"
+              value={form.tituloDpp}
+              onChange={(e) => handleChange("tituloDpp", e.target.value)}
+              readOnly={readOnly}
+              maxLength={150}
+            />
           </div>
 
           <div className="grid grid-cols-4 items-center gap-4">

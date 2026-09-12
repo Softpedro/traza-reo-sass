@@ -29,12 +29,13 @@ type BrandWithCompany = MdBrand & {
 };
 
 function mapBrandForApi(row: BrandWithCompany) {
-  // colorFondoImagenDpp es un string plano → pasa por ...rest sin transformar.
-  const { logoBrand, logoDpp, ...rest } = row;
+  // colorFondoImagenDpp y tituloDpp son strings planos → pasan por ...rest sin transformar.
+  const { logoBrand, logoDpp, faviconDpp, ...rest } = row;
   return {
     ...rest,
     logoBrand: logoBytesToDataUrl(logoBrand),
     logoDpp: logoBytesToDataUrl(logoDpp),
+    faviconDpp: logoBytesToDataUrl(faviconDpp),
   };
 }
 
@@ -94,6 +95,9 @@ export class BrandService {
     logoBrand?: string | null;
     /** undefined = no tocar; string = reemplazar; null = borrar. Antes era un chequeo de verdad, así que no había forma de quitar la imagen. */
     logoDpp?: string | null;
+    /** undefined = no tocar; string = reemplazar; null = borrar. Antes era un chequeo de verdad, así que no había forma de quitar la imagen. */
+    faviconDpp?: string | null;
+    tituloDpp?: string | null;
     colorFondoImagenDpp?: string | null;
     stateBrand?: number;
   }) {
@@ -125,11 +129,15 @@ export class BrandService {
       whatsappBrand: data.whatsappBrand ?? null,
       ecommerceBrand: data.ecommerceBrand ?? null,
       subdomainBrand: data.subdomainBrand ?? null,
+      tituloDpp: data.tituloDpp ?? null,
       colorFondoImagenDpp: data.colorFondoImagenDpp ?? null,
       ...(data.logoBrand
         ? { logoBrand: Buffer.from(data.logoBrand, "base64") }
         : {}),
       ...(data.logoDpp ? { logoDpp: Buffer.from(data.logoDpp, "base64") } : {}),
+      ...(data.faviconDpp
+        ? { faviconDpp: Buffer.from(data.faviconDpp, "base64") }
+        : {}),
       stateBrand: data.stateBrand ?? 1,
       codUsuarioCargaDl: "SYSTEM",
       fehProcesoCargaDl: new Date(),
@@ -173,6 +181,8 @@ export class BrandService {
       subdomainBrand: string | null;
       logoBrand: string | null;
       logoDpp: string | null;
+      faviconDpp: string | null;
+      tituloDpp: string | null;
       colorFondoImagenDpp: string | null;
       stateBrand: number;
     }>
@@ -194,6 +204,7 @@ export class BrandService {
       "whatsappBrand",
       "ecommerceBrand",
       "subdomainBrand",
+      "tituloDpp",
       "colorFondoImagenDpp",
       "stateBrand",
     ] as const;
@@ -207,6 +218,9 @@ export class BrandService {
     }
     if (data.logoDpp !== undefined) {
       updateData.logoDpp = data.logoDpp ? Buffer.from(data.logoDpp, "base64") : null;
+    }
+    if (data.faviconDpp !== undefined) {
+      updateData.faviconDpp = data.faviconDpp ? Buffer.from(data.faviconDpp, "base64") : null;
     }
 
     const updated = await this.prisma.mdBrand.update({

@@ -25,6 +25,10 @@ export type Brand = {
   logoBrand?: string | null;
   /** Logo específico para el DPP (Data URL desde API). Se expone en el servicio DPP. */
   logoDpp?: string | null;
+  /** Favicon de la app pública del DPP (Data URL desde API). */
+  faviconDpp?: string | null;
+  /** Título de la app pública del DPP (texto de la pestaña del navegador). */
+  tituloDpp?: string | null;
   /** Color de fondo de la imagen en el DPP (hex, ej. "#0A0A0A"). Se expone en el servicio DPP. */
   colorFondoImagenDpp?: string | null;
   stateBrand: number;

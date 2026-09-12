@@ -87,6 +87,10 @@ model MdBrand {
   // Logo que se expone en el servicio del DPP (app pública), independiente del
   // "Logo Etiqueta" (logoBrand).
   logoDpp            Bytes?          @map("LOGO_DPP")
+  // Favicon de la app pública del DPP (el ícono de la pestaña del navegador).
+  faviconDpp         Bytes?          @map("FAVICON_DPP")
+  // Título de la app pública del DPP (el texto de la pestaña del navegador).
+  tituloDpp          String?         @map("TITULO_DPP") @db.VarChar(150)
   // Color de fondo de la imagen en el DPP (hex, ej. "#0A0A0A").
   colorFondoImagenDpp String?        @map("COLOR_FONDO_IMAGEN_DPP") @db.VarChar(20)
   subdomainBrand     String?         @map("SUBDOMAIN_BRAND") @db.VarChar(100)

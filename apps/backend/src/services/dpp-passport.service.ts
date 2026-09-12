@@ -181,6 +181,8 @@ export class DppPassportService {
                     nameBrand: true,
                     logoBrand: true,
                     logoDpp: true,
+                    faviconDpp: true,
+                    tituloDpp: true,
                     colorFondoImagenDpp: true,
                     facebookBrand: true,
                     instagramBrand: true,
@@ -477,6 +479,9 @@ export class DppPassportService {
           logoUrl: imageBytesToDataUrl(brand?.logoBrand),
           // Logo y color de fondo específicos para el DPP (Configuración → Marca).
           logoDppUrl: imageBytesToDataUrl(brand?.logoDpp),
+          // Identidad de la pestaña del navegador en la app pública: ícono y texto.
+          faviconUrl: imageBytesToDataUrl(brand?.faviconDpp),
+          pageTitle: brand?.tituloDpp?.trim() || null,
           backgroundColor: brand?.colorFondoImagenDpp?.trim() || null,
           social: {
             facebook: brand?.facebookBrand ?? null,

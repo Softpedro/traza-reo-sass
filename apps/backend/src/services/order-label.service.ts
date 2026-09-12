@@ -10,6 +10,37 @@ import {
 /** Tope defensivo para evitar generar millones de detalles por error de cálculo. */
 const MAX_LABEL_RANGE = 100_000;
 
+/**
+ * Máximo de páginas (= unidades) por PDF de etiquetas.
+ *
+ * pdf-lib construye el documento entero en memoria y retiene cada operador de
+ * dibujo, así que el consumo crece lineal con las páginas. Medido con un heap de
+ * 384 MB: 1000 páginas pasan en 2.7 s, 1200 aún entran y 1500 revientan el heap.
+ * 1000 deja margen incluso en el contenedor más pequeño; súbelo con
+ * LABELS_PDF_MAX_UNITS si el plan tiene más memoria.
+ *
+ * Sin este tope, "Generar PDF de todas las etiquetas" de una orden grande mataba
+ * al proceso por OOM y el navegador solo veía un "Failed to fetch".
+ */
+const MAX_PDF_UNITS = Number(process.env.LABELS_PDF_MAX_UNITS ?? 1000);
+
+/**
+ * El PDF pedido excede `MAX_PDF_UNITS`. La ruta la traduce a 413 con un mensaje
+ * accionable en vez del 500 genérico de `errorResponse`.
+ */
+export class LabelsPdfTooLargeError extends Error {
+  constructor(
+    readonly requested: number,
+    readonly max: number
+  ) {
+    super(
+      `El PDF pedido tiene ${requested} etiquetas y el máximo por archivo es ${max}. ` +
+        `Genera el PDF etiqueta por etiqueta desde la columna Acción.`
+    );
+    this.name = "LabelsPdfTooLargeError";
+  }
+}
+
 
 const LABEL_HEAD_FOR_LIST = {
   idDlkOrderLabelHead: true,
@@ -1053,6 +1084,18 @@ export class OrderLabelService {
     });
   }
 
+  /**
+   * Cuenta las unidades antes de construirlas: si no cabe, se corta aquí y no se
+   * carga nada en memoria. Un `count` es mucho más barato que el `findMany` + JOINs
+   * de `buildLabelUnits`, y este era justo el camino que reventaba el proceso.
+   */
+  private async assertPdfSize(labelIds: number[]): Promise<void> {
+    const total = await this.prisma.odOrderLabelDetail.count({
+      where: { idDlkOrderLabelHead: { in: labelIds } },
+    });
+    if (total > MAX_PDF_UNITS) throw new LabelsPdfTooLargeError(total, MAX_PDF_UNITS);
+  }
+
   async buildLabelPdf(
     orderHeadId: number,
     labelId: number,
@@ -1066,6 +1109,8 @@ export class OrderLabelService {
     if (head.idDlkOrderHead !== orderHeadId) {
       throw new Error("La etiqueta no pertenece a esta orden de pedido");
     }
+
+    await this.assertPdfSize([labelId]);
 
     const units = await this.buildLabelUnits([labelId]);
     if (units.length === 0) {
@@ -1093,6 +1138,8 @@ export class OrderLabelService {
     if (heads.length === 0) throw new Error("Esta orden no tiene etiquetas creadas");
 
     const ids = heads.map((h) => h.idDlkOrderLabelHead);
+    await this.assertPdfSize(ids);
+
     const units = await this.buildLabelUnits(ids);
     if (units.length === 0) {
       throw new Error("Las etiquetas de esta orden no tienen unidades para imprimir");

@@ -98,6 +98,59 @@ const ICON_FILES: { file: string; alt: string }[] = [
 
 const ICON_ASSETS: IconAsset[] = ICON_FILES.map((i) => loadIcon(i.file));
 
+/* ----------------------------- QR ----------------------------- */
+/**
+ * Matriz de módulos del QR. Se dibuja como vector (ver `drawQr`), no como imagen:
+ * un QR rasterizado a 1200 px ocupaba ~5 MB de memoria por etiqueta mientras
+ * pdf-lib mantiene los píxeles crudos hasta `save()`, así que una orden de 76
+ * unidades se comía ~475 MB y tumbaba el contenedor (OOM → "Failed to fetch").
+ */
+type QrMatrix = { size: number; data: Uint8Array };
+
+function qrMatrix(text: string): QrMatrix {
+  const qr = QRCode.create(text, { errorCorrectionLevel: "M" });
+  return { size: qr.modules.size, data: qr.modules.data };
+}
+
+/**
+ * Dibuja el QR como un único path vectorial con (x, y) en su esquina superior
+ * izquierda. Ventajas frente a la imagen: nitidez independiente del dpi (la GODEX
+ * imprime a 203, pero el mismo PDF sirve para cualquier impresora) y coste de
+ * memoria despreciable.
+ *
+ * Se emite un solo `drawSvgPath` en vez de un rectángulo por módulo porque pdf-lib
+ * retiene cada operador como objeto JS: ~1000 rectángulos por página costaban
+ * 0.75 MB/página frente a 0.23 MB con el path único.
+ *
+ * Los módulos contiguos de una misma fila se funden en un solo tramo, lo que
+ * reduce el path a ~1/3 y evita costuras entre ellos.
+ */
+function drawQr(page: PDFPage, qr: QrMatrix, x: number, y: number, side: number, color: RGB) {
+  const n = qr.size;
+  const cell = side / n;
+  const f = (v: number) => v.toFixed(3);
+  let d = "";
+  for (let row = 0; row < n; row++) {
+    let col = 0;
+    while (col < n) {
+      if (!qr.data[row * n + col]) {
+        col++;
+        continue;
+      }
+      let run = 1;
+      while (col + run < n && qr.data[row * n + col + run]) run++;
+      const w = run * cell;
+      // Subpath cerrado y en el mismo sentido para todos: con winding "nonzero"
+      // ningún tramo se convierte en agujero del anterior.
+      d += `M${f(col * cell)} ${f(row * cell)}h${f(w)}v${f(cell)}h-${f(w)}Z`;
+      col += run;
+    }
+  }
+  // drawSvgPath usa el eje Y hacia abajo desde (x, y), de ahí que `y` sea el borde
+  // superior del QR y las coordenadas del path se cuenten desde ahí.
+  page.drawSvgPath(d, { x, y, color, borderWidth: 0 });
+}
+
 /* ----------------------------- helpers de texto ----------------------------- */
 
 function clamp(v: number, lo: number, hi: number): number {
@@ -177,7 +230,7 @@ type DrawCtx = {
   h: number;
   unit: LabelUnit;
   logo: PDFImage | null;
-  qrImg: PDFImage;
+  qr: QrMatrix;
   icons: PDFImage[];
   font: PDFFont;
   fontBold: PDFFont;
@@ -186,7 +239,7 @@ type DrawCtx = {
 
 /** Dibuja una etiqueta completa en su página. */
 function drawLabel(page: PDFPage, ctx: DrawCtx) {
-  const { w, h, unit, logo, qrImg, icons, font, fontBold, brandName } = ctx;
+  const { w, h, unit, logo, qr, icons, font, fontBold, brandName } = ctx;
   const black = rgb(0, 0, 0);
   const mx = w * 0.08;
   const innerW = w - 2 * mx;
@@ -297,7 +350,7 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
     height: qrSide + 2 * qrPad,
     color: rgb(1, 1, 1),
   });
-  page.drawImage(qrImg, { x: qrX, y: qrBottom, width: qrSide, height: qrSide });
+  drawQr(page, qr, qrX, qrTop, qrSide, black);
 
   // Posicionamiento de los iconos (sin línea separadora arriba).
   const iconsBottom = bottomMargin + footerH + ICON_ROW_GAP;
@@ -401,19 +454,13 @@ export async function buildLabelsPdf(
 
   for (const unit of units) {
     const page = doc.addPage([w, h]);
-    const qrPng = await QRCode.toBuffer(unit.urlDppFull || unit.sgtinFull, {
-      errorCorrectionLevel: "M",
-      margin: 0,
-      width: 1200,
-      color: { dark: "#000000", light: "#ffffff" },
-    });
-    const qrImg = await doc.embedPng(qrPng);
+    const qr = qrMatrix(unit.urlDppFull || unit.sgtinFull);
     drawLabel(page, {
       w,
       h,
       unit,
       logo,
-      qrImg,
+      qr,
       icons,
       font,
       fontBold,

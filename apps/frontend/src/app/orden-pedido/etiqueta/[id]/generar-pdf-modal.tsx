@@ -65,7 +65,16 @@ export function GenerarPdfModal({ open, onOpenChange, order, labelHead }: Props)
       onOpenChange(false);
     } catch (err) {
       console.error(err);
-      setError(err instanceof Error ? err.message : "Error al generar el PDF");
+      // "Failed to fetch" es el TypeError crudo de fetch: la conexión se cortó antes
+      // de recibir respuesta. Mostrarlo tal cual no le dice nada a quien imprime.
+      const isNetwork = err instanceof TypeError;
+      setError(
+        isNetwork
+          ? "No se pudo contactar al servidor mientras se generaba el PDF. Reintenta; si vuelve a fallar, genera las etiquetas por separado."
+          : err instanceof Error
+            ? err.message
+            : "Error al generar el PDF"
+      );
     } finally {
       setGenerating(false);
     }

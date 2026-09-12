@@ -1,7 +1,19 @@
 import { Router } from "express";
+import { LabelsPdfTooLargeError } from "../services/order-label.service.js";
 import type { OrderLabelService } from "../services/order-label.service.js";
 import { isLabelSize } from "../services/label-pdf.js";
 import { errorResponse } from "../lib/http-error.js";
+
+/**
+ * Un PDF demasiado grande es culpa de la petición, no del servidor: 413 con el
+ * mensaje del error para que el modal lo muestre tal cual, en vez del 500 genérico.
+ */
+function pdfErrorResponse(e: unknown): { status: number; body: { error: string; type: string } } {
+  if (e instanceof LabelsPdfTooLargeError) {
+    return { status: 413, body: { error: e.message, type: "TOO_LARGE" } };
+  }
+  return errorResponse(e);
+}
 
 function parseId(value: string): number | null {
   const n = Number(value);
@@ -138,7 +150,7 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
       res.send(Buffer.from(pdf));
     } catch (e) {
       console.error("[order-labels:pdf-all]", e);
-      const err = errorResponse(e);
+      const err = pdfErrorResponse(e);
       res.status(err.status).json(err.body);
     }
   });
@@ -202,7 +214,7 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
       res.send(Buffer.from(pdf));
     } catch (e) {
       console.error("[order-labels:pdf]", e);
-      const err = errorResponse(e);
+      const err = pdfErrorResponse(e);
       res.status(err.status).json(err.body);
     }
   });

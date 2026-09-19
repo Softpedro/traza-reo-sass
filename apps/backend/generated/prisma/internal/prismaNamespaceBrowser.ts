@@ -105,7 +105,12 @@ export const ModelName = {
   OdInputActivitiesRoute: 'OdInputActivitiesRoute',
   OdProcedureActivitiesRoute: 'OdProcedureActivitiesRoute',
   OdOutputActivitiesRoute: 'OdOutputActivitiesRoute',
-  OdUnitTrace: 'OdUnitTrace'
+  OdUnitTrace: 'OdUnitTrace',
+  OdCarbonFootprint: 'OdCarbonFootprint',
+  OdWaterFootprint: 'OdWaterFootprint',
+  OdRestrictedSubstances: 'OdRestrictedSubstances',
+  OdCircularEconomy: 'OdCircularEconomy',
+  OdSocialImpact: 'OdSocialImpact'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1431,6 +1436,121 @@ export const OdUnitTraceScalarFieldEnum = {
 export type OdUnitTraceScalarFieldEnum = (typeof OdUnitTraceScalarFieldEnum)[keyof typeof OdUnitTraceScalarFieldEnum]
 
 
+export const OdCarbonFootprintScalarFieldEnum = {
+  idDlkCarbonFootprint: 'idDlkCarbonFootprint',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  codCarbonFootprint: 'codCarbonFootprint',
+  size: 'size',
+  weight: 'weight',
+  carbonFootprint: 'carbonFootprint',
+  estimatedValue: 'estimatedValue',
+  unitDescription: 'unitDescription',
+  scope: 'scope',
+  report: 'report',
+  reportFile: 'reportFile',
+  stateCarbonFootprint: 'stateCarbonFootprint',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdCarbonFootprintScalarFieldEnum = (typeof OdCarbonFootprintScalarFieldEnum)[keyof typeof OdCarbonFootprintScalarFieldEnum]
+
+
+export const OdWaterFootprintScalarFieldEnum = {
+  idDlkWaterFootprint: 'idDlkWaterFootprint',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  codWaterFootprint: 'codWaterFootprint',
+  size: 'size',
+  weight: 'weight',
+  waterFootprint: 'waterFootprint',
+  estimatedValue: 'estimatedValue',
+  unitDescription: 'unitDescription',
+  scope: 'scope',
+  report: 'report',
+  reportFile: 'reportFile',
+  stateWaterFootprint: 'stateWaterFootprint',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdWaterFootprintScalarFieldEnum = (typeof OdWaterFootprintScalarFieldEnum)[keyof typeof OdWaterFootprintScalarFieldEnum]
+
+
+export const OdRestrictedSubstancesScalarFieldEnum = {
+  idDlkRestrictedSubstances: 'idDlkRestrictedSubstances',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  codRestrictedSubstances: 'codRestrictedSubstances',
+  weight: 'weight',
+  restrictedSubstances: 'restrictedSubstances',
+  topic: 'topic',
+  content: 'content',
+  chemicalScope: 'chemicalScope',
+  report: 'report',
+  reportFile: 'reportFile',
+  stateRestrictedSubstances: 'stateRestrictedSubstances',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdRestrictedSubstancesScalarFieldEnum = (typeof OdRestrictedSubstancesScalarFieldEnum)[keyof typeof OdRestrictedSubstancesScalarFieldEnum]
+
+
+export const OdCircularEconomyScalarFieldEnum = {
+  idDlkCircularEconomy: 'idDlkCircularEconomy',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  codCircularEconomy: 'codCircularEconomy',
+  circularEconomy: 'circularEconomy',
+  image: 'image',
+  imageFile: 'imageFile',
+  description: 'description',
+  topic: 'topic',
+  content: 'content',
+  report: 'report',
+  reportFile: 'reportFile',
+  stateCircularEconomy: 'stateCircularEconomy',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdCircularEconomyScalarFieldEnum = (typeof OdCircularEconomyScalarFieldEnum)[keyof typeof OdCircularEconomyScalarFieldEnum]
+
+
+export const OdSocialImpactScalarFieldEnum = {
+  idDlkSocialImpact: 'idDlkSocialImpact',
+  idDlkBrand: 'idDlkBrand',
+  codSocialImpact: 'codSocialImpact',
+  socialImpact: 'socialImpact',
+  femaleWorkforce: 'femaleWorkforce',
+  leadership: 'leadership',
+  workingConditions: 'workingConditions',
+  commitmentOit: 'commitmentOit',
+  scope: 'scope',
+  referenceStandard: 'referenceStandard',
+  report: 'report',
+  reportFile: 'reportFile',
+  stateSocialImpact: 'stateSocialImpact',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdSocialImpactScalarFieldEnum = (typeof OdSocialImpactScalarFieldEnum)[keyof typeof OdSocialImpactScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2278,4 +2398,76 @@ export const OdUnitTraceOrderByRelevanceFieldEnum = {
 } as const
 
 export type OdUnitTraceOrderByRelevanceFieldEnum = (typeof OdUnitTraceOrderByRelevanceFieldEnum)[keyof typeof OdUnitTraceOrderByRelevanceFieldEnum]
+
+
+export const OdCarbonFootprintOrderByRelevanceFieldEnum = {
+  codCarbonFootprint: 'codCarbonFootprint',
+  size: 'size',
+  unitDescription: 'unitDescription',
+  scope: 'scope',
+  report: 'report',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdCarbonFootprintOrderByRelevanceFieldEnum = (typeof OdCarbonFootprintOrderByRelevanceFieldEnum)[keyof typeof OdCarbonFootprintOrderByRelevanceFieldEnum]
+
+
+export const OdWaterFootprintOrderByRelevanceFieldEnum = {
+  codWaterFootprint: 'codWaterFootprint',
+  size: 'size',
+  unitDescription: 'unitDescription',
+  scope: 'scope',
+  report: 'report',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdWaterFootprintOrderByRelevanceFieldEnum = (typeof OdWaterFootprintOrderByRelevanceFieldEnum)[keyof typeof OdWaterFootprintOrderByRelevanceFieldEnum]
+
+
+export const OdRestrictedSubstancesOrderByRelevanceFieldEnum = {
+  codRestrictedSubstances: 'codRestrictedSubstances',
+  restrictedSubstances: 'restrictedSubstances',
+  topic: 'topic',
+  content: 'content',
+  chemicalScope: 'chemicalScope',
+  report: 'report',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdRestrictedSubstancesOrderByRelevanceFieldEnum = (typeof OdRestrictedSubstancesOrderByRelevanceFieldEnum)[keyof typeof OdRestrictedSubstancesOrderByRelevanceFieldEnum]
+
+
+export const OdCircularEconomyOrderByRelevanceFieldEnum = {
+  codCircularEconomy: 'codCircularEconomy',
+  circularEconomy: 'circularEconomy',
+  image: 'image',
+  description: 'description',
+  topic: 'topic',
+  content: 'content',
+  report: 'report',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdCircularEconomyOrderByRelevanceFieldEnum = (typeof OdCircularEconomyOrderByRelevanceFieldEnum)[keyof typeof OdCircularEconomyOrderByRelevanceFieldEnum]
+
+
+export const OdSocialImpactOrderByRelevanceFieldEnum = {
+  codSocialImpact: 'codSocialImpact',
+  socialImpact: 'socialImpact',
+  femaleWorkforce: 'femaleWorkforce',
+  leadership: 'leadership',
+  workingConditions: 'workingConditions',
+  commitmentOit: 'commitmentOit',
+  scope: 'scope',
+  referenceStandard: 'referenceStandard',
+  report: 'report',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdSocialImpactOrderByRelevanceFieldEnum = (typeof OdSocialImpactOrderByRelevanceFieldEnum)[keyof typeof OdSocialImpactOrderByRelevanceFieldEnum]
 

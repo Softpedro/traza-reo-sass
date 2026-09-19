@@ -438,7 +438,12 @@ export const ModelName = {
   OdInputActivitiesRoute: 'OdInputActivitiesRoute',
   OdProcedureActivitiesRoute: 'OdProcedureActivitiesRoute',
   OdOutputActivitiesRoute: 'OdOutputActivitiesRoute',
-  OdUnitTrace: 'OdUnitTrace'
+  OdUnitTrace: 'OdUnitTrace',
+  OdCarbonFootprint: 'OdCarbonFootprint',
+  OdWaterFootprint: 'OdWaterFootprint',
+  OdRestrictedSubstances: 'OdRestrictedSubstances',
+  OdCircularEconomy: 'OdCircularEconomy',
+  OdSocialImpact: 'OdSocialImpact'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -454,7 +459,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdApiClient" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdModel" | "mdPackaging" | "mdCare" | "mdModelImage" | "mdModelDetail" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderLabelComponent" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace"
+    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdApiClient" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdModel" | "mdPackaging" | "mdCare" | "mdModelImage" | "mdModelDetail" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderLabelComponent" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace" | "odCarbonFootprint" | "odWaterFootprint" | "odRestrictedSubstances" | "odCircularEconomy" | "odSocialImpact"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4088,6 +4093,336 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    OdCarbonFootprint: {
+      payload: Prisma.$OdCarbonFootprintPayload<ExtArgs>
+      fields: Prisma.OdCarbonFootprintFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdCarbonFootprintFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCarbonFootprintPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdCarbonFootprintFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCarbonFootprintPayload>
+        }
+        findFirst: {
+          args: Prisma.OdCarbonFootprintFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCarbonFootprintPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdCarbonFootprintFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCarbonFootprintPayload>
+        }
+        findMany: {
+          args: Prisma.OdCarbonFootprintFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCarbonFootprintPayload>[]
+        }
+        create: {
+          args: Prisma.OdCarbonFootprintCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCarbonFootprintPayload>
+        }
+        createMany: {
+          args: Prisma.OdCarbonFootprintCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdCarbonFootprintDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCarbonFootprintPayload>
+        }
+        update: {
+          args: Prisma.OdCarbonFootprintUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCarbonFootprintPayload>
+        }
+        deleteMany: {
+          args: Prisma.OdCarbonFootprintDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdCarbonFootprintUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdCarbonFootprintUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCarbonFootprintPayload>
+        }
+        aggregate: {
+          args: Prisma.OdCarbonFootprintAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdCarbonFootprint>
+        }
+        groupBy: {
+          args: Prisma.OdCarbonFootprintGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdCarbonFootprintGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdCarbonFootprintCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdCarbonFootprintCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdWaterFootprint: {
+      payload: Prisma.$OdWaterFootprintPayload<ExtArgs>
+      fields: Prisma.OdWaterFootprintFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdWaterFootprintFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdWaterFootprintPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdWaterFootprintFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdWaterFootprintPayload>
+        }
+        findFirst: {
+          args: Prisma.OdWaterFootprintFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdWaterFootprintPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdWaterFootprintFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdWaterFootprintPayload>
+        }
+        findMany: {
+          args: Prisma.OdWaterFootprintFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdWaterFootprintPayload>[]
+        }
+        create: {
+          args: Prisma.OdWaterFootprintCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdWaterFootprintPayload>
+        }
+        createMany: {
+          args: Prisma.OdWaterFootprintCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdWaterFootprintDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdWaterFootprintPayload>
+        }
+        update: {
+          args: Prisma.OdWaterFootprintUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdWaterFootprintPayload>
+        }
+        deleteMany: {
+          args: Prisma.OdWaterFootprintDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdWaterFootprintUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdWaterFootprintUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdWaterFootprintPayload>
+        }
+        aggregate: {
+          args: Prisma.OdWaterFootprintAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdWaterFootprint>
+        }
+        groupBy: {
+          args: Prisma.OdWaterFootprintGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdWaterFootprintGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdWaterFootprintCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdWaterFootprintCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdRestrictedSubstances: {
+      payload: Prisma.$OdRestrictedSubstancesPayload<ExtArgs>
+      fields: Prisma.OdRestrictedSubstancesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdRestrictedSubstancesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdRestrictedSubstancesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdRestrictedSubstancesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdRestrictedSubstancesPayload>
+        }
+        findFirst: {
+          args: Prisma.OdRestrictedSubstancesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdRestrictedSubstancesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdRestrictedSubstancesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdRestrictedSubstancesPayload>
+        }
+        findMany: {
+          args: Prisma.OdRestrictedSubstancesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdRestrictedSubstancesPayload>[]
+        }
+        create: {
+          args: Prisma.OdRestrictedSubstancesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdRestrictedSubstancesPayload>
+        }
+        createMany: {
+          args: Prisma.OdRestrictedSubstancesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdRestrictedSubstancesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdRestrictedSubstancesPayload>
+        }
+        update: {
+          args: Prisma.OdRestrictedSubstancesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdRestrictedSubstancesPayload>
+        }
+        deleteMany: {
+          args: Prisma.OdRestrictedSubstancesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdRestrictedSubstancesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdRestrictedSubstancesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdRestrictedSubstancesPayload>
+        }
+        aggregate: {
+          args: Prisma.OdRestrictedSubstancesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdRestrictedSubstances>
+        }
+        groupBy: {
+          args: Prisma.OdRestrictedSubstancesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdRestrictedSubstancesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdRestrictedSubstancesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdRestrictedSubstancesCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdCircularEconomy: {
+      payload: Prisma.$OdCircularEconomyPayload<ExtArgs>
+      fields: Prisma.OdCircularEconomyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdCircularEconomyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCircularEconomyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdCircularEconomyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCircularEconomyPayload>
+        }
+        findFirst: {
+          args: Prisma.OdCircularEconomyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCircularEconomyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdCircularEconomyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCircularEconomyPayload>
+        }
+        findMany: {
+          args: Prisma.OdCircularEconomyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCircularEconomyPayload>[]
+        }
+        create: {
+          args: Prisma.OdCircularEconomyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCircularEconomyPayload>
+        }
+        createMany: {
+          args: Prisma.OdCircularEconomyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdCircularEconomyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCircularEconomyPayload>
+        }
+        update: {
+          args: Prisma.OdCircularEconomyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCircularEconomyPayload>
+        }
+        deleteMany: {
+          args: Prisma.OdCircularEconomyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdCircularEconomyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdCircularEconomyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdCircularEconomyPayload>
+        }
+        aggregate: {
+          args: Prisma.OdCircularEconomyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdCircularEconomy>
+        }
+        groupBy: {
+          args: Prisma.OdCircularEconomyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdCircularEconomyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdCircularEconomyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdCircularEconomyCountAggregateOutputType> | number
+        }
+      }
+    }
+    OdSocialImpact: {
+      payload: Prisma.$OdSocialImpactPayload<ExtArgs>
+      fields: Prisma.OdSocialImpactFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdSocialImpactFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSocialImpactPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdSocialImpactFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSocialImpactPayload>
+        }
+        findFirst: {
+          args: Prisma.OdSocialImpactFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSocialImpactPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdSocialImpactFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSocialImpactPayload>
+        }
+        findMany: {
+          args: Prisma.OdSocialImpactFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSocialImpactPayload>[]
+        }
+        create: {
+          args: Prisma.OdSocialImpactCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSocialImpactPayload>
+        }
+        createMany: {
+          args: Prisma.OdSocialImpactCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdSocialImpactDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSocialImpactPayload>
+        }
+        update: {
+          args: Prisma.OdSocialImpactUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSocialImpactPayload>
+        }
+        deleteMany: {
+          args: Prisma.OdSocialImpactDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdSocialImpactUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdSocialImpactUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdSocialImpactPayload>
+        }
+        aggregate: {
+          args: Prisma.OdSocialImpactAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdSocialImpact>
+        }
+        groupBy: {
+          args: Prisma.OdSocialImpactGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdSocialImpactGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdSocialImpactCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdSocialImpactCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -5434,6 +5769,121 @@ export const OdUnitTraceScalarFieldEnum = {
 export type OdUnitTraceScalarFieldEnum = (typeof OdUnitTraceScalarFieldEnum)[keyof typeof OdUnitTraceScalarFieldEnum]
 
 
+export const OdCarbonFootprintScalarFieldEnum = {
+  idDlkCarbonFootprint: 'idDlkCarbonFootprint',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  codCarbonFootprint: 'codCarbonFootprint',
+  size: 'size',
+  weight: 'weight',
+  carbonFootprint: 'carbonFootprint',
+  estimatedValue: 'estimatedValue',
+  unitDescription: 'unitDescription',
+  scope: 'scope',
+  report: 'report',
+  reportFile: 'reportFile',
+  stateCarbonFootprint: 'stateCarbonFootprint',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdCarbonFootprintScalarFieldEnum = (typeof OdCarbonFootprintScalarFieldEnum)[keyof typeof OdCarbonFootprintScalarFieldEnum]
+
+
+export const OdWaterFootprintScalarFieldEnum = {
+  idDlkWaterFootprint: 'idDlkWaterFootprint',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  codWaterFootprint: 'codWaterFootprint',
+  size: 'size',
+  weight: 'weight',
+  waterFootprint: 'waterFootprint',
+  estimatedValue: 'estimatedValue',
+  unitDescription: 'unitDescription',
+  scope: 'scope',
+  report: 'report',
+  reportFile: 'reportFile',
+  stateWaterFootprint: 'stateWaterFootprint',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdWaterFootprintScalarFieldEnum = (typeof OdWaterFootprintScalarFieldEnum)[keyof typeof OdWaterFootprintScalarFieldEnum]
+
+
+export const OdRestrictedSubstancesScalarFieldEnum = {
+  idDlkRestrictedSubstances: 'idDlkRestrictedSubstances',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  codRestrictedSubstances: 'codRestrictedSubstances',
+  weight: 'weight',
+  restrictedSubstances: 'restrictedSubstances',
+  topic: 'topic',
+  content: 'content',
+  chemicalScope: 'chemicalScope',
+  report: 'report',
+  reportFile: 'reportFile',
+  stateRestrictedSubstances: 'stateRestrictedSubstances',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdRestrictedSubstancesScalarFieldEnum = (typeof OdRestrictedSubstancesScalarFieldEnum)[keyof typeof OdRestrictedSubstancesScalarFieldEnum]
+
+
+export const OdCircularEconomyScalarFieldEnum = {
+  idDlkCircularEconomy: 'idDlkCircularEconomy',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  codCircularEconomy: 'codCircularEconomy',
+  circularEconomy: 'circularEconomy',
+  image: 'image',
+  imageFile: 'imageFile',
+  description: 'description',
+  topic: 'topic',
+  content: 'content',
+  report: 'report',
+  reportFile: 'reportFile',
+  stateCircularEconomy: 'stateCircularEconomy',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdCircularEconomyScalarFieldEnum = (typeof OdCircularEconomyScalarFieldEnum)[keyof typeof OdCircularEconomyScalarFieldEnum]
+
+
+export const OdSocialImpactScalarFieldEnum = {
+  idDlkSocialImpact: 'idDlkSocialImpact',
+  idDlkBrand: 'idDlkBrand',
+  codSocialImpact: 'codSocialImpact',
+  socialImpact: 'socialImpact',
+  femaleWorkforce: 'femaleWorkforce',
+  leadership: 'leadership',
+  workingConditions: 'workingConditions',
+  commitmentOit: 'commitmentOit',
+  scope: 'scope',
+  referenceStandard: 'referenceStandard',
+  report: 'report',
+  reportFile: 'reportFile',
+  stateSocialImpact: 'stateSocialImpact',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdSocialImpactScalarFieldEnum = (typeof OdSocialImpactScalarFieldEnum)[keyof typeof OdSocialImpactScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -6283,6 +6733,78 @@ export const OdUnitTraceOrderByRelevanceFieldEnum = {
 export type OdUnitTraceOrderByRelevanceFieldEnum = (typeof OdUnitTraceOrderByRelevanceFieldEnum)[keyof typeof OdUnitTraceOrderByRelevanceFieldEnum]
 
 
+export const OdCarbonFootprintOrderByRelevanceFieldEnum = {
+  codCarbonFootprint: 'codCarbonFootprint',
+  size: 'size',
+  unitDescription: 'unitDescription',
+  scope: 'scope',
+  report: 'report',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdCarbonFootprintOrderByRelevanceFieldEnum = (typeof OdCarbonFootprintOrderByRelevanceFieldEnum)[keyof typeof OdCarbonFootprintOrderByRelevanceFieldEnum]
+
+
+export const OdWaterFootprintOrderByRelevanceFieldEnum = {
+  codWaterFootprint: 'codWaterFootprint',
+  size: 'size',
+  unitDescription: 'unitDescription',
+  scope: 'scope',
+  report: 'report',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdWaterFootprintOrderByRelevanceFieldEnum = (typeof OdWaterFootprintOrderByRelevanceFieldEnum)[keyof typeof OdWaterFootprintOrderByRelevanceFieldEnum]
+
+
+export const OdRestrictedSubstancesOrderByRelevanceFieldEnum = {
+  codRestrictedSubstances: 'codRestrictedSubstances',
+  restrictedSubstances: 'restrictedSubstances',
+  topic: 'topic',
+  content: 'content',
+  chemicalScope: 'chemicalScope',
+  report: 'report',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdRestrictedSubstancesOrderByRelevanceFieldEnum = (typeof OdRestrictedSubstancesOrderByRelevanceFieldEnum)[keyof typeof OdRestrictedSubstancesOrderByRelevanceFieldEnum]
+
+
+export const OdCircularEconomyOrderByRelevanceFieldEnum = {
+  codCircularEconomy: 'codCircularEconomy',
+  circularEconomy: 'circularEconomy',
+  image: 'image',
+  description: 'description',
+  topic: 'topic',
+  content: 'content',
+  report: 'report',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdCircularEconomyOrderByRelevanceFieldEnum = (typeof OdCircularEconomyOrderByRelevanceFieldEnum)[keyof typeof OdCircularEconomyOrderByRelevanceFieldEnum]
+
+
+export const OdSocialImpactOrderByRelevanceFieldEnum = {
+  codSocialImpact: 'codSocialImpact',
+  socialImpact: 'socialImpact',
+  femaleWorkforce: 'femaleWorkforce',
+  leadership: 'leadership',
+  workingConditions: 'workingConditions',
+  commitmentOit: 'commitmentOit',
+  scope: 'scope',
+  referenceStandard: 'referenceStandard',
+  report: 'report',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdSocialImpactOrderByRelevanceFieldEnum = (typeof OdSocialImpactOrderByRelevanceFieldEnum)[keyof typeof OdSocialImpactOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -6523,6 +7045,11 @@ export type GlobalOmitConfig = {
   odProcedureActivitiesRoute?: Prisma.OdProcedureActivitiesRouteOmit
   odOutputActivitiesRoute?: Prisma.OdOutputActivitiesRouteOmit
   odUnitTrace?: Prisma.OdUnitTraceOmit
+  odCarbonFootprint?: Prisma.OdCarbonFootprintOmit
+  odWaterFootprint?: Prisma.OdWaterFootprintOmit
+  odRestrictedSubstances?: Prisma.OdRestrictedSubstancesOmit
+  odCircularEconomy?: Prisma.OdCircularEconomyOmit
+  odSocialImpact?: Prisma.OdSocialImpactOmit
 }
 
 /* Types for Logging */

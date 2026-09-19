@@ -104,6 +104,7 @@ model MdBrand {
   subbrands          MdSubbrand[]
   orderHeads         OdOrderHead[]
   models             MdModel[]
+  socialImpacts      OdSocialImpact[]
 
   @@index([idDlkParentCompany], map: "FK_BRAND_PARENT_COMPANY")
   @@index([codUbigeoBrand], map: "FK_BRAND_UBIGEO")
@@ -306,67 +307,71 @@ model OdOrderHead {
  * Detalle de orden (OD_ORDER_DETAIL).
  */
 model OdOrderDetail {
-  idDlkOrderDetail  Int                @id @default(autoincrement()) @map("ID_DLK_ORDER_DETAIL")
-  idDlkOrderHead    Int                @map("ID_DLK_ORDER_HEAD")
-  codOrderDetail    String?            @map("COD_ORDER_DETAIL") @db.VarChar(50)
-  codEstilo         String?            @map("COD_ESTILO") @db.VarChar(50)
+  idDlkOrderDetail     Int                @id @default(autoincrement()) @map("ID_DLK_ORDER_DETAIL")
+  idDlkOrderHead       Int                @map("ID_DLK_ORDER_HEAD")
+  codOrderDetail       String?            @map("COD_ORDER_DETAIL") @db.VarChar(50)
+  codEstilo            String?            @map("COD_ESTILO") @db.VarChar(50)
   /**
    * Prisma conserva `nomEstilo`; columna DB renombrada a NAME_ESTILO.
    */
-  nomEstilo         String?            @map("NAME_ESTILO") @db.VarChar(200)
-  imgEstilo         Bytes?             @map("IMG_ESTILO") @db.MediumBlob
-  desTela           String?            @map("DES_TELA") @db.VarChar(200)
-  colorAway         String?            @map("COLOR_AWAY") @db.VarChar(50)
-  fondoTela         String?            @map("FONDO_TELA") @db.VarChar(50)
-  versionTela       String?            @map("VERSION_TELA") @db.VarChar(50)
-  orderSample       Int?               @default(0) @map("ORDER_SAMPLE") @db.TinyInt
-  size0_3           Int?               @default(0) @map("SIZE_0_3")
-  size3_6           Int?               @default(0) @map("SIZE_3_6")
-  size0_6           Int?               @default(0) @map("SIZE_0_6")
-  size6_12          Int?               @default(0) @map("SIZE_6_12")
-  size12_18         Int?               @default(0) @map("SIZE_12_18")
-  size2             Int?               @default(0) @map("SIZE_2")
-  size3             Int?               @default(0) @map("SIZE_3")
-  size4             Int?               @default(0) @map("SIZE_4")
-  size5             Int?               @default(0) @map("SIZE_5")
-  size6             Int?               @default(0) @map("SIZE_6")
-  size7             Int?               @default(0) @map("SIZE_7")
-  size8             Int?               @default(0) @map("SIZE_8")
-  size9             Int?               @default(0) @map("SIZE_9")
-  size10            Int?               @default(0) @map("SIZE_10")
-  size11            Int?               @default(0) @map("SIZE_11")
-  size12            Int?               @default(0) @map("SIZE_12")
-  size14            Int?               @default(0) @map("SIZE_14")
-  size16            Int?               @default(0) @map("SIZE_16")
-  sizeXs            Int?               @default(0) @map("SIZE_XS")
-  sizeS             Int?               @default(0) @map("SIZE_S")
-  sizeM             Int?               @default(0) @map("SIZE_M")
-  sizeL             Int?               @default(0) @map("SIZE_L")
-  sizeXl            Int?               @default(0) @map("SIZE_XL")
-  sizeXxl           Int?               @default(0) @map("SIZE_XXL")
+  nomEstilo            String?            @map("NAME_ESTILO") @db.VarChar(200)
+  imgEstilo            Bytes?             @map("IMG_ESTILO") @db.MediumBlob
+  desTela              String?            @map("DES_TELA") @db.VarChar(200)
+  colorAway            String?            @map("COLOR_AWAY") @db.VarChar(50)
+  fondoTela            String?            @map("FONDO_TELA") @db.VarChar(50)
+  versionTela          String?            @map("VERSION_TELA") @db.VarChar(50)
+  orderSample          Int?               @default(0) @map("ORDER_SAMPLE") @db.TinyInt
+  size0_3              Int?               @default(0) @map("SIZE_0_3")
+  size3_6              Int?               @default(0) @map("SIZE_3_6")
+  size0_6              Int?               @default(0) @map("SIZE_0_6")
+  size6_12             Int?               @default(0) @map("SIZE_6_12")
+  size12_18            Int?               @default(0) @map("SIZE_12_18")
+  size2                Int?               @default(0) @map("SIZE_2")
+  size3                Int?               @default(0) @map("SIZE_3")
+  size4                Int?               @default(0) @map("SIZE_4")
+  size5                Int?               @default(0) @map("SIZE_5")
+  size6                Int?               @default(0) @map("SIZE_6")
+  size7                Int?               @default(0) @map("SIZE_7")
+  size8                Int?               @default(0) @map("SIZE_8")
+  size9                Int?               @default(0) @map("SIZE_9")
+  size10               Int?               @default(0) @map("SIZE_10")
+  size11               Int?               @default(0) @map("SIZE_11")
+  size12               Int?               @default(0) @map("SIZE_12")
+  size14               Int?               @default(0) @map("SIZE_14")
+  size16               Int?               @default(0) @map("SIZE_16")
+  sizeXs               Int?               @default(0) @map("SIZE_XS")
+  sizeS                Int?               @default(0) @map("SIZE_S")
+  sizeM                Int?               @default(0) @map("SIZE_M")
+  sizeL                Int?               @default(0) @map("SIZE_L")
+  sizeXl               Int?               @default(0) @map("SIZE_XL")
+  sizeXxl              Int?               @default(0) @map("SIZE_XXL")
   /**
    * Prisma conserva `totalEstilo`; columna DB renombrada a TOTAL_ORDER_PRODUCTION.
    */
-  totalEstilo       Int?               @map("TOTAL_ORDER_PRODUCTION")
+  totalEstilo          Int?               @map("TOTAL_ORDER_PRODUCTION")
   /**
    * 1 = la orden de producción es un set (varias piezas por unidad).
    */
-  esSet             Int                @default(0) @map("ES_SET") @db.TinyInt
+  esSet                Int                @default(0) @map("ES_SET") @db.TinyInt
   /**
    * Piezas por unidad (2 = pijama pantalón + camisa).
    */
-  numPiezas         Int                @default(1) @map("NUM_PIEZAS")
-  supplyFile        Bytes?             @map("SUPPLY_FILE") @db.MediumBlob
-  stateOrderDetail  Int?               @default(1) @map("STATE_ORDER_DETAIL") @db.TinyInt
-  codUsuarioCargaDl String?            @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
-  fecProcesoCargaDl DateTime?          @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
-  fecProcesoModifDl DateTime?          @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
-  desAccion         String?            @map("DES_ACCION") @db.VarChar(20)
-  flgStatutActif    Int?               @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
-  orderHead         OdOrderHead        @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: Cascade, onUpdate: Cascade, map: "fk_detail_order_head")
-  labelHeads        OdOrderLabelHead[]
-  components        OdOrderComponent[]
-  labelComponents   OdOrderLabelComponent[]
+  numPiezas            Int                @default(1) @map("NUM_PIEZAS")
+  supplyFile           Bytes?             @map("SUPPLY_FILE") @db.MediumBlob
+  stateOrderDetail     Int?               @default(1) @map("STATE_ORDER_DETAIL") @db.TinyInt
+  codUsuarioCargaDl    String?            @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl    DateTime?          @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl    DateTime?          @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion            String?            @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif       Int?               @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  orderHead            OdOrderHead        @relation(fields: [idDlkOrderHead], references: [idDlkOrderHead], onDelete: Cascade, onUpdate: Cascade, map: "fk_detail_order_head")
+  labelHeads           OdOrderLabelHead[]
+  components           OdOrderComponent[]
+  labelComponents      OdOrderLabelComponent[]
+  carbonFootprints     OdCarbonFootprint[]
+  waterFootprints      OdWaterFootprint[]
+  restrictedSubstances OdRestrictedSubstances[]
+  circularEconomies    OdCircularEconomy[]
 
   @@index([idDlkOrderHead], map: "idx_order_detail_head")
   @@map("OD_ORDER_DETAIL")
@@ -1637,4 +1642,177 @@ model OdUnitTrace {
   @@index([idItemUnicoIot], map: "idx_unit_trace_iot")
   @@index([idDlkActivitiesRoute], map: "idx_unit_trace_activity")
   @@map("OD_UNIT_TRACE")
+}
+
+// =====================================================================
+//  INDICADORES DE SOSTENIBILIDAD POR DETALLE DE ORDEN (insumos del DPP)
+// =====================================================================
+
+/**
+ * Huella de carbono declarada por talla para un detalle de orden.
+ */
+model OdCarbonFootprint {
+  idDlkCarbonFootprint Int           @id @default(autoincrement()) @map("ID_DLK_CARBON_FOOTPRINT")
+  idDlkOrderDetail     Int           @map("ID_DLK_ORDER_DETAIL")
+  codCarbonFootprint   String        @map("COD_CARBON_FOOTPRINT") @db.VarChar(50)
+  size                 String        @map("SIZE") @db.VarChar(10)
+  weight               Decimal       @map("WEIGHT") @db.Decimal(10, 4)
+  carbonFootprint      Decimal       @map("CARBON_FOOTPRINT") @db.Decimal(10, 4)
+  /**
+   * 1 = el valor es una estimación, no una medición.
+   */
+  estimatedValue       Int           @default(0) @map("ESTIMATED_VALUE") @db.TinyInt
+  unitDescription      String        @map("UNIT_DESCRIPTION") @db.VarChar(500)
+  scope                String        @map("SCOPE") @db.VarChar(1000)
+  /**
+   * Nombre del PDF subido; el archivo va en reportFile.
+   */
+  report               String?       @map("REPORT") @db.VarChar(500)
+  reportFile           Bytes?        @map("REPORT_FILE") @db.MediumBlob
+  stateCarbonFootprint Int           @default(1) @map("STATE_CARBON_FOOTPRINT") @db.TinyInt
+  codUsuarioCargaDl    String        @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl    DateTime      @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl    DateTime      @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion            String        @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif       Int           @default(1) @map("FLG_STATUT_ACTIF")
+  orderDetail          OdOrderDetail @relation(fields: [idDlkOrderDetail], references: [idDlkOrderDetail], onDelete: Restrict, onUpdate: Cascade, map: "fk_carbon_footprint_order_detail")
+
+  @@index([idDlkOrderDetail], map: "idx_carbon_footprint_order_detail")
+  @@map("OD_CARBON_FOOTPRINT")
+}
+
+/**
+ * Huella hídrica declarada por talla para un detalle de orden.
+ */
+model OdWaterFootprint {
+  idDlkWaterFootprint Int           @id @default(autoincrement()) @map("ID_DLK_WATER_FOOTPRINT")
+  idDlkOrderDetail    Int           @map("ID_DLK_ORDER_DETAIL")
+  codWaterFootprint   String        @map("COD_WATER_FOOTPRINT") @db.VarChar(50)
+  size                String        @map("SIZE") @db.VarChar(10)
+  weight              Decimal       @map("WEIGHT") @db.Decimal(10, 4)
+  waterFootprint      Decimal       @map("WATER_FOOTPRINT") @db.Decimal(10, 4)
+  /**
+   * 1 = el valor es una estimación, no una medición.
+   */
+  estimatedValue      Int           @default(0) @map("ESTIMATED_VALUE") @db.TinyInt
+  unitDescription     String        @map("UNIT_DESCRIPTION") @db.VarChar(500)
+  scope               String        @map("SCOPE") @db.VarChar(1000)
+  /**
+   * Nombre del PDF subido; el archivo va en reportFile.
+   */
+  report              String?       @map("REPORT") @db.VarChar(500)
+  reportFile          Bytes?        @map("REPORT_FILE") @db.MediumBlob
+  stateWaterFootprint Int           @default(1) @map("STATE_WATER_FOOTPRINT") @db.TinyInt
+  codUsuarioCargaDl   String        @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl   DateTime      @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl   DateTime      @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion           String        @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif      Int           @default(1) @map("FLG_STATUT_ACTIF")
+  orderDetail         OdOrderDetail @relation(fields: [idDlkOrderDetail], references: [idDlkOrderDetail], onDelete: Restrict, onUpdate: Cascade, map: "fk_water_footprint_order_detail")
+
+  @@index([idDlkOrderDetail], map: "idx_water_footprint_order_detail")
+  @@map("OD_WATER_FOOTPRINT")
+}
+
+/**
+ * Sustancias restringidas / control químico del detalle de orden.
+ */
+model OdRestrictedSubstances {
+  idDlkRestrictedSubstances Int           @id @default(autoincrement()) @map("ID_DLK_RESTRICTED_SUBSTANCES")
+  idDlkOrderDetail          Int           @map("ID_DLK_ORDER_DETAIL")
+  codRestrictedSubstances   String        @map("COD_RESTRICTED_SUBSTANCES") @db.VarChar(50)
+  weight                    Decimal?      @map("WEIGHT") @db.Decimal(10, 4)
+  restrictedSubstances      String?       @map("RESTRICTED_SUBSTANCES") @db.VarChar(100)
+  topic                     String?       @map("TOPIC") @db.VarChar(100)
+  content                   String?       @map("CONTENT") @db.VarChar(1000)
+  chemicalScope             String?       @map("CHEMICAL_SCOPE") @db.VarChar(1000)
+  /**
+   * Nombre del PDF subido; el archivo va en reportFile.
+   */
+  report                    String?       @map("REPORT") @db.VarChar(500)
+  reportFile                Bytes?        @map("REPORT_FILE") @db.MediumBlob
+  stateRestrictedSubstances Int?          @default(1) @map("STATE_RESTRICTED_SUBSTANCES") @db.TinyInt
+  codUsuarioCargaDl         String?       @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl         DateTime?     @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl         DateTime?     @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion                 String?       @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif            Int?          @default(1) @map("FLG_STATUT_ACTIF")
+  orderDetail               OdOrderDetail @relation(fields: [idDlkOrderDetail], references: [idDlkOrderDetail], onDelete: Restrict, onUpdate: Cascade, map: "fk_restricted_substances_order_detail")
+
+  @@index([idDlkOrderDetail], map: "idx_restricted_substances_order_detail")
+  @@map("OD_RESTRICTED_SUBSTANCES")
+}
+
+/**
+ * Economía circular: prácticas y contenidos declarados para el detalle de orden.
+ */
+model OdCircularEconomy {
+  idDlkCircularEconomy Int           @id @default(autoincrement()) @map("ID_DLK_CIRCULAR_ECONOMY")
+  idDlkOrderDetail     Int           @map("ID_DLK_ORDER_DETAIL")
+  codCircularEconomy   String        @map("COD_CIRCULAR_ECONOMY") @db.VarChar(50)
+  /**
+   * Nombre de la práctica ("Upcycling (Scrunchie)"), el equivalente a
+   * RESTRICTED_SUBSTANCES en OD_RESTRICTED_SUBSTANCES.
+   */
+  circularEconomy      String?       @map("CIRCULAR_ECONOMY") @db.VarChar(100)
+  /**
+   * Nombre de la imagen subida; el archivo va en imageFile.
+   */
+  image                String?       @map("IMAGE") @db.VarChar(500)
+  imageFile            Bytes?        @map("IMAGE_FILE") @db.MediumBlob
+  description          String?       @map("DESCRIPTION") @db.VarChar(200)
+  topic                String?       @map("TOPIC") @db.VarChar(100)
+  content              String?       @map("CONTENT") @db.VarChar(1000)
+  /**
+   * Nombre del PDF subido; el archivo va en reportFile.
+   */
+  report               String?       @map("REPORT") @db.VarChar(500)
+  reportFile           Bytes?        @map("REPORT_FILE") @db.MediumBlob
+  stateCircularEconomy Int?          @default(1) @map("STATE_CIRCULAR_ECONOMY") @db.TinyInt
+  codUsuarioCargaDl    String?       @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl    DateTime?     @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl    DateTime?     @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion            String?       @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif       Int?          @default(1) @map("FLG_STATUT_ACTIF")
+  orderDetail          OdOrderDetail @relation(fields: [idDlkOrderDetail], references: [idDlkOrderDetail], onDelete: Restrict, onUpdate: Cascade, map: "fk_circular_economy_order_detail")
+
+  @@index([idDlkOrderDetail], map: "idx_circular_economy_order_detail")
+  @@map("OD_CIRCULAR_ECONOMY")
+}
+
+/**
+ * Impacto social declarado para el detalle de orden.
+ */
+model OdSocialImpact {
+  idDlkSocialImpact Int           @id @default(autoincrement()) @map("ID_DLK_SOCIAL_IMPACT")
+  /**
+   * Cuelga de la marca, no de la orden: son datos de la empresa, no de la prenda.
+   */
+  idDlkBrand        Int           @map("ID_DLK_BRAND")
+  codSocialImpact   String        @map("COD_SOCIAL_IMPACT") @db.VarChar(50)
+  /**
+   * Nombre de la ficha ("Trabajo Digno y Equidad").
+   */
+  socialImpact      String?       @map("SOCIAL_IMPACT") @db.VarChar(100)
+  femaleWorkforce   String?       @map("FEMALE_WORKFORCE") @db.VarChar(100)
+  leadership        String?       @map("LEADERSHIP") @db.VarChar(200)
+  workingConditions String?       @map("WORKING_CONDITIONS") @db.VarChar(100)
+  commitmentOit     String?       @map("COMMITMENT_OIT") @db.VarChar(100)
+  scope             String?       @map("SCOPE") @db.VarChar(500)
+  referenceStandard String?       @map("REFERENCE_STANDARD") @db.VarChar(1000)
+  /**
+   * Nombre del PDF subido; el archivo va en reportFile.
+   */
+  report            String?       @map("REPORT") @db.VarChar(500)
+  reportFile        Bytes?        @map("REPORT_FILE") @db.MediumBlob
+  stateSocialImpact Int?          @default(1) @map("STATE_SOCIAL_IMPACT") @db.TinyInt
+  codUsuarioCargaDl String?       @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl DateTime?     @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl DateTime?     @default(now()) @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion         String?       @default("INSERT") @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif    Int?          @default(1) @map("FLG_STATUT_ACTIF")
+  brand             MdBrand       @relation(fields: [idDlkBrand], references: [idDlkBrand], onDelete: Restrict, onUpdate: Cascade, map: "fk_social_impact_brand")
+
+  @@index([idDlkBrand], map: "idx_social_impact_brand")
+  @@map("OD_SOCIAL_IMPACT")
 }

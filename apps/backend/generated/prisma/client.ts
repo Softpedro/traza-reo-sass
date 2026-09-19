@@ -334,3 +334,33 @@ export type OdOutputActivitiesRoute = Prisma.OdOutputActivitiesRouteModel
  *  * Eventos por unidad serializada (SGTIN) desde el ensamble + etiqueta: IoT, acabados, QC, empaque.
  */
 export type OdUnitTrace = Prisma.OdUnitTraceModel
+/**
+ * Model OdCarbonFootprint
+ * *
+ *  * Huella de carbono declarada por talla para un detalle de orden.
+ */
+export type OdCarbonFootprint = Prisma.OdCarbonFootprintModel
+/**
+ * Model OdWaterFootprint
+ * *
+ *  * Huella hídrica declarada por talla para un detalle de orden.
+ */
+export type OdWaterFootprint = Prisma.OdWaterFootprintModel
+/**
+ * Model OdRestrictedSubstances
+ * *
+ *  * Sustancias restringidas / control químico del detalle de orden.
+ */
+export type OdRestrictedSubstances = Prisma.OdRestrictedSubstancesModel
+/**
+ * Model OdCircularEconomy
+ * *
+ *  * Economía circular: prácticas y contenidos declarados para el detalle de orden.
+ */
+export type OdCircularEconomy = Prisma.OdCircularEconomyModel
+/**
+ * Model OdSocialImpact
+ * *
+ *  * Impacto social declarado para el detalle de orden.
+ */
+export type OdSocialImpact = Prisma.OdSocialImpactModel

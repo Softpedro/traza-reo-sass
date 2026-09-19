@@ -1,4 +1,4 @@
-import { Home, Settings, ShoppingCart, type LucideIcon } from "lucide-react";
+import { BookCheck, Home, Layers, Settings, ShoppingCart, type LucideIcon } from "lucide-react";
 
 export type NavLeafItem = {
   type: "leaf";
@@ -126,5 +126,28 @@ export const navItems: NavItem[] = [
         listIndex: 6,
       },
     ],
+  },
+  {
+    type: "collapsible",
+    label: "Sostenibilidad",
+    icon: BookCheck,
+    basePath: "/sostenibilidad",
+    children: [
+      { type: "leaf", label: "Huella CO2", href: "/sostenibilidad/huella-co2" },
+      { type: "leaf", label: "Huella Hídrica", href: "/sostenibilidad/huella-hidrica" },
+      {
+        type: "leaf",
+        label: "Sustancias Restringidas",
+        href: "/sostenibilidad/sustancias-restringidas",
+      },
+      { type: "leaf", label: "Economía Circular", href: "/sostenibilidad/economia-circular" },
+      { type: "leaf", label: "Impacto Social", href: "/sostenibilidad/impacto-social" },
+    ],
+  },
+  {
+    type: "leaf",
+    label: "Tiers no controladas",
+    href: "/tiers-no-controladas",
+    icon: Layers,
   },
 ];

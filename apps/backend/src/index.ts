@@ -29,6 +29,8 @@ import { CircularEconomyService } from "./services/circular-economy.service.js";
 import { circularEconomyRoutes } from "./routes/circular-economy.routes.js";
 import { SocialImpactService } from "./services/social-impact.service.js";
 import { socialImpactRoutes } from "./routes/social-impact.routes.js";
+import { UncontrolledLayersService } from "./services/uncontrolled-layers.service.js";
+import { uncontrolledLayersRoutes } from "./routes/uncontrolled-layers.routes.js";
 import { SupplierService } from "./services/supplier.service.js";
 import { supplierRoutes } from "./routes/supplier.routes.js";
 import { MaterialService } from "./services/material.service.js";
@@ -220,6 +222,7 @@ const waterFootprintService = new WaterFootprintService(prisma);
 const restrictedSubstancesService = new RestrictedSubstancesService(prisma);
 const circularEconomyService = new CircularEconomyService(prisma);
 const socialImpactService = new SocialImpactService(prisma);
+const uncontrolledLayersService = new UncontrolledLayersService(prisma);
 const supplierService = new SupplierService(prisma);
 const materialService = new MaterialService(prisma);
 const aviosService = new AviosService(prisma);
@@ -275,6 +278,10 @@ app.use("/api/water-footprints", waterFootprintRoutes(waterFootprintService));
 app.use("/api/restricted-substances", restrictedSubstancesRoutes(restrictedSubstancesService));
 app.use("/api/circular-economies", circularEconomyRoutes(circularEconomyService));
 app.use("/api/social-impacts", socialImpactRoutes(socialImpactService));
+app.use(
+  "/api/uncontrolled-layers",
+  uncontrolledLayersRoutes(uncontrolledLayersService)
+);
 app.use("/api/suppliers", supplierRoutes(supplierService));
 app.use("/api/materials", materialRoutes(materialService));
 app.use("/api/avios", aviosRoutes(aviosService));

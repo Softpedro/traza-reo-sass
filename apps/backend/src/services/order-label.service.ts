@@ -1,6 +1,7 @@
 import type { Prisma, PrismaClient } from "../../generated/prisma/client.js";
+import type { Writable } from "node:stream";
 import {
-  buildLabelsPdf,
+  writeLabelsPdf,
   detectImageKind,
   type LabelLogo,
   type LabelSizeKey,
@@ -13,16 +14,20 @@ const MAX_LABEL_RANGE = 100_000;
 /**
  * Máximo de páginas (= unidades) por PDF de etiquetas.
  *
- * pdf-lib construye el documento entero en memoria y retiene cada operador de
- * dibujo, así que el consumo crece lineal con las páginas. Medido con un heap de
- * 384 MB: 1000 páginas pasan en 2.7 s, 1200 aún entran y 1500 revientan el heap.
- * 1000 deja margen incluso en el contenedor más pequeño; súbelo con
- * LABELS_PDF_MAX_UNITS si el plan tiene más memoria.
- *
- * Sin este tope, "Generar PDF de todas las etiquetas" de una orden grande mataba
- * al proceso por OOM y el navegador solo veía un "Failed to fetch".
+ * El PDF sale en streaming (ver label-pdf.ts), así que la memoria ya no crece con
+ * las páginas: el tope sólo acota cuánto dura una descarga (~3 s por 1000 páginas
+ * en local; en el contenedor, varias veces más). Ajustable con LABELS_PDF_MAX_UNITS.
  */
-const MAX_PDF_UNITS = Number(process.env.LABELS_PDF_MAX_UNITS ?? 1000);
+const MAX_PDF_UNITS = Number(process.env.LABELS_PDF_MAX_UNITS ?? 5000);
+
+/**
+ * PDF listo para escribirse: todo lo que puede fallar (orden, tope, unidades, marca)
+ * ya se validó, así que la ruta puede mandar los headers y empezar el stream.
+ */
+export type LabelsPdfJob = {
+  count: number;
+  write: (out: Writable) => Promise<void>;
+};
 
 /**
  * El PDF pedido excede `MAX_PDF_UNITS`. La ruta la traduce a 413 con un mensaje
@@ -1096,11 +1101,11 @@ export class OrderLabelService {
     if (total > MAX_PDF_UNITS) throw new LabelsPdfTooLargeError(total, MAX_PDF_UNITS);
   }
 
-  async buildLabelPdf(
+  async prepareLabelPdf(
     orderHeadId: number,
     labelId: number,
     size: LabelSizeKey
-  ): Promise<{ pdf: Uint8Array; count: number }> {
+  ): Promise<LabelsPdfJob> {
     const head = await this.prisma.odOrderLabelHead.findUnique({
       where: { idDlkOrderLabelHead: labelId },
       select: { idDlkOrderLabelHead: true, idDlkOrderHead: true },
@@ -1118,18 +1123,18 @@ export class OrderLabelService {
     }
 
     const brand = await this.getBrandForOrder(orderHeadId);
-    const pdf = await buildLabelsPdf(units, { size, brandName: brand.name, logo: brand.logo });
-    return { pdf, count: units.length };
+    return {
+      count: units.length,
+      write: (out) =>
+        writeLabelsPdf(units, { size, brandName: brand.name, logo: brand.logo }, out),
+    };
   }
 
   /**
    * PDF imprimible con TODAS las etiquetas activas de una orden: concatena las
    * unidades de cada cabecera en un solo documento, en el tamaño elegido.
    */
-  async buildAllLabelsPdf(
-    orderHeadId: number,
-    size: LabelSizeKey
-  ): Promise<{ pdf: Uint8Array; count: number }> {
+  async prepareAllLabelsPdf(orderHeadId: number, size: LabelSizeKey): Promise<LabelsPdfJob> {
     const heads = await this.prisma.odOrderLabelHead.findMany({
       where: { idDlkOrderHead: orderHeadId, flgStatutActif: 1 },
       select: { idDlkOrderLabelHead: true },
@@ -1146,8 +1151,11 @@ export class OrderLabelService {
     }
 
     const brand = await this.getBrandForOrder(orderHeadId);
-    const pdf = await buildLabelsPdf(units, { size, brandName: brand.name, logo: brand.logo });
-    return { pdf, count: units.length };
+    return {
+      count: units.length,
+      write: (out) =>
+        writeLabelsPdf(units, { size, brandName: brand.name, logo: brand.logo }, out),
+    };
   }
 
   /** Marca / desmarca una unidad serializada como rechazada (lista negra). */

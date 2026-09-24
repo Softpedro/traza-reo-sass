@@ -3,12 +3,18 @@
  *
  * 1 página = 1 etiqueta. Tamaño físico: 40 × 100 mm (única opción).
  * Pensado para impresora GODEX G500 (203 dpi).
+ *
+ * El PDF se genera en streaming con PDFKit: cada página se escribe en la salida en
+ * cuanto se termina y se libera, así que la memoria no crece con la cantidad de
+ * etiquetas. Con pdf-lib el documento entero vivía en memoria hasta `save()`
+ * (~0.7 MB por página): una orden de 682 unidades se comía ~470 MB, el contenedor
+ * moría por OOM y el proxy devolvía 502.
  */
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-import type { PDFFont, PDFImage, PDFPage, RGB } from "pdf-lib";
+import { PassThrough, type Writable } from "node:stream";
+import PDFDocument from "pdfkit";
 import QRCode from "qrcode";
 
 const MM_TO_PT = 72 / 25.4;
@@ -22,6 +28,13 @@ const QR_QUIET_MM = 2;
 
 /** Grosor uniforme y fino de las líneas divisorias (en pt). */
 const LINE_THICKNESS = 0.25;
+
+/**
+ * Cada cuántas páginas se cede el event loop. Generar una etiqueta es CPU pura (QR +
+ * texto): sin ceder, una orden grande bloquearía al resto de peticiones del backend
+ * mientras dura.
+ */
+const PAGES_PER_TICK = 20;
 
 export type LabelSizeKey = "40x100";
 
@@ -78,13 +91,10 @@ export function detectImageKind(bytes: Uint8Array): "png" | "jpg" | null {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ICONS_DIR = join(__dirname, "..", "assets", "label-icons");
 
-type IconAsset = { bytes: Uint8Array; kind: "png" | "jpg" };
-
-function loadIcon(filename: string): IconAsset {
-  const bytes = new Uint8Array(readFileSync(join(ICONS_DIR, filename)));
-  const kind = detectImageKind(bytes);
-  if (!kind) throw new Error(`Icono inválido: ${filename}`);
-  return { bytes, kind };
+function loadIcon(filename: string): Buffer {
+  const bytes = readFileSync(join(ICONS_DIR, filename));
+  if (!detectImageKind(bytes)) throw new Error(`Icono inválido: ${filename}`);
+  return bytes;
 }
 
 /** Orden de presentación en la fila inferior de la etiqueta. */
@@ -96,14 +106,71 @@ const ICON_FILES: { file: string; alt: string }[] = [
   { file: "agua.png", alt: "Agua" },
 ];
 
-const ICON_ASSETS: IconAsset[] = ICON_FILES.map((i) => loadIcon(i.file));
+const ICON_ASSETS: Buffer[] = ICON_FILES.map((i) => loadIcon(i.file));
+
+/* ----------------------------- lienzo ----------------------------- */
+
+type Doc = PDFKit.PDFDocument;
+
+/** Imagen ya abierta por PDFKit: se embebe una vez por documento y se reutiliza. */
+type OpenedImage = { width: number; height: number };
+
+type FontName = "Helvetica" | "Helvetica-Bold";
+
+/**
+ * Primitivas de dibujo con el origen abajo a la izquierda y el eje Y hacia arriba,
+ * como en pdf-lib: así el layout de `drawLabel` se mantiene tal cual se calibró para
+ * la GODEX. PDFKit tiene el origen arriba, de ahí el `h - y` en cada primitiva.
+ */
+class Canvas {
+  constructor(
+    readonly doc: Doc,
+    readonly h: number
+  ) {}
+
+  width(text: string, font: FontName, fs: number): number {
+    return this.doc.font(font).fontSize(fs).widthOfString(text);
+  }
+
+  /** Texto con la línea base en `baselineY`. */
+  text(text: string, x: number, baselineY: number, font: FontName, fs: number) {
+    this.doc
+      .font(font)
+      .fontSize(fs)
+      .fillColor("black")
+      .text(text, x, this.h - baselineY, { baseline: "alphabetic", lineBreak: false });
+  }
+
+  /** Imagen con su esquina inferior izquierda en (x, y). */
+  image(img: OpenedImage, x: number, y: number, width: number, height: number) {
+    this.doc.image(img as unknown as Buffer, x, this.h - y - height, { width, height });
+  }
+
+  hr(x1: number, x2: number, y: number) {
+    this.doc
+      .moveTo(x1, this.h - y)
+      .lineTo(x2, this.h - y)
+      .lineWidth(LINE_THICKNESS)
+      .strokeColor("black")
+      .stroke();
+  }
+
+  /** Rectángulo blanco con su esquina inferior izquierda en (x, y). */
+  whiteRect(x: number, y: number, width: number, height: number) {
+    this.doc.rect(x, this.h - y - height, width, height).fill("white");
+  }
+
+  /** Path SVG (eje Y hacia abajo) con su origen en (x, top). */
+  svgPath(d: string, x: number, top: number) {
+    this.doc.save().translate(x, this.h - top).path(d).fill("black").restore();
+  }
+}
 
 /* ----------------------------- QR ----------------------------- */
 /**
  * Matriz de módulos del QR. Se dibuja como vector (ver `drawQr`), no como imagen:
- * un QR rasterizado a 1200 px ocupaba ~5 MB de memoria por etiqueta mientras
- * pdf-lib mantiene los píxeles crudos hasta `save()`, así que una orden de 76
- * unidades se comía ~475 MB y tumbaba el contenedor (OOM → "Failed to fetch").
+ * nitidez independiente del dpi (la GODEX imprime a 203, pero el mismo PDF sirve
+ * para cualquier impresora) y un coste de memoria despreciable.
  */
 type QrMatrix = { size: number; data: Uint8Array };
 
@@ -113,19 +180,11 @@ function qrMatrix(text: string): QrMatrix {
 }
 
 /**
- * Dibuja el QR como un único path vectorial con (x, y) en su esquina superior
- * izquierda. Ventajas frente a la imagen: nitidez independiente del dpi (la GODEX
- * imprime a 203, pero el mismo PDF sirve para cualquier impresora) y coste de
- * memoria despreciable.
- *
- * Se emite un solo `drawSvgPath` en vez de un rectángulo por módulo porque pdf-lib
- * retiene cada operador como objeto JS: ~1000 rectángulos por página costaban
- * 0.75 MB/página frente a 0.23 MB con el path único.
- *
- * Los módulos contiguos de una misma fila se funden en un solo tramo, lo que
- * reduce el path a ~1/3 y evita costuras entre ellos.
+ * Dibuja el QR como un único path vectorial con (x, top) en su esquina superior
+ * izquierda. Los módulos contiguos de una misma fila se funden en un solo tramo, lo
+ * que reduce el path a ~1/3 y evita costuras entre ellos.
  */
-function drawQr(page: PDFPage, qr: QrMatrix, x: number, y: number, side: number, color: RGB) {
+function drawQr(c: Canvas, qr: QrMatrix, x: number, top: number, side: number) {
   const n = qr.size;
   const cell = side / n;
   const f = (v: number) => v.toFixed(3);
@@ -146,32 +205,26 @@ function drawQr(page: PDFPage, qr: QrMatrix, x: number, y: number, side: number,
       col += run;
     }
   }
-  // drawSvgPath usa el eje Y hacia abajo desde (x, y), de ahí que `y` sea el borde
-  // superior del QR y las coordenadas del path se cuenten desde ahí.
-  page.drawSvgPath(d, { x, y, color, borderWidth: 0 });
+  c.svgPath(d, x, top);
 }
 
 /* ----------------------------- helpers de texto ----------------------------- */
 
-function clamp(v: number, lo: number, hi: number): number {
-  return Math.max(lo, Math.min(hi, v));
-}
-
 /** Reduce el tamaño de fuente hasta que el texto entre en maxW. */
-function fitFont(text: string, font: PDFFont, maxW: number, desired: number): number {
+function fitFont(c: Canvas, text: string, font: FontName, maxW: number, desired: number): number {
   let fs = desired;
-  while (fs > 2 && font.widthOfTextAtSize(text, fs) > maxW) fs -= 0.25;
+  while (fs > 2 && c.width(text, font, fs) > maxW) fs -= 0.25;
   return fs;
 }
 
 /** Parte el texto en líneas que caben en maxW. */
-function wrap(text: string, font: PDFFont, fs: number, maxW: number): string[] {
+function wrap(c: Canvas, text: string, font: FontName, fs: number, maxW: number): string[] {
   const words = text.split(/\s+/).filter(Boolean);
   const lines: string[] = [];
   let line = "";
   for (const word of words) {
     const candidate = line ? `${line} ${word}` : word;
-    if (font.widthOfTextAtSize(candidate, fs) <= maxW || !line) {
+    if (c.width(candidate, font, fs) <= maxW || !line) {
       line = candidate;
     } else {
       lines.push(line);
@@ -183,64 +236,55 @@ function wrap(text: string, font: PDFFont, fs: number, maxW: number): string[] {
 }
 
 function drawCentered(
-  page: PDFPage,
+  c: Canvas,
   text: string,
-  font: PDFFont,
+  font: FontName,
   fs: number,
   pageW: number,
-  baselineY: number,
-  color: RGB
+  baselineY: number
 ) {
-  const tw = font.widthOfTextAtSize(text, fs);
-  page.drawText(text, { x: (pageW - tw) / 2, y: baselineY, size: fs, font, color });
+  const tw = c.width(text, font, fs);
+  c.text(text, (pageW - tw) / 2, baselineY, font, fs);
 }
 
 /** Dibuja varios segmentos (cada uno con su font) como una sola línea centrada. */
 function drawCenteredSegments(
-  page: PDFPage,
-  segments: { text: string; font: PDFFont }[],
+  c: Canvas,
+  segments: { text: string; font: FontName }[],
   fs: number,
   pageW: number,
-  baselineY: number,
-  color: RGB
+  baselineY: number
 ) {
-  const totalW = segments.reduce((a, s) => a + s.font.widthOfTextAtSize(s.text, fs), 0);
+  const totalW = segments.reduce((a, s) => a + c.width(s.text, s.font, fs), 0);
   let x = (pageW - totalW) / 2;
   for (const s of segments) {
-    page.drawText(s.text, { x, y: baselineY, size: fs, font: s.font, color });
-    x += s.font.widthOfTextAtSize(s.text, fs);
+    c.text(s.text, x, baselineY, s.font, fs);
+    x += c.width(s.text, s.font, fs);
   }
-}
-
-function hr(page: PDFPage, x1: number, x2: number, y: number, color: RGB) {
-  page.drawLine({
-    start: { x: x1, y },
-    end: { x: x2, y },
-    thickness: LINE_THICKNESS,
-    color,
-  });
 }
 
 /* ----------------------------- render ----------------------------- */
 
 const SUBTITLE = "Escanea para ver el Pasaporte Digital del Producto";
 
+const FONT: FontName = "Helvetica";
+const FONT_BOLD: FontName = "Helvetica-Bold";
+
 type DrawCtx = {
   w: number;
   h: number;
   unit: LabelUnit;
-  logo: PDFImage | null;
+  logo: OpenedImage | null;
   qr: QrMatrix;
-  icons: PDFImage[];
-  font: PDFFont;
-  fontBold: PDFFont;
+  icons: OpenedImage[];
   brandName: string;
 };
 
-/** Dibuja una etiqueta completa en su página. */
-function drawLabel(page: PDFPage, ctx: DrawCtx) {
-  const { w, h, unit, logo, qr, icons, font, fontBold, brandName } = ctx;
-  const black = rgb(0, 0, 0);
+/** Dibuja una etiqueta completa en la página actual. */
+function drawLabel(c: Canvas, ctx: DrawCtx) {
+  const { w, h, unit, logo, qr, icons, brandName } = ctx;
+  const font = FONT;
+  const fontBold = FONT_BOLD;
   const mx = w * 0.08;
   const innerW = w - 2 * mx;
 
@@ -283,48 +327,48 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
     const s = Math.min(logoMaxW / logo.width, logoMaxH / logo.height);
     const lw = logo.width * s;
     const lh = logo.height * s;
-    page.drawImage(logo, { x: (w - lw) / 2, y: y - lh, width: lw, height: lh });
+    c.image(logo, (w - lw) / 2, y - lh, lw, lh);
     y -= lh;
   } else {
-    const fs = fitFont(brandName, fontBold, innerW, 13);
+    const fs = fitFont(c, brandName, fontBold, innerW, 13);
     y -= fs;
-    drawCentered(page, brandName, fontBold, fs, w, y, black);
+    drawCentered(c, brandName, fontBold, fs, w, y);
   }
   y -= GAP;
 
-  hr(page, mx, w - mx, y, black);
+  c.hr(mx, w - mx, y);
   y -= GAP;
 
   // Identificación del producto: modelo, pieza y nº de producto.
   if (unit.modelName) {
-    const fs = fitFont(unit.modelName, fontBold, innerW, 9);
-    for (const ln of wrap(unit.modelName, fontBold, fs, innerW)) {
+    const fs = fitFont(c, unit.modelName, fontBold, innerW, 9);
+    for (const ln of wrap(c, unit.modelName, fontBold, fs, innerW)) {
       y -= fs * 1.2;
-      drawCentered(page, ln, fontBold, fs, w, y, black);
+      drawCentered(c, ln, fontBold, fs, w, y);
     }
   }
   if (unit.pieceLabel) {
-    const fs = fitFont(unit.pieceLabel, font, innerW, 7);
-    for (const ln of wrap(unit.pieceLabel, font, fs, innerW)) {
+    const fs = fitFont(c, unit.pieceLabel, font, innerW, 7);
+    for (const ln of wrap(c, unit.pieceLabel, font, fs, innerW)) {
       y -= fs * 1.25;
-      drawCentered(page, ln, font, fs, w, y, black);
+      drawCentered(c, ln, font, fs, w, y);
     }
   }
   if (unit.productNumber != null) {
     const fs = 9;
     y -= fs * 1.35;
-    drawCentered(page, `N° ${unit.productNumber}`, fontBold, fs, w, y, black);
+    drawCentered(c, `N° ${unit.productNumber}`, fontBold, fs, w, y);
   }
   y -= GAP;
 
-  hr(page, mx, w - mx, y, black);
+  c.hr(mx, w - mx, y);
   y -= GAP;
 
   // Subtítulo.
   const subFs = 6.5;
-  for (const ln of wrap(SUBTITLE, font, subFs, innerW)) {
+  for (const ln of wrap(c, SUBTITLE, font, subFs, innerW)) {
     y -= subFs * 1.18;
-    drawCentered(page, ln, font, subFs, w, y, black);
+    drawCentered(c, ln, font, subFs, w, y);
   }
   y -= GAP;
 
@@ -343,21 +387,15 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
   const qrTop = y - Math.max(0, (band - qrSide) * QR_TOP_BIAS);
   const qrX = (w - qrSide) / 2;
   const qrBottom = qrTop - qrSide;
-  page.drawRectangle({
-    x: qrX - qrPad,
-    y: qrBottom - qrPad,
-    width: qrSide + 2 * qrPad,
-    height: qrSide + 2 * qrPad,
-    color: rgb(1, 1, 1),
-  });
-  drawQr(page, qr, qrX, qrTop, qrSide, black);
+  c.whiteRect(qrX - qrPad, qrBottom - qrPad, qrSide + 2 * qrPad, qrSide + 2 * qrPad);
+  drawQr(c, qr, qrX, qrTop, qrSide);
 
   // Posicionamiento de los iconos (sin línea separadora arriba).
   const iconsBottom = bottomMargin + footerH + ICON_ROW_GAP;
 
   // sGTIN — entre el QR y los iconos, centrado en el hueco que reserva sgtinBlockH.
-  const sgtinFsFit = fitFont(unit.sgtinFull, fontBold, innerW, sgtinFs);
-  drawCentered(page, unit.sgtinFull, fontBold, sgtinFsFit, w, sgtinBaseline, black);
+  const sgtinFsFit = fitFont(c, unit.sgtinFull, fontBold, innerW, sgtinFs);
+  drawCentered(c, unit.sgtinFull, fontBold, sgtinFsFit, w, sgtinBaseline);
 
   // Fila de iconos: bloque centrado con separación fija entre ellos. Antes se repartía
   // todo el ancho útil, así que los iconos quedaban desperdigados de borde a borde.
@@ -371,36 +409,29 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
     const iw = ratio >= 1 ? iconSize : iconSize * ratio;
     const ih = ratio >= 1 ? iconSize / ratio : iconSize;
     const cx = rowX + slot * i + iconSize / 2;
-    page.drawImage(img, {
-      x: cx - iw / 2,
-      y: iconsBottom + (iconSize - ih) / 2,
-      width: iw,
-      height: ih,
-    });
+    c.image(img, cx - iw / 2, iconsBottom + (iconSize - ih) / 2, iw, ih);
   }
 
   // Pie (3 líneas).
   const footerFs = 5.5;
   drawCentered(
-    page,
+    c,
     "Proveedor del servicio:",
     font,
     footerFs,
     w,
-    bottomMargin + footerLineH * 2 + footerFs * 0.2,
-    black
+    bottomMargin + footerLineH * 2 + footerFs * 0.2
   );
   drawCentered(
-    page,
+    c,
     "UMA TECHNOLOGY S.A.C.",
     fontBold,
     footerFs,
     w,
-    bottomMargin + footerLineH + footerFs * 0.2,
-    black
+    bottomMargin + footerLineH + footerFs * 0.2
   );
   drawCenteredSegments(
-    page,
+    c,
     [
       { text: "Plataforma ", font },
       { text: "TRAZA", font: fontBold },
@@ -408,65 +439,104 @@ function drawLabel(page: PDFPage, ctx: DrawCtx) {
     ],
     footerFs,
     w,
-    bottomMargin + footerFs * 0.2,
-    black
+    bottomMargin + footerFs * 0.2
   );
 }
 
-/**
- * Construye un PDF con una página por unidad. Devuelve los bytes del PDF.
- * `units` puede traer las unidades de una sola etiqueta o de varias.
- */
-export async function buildLabelsPdf(
-  units: LabelUnit[],
-  opts: LabelPdfOptions
-): Promise<Uint8Array> {
-  const doc = await PDFDocument.create();
-  const font = await doc.embedFont(StandardFonts.Helvetica);
-  const fontBold = await doc.embedFont(StandardFonts.HelveticaBold);
+/** `doc.openImage` existe en PDFKit pero no está en @types/pdfkit. */
+function openImage(doc: Doc, bytes: Uint8Array): OpenedImage {
+  return (doc as unknown as { openImage(src: Buffer): OpenedImage }).openImage(
+    Buffer.from(bytes.buffer, bytes.byteOffset, bytes.byteLength)
+  );
+}
 
+/** Espera a que `out` acepte más datos; si el cliente cortó antes, no se queda colgado. */
+function drainOrClose(out: Writable): Promise<void> {
+  return new Promise((resolve) => {
+    const done = () => {
+      out.off("drain", done);
+      out.off("close", done);
+      resolve();
+    };
+    out.once("drain", done);
+    out.once("close", done);
+  });
+}
+
+/**
+ * Escribe en `out` un PDF con una página por unidad y resuelve cuando `out` recibió
+ * el documento completo. `units` puede traer las unidades de una sola etiqueta o de
+ * varias.
+ *
+ * Las páginas se escriben a medida que se generan, respetando la contrapresión de
+ * `out`: si el cliente descarga lento, la generación espera en vez de acumular el
+ * PDF en memoria.
+ */
+export async function writeLabelsPdf(
+  units: LabelUnit[],
+  opts: LabelPdfOptions,
+  out: Writable
+): Promise<void> {
   const size = LABEL_SIZES[opts.size];
   const w = size.wMm * MM_TO_PT;
   const h = size.hMm * MM_TO_PT;
 
-  // El logo se embebe una sola vez y se reutiliza en todas las páginas.
-  let logo: PDFImage | null = null;
+  const doc = new PDFDocument({ size: [w, h], margin: 0, autoFirstPage: false });
+  const finished = new Promise<void>((resolve, reject) => {
+    out.once("finish", resolve);
+    out.once("close", resolve);
+    out.once("error", reject);
+    doc.once("error", reject);
+  });
+  doc.pipe(out);
+
+  // El logo y los iconos se embeben una sola vez y se reutilizan en todas las páginas.
+  let logo: OpenedImage | null = null;
   if (opts.logo) {
     try {
-      logo =
-        opts.logo.kind === "png"
-          ? await doc.embedPng(opts.logo.bytes)
-          : await doc.embedJpg(opts.logo.bytes);
+      logo = openImage(doc, opts.logo.bytes);
     } catch {
       logo = null;
     }
   }
+  const icons = ICON_ASSETS.map((bytes) => openImage(doc, bytes));
 
-  // Iconos: se embeben una sola vez por documento.
-  const icons: PDFImage[] = [];
-  for (const asset of ICON_ASSETS) {
-    icons.push(
-      asset.kind === "png"
-        ? await doc.embedPng(asset.bytes)
-        : await doc.embedJpg(asset.bytes)
-    );
-  }
+  const canvas = new Canvas(doc, h);
+  for (let i = 0; i < units.length; i++) {
+    // El cliente cortó la descarga: no tiene sentido seguir generando.
+    if (out.destroyed) break;
 
-  for (const unit of units) {
-    const page = doc.addPage([w, h]);
-    const qr = qrMatrix(unit.urlDppFull || unit.sgtinFull);
-    drawLabel(page, {
+    const unit = units[i];
+    doc.addPage({ size: [w, h], margin: 0 });
+    drawLabel(canvas, {
       w,
       h,
       unit,
       logo,
-      qr,
+      qr: qrMatrix(unit.urlDppFull || unit.sgtinFull),
       icons,
-      font,
-      fontBold,
       brandName: opts.brandName,
     });
+
+    if (out.writableNeedDrain) {
+      await drainOrClose(out);
+    } else if ((i + 1) % PAGES_PER_TICK === 0) {
+      await new Promise((resolve) => setImmediate(resolve));
+    }
   }
 
-  return doc.save();
+  doc.end();
+  await finished;
+}
+
+/** Variante en memoria (tests y scripts): junta el PDF completo en un Buffer. */
+export async function buildLabelsPdf(units: LabelUnit[], opts: LabelPdfOptions): Promise<Buffer> {
+  const sink = new PassThrough();
+  const collected = (async () => {
+    const chunks: Buffer[] = [];
+    for await (const chunk of sink) chunks.push(chunk as Buffer);
+    return Buffer.concat(chunks);
+  })();
+  await writeLabelsPdf(units, opts, sink);
+  return collected;
 }

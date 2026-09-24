@@ -1,6 +1,6 @@
-import { Router } from "express";
+import { Router, type Response } from "express";
 import { LabelsPdfTooLargeError } from "../services/order-label.service.js";
-import type { OrderLabelService } from "../services/order-label.service.js";
+import type { LabelsPdfJob, OrderLabelService } from "../services/order-label.service.js";
 import { isLabelSize } from "../services/label-pdf.js";
 import { errorResponse } from "../lib/http-error.js";
 
@@ -13,6 +13,32 @@ function pdfErrorResponse(e: unknown): { status: number; body: { error: string; 
     return { status: 413, body: { error: e.message, type: "TOO_LARGE" } };
   }
   return errorResponse(e);
+}
+
+/** Manda los headers y escribe el PDF en streaming a medida que se genera. */
+async function sendPdf(res: Response, job: LabelsPdfJob, filename: string) {
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+  res.setHeader("X-Label-Count", String(job.count));
+  // Sin buffering en proxys intermedios: las páginas tienen que salir a medida que se
+  // generan para que el proxy vea tráfico y no corte la conexión.
+  res.setHeader("X-Accel-Buffering", "no");
+  res.flushHeaders();
+  await job.write(res);
+}
+
+/**
+ * Si el error llega antes del stream se responde JSON como siempre; si el PDF ya
+ * empezó a salir, los headers están enviados y sólo queda cortar la conexión para
+ * que el navegador no guarde un PDF truncado como si estuviera completo.
+ */
+function sendPdfError(res: Response, e: unknown) {
+  if (res.headersSent) {
+    res.destroy(e instanceof Error ? e : undefined);
+    return;
+  }
+  const err = pdfErrorResponse(e);
+  res.status(err.status).json(err.body);
 }
 
 function parseId(value: string): number | null {
@@ -140,18 +166,11 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
           .status(400)
           .json({ error: "Tamaño inválido (usa 40x100)", type: "VALIDATION" });
       }
-      const { pdf, count } = await service.buildAllLabelsPdf(orderHeadId, size);
-      res.setHeader("Content-Type", "application/pdf");
-      res.setHeader(
-        "Content-Disposition",
-        `attachment; filename="etiquetas-orden-${orderHeadId}-${size}.pdf"`
-      );
-      res.setHeader("X-Label-Count", String(count));
-      res.send(Buffer.from(pdf));
+      const job = await service.prepareAllLabelsPdf(orderHeadId, size);
+      await sendPdf(res, job, `etiquetas-orden-${orderHeadId}-${size}.pdf`);
     } catch (e) {
       console.error("[order-labels:pdf-all]", e);
-      const err = pdfErrorResponse(e);
-      res.status(err.status).json(err.body);
+      sendPdfError(res, e);
     }
   });
 
@@ -204,18 +223,11 @@ export function orderLabelRoutes(service: OrderLabelService): Router {
           .status(400)
           .json({ error: "Tamaño inválido (usa 40x100)", type: "VALIDATION" });
       }
-      const { pdf, count } = await service.buildLabelPdf(orderHeadId, labelId, size);
-      res.setHeader("Content-Type", "application/pdf");
-      res.setHeader(
-        "Content-Disposition",
-        `attachment; filename="etiqueta-${labelId}-${size}.pdf"`
-      );
-      res.setHeader("X-Label-Count", String(count));
-      res.send(Buffer.from(pdf));
+      const job = await service.prepareLabelPdf(orderHeadId, labelId, size);
+      await sendPdf(res, job, `etiqueta-${labelId}-${size}.pdf`);
     } catch (e) {
       console.error("[order-labels:pdf]", e);
-      const err = pdfErrorResponse(e);
-      res.status(err.status).json(err.body);
+      sendPdfError(res, e);
     }
   });
 

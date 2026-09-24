@@ -77,12 +77,14 @@ export function Sidebar() {
   function renderLeaf(item: NavLeafItem, indent: number) {
     const active = isLeafActive(item.href);
     const numbered = item.listIndex != null;
+    const topLevel = indent === 0;
     return (
       <Link
         key={item.href}
         href={item.href}
         className={cn(
-          "flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors text-neutral-900",
+          "flex items-center rounded-md px-3 py-2 text-sm transition-colors text-neutral-900",
+          topLevel ? "gap-3" : "gap-2",
           numbered && "pl-2",
           active
             ? numbered
@@ -189,7 +191,7 @@ export function Sidebar() {
   }
 
   function renderItem(item: NavItem) {
-    if (item.type === "leaf") return renderLeaf(item, 1);
+    if (item.type === "leaf") return renderLeaf(item, 0);
     return renderCollapsible(item);
   }
 

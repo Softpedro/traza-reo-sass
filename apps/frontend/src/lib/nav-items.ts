@@ -145,9 +145,14 @@ export const navItems: NavItem[] = [
     ],
   },
   {
-    type: "leaf",
+    type: "collapsible",
     label: "Tiers no controladas",
-    href: "/tiers-no-controladas",
     icon: Layers,
+    basePath: "/tiers-no-controladas",
+    children: [
+      { type: "leaf", label: "Tier 2", href: "/tiers-no-controladas/tier-2" },
+      { type: "leaf", label: "Tier 3", href: "/tiers-no-controladas/tier-3" },
+      { type: "leaf", label: "Tier 4", href: "/tiers-no-controladas/tier-4" },
+    ],
   },
 ];

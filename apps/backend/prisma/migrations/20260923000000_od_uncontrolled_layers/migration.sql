@@ -1,0 +1,40 @@
+-- Tiers no controladas: eslabones de la cadena fuera del control directo de la
+-- marca (Tier 2, 3 y 4), por detalle de orden (OD_ORDER_DETAIL 1:N).
+--   - SERVICE sólo aplica a Tier 2 (1: Tejido, 2: Teñido, 3: Estampado).
+--   - ORIGIN sólo aplica a Tier 4.
+--   - CERTIFICATE_SHEET: archivo del certificado.
+-- Sigue el patrón DLK de las tablas OD_*: DATETIME(3) para que case con
+-- @db.DateTime(3) de Prisma y FEH_PROCESO_MODIF_DL gestionado por la app
+-- (@updatedAt), sin ON UPDATE CURRENT_TIMESTAMP.
+-- Aditiva: sólo crea una tabla nueva.
+
+-- CreateTable
+CREATE TABLE `OD_UNCONTROLLED_LAYERS` (
+    `ID_DLK_UNCONTROLLED_LAYERS` INTEGER NOT NULL AUTO_INCREMENT,
+    `ID_DLK_ORDER_DETAIL` INTEGER NOT NULL,
+    `COD_UNCONTROLLED_LAYERS` VARCHAR(50) NOT NULL,
+    `TIER` TINYINT NOT NULL COMMENT 'Valores: 2, 3 o 4',
+    `PRODUCT` VARCHAR(200) NULL,
+    `SUPPLIER` VARCHAR(150) NULL,
+    `SERVICE` TINYINT NULL COMMENT 'Solo Tier 2 (1: Tejido, 2: Teñido, 3: Estampado)',
+    `ORIGIN` VARCHAR(150) NULL COMMENT 'Solo Tier 4',
+    `CERTIFICATE` VARCHAR(100) NULL,
+    `TRANSMITTER` VARCHAR(100) NULL,
+    `CERTIFICATE_NUMBER` VARCHAR(100) NULL,
+    `DATE_OF_ISSUE` DATE NULL,
+    `EXPIRATION_DATE` DATE NULL,
+    `CERTIFICATE_SHEET` MEDIUMBLOB NULL,
+    `START_DATE` DATE NULL,
+    `END_DATE` DATE NULL,
+    `STATE_UNCONTROLLED_LAYERS` TINYINT NOT NULL DEFAULT 1,
+    `COD_USUARIO_CARGA_DL` VARCHAR(20) NULL,
+    `FEH_PROCESO_CARGA_DL` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `FEH_PROCESO_MODIF_DL` DATETIME(3) NULL,
+    `DES_ACCION` VARCHAR(20) NULL,
+    `FLG_STATUT_ACTIF` TINYINT NOT NULL DEFAULT 1,
+    INDEX `idx_uncontrolled_layers_order_detail`(`ID_DLK_ORDER_DETAIL`),
+    PRIMARY KEY (`ID_DLK_UNCONTROLLED_LAYERS`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `OD_UNCONTROLLED_LAYERS` ADD CONSTRAINT `fk_uncontrolled_layers_order_detail` FOREIGN KEY (`ID_DLK_ORDER_DETAIL`) REFERENCES `OD_ORDER_DETAIL`(`ID_DLK_ORDER_DETAIL`) ON DELETE RESTRICT ON UPDATE CASCADE;

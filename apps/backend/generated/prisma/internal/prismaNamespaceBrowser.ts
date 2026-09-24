@@ -110,7 +110,8 @@ export const ModelName = {
   OdWaterFootprint: 'OdWaterFootprint',
   OdRestrictedSubstances: 'OdRestrictedSubstances',
   OdCircularEconomy: 'OdCircularEconomy',
-  OdSocialImpact: 'OdSocialImpact'
+  OdSocialImpact: 'OdSocialImpact',
+  OdUncontrolledLayers: 'OdUncontrolledLayers'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1551,6 +1552,34 @@ export const OdSocialImpactScalarFieldEnum = {
 export type OdSocialImpactScalarFieldEnum = (typeof OdSocialImpactScalarFieldEnum)[keyof typeof OdSocialImpactScalarFieldEnum]
 
 
+export const OdUncontrolledLayersScalarFieldEnum = {
+  idDlkUncontrolledLayers: 'idDlkUncontrolledLayers',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  codUncontrolledLayers: 'codUncontrolledLayers',
+  tier: 'tier',
+  product: 'product',
+  supplier: 'supplier',
+  service: 'service',
+  origin: 'origin',
+  certificate: 'certificate',
+  transmitter: 'transmitter',
+  certificateNumber: 'certificateNumber',
+  dateOfIssue: 'dateOfIssue',
+  expirationDate: 'expirationDate',
+  certificateSheet: 'certificateSheet',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  stateUncontrolledLayers: 'stateUncontrolledLayers',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdUncontrolledLayersScalarFieldEnum = (typeof OdUncontrolledLayersScalarFieldEnum)[keyof typeof OdUncontrolledLayersScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2470,4 +2499,19 @@ export const OdSocialImpactOrderByRelevanceFieldEnum = {
 } as const
 
 export type OdSocialImpactOrderByRelevanceFieldEnum = (typeof OdSocialImpactOrderByRelevanceFieldEnum)[keyof typeof OdSocialImpactOrderByRelevanceFieldEnum]
+
+
+export const OdUncontrolledLayersOrderByRelevanceFieldEnum = {
+  codUncontrolledLayers: 'codUncontrolledLayers',
+  product: 'product',
+  supplier: 'supplier',
+  origin: 'origin',
+  certificate: 'certificate',
+  transmitter: 'transmitter',
+  certificateNumber: 'certificateNumber',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdUncontrolledLayersOrderByRelevanceFieldEnum = (typeof OdUncontrolledLayersOrderByRelevanceFieldEnum)[keyof typeof OdUncontrolledLayersOrderByRelevanceFieldEnum]
 

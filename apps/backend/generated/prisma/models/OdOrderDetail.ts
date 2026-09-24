@@ -669,6 +669,7 @@ export type OdOrderDetailWhereInput = {
   waterFootprints?: Prisma.OdWaterFootprintListRelationFilter
   restrictedSubstances?: Prisma.OdRestrictedSubstancesListRelationFilter
   circularEconomies?: Prisma.OdCircularEconomyListRelationFilter
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersListRelationFilter
 }
 
 export type OdOrderDetailOrderByWithRelationInput = {
@@ -725,6 +726,7 @@ export type OdOrderDetailOrderByWithRelationInput = {
   waterFootprints?: Prisma.OdWaterFootprintOrderByRelationAggregateInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesOrderByRelationAggregateInput
   circularEconomies?: Prisma.OdCircularEconomyOrderByRelationAggregateInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersOrderByRelationAggregateInput
   _relevance?: Prisma.OdOrderDetailOrderByRelevanceInput
 }
 
@@ -785,6 +787,7 @@ export type OdOrderDetailWhereUniqueInput = Prisma.AtLeast<{
   waterFootprints?: Prisma.OdWaterFootprintListRelationFilter
   restrictedSubstances?: Prisma.OdRestrictedSubstancesListRelationFilter
   circularEconomies?: Prisma.OdCircularEconomyListRelationFilter
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersListRelationFilter
 }, "idDlkOrderDetail">
 
 export type OdOrderDetailOrderByWithAggregationInput = {
@@ -943,6 +946,7 @@ export type OdOrderDetailCreateInput = {
   waterFootprints?: Prisma.OdWaterFootprintCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailUncheckedCreateInput = {
@@ -998,6 +1002,7 @@ export type OdOrderDetailUncheckedCreateInput = {
   waterFootprints?: Prisma.OdWaterFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailUpdateInput = {
@@ -1052,6 +1057,7 @@ export type OdOrderDetailUpdateInput = {
   waterFootprints?: Prisma.OdWaterFootprintUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailUncheckedUpdateInput = {
@@ -1107,6 +1113,7 @@ export type OdOrderDetailUncheckedUpdateInput = {
   waterFootprints?: Prisma.OdWaterFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailCreateManyInput = {
@@ -1633,6 +1640,20 @@ export type OdOrderDetailUpdateOneRequiredWithoutCircularEconomiesNestedInput = 
   update?: Prisma.XOR<Prisma.XOR<Prisma.OdOrderDetailUpdateToOneWithWhereWithoutCircularEconomiesInput, Prisma.OdOrderDetailUpdateWithoutCircularEconomiesInput>, Prisma.OdOrderDetailUncheckedUpdateWithoutCircularEconomiesInput>
 }
 
+export type OdOrderDetailCreateNestedOneWithoutUncontrolledLayersInput = {
+  create?: Prisma.XOR<Prisma.OdOrderDetailCreateWithoutUncontrolledLayersInput, Prisma.OdOrderDetailUncheckedCreateWithoutUncontrolledLayersInput>
+  connectOrCreate?: Prisma.OdOrderDetailCreateOrConnectWithoutUncontrolledLayersInput
+  connect?: Prisma.OdOrderDetailWhereUniqueInput
+}
+
+export type OdOrderDetailUpdateOneRequiredWithoutUncontrolledLayersNestedInput = {
+  create?: Prisma.XOR<Prisma.OdOrderDetailCreateWithoutUncontrolledLayersInput, Prisma.OdOrderDetailUncheckedCreateWithoutUncontrolledLayersInput>
+  connectOrCreate?: Prisma.OdOrderDetailCreateOrConnectWithoutUncontrolledLayersInput
+  upsert?: Prisma.OdOrderDetailUpsertWithoutUncontrolledLayersInput
+  connect?: Prisma.OdOrderDetailWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OdOrderDetailUpdateToOneWithWhereWithoutUncontrolledLayersInput, Prisma.OdOrderDetailUpdateWithoutUncontrolledLayersInput>, Prisma.OdOrderDetailUncheckedUpdateWithoutUncontrolledLayersInput>
+}
+
 export type OdOrderDetailCreateWithoutOrderHeadInput = {
   codOrderDetail?: string | null
   codEstilo?: string | null
@@ -1684,6 +1705,7 @@ export type OdOrderDetailCreateWithoutOrderHeadInput = {
   waterFootprints?: Prisma.OdWaterFootprintCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailUncheckedCreateWithoutOrderHeadInput = {
@@ -1738,6 +1760,7 @@ export type OdOrderDetailUncheckedCreateWithoutOrderHeadInput = {
   waterFootprints?: Prisma.OdWaterFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailCreateOrConnectWithoutOrderHeadInput = {
@@ -1868,6 +1891,7 @@ export type OdOrderDetailCreateWithoutLabelHeadsInput = {
   waterFootprints?: Prisma.OdWaterFootprintCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailUncheckedCreateWithoutLabelHeadsInput = {
@@ -1922,6 +1946,7 @@ export type OdOrderDetailUncheckedCreateWithoutLabelHeadsInput = {
   waterFootprints?: Prisma.OdWaterFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailCreateOrConnectWithoutLabelHeadsInput = {
@@ -1991,6 +2016,7 @@ export type OdOrderDetailUpdateWithoutLabelHeadsInput = {
   waterFootprints?: Prisma.OdWaterFootprintUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailUncheckedUpdateWithoutLabelHeadsInput = {
@@ -2045,6 +2071,7 @@ export type OdOrderDetailUncheckedUpdateWithoutLabelHeadsInput = {
   waterFootprints?: Prisma.OdWaterFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailCreateWithoutLabelComponentsInput = {
@@ -2098,6 +2125,7 @@ export type OdOrderDetailCreateWithoutLabelComponentsInput = {
   waterFootprints?: Prisma.OdWaterFootprintCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailUncheckedCreateWithoutLabelComponentsInput = {
@@ -2152,6 +2180,7 @@ export type OdOrderDetailUncheckedCreateWithoutLabelComponentsInput = {
   waterFootprints?: Prisma.OdWaterFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailCreateOrConnectWithoutLabelComponentsInput = {
@@ -2221,6 +2250,7 @@ export type OdOrderDetailUpdateWithoutLabelComponentsInput = {
   waterFootprints?: Prisma.OdWaterFootprintUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailUncheckedUpdateWithoutLabelComponentsInput = {
@@ -2275,6 +2305,7 @@ export type OdOrderDetailUncheckedUpdateWithoutLabelComponentsInput = {
   waterFootprints?: Prisma.OdWaterFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailCreateWithoutComponentsInput = {
@@ -2328,6 +2359,7 @@ export type OdOrderDetailCreateWithoutComponentsInput = {
   waterFootprints?: Prisma.OdWaterFootprintCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailUncheckedCreateWithoutComponentsInput = {
@@ -2382,6 +2414,7 @@ export type OdOrderDetailUncheckedCreateWithoutComponentsInput = {
   waterFootprints?: Prisma.OdWaterFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailCreateOrConnectWithoutComponentsInput = {
@@ -2451,6 +2484,7 @@ export type OdOrderDetailUpdateWithoutComponentsInput = {
   waterFootprints?: Prisma.OdWaterFootprintUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailUncheckedUpdateWithoutComponentsInput = {
@@ -2505,6 +2539,7 @@ export type OdOrderDetailUncheckedUpdateWithoutComponentsInput = {
   waterFootprints?: Prisma.OdWaterFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailCreateWithoutCarbonFootprintsInput = {
@@ -2558,6 +2593,7 @@ export type OdOrderDetailCreateWithoutCarbonFootprintsInput = {
   waterFootprints?: Prisma.OdWaterFootprintCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailUncheckedCreateWithoutCarbonFootprintsInput = {
@@ -2612,6 +2648,7 @@ export type OdOrderDetailUncheckedCreateWithoutCarbonFootprintsInput = {
   waterFootprints?: Prisma.OdWaterFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailCreateOrConnectWithoutCarbonFootprintsInput = {
@@ -2681,6 +2718,7 @@ export type OdOrderDetailUpdateWithoutCarbonFootprintsInput = {
   waterFootprints?: Prisma.OdWaterFootprintUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailUncheckedUpdateWithoutCarbonFootprintsInput = {
@@ -2735,6 +2773,7 @@ export type OdOrderDetailUncheckedUpdateWithoutCarbonFootprintsInput = {
   waterFootprints?: Prisma.OdWaterFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailCreateWithoutWaterFootprintsInput = {
@@ -2788,6 +2827,7 @@ export type OdOrderDetailCreateWithoutWaterFootprintsInput = {
   carbonFootprints?: Prisma.OdCarbonFootprintCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailUncheckedCreateWithoutWaterFootprintsInput = {
@@ -2842,6 +2882,7 @@ export type OdOrderDetailUncheckedCreateWithoutWaterFootprintsInput = {
   carbonFootprints?: Prisma.OdCarbonFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailCreateOrConnectWithoutWaterFootprintsInput = {
@@ -2911,6 +2952,7 @@ export type OdOrderDetailUpdateWithoutWaterFootprintsInput = {
   carbonFootprints?: Prisma.OdCarbonFootprintUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailUncheckedUpdateWithoutWaterFootprintsInput = {
@@ -2965,6 +3007,7 @@ export type OdOrderDetailUncheckedUpdateWithoutWaterFootprintsInput = {
   carbonFootprints?: Prisma.OdCarbonFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailCreateWithoutRestrictedSubstancesInput = {
@@ -3018,6 +3061,7 @@ export type OdOrderDetailCreateWithoutRestrictedSubstancesInput = {
   carbonFootprints?: Prisma.OdCarbonFootprintCreateNestedManyWithoutOrderDetailInput
   waterFootprints?: Prisma.OdWaterFootprintCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailUncheckedCreateWithoutRestrictedSubstancesInput = {
@@ -3072,6 +3116,7 @@ export type OdOrderDetailUncheckedCreateWithoutRestrictedSubstancesInput = {
   carbonFootprints?: Prisma.OdCarbonFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
   waterFootprints?: Prisma.OdWaterFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailCreateOrConnectWithoutRestrictedSubstancesInput = {
@@ -3141,6 +3186,7 @@ export type OdOrderDetailUpdateWithoutRestrictedSubstancesInput = {
   carbonFootprints?: Prisma.OdCarbonFootprintUpdateManyWithoutOrderDetailNestedInput
   waterFootprints?: Prisma.OdWaterFootprintUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailUncheckedUpdateWithoutRestrictedSubstancesInput = {
@@ -3195,6 +3241,7 @@ export type OdOrderDetailUncheckedUpdateWithoutRestrictedSubstancesInput = {
   carbonFootprints?: Prisma.OdCarbonFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
   waterFootprints?: Prisma.OdWaterFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailCreateWithoutCircularEconomiesInput = {
@@ -3248,6 +3295,7 @@ export type OdOrderDetailCreateWithoutCircularEconomiesInput = {
   carbonFootprints?: Prisma.OdCarbonFootprintCreateNestedManyWithoutOrderDetailInput
   waterFootprints?: Prisma.OdWaterFootprintCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailUncheckedCreateWithoutCircularEconomiesInput = {
@@ -3302,6 +3350,7 @@ export type OdOrderDetailUncheckedCreateWithoutCircularEconomiesInput = {
   carbonFootprints?: Prisma.OdCarbonFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
   waterFootprints?: Prisma.OdWaterFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedCreateNestedManyWithoutOrderDetailInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedCreateNestedManyWithoutOrderDetailInput
 }
 
 export type OdOrderDetailCreateOrConnectWithoutCircularEconomiesInput = {
@@ -3371,6 +3420,7 @@ export type OdOrderDetailUpdateWithoutCircularEconomiesInput = {
   carbonFootprints?: Prisma.OdCarbonFootprintUpdateManyWithoutOrderDetailNestedInput
   waterFootprints?: Prisma.OdWaterFootprintUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailUncheckedUpdateWithoutCircularEconomiesInput = {
@@ -3425,6 +3475,241 @@ export type OdOrderDetailUncheckedUpdateWithoutCircularEconomiesInput = {
   carbonFootprints?: Prisma.OdCarbonFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
   waterFootprints?: Prisma.OdWaterFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedUpdateManyWithoutOrderDetailNestedInput
+}
+
+export type OdOrderDetailCreateWithoutUncontrolledLayersInput = {
+  codOrderDetail?: string | null
+  codEstilo?: string | null
+  nomEstilo?: string | null
+  imgEstilo?: runtime.Bytes | null
+  desTela?: string | null
+  colorAway?: string | null
+  fondoTela?: string | null
+  versionTela?: string | null
+  orderSample?: number | null
+  size0_3?: number | null
+  size3_6?: number | null
+  size0_6?: number | null
+  size6_12?: number | null
+  size12_18?: number | null
+  size2?: number | null
+  size3?: number | null
+  size4?: number | null
+  size5?: number | null
+  size6?: number | null
+  size7?: number | null
+  size8?: number | null
+  size9?: number | null
+  size10?: number | null
+  size11?: number | null
+  size12?: number | null
+  size14?: number | null
+  size16?: number | null
+  sizeXs?: number | null
+  sizeS?: number | null
+  sizeM?: number | null
+  sizeL?: number | null
+  sizeXl?: number | null
+  sizeXxl?: number | null
+  totalEstilo?: number | null
+  esSet?: number
+  numPiezas?: number
+  supplyFile?: runtime.Bytes | null
+  stateOrderDetail?: number | null
+  codUsuarioCargaDl?: string | null
+  fecProcesoCargaDl?: Date | string | null
+  fecProcesoModifDl?: Date | string | null
+  desAccion?: string | null
+  flgStatutActif?: number | null
+  orderHead: Prisma.OdOrderHeadCreateNestedOneWithoutDetailsInput
+  labelHeads?: Prisma.OdOrderLabelHeadCreateNestedManyWithoutOrderDetailInput
+  components?: Prisma.OdOrderComponentCreateNestedManyWithoutOrderDetailInput
+  labelComponents?: Prisma.OdOrderLabelComponentCreateNestedManyWithoutOrderDetailInput
+  carbonFootprints?: Prisma.OdCarbonFootprintCreateNestedManyWithoutOrderDetailInput
+  waterFootprints?: Prisma.OdWaterFootprintCreateNestedManyWithoutOrderDetailInput
+  restrictedSubstances?: Prisma.OdRestrictedSubstancesCreateNestedManyWithoutOrderDetailInput
+  circularEconomies?: Prisma.OdCircularEconomyCreateNestedManyWithoutOrderDetailInput
+}
+
+export type OdOrderDetailUncheckedCreateWithoutUncontrolledLayersInput = {
+  idDlkOrderDetail?: number
+  idDlkOrderHead: number
+  codOrderDetail?: string | null
+  codEstilo?: string | null
+  nomEstilo?: string | null
+  imgEstilo?: runtime.Bytes | null
+  desTela?: string | null
+  colorAway?: string | null
+  fondoTela?: string | null
+  versionTela?: string | null
+  orderSample?: number | null
+  size0_3?: number | null
+  size3_6?: number | null
+  size0_6?: number | null
+  size6_12?: number | null
+  size12_18?: number | null
+  size2?: number | null
+  size3?: number | null
+  size4?: number | null
+  size5?: number | null
+  size6?: number | null
+  size7?: number | null
+  size8?: number | null
+  size9?: number | null
+  size10?: number | null
+  size11?: number | null
+  size12?: number | null
+  size14?: number | null
+  size16?: number | null
+  sizeXs?: number | null
+  sizeS?: number | null
+  sizeM?: number | null
+  sizeL?: number | null
+  sizeXl?: number | null
+  sizeXxl?: number | null
+  totalEstilo?: number | null
+  esSet?: number
+  numPiezas?: number
+  supplyFile?: runtime.Bytes | null
+  stateOrderDetail?: number | null
+  codUsuarioCargaDl?: string | null
+  fecProcesoCargaDl?: Date | string | null
+  fecProcesoModifDl?: Date | string | null
+  desAccion?: string | null
+  flgStatutActif?: number | null
+  labelHeads?: Prisma.OdOrderLabelHeadUncheckedCreateNestedManyWithoutOrderDetailInput
+  components?: Prisma.OdOrderComponentUncheckedCreateNestedManyWithoutOrderDetailInput
+  labelComponents?: Prisma.OdOrderLabelComponentUncheckedCreateNestedManyWithoutOrderDetailInput
+  carbonFootprints?: Prisma.OdCarbonFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
+  waterFootprints?: Prisma.OdWaterFootprintUncheckedCreateNestedManyWithoutOrderDetailInput
+  restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedCreateNestedManyWithoutOrderDetailInput
+  circularEconomies?: Prisma.OdCircularEconomyUncheckedCreateNestedManyWithoutOrderDetailInput
+}
+
+export type OdOrderDetailCreateOrConnectWithoutUncontrolledLayersInput = {
+  where: Prisma.OdOrderDetailWhereUniqueInput
+  create: Prisma.XOR<Prisma.OdOrderDetailCreateWithoutUncontrolledLayersInput, Prisma.OdOrderDetailUncheckedCreateWithoutUncontrolledLayersInput>
+}
+
+export type OdOrderDetailUpsertWithoutUncontrolledLayersInput = {
+  update: Prisma.XOR<Prisma.OdOrderDetailUpdateWithoutUncontrolledLayersInput, Prisma.OdOrderDetailUncheckedUpdateWithoutUncontrolledLayersInput>
+  create: Prisma.XOR<Prisma.OdOrderDetailCreateWithoutUncontrolledLayersInput, Prisma.OdOrderDetailUncheckedCreateWithoutUncontrolledLayersInput>
+  where?: Prisma.OdOrderDetailWhereInput
+}
+
+export type OdOrderDetailUpdateToOneWithWhereWithoutUncontrolledLayersInput = {
+  where?: Prisma.OdOrderDetailWhereInput
+  data: Prisma.XOR<Prisma.OdOrderDetailUpdateWithoutUncontrolledLayersInput, Prisma.OdOrderDetailUncheckedUpdateWithoutUncontrolledLayersInput>
+}
+
+export type OdOrderDetailUpdateWithoutUncontrolledLayersInput = {
+  codOrderDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  codEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nomEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imgEstilo?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  desTela?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorAway?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fondoTela?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  versionTela?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderSample?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size0_3?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size3_6?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size0_6?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size6_12?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size12_18?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size2?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size3?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size4?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size5?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size6?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size7?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size8?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size9?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size10?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size11?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size12?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size14?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size16?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sizeXs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sizeS?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sizeM?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sizeL?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sizeXl?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sizeXxl?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalEstilo?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  esSet?: Prisma.IntFieldUpdateOperationsInput | number
+  numPiezas?: Prisma.IntFieldUpdateOperationsInput | number
+  supplyFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  stateOrderDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  orderHead?: Prisma.OdOrderHeadUpdateOneRequiredWithoutDetailsNestedInput
+  labelHeads?: Prisma.OdOrderLabelHeadUpdateManyWithoutOrderDetailNestedInput
+  components?: Prisma.OdOrderComponentUpdateManyWithoutOrderDetailNestedInput
+  labelComponents?: Prisma.OdOrderLabelComponentUpdateManyWithoutOrderDetailNestedInput
+  carbonFootprints?: Prisma.OdCarbonFootprintUpdateManyWithoutOrderDetailNestedInput
+  waterFootprints?: Prisma.OdWaterFootprintUpdateManyWithoutOrderDetailNestedInput
+  restrictedSubstances?: Prisma.OdRestrictedSubstancesUpdateManyWithoutOrderDetailNestedInput
+  circularEconomies?: Prisma.OdCircularEconomyUpdateManyWithoutOrderDetailNestedInput
+}
+
+export type OdOrderDetailUncheckedUpdateWithoutUncontrolledLayersInput = {
+  idDlkOrderDetail?: Prisma.IntFieldUpdateOperationsInput | number
+  idDlkOrderHead?: Prisma.IntFieldUpdateOperationsInput | number
+  codOrderDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  codEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nomEstilo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imgEstilo?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  desTela?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorAway?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fondoTela?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  versionTela?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderSample?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size0_3?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size3_6?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size0_6?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size6_12?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size12_18?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size2?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size3?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size4?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size5?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size6?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size7?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size8?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size9?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size10?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size11?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size12?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size14?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  size16?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sizeXs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sizeS?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sizeM?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sizeL?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sizeXl?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sizeXxl?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalEstilo?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  esSet?: Prisma.IntFieldUpdateOperationsInput | number
+  numPiezas?: Prisma.IntFieldUpdateOperationsInput | number
+  supplyFile?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  stateOrderDetail?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  codUsuarioCargaDl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fecProcesoCargaDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fecProcesoModifDl?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  desAccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  flgStatutActif?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  labelHeads?: Prisma.OdOrderLabelHeadUncheckedUpdateManyWithoutOrderDetailNestedInput
+  components?: Prisma.OdOrderComponentUncheckedUpdateManyWithoutOrderDetailNestedInput
+  labelComponents?: Prisma.OdOrderLabelComponentUncheckedUpdateManyWithoutOrderDetailNestedInput
+  carbonFootprints?: Prisma.OdCarbonFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
+  waterFootprints?: Prisma.OdWaterFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
+  restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedUpdateManyWithoutOrderDetailNestedInput
+  circularEconomies?: Prisma.OdCircularEconomyUncheckedUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailCreateManyOrderHeadInput = {
@@ -3525,6 +3810,7 @@ export type OdOrderDetailUpdateWithoutOrderHeadInput = {
   waterFootprints?: Prisma.OdWaterFootprintUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailUncheckedUpdateWithoutOrderHeadInput = {
@@ -3579,6 +3865,7 @@ export type OdOrderDetailUncheckedUpdateWithoutOrderHeadInput = {
   waterFootprints?: Prisma.OdWaterFootprintUncheckedUpdateManyWithoutOrderDetailNestedInput
   restrictedSubstances?: Prisma.OdRestrictedSubstancesUncheckedUpdateManyWithoutOrderDetailNestedInput
   circularEconomies?: Prisma.OdCircularEconomyUncheckedUpdateManyWithoutOrderDetailNestedInput
+  uncontrolledLayers?: Prisma.OdUncontrolledLayersUncheckedUpdateManyWithoutOrderDetailNestedInput
 }
 
 export type OdOrderDetailUncheckedUpdateManyWithoutOrderHeadInput = {
@@ -3641,6 +3928,7 @@ export type OdOrderDetailCountOutputType = {
   waterFootprints: number
   restrictedSubstances: number
   circularEconomies: number
+  uncontrolledLayers: number
 }
 
 export type OdOrderDetailCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3651,6 +3939,7 @@ export type OdOrderDetailCountOutputTypeSelect<ExtArgs extends runtime.Types.Ext
   waterFootprints?: boolean | OdOrderDetailCountOutputTypeCountWaterFootprintsArgs
   restrictedSubstances?: boolean | OdOrderDetailCountOutputTypeCountRestrictedSubstancesArgs
   circularEconomies?: boolean | OdOrderDetailCountOutputTypeCountCircularEconomiesArgs
+  uncontrolledLayers?: boolean | OdOrderDetailCountOutputTypeCountUncontrolledLayersArgs
 }
 
 /**
@@ -3712,6 +4001,13 @@ export type OdOrderDetailCountOutputTypeCountCircularEconomiesArgs<ExtArgs exten
   where?: Prisma.OdCircularEconomyWhereInput
 }
 
+/**
+ * OdOrderDetailCountOutputType without action
+ */
+export type OdOrderDetailCountOutputTypeCountUncontrolledLayersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OdUncontrolledLayersWhereInput
+}
+
 
 export type OdOrderDetailSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idDlkOrderDetail?: boolean
@@ -3767,6 +4063,7 @@ export type OdOrderDetailSelect<ExtArgs extends runtime.Types.Extensions.Interna
   waterFootprints?: boolean | Prisma.OdOrderDetail$waterFootprintsArgs<ExtArgs>
   restrictedSubstances?: boolean | Prisma.OdOrderDetail$restrictedSubstancesArgs<ExtArgs>
   circularEconomies?: boolean | Prisma.OdOrderDetail$circularEconomiesArgs<ExtArgs>
+  uncontrolledLayers?: boolean | Prisma.OdOrderDetail$uncontrolledLayersArgs<ExtArgs>
   _count?: boolean | Prisma.OdOrderDetailCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["odOrderDetail"]>
 
@@ -3830,6 +4127,7 @@ export type OdOrderDetailInclude<ExtArgs extends runtime.Types.Extensions.Intern
   waterFootprints?: boolean | Prisma.OdOrderDetail$waterFootprintsArgs<ExtArgs>
   restrictedSubstances?: boolean | Prisma.OdOrderDetail$restrictedSubstancesArgs<ExtArgs>
   circularEconomies?: boolean | Prisma.OdOrderDetail$circularEconomiesArgs<ExtArgs>
+  uncontrolledLayers?: boolean | Prisma.OdOrderDetail$uncontrolledLayersArgs<ExtArgs>
   _count?: boolean | Prisma.OdOrderDetailCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -3844,6 +4142,7 @@ export type $OdOrderDetailPayload<ExtArgs extends runtime.Types.Extensions.Inter
     waterFootprints: Prisma.$OdWaterFootprintPayload<ExtArgs>[]
     restrictedSubstances: Prisma.$OdRestrictedSubstancesPayload<ExtArgs>[]
     circularEconomies: Prisma.$OdCircularEconomyPayload<ExtArgs>[]
+    uncontrolledLayers: Prisma.$OdUncontrolledLayersPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idDlkOrderDetail: number
@@ -4255,6 +4554,7 @@ export interface Prisma__OdOrderDetailClient<T, Null = never, ExtArgs extends ru
   waterFootprints<T extends Prisma.OdOrderDetail$waterFootprintsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderDetail$waterFootprintsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdWaterFootprintPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   restrictedSubstances<T extends Prisma.OdOrderDetail$restrictedSubstancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderDetail$restrictedSubstancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdRestrictedSubstancesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   circularEconomies<T extends Prisma.OdOrderDetail$circularEconomiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderDetail$circularEconomiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdCircularEconomyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  uncontrolledLayers<T extends Prisma.OdOrderDetail$uncontrolledLayersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OdOrderDetail$uncontrolledLayersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OdUncontrolledLayersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4842,6 +5142,30 @@ export type OdOrderDetail$circularEconomiesArgs<ExtArgs extends runtime.Types.Ex
   take?: number
   skip?: number
   distinct?: Prisma.OdCircularEconomyScalarFieldEnum | Prisma.OdCircularEconomyScalarFieldEnum[]
+}
+
+/**
+ * OdOrderDetail.uncontrolledLayers
+ */
+export type OdOrderDetail$uncontrolledLayersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OdUncontrolledLayers
+   */
+  select?: Prisma.OdUncontrolledLayersSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OdUncontrolledLayers
+   */
+  omit?: Prisma.OdUncontrolledLayersOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OdUncontrolledLayersInclude<ExtArgs> | null
+  where?: Prisma.OdUncontrolledLayersWhereInput
+  orderBy?: Prisma.OdUncontrolledLayersOrderByWithRelationInput | Prisma.OdUncontrolledLayersOrderByWithRelationInput[]
+  cursor?: Prisma.OdUncontrolledLayersWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OdUncontrolledLayersScalarFieldEnum | Prisma.OdUncontrolledLayersScalarFieldEnum[]
 }
 
 /**

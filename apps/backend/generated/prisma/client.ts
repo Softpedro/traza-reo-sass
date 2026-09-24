@@ -364,3 +364,8 @@ export type OdCircularEconomy = Prisma.OdCircularEconomyModel
  *  * Impacto social declarado para el detalle de orden.
  */
 export type OdSocialImpact = Prisma.OdSocialImpactModel
+/**
+ * Model OdUncontrolledLayers
+ * Tiers no controladas (Tier 2, 3 y 4) por detalle de orden.
+ */
+export type OdUncontrolledLayers = Prisma.OdUncontrolledLayersModel

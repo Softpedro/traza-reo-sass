@@ -443,7 +443,8 @@ export const ModelName = {
   OdWaterFootprint: 'OdWaterFootprint',
   OdRestrictedSubstances: 'OdRestrictedSubstances',
   OdCircularEconomy: 'OdCircularEconomy',
-  OdSocialImpact: 'OdSocialImpact'
+  OdSocialImpact: 'OdSocialImpact',
+  OdUncontrolledLayers: 'OdUncontrolledLayers'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -459,7 +460,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdApiClient" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdModel" | "mdPackaging" | "mdCare" | "mdModelImage" | "mdModelDetail" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderLabelComponent" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace" | "odCarbonFootprint" | "odWaterFootprint" | "odRestrictedSubstances" | "odCircularEconomy" | "odSocialImpact"
+    modelProps: "mdParentCompany" | "mdUbigeo" | "mdBrand" | "mdSupplier" | "mdMaterial" | "mdAvio" | "mdOrdenPedido" | "odOrderHead" | "odOrderDetail" | "mdProductionChain" | "mdProcess" | "mdSubprocess" | "mdActivities" | "mdInputProcess" | "mdInputSubprocess" | "mdInputActivities" | "mdOutputProcess" | "mdOutputSubprocess" | "mdOutputActivities" | "mdProcedureProcess" | "mdProcedureSubprocess" | "mdProcedureActivities" | "mdFacility" | "mdApiClient" | "mdMaquila" | "mdFacilityMaquila" | "mdParentCompanyMaquila" | "mdSubbrand" | "mdModel" | "mdPackaging" | "mdCare" | "mdModelImage" | "mdModelDetail" | "mdUserReo" | "mdUserBackupCode" | "lgUserAccess" | "lgParentCompany" | "mdDigitalIdentifier" | "odOrderLabelHead" | "odOrderLabelDetail" | "odOrderLabelComponent" | "odOrderComponent" | "odProcessRoute" | "odInputProcessRoute" | "odProcedureProcessRoute" | "odOutputProcessRoute" | "odSubprocessRoute" | "odInputSubprocessRoute" | "odProcedureSubprocessRoute" | "odOutputSubprocessRoute" | "odActivitiesRoute" | "odInputActivitiesRoute" | "odProcedureActivitiesRoute" | "odOutputActivitiesRoute" | "odUnitTrace" | "odCarbonFootprint" | "odWaterFootprint" | "odRestrictedSubstances" | "odCircularEconomy" | "odSocialImpact" | "odUncontrolledLayers"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4423,6 +4424,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    OdUncontrolledLayers: {
+      payload: Prisma.$OdUncontrolledLayersPayload<ExtArgs>
+      fields: Prisma.OdUncontrolledLayersFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OdUncontrolledLayersFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUncontrolledLayersPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OdUncontrolledLayersFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUncontrolledLayersPayload>
+        }
+        findFirst: {
+          args: Prisma.OdUncontrolledLayersFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUncontrolledLayersPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OdUncontrolledLayersFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUncontrolledLayersPayload>
+        }
+        findMany: {
+          args: Prisma.OdUncontrolledLayersFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUncontrolledLayersPayload>[]
+        }
+        create: {
+          args: Prisma.OdUncontrolledLayersCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUncontrolledLayersPayload>
+        }
+        createMany: {
+          args: Prisma.OdUncontrolledLayersCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OdUncontrolledLayersDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUncontrolledLayersPayload>
+        }
+        update: {
+          args: Prisma.OdUncontrolledLayersUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUncontrolledLayersPayload>
+        }
+        deleteMany: {
+          args: Prisma.OdUncontrolledLayersDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OdUncontrolledLayersUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OdUncontrolledLayersUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OdUncontrolledLayersPayload>
+        }
+        aggregate: {
+          args: Prisma.OdUncontrolledLayersAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOdUncontrolledLayers>
+        }
+        groupBy: {
+          args: Prisma.OdUncontrolledLayersGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdUncontrolledLayersGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OdUncontrolledLayersCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OdUncontrolledLayersCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -5884,6 +5951,34 @@ export const OdSocialImpactScalarFieldEnum = {
 export type OdSocialImpactScalarFieldEnum = (typeof OdSocialImpactScalarFieldEnum)[keyof typeof OdSocialImpactScalarFieldEnum]
 
 
+export const OdUncontrolledLayersScalarFieldEnum = {
+  idDlkUncontrolledLayers: 'idDlkUncontrolledLayers',
+  idDlkOrderDetail: 'idDlkOrderDetail',
+  codUncontrolledLayers: 'codUncontrolledLayers',
+  tier: 'tier',
+  product: 'product',
+  supplier: 'supplier',
+  service: 'service',
+  origin: 'origin',
+  certificate: 'certificate',
+  transmitter: 'transmitter',
+  certificateNumber: 'certificateNumber',
+  dateOfIssue: 'dateOfIssue',
+  expirationDate: 'expirationDate',
+  certificateSheet: 'certificateSheet',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  stateUncontrolledLayers: 'stateUncontrolledLayers',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  fecProcesoCargaDl: 'fecProcesoCargaDl',
+  fecProcesoModifDl: 'fecProcesoModifDl',
+  desAccion: 'desAccion',
+  flgStatutActif: 'flgStatutActif'
+} as const
+
+export type OdUncontrolledLayersScalarFieldEnum = (typeof OdUncontrolledLayersScalarFieldEnum)[keyof typeof OdUncontrolledLayersScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -6805,6 +6900,21 @@ export const OdSocialImpactOrderByRelevanceFieldEnum = {
 export type OdSocialImpactOrderByRelevanceFieldEnum = (typeof OdSocialImpactOrderByRelevanceFieldEnum)[keyof typeof OdSocialImpactOrderByRelevanceFieldEnum]
 
 
+export const OdUncontrolledLayersOrderByRelevanceFieldEnum = {
+  codUncontrolledLayers: 'codUncontrolledLayers',
+  product: 'product',
+  supplier: 'supplier',
+  origin: 'origin',
+  certificate: 'certificate',
+  transmitter: 'transmitter',
+  certificateNumber: 'certificateNumber',
+  codUsuarioCargaDl: 'codUsuarioCargaDl',
+  desAccion: 'desAccion'
+} as const
+
+export type OdUncontrolledLayersOrderByRelevanceFieldEnum = (typeof OdUncontrolledLayersOrderByRelevanceFieldEnum)[keyof typeof OdUncontrolledLayersOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -7050,6 +7160,7 @@ export type GlobalOmitConfig = {
   odRestrictedSubstances?: Prisma.OdRestrictedSubstancesOmit
   odCircularEconomy?: Prisma.OdCircularEconomyOmit
   odSocialImpact?: Prisma.OdSocialImpactOmit
+  odUncontrolledLayers?: Prisma.OdUncontrolledLayersOmit
 }
 
 /* Types for Logging */

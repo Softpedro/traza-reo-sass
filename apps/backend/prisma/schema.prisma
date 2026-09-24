@@ -372,6 +372,7 @@ model OdOrderDetail {
   waterFootprints      OdWaterFootprint[]
   restrictedSubstances OdRestrictedSubstances[]
   circularEconomies    OdCircularEconomy[]
+  uncontrolledLayers   OdUncontrolledLayers[]
 
   @@index([idDlkOrderHead], map: "idx_order_detail_head")
   @@map("OD_ORDER_DETAIL")
@@ -1815,4 +1816,43 @@ model OdSocialImpact {
 
   @@index([idDlkBrand], map: "idx_social_impact_brand")
   @@map("OD_SOCIAL_IMPACT")
+}
+
+/// Tiers no controladas (Tier 2, 3 y 4) por detalle de orden.
+model OdUncontrolledLayers {
+  idDlkUncontrolledLayers Int           @id @default(autoincrement()) @map("ID_DLK_UNCONTROLLED_LAYERS")
+  idDlkOrderDetail        Int           @map("ID_DLK_ORDER_DETAIL")
+  codUncontrolledLayers   String        @map("COD_UNCONTROLLED_LAYERS") @db.VarChar(50)
+  /**
+   * Valores: 2, 3 o 4.
+   */
+  tier                    Int           @map("TIER") @db.TinyInt
+  product                 String?       @map("PRODUCT") @db.VarChar(200)
+  supplier                String?       @map("SUPPLIER") @db.VarChar(150)
+  /**
+   * Solo Tier 2 (1: Tejido, 2: Teñido, 3: Estampado).
+   */
+  service                 Int?          @map("SERVICE") @db.TinyInt
+  /**
+   * Solo Tier 4.
+   */
+  origin                  String?       @map("ORIGIN") @db.VarChar(150)
+  certificate             String?       @map("CERTIFICATE") @db.VarChar(100)
+  transmitter             String?       @map("TRANSMITTER") @db.VarChar(100)
+  certificateNumber       String?       @map("CERTIFICATE_NUMBER") @db.VarChar(100)
+  dateOfIssue             DateTime?     @map("DATE_OF_ISSUE") @db.Date
+  expirationDate          DateTime?     @map("EXPIRATION_DATE") @db.Date
+  certificateSheet        Bytes?        @map("CERTIFICATE_SHEET") @db.MediumBlob
+  startDate               DateTime?     @map("START_DATE") @db.Date
+  endDate                 DateTime?     @map("END_DATE") @db.Date
+  stateUncontrolledLayers Int           @default(1) @map("STATE_UNCONTROLLED_LAYERS") @db.TinyInt
+  codUsuarioCargaDl       String?       @map("COD_USUARIO_CARGA_DL") @db.VarChar(20)
+  fecProcesoCargaDl       DateTime      @default(now()) @map("FEH_PROCESO_CARGA_DL") @db.DateTime(3)
+  fecProcesoModifDl       DateTime?     @updatedAt @map("FEH_PROCESO_MODIF_DL") @db.DateTime(3)
+  desAccion               String?       @map("DES_ACCION") @db.VarChar(20)
+  flgStatutActif          Int           @default(1) @map("FLG_STATUT_ACTIF") @db.TinyInt
+  orderDetail             OdOrderDetail @relation(fields: [idDlkOrderDetail], references: [idDlkOrderDetail], onDelete: Restrict, onUpdate: Cascade, map: "fk_uncontrolled_layers_order_detail")
+
+  @@index([idDlkOrderDetail], map: "idx_uncontrolled_layers_order_detail")
+  @@map("OD_UNCONTROLLED_LAYERS")
 }

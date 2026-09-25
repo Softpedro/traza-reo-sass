@@ -1,5 +1,13 @@
 import { Buffer } from "node:buffer";
 import type { PrismaClient } from "../../generated/prisma/client.js";
+import {
+  buildSupplyChain,
+  buildSustainability,
+  getDocumentFile,
+  type DocumentUrlBuilder,
+  type DppDocument,
+  type UnitContext,
+} from "./dpp-sustainability.js";
 
 /**
  * Servicio de lectura del "pasaporte digital" (DPP) de una prenda, para alimentar
@@ -123,12 +131,21 @@ export function parseDppUrl(url: string): ParsedDppUrl | null {
 
 export type DppPassportResult = { notFound: true } | { passport: Record<string, unknown> };
 
+export type PassportOptions = {
+  /** URL de descarga de cada documento; sin ella los informes salen sin enlace. */
+  documentUrl?: DocumentUrlBuilder;
+};
+
 export class DppPassportService {
   constructor(private prisma: PrismaClient) {}
 
-  async getPassport(url: string): Promise<DppPassportResult> {
+  /**
+   * Resuelve la unidad serializada (la prenda) a partir de la URL del QR. La usan el
+   * pasaporte y la descarga de documentos, que así piden exactamente el mismo acceso.
+   */
+  private async findUnit(url: string) {
     const parsed = parseDppUrl(url);
-    if (!parsed) return { notFound: true };
+    if (!parsed) return null;
 
     // Candidatos por GTIN (normalizado y sin ceros a la izquierda) + serial.
     // Se afina luego en JS por lote (codOrderDetail saneado), porque en BD puede
@@ -178,6 +195,7 @@ export class DppPassportService {
                 codOrderHead: true,
                 brand: {
                   select: {
+                    idDlkBrand: true,
                     nameBrand: true,
                     logoBrand: true,
                     logoDpp: true,
@@ -206,7 +224,13 @@ export class DppPassportService {
       candidates.find(
         (c) => sanitizeLote(c.labelHead?.orderDetail?.codOrderDetail) === parsed.lote
       ) ?? candidates[0]; // si no hay lote en BD, cae al único candidato por GTIN+serial
-    if (!unit) return { notFound: true };
+    return unit ? { parsed, unit } : null;
+  }
+
+  async getPassport(url: string, opts: PassportOptions = {}): Promise<DppPassportResult> {
+    const found = await this.findUnit(url);
+    if (!found) return { notFound: true };
+    const { parsed, unit } = found;
 
     const head = unit.labelHead;
     const detail = head?.orderDetail;
@@ -570,6 +594,43 @@ export class DppPassportService {
       },
     };
 
+    // ── Sostenibilidad y Tiers no controladas ─────────────────────────
+    if (detail) {
+      const ctx = this.unitContext(unit);
+      const documentUrl = opts.documentUrl ?? (() => "");
+      const [sustainability, supplyChain] = await Promise.all([
+        buildSustainability(this.prisma, ctx, documentUrl),
+        buildSupplyChain(this.prisma, ctx, documentUrl),
+      ]);
+      Object.assign(passport, { sustainability, supplyChain });
+    }
+
     return { passport };
+  }
+
+  /** Talla, orden de producción y marca de la unidad: lo que usan esas secciones. */
+  private unitContext(
+    unit: NonNullable<Awaited<ReturnType<DppPassportService["findUnit"]>>>["unit"]
+  ): UnitContext {
+    const head = unit.labelHead;
+    return {
+      idDlkOrderDetail: head!.orderDetail!.idDlkOrderDetail,
+      idDlkBrand: head?.orderHead?.brand?.idDlkBrand ?? null,
+      size: unit.size?.trim() || head?.size?.trim() || null,
+    };
+  }
+
+  /**
+   * PDF de un documento del pasaporte (informe de sostenibilidad o certificado de un
+   * tier). Pide la URL del QR, como el pasaporte: no hay forma de pedir un documento
+   * por ID sin tener una prenda de esa orden.
+   */
+  async getDocument(
+    url: string,
+    doc: DppDocument
+  ): Promise<{ bytes: Uint8Array; filename: string } | null> {
+    const found = await this.findUnit(url);
+    if (!found?.unit.labelHead?.orderDetail) return null;
+    return getDocumentFile(this.prisma, this.unitContext(found.unit), doc);
   }
 }

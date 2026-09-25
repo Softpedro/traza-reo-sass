@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { PrismaClient } from "../../generated/prisma/client.js";
 import type { UnitTraceService } from "../services/unit-trace.service.js";
 import type { DppPassportService } from "../services/dpp-passport.service.js";
+import { isDppDocument, type DppDocument } from "../services/dpp-sustainability.js";
 import { apiKeyMiddleware, type ApiClientRequest } from "../middleware/api-key.middleware.js";
 
 // Dominios DPP permitidos para la ingesta de escaneos. Configurable por env
@@ -45,7 +46,12 @@ export function dppRoutes(
       if (!url) {
         return res.status(400).json({ error: "url es obligatoria", type: "VALIDATION" });
       }
-      const result = await passportService.getPassport(url);
+      // URL absoluta de descarga de cada documento, con el host por el que entró el
+      // pedido (trust proxy está activo, así que respeta el https del proxy).
+      const fileBase = `${req.protocol}://${req.get("host")}${req.baseUrl}/passport/file`;
+      const documentUrl = (doc: DppDocument) =>
+        `${fileBase}?url=${encodeURIComponent(url)}&doc=${doc}`;
+      const result = await passportService.getPassport(url, { documentUrl });
       if ("notFound" in result) {
         return res
           .status(404)
@@ -54,6 +60,34 @@ export function dppRoutes(
       res.json(result.passport);
     } catch (e) {
       console.error("[dpp:passport]", e);
+      res.status(500).json({ error: "Error interno", type: "INTERNAL" });
+    }
+  });
+
+  // Documento del pasaporte (informe de sostenibilidad o certificado de un tier). Se
+  // pide con la misma URL del QR que el pasaporte, nunca por ID: así sólo baja un
+  // informe quien tiene una prenda de esa orden de producción.
+  router.get("/passport/file", async (req: ApiClientRequest, res) => {
+    try {
+      const url = typeof req.query.url === "string" ? req.query.url.trim() : "";
+      const doc = req.query.doc;
+      if (!url || !isDppDocument(doc)) {
+        return res
+          .status(400)
+          .json({ error: "url y doc son obligatorios", type: "VALIDATION" });
+      }
+      const file = await passportService.getDocument(url, doc);
+      if (!file) {
+        return res.status(404).json({ error: "Documento no encontrado", type: "NOT_FOUND" });
+      }
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        `inline; filename="${encodeURIComponent(file.filename)}"`
+      );
+      res.send(Buffer.from(file.bytes));
+    } catch (e) {
+      console.error("[dpp:passport-file]", e);
       res.status(500).json({ error: "Error interno", type: "INTERNAL" });
     }
   });

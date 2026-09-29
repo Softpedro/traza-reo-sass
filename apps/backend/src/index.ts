@@ -113,6 +113,12 @@ const adapter = new PrismaMariaDb({
   acquireTimeout: Number(process.env.DB_ACQUIRE_TIMEOUT_MS ?? 8000),
   // Menor que acquireTimeout para que quepa un reintento dentro de la ventana de espera.
   connectTimeout: Number(process.env.DB_CONNECT_TIMEOUT_MS ?? 5000),
+  // Ping en conexiones ociosas para que un corte silencioso de red o del proxy del MySQL
+  // administrado se detecte y la conexión se descarte, en vez de quedar muerta en el pool.
+  keepAliveDelay: Number(process.env.DB_KEEPALIVE_MS ?? 30000),
+  // Por debajo del wait_timeout habitual del servidor: el pool recicla antes de que el
+  // servidor cierre por su lado. En segundos (opción del driver `mariadb`).
+  idleTimeout: Number(process.env.DB_IDLE_TIMEOUT_S ?? 300),
 });
 const prisma = new PrismaClient({ adapter });
 
@@ -446,4 +452,43 @@ app.listen(Number(PORT), "0.0.0.0", () => {
       console.error("[DB] ERROR: No se pudo conectar a la base de datos:", e instanceof Error ? e.message : e);
       console.error("[DB] Verifica que MariaDB esté corriendo en", `${dbConfig.host}:${dbConfig.port}`);
     });
+
+  startDbWatchdog();
 });
+
+/**
+ * Seenode no sondea /health, así que si el pool se queda sin poder abrir conexiones
+ * (visto en producción: `active=0 idle=0 limit=3` durante horas con la base sana) el
+ * proceso sigue vivo devolviendo 503 hasta que alguien lo reinicia a mano. Este watchdog
+ * prueba la base cada `DB_WATCHDOG_INTERVAL_MS` y, tras `DB_WATCHDOG_MAX_FAILURES`
+ * fallos de conectividad seguidos, termina el proceso para que el orquestador levante
+ * uno nuevo con un pool limpio. Con la base caída de verdad sólo reinicia en bucle
+ * lento, que no empeora nada: sin base el backend no sirve de todos modos.
+ */
+function startDbWatchdog() {
+  const intervalMs = Number(process.env.DB_WATCHDOG_INTERVAL_MS ?? 60000);
+  const maxFailures = Number(process.env.DB_WATCHDOG_MAX_FAILURES ?? 5);
+  if (!intervalMs || !maxFailures) return;
+
+  let failures = 0;
+  const timer = setInterval(async () => {
+    try {
+      await prisma.$queryRawUnsafe("SELECT 1");
+      if (failures > 0) console.log(`[DB watchdog] Conexión recuperada tras ${failures} fallo(s)`);
+      failures = 0;
+    } catch (e) {
+      // Sólo cuentan los fallos de conectividad; un error de otra clase no justifica reiniciar.
+      if (!isDbConnectionError(e)) return;
+      failures++;
+      // El error completo: el DriverAdapterError de Prisma deja `message` vacío y el
+      // detalle (p. ej. "pool timeout ... active=0 idle=0") va en `cause`.
+      console.error(`[DB watchdog] Fallo ${failures}/${maxFailures}:`, e);
+      if (failures >= maxFailures) {
+        console.error("[DB watchdog] Pool sin conexión. Saliendo para que el orquestador reinicie.");
+        process.exit(1);
+      }
+    }
+  }, intervalMs);
+  // No mantiene vivo el proceso por sí solo (p. ej. en un apagado ordenado).
+  timer.unref();
+}

@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { createHash } from "node:crypto";
 import type { PrismaClient } from "../../generated/prisma/client.js";
+import { errorResponse } from "../lib/http-error.js";
 
 export interface ApiClientRequest extends Request {
   apiClient?: { idDlkApiClient: number; nameApiClient: string };
@@ -32,8 +33,11 @@ export function apiKeyMiddleware(prisma: PrismaClient) {
       req.apiClient = client;
       next();
     } catch (e) {
+      // Aquí sólo puede fallar la consulta a MD_API_CLIENT, no la key: un pool caído debe
+      // verse como 503 DB_CONNECTION, no como "Error de autenticación".
       console.error("[api-key]", e);
-      return res.status(500).json({ error: "Error de autenticación", type: "INTERNAL" });
+      const err = errorResponse(e);
+      return res.status(err.status).json(err.body);
     }
   };
 }
